@@ -84,6 +84,10 @@ MD4DSP-m2python/
 │   ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.png
 │   ├── Interactive Data Cleaning.png
 │   ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
+│ └── extracted_data
+│   └── ...
+│ └── parsed_data
+│   └── ...
 │
 ├── .gitignore
 ├── knwf_data_parser.py
@@ -92,6 +96,15 @@ MD4DSP-m2python/
 ```
 
 - **`selected_KNIME_workflows/`**: contains the selected KNIME workflows to be parsed and exported json via Python script.
+
+
+- **`selected_KNIME_workflows/images/`**: contains the images of the selected KNIME workflows.
+
+
+- **`selected_KNIME_workflows/extracted_data/`**: contains the extracted data from the selected KNIME workflows.
+
+
+- **`selected_KNIME_workflows/parsed_data/`**: contains the parsed data from the selected KNIME workflows.
 
 
 - **`README.md`**: file that contains the documentation of the project.
