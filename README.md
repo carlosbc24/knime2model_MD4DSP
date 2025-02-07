@@ -111,10 +111,6 @@ MD4DSP-m2python/
   
 
 - **`requirements.txt`**: file that contains the libraries needed to run the project.
-
-
-## External Documentation
-The external documentation of the project is available in the following link: https://unexes.sharepoint.com/:f:/s/PDI_i3lab/EutekinB0hRGg6lyGESzkE4B544DedZpFTlwswpUUZh8ag?e=5RPUgt
   
 ## Authors
 - Carlos Breuer Carrasco
