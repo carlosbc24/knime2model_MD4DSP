@@ -3,9 +3,6 @@ import os
 import xml.etree.ElementTree as ET
 import json
 
-INPUT_KNIME_WORKFLOW_TO_PARSE = "Data Cleaning Project.knwf"
-OUPUT_JSON_FILENAME = "InputKnimeWorkflow"  # Nombre del archivo JSON de salida
-
 
 def extract_knwf_data(knwf_filename, output_json_filename):
     """
@@ -274,7 +271,6 @@ def extract_node_settings(settings_path):
             if detection_option is not None:
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
-
         elif "Auto-Binner" in node_info["node_name"]:
             # Extraer columnas incluidas y excluidas
             included_columns = [
@@ -458,12 +454,3 @@ def extract_node_settings(settings_path):
             print(f"Node type not recognized: {node_info['node_name']}")
 
     return node_info
-
-
-wf_count = 0
-# Extraer datos de todos los archivos KNIME en el directorio
-for file in os.listdir("selected_KNIME_workflows"):
-    if file.endswith(".knwf"):
-        wf_count += 1
-        extracted_output_filename = f"{OUPUT_JSON_FILENAME}_{wf_count}.json"
-        extract_knwf_data(file, extracted_output_filename)

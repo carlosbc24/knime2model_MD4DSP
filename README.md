@@ -44,7 +44,7 @@
    
 7. Run the Python script to parse and export data from a KNIME workflow:
     ```bash
-    python knwf_data_parser.py
+    python3 -m parsers.knwf2workflow
     ```
 
 8. (Optional) Remove the environment created previously:
@@ -60,6 +60,10 @@ The project structure must follow the next structure:
 ```bash
 MD4DSP-m2python/
 │
+├── parsers/
+│ ├── json2workflow.py
+│ ├── knwf2workflow.py
+│ └── knwf2json.py
 ├── selected_KNIME_workflows/
 │ ├── 01 Data Cleaning.knwf
 │ ├── 01_ Exercises.knwf
@@ -72,7 +76,7 @@ MD4DSP-m2python/
 │ ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.knwf
 │ ├── Interactive Data Cleaning.knwf
 │ ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).knwf
-│ └── images
+│ ├── images/
 │   ├── 01 Data Cleaning.png
 │   ├── 01_ Exercises.png
 │   ├── 01_Column_Row_Filtering.png
@@ -83,17 +87,19 @@ MD4DSP-m2python/
 │   ├── Data Cleaning Project.png
 │   ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.png
 │   ├── Interactive Data Cleaning.png
-│   ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
-│ └── extracted_data
+│   └── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
+│ ├── extracted_data/
 │   └── ...
-│ └── parsed_data
+│ ├── parsed_data/
 │   └── ...
 │
 ├── .gitignore
-├── knwf_data_parser.py
 ├── README.md
 └── requirements.txt
 ```
+
+- **`parsers/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
+
 
 - **`selected_KNIME_workflows/`**: contains the selected KNIME workflows to be parsed and exported json via Python script.
 
@@ -105,6 +111,9 @@ MD4DSP-m2python/
 
 
 - **`selected_KNIME_workflows/parsed_data/`**: contains the parsed data from the selected KNIME workflows.
+
+
+- **`.gitignore`**: file that contains the files and directories to be ignored by Git.
 
 
 - **`README.md`**: file that contains the documentation of the project.
