@@ -1,14 +1,20 @@
 import os
-from parsers.knwf2json import extract_knwf_data
+import yaml
 
-INPUT_KNIME_WORKFLOW_TO_PARSE = "Data Cleaning Project.knwf"
-OUPUT_JSON_FILENAME = "InputKnimeWorkflow"  # Nombre del archivo JSON de salida
+from parsers.json2workflow import json_to_xmi_workflow
+from parsers.knwf2json import extract_data_knime2json
 
+# Read yaml file configuration variables
+with open("parser_config.yaml", "r") as file:
+    config = yaml.safe_load(file)
+    input_knwf_folder = config["input_knwf_folder"]
+    output_json_folder = config["output_json_folder"]
+    output_xmi_folder = config["output_xmi_folder"]
 
-wf_count = 0
-# Extraer datos de todos los archivos KNIME en el directorio
-for file in os.listdir("selected_KNIME_workflows"):
+# Extract data from all knwf files in the input folder
+for file in os.listdir(input_knwf_folder):
     if file.endswith(".knwf"):
-        wf_count += 1
-        extracted_output_filename = f"{OUPUT_JSON_FILENAME}_{wf_count}.json"
-        extract_knwf_data(file, extracted_output_filename)
+        workflow_filename = file.split(".")[0]
+        extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_filename + ".json")
+        json_to_xmi_workflow(os.path.join(output_json_folder, workflow_filename, workflow_filename + ".json"),
+                             output_xmi_folder, workflow_filename + ".xmi")

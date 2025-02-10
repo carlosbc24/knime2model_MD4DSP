@@ -1,45 +1,45 @@
-import zipfile
+
 import os
-import xml.etree.ElementTree as ET
 import json
+import zipfile
+import xml.etree.ElementTree as ET
 
 
-def extract_knwf_data(knwf_filename, output_json_filename):
+def extract_data_knime2json(knwf_filename, input_folder, output_folder, output_json_filename):
     """
     Extracts the nodes and connections from a KNIME workflow file and saves them in a JSON file.
 
     :param knwf_filename: string with the name of the KNIME workflow file to parse
+    :param input_folder: string with the path to the folder containing the KNIME workflow files
+    :param output_folder: string with the path to the folder where the JSON files will be saved
     :param output_json_filename: string with the name of the JSON file to save the extracted data
     :return:
     """
-    # Path to the uploaded KNIME workflow file
-    knwf_file_path = f"selected_KNIME_workflows/{knwf_filename}"
+    # Path to the KNIME workflow file
+    knwf_file_path = f"{input_folder}/{knwf_filename}"
     knwf_filename_without_extension = knwf_file_path.split("/")[-1].split(".")[0]
 
     # Extract the KNIME workflow files
-    extract_path = f"selected_KNIME_workflows/extracted_data/{knwf_filename_without_extension}"
-
-    # Crear directorio si no existe
+    extract_path = f"{input_folder}/extracted_data/{knwf_filename_without_extension}"
     if not os.path.exists(extract_path):
         os.makedirs(extract_path)
-
     with zipfile.ZipFile(knwf_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_path)
 
-    # Ruta del archivo workflow.knime
+    # Path to the workflow.knime file
     workflow_knime_path = os.path.join(extract_path, knwf_filename_without_extension, "workflow.knime")
 
-    # Definir espacio de nombres de KNIME
+    # Define the namespace for the XML file
     namespace = {"knime": "http://www.knime.org/2008/09/XMLConfig"}
 
-    # Parsear el archivo XML
+    # Parse the XML file
     tree = ET.parse(workflow_knime_path)
     root = tree.getroot()
 
     nodes = []
     connections = []
 
-    # Extraer nodos
+    # Extract nodes
     for node in root.findall(".//knime:config[@key='nodes']/knime:config", namespace):
         node_id = node.find(".//knime:entry[@key='id']", namespace)
         node_settings_file = node.find(".//knime:entry[@key='node_settings_file']", namespace)
@@ -50,7 +50,7 @@ def extract_knwf_data(knwf_filename, output_json_filename):
                 "node_settings_file": node_settings_file.attrib["value"]
             })
 
-    # Extraer conexiones
+    # Extract connections
     for connection in root.findall(".//knime:config[@key='connections']/knime:config", namespace):
         source_id = connection.find(".//knime:entry[@key='sourceID']", namespace)
         dest_id = connection.find(".//knime:entry[@key='destID']", namespace)
@@ -61,7 +61,7 @@ def extract_knwf_data(knwf_filename, output_json_filename):
                 "destID": int(dest_id.attrib["value"])
             })
 
-    # Extraer configuraciones de nodos
+    # Extract node settings
     for node in nodes:
         settings_path = os.path.join(extract_path, knwf_filename_without_extension, node["node_settings_file"])
         if os.path.exists(settings_path):
@@ -71,15 +71,22 @@ def extract_knwf_data(knwf_filename, output_json_filename):
     for node in nodes:
         del node["node_settings_file"]
 
-    # Guardar resultados en JSON
-    ouput_json_filepath = (f"selected_KNIME_workflows/parsed_data/{knwf_filename_without_extension}"
+    # Save the extracted data in a JSON file
+    ouput_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
                            f"/{output_json_filename}")
 
-    # Crear directorio si no existe
     if not os.path.exists(os.path.dirname(ouput_json_filepath)):
         os.makedirs(os.path.dirname(ouput_json_filepath))
+    # Check if the file already exists. If the file does exist, add the suffix "_1" to the filename. If the file
+    # exists, add a suffix "_n" to the filename, where n is the lowest integer that makes the filename unique.
+    if os.path.exists(ouput_json_filepath):
+        i = 1
+        while os.path.exists(ouput_json_filepath):
+            ouput_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
+                                   f"/{output_json_filename.split('.')[0]}_{i}.json")
+            i += 1
 
-    # Guardar resultados en JSON
+    # Save the extracted data in a JSON file
     result = {"nodes": nodes, "connections": connections}
     with open(ouput_json_filepath, "w", encoding="utf-8") as json_file:
         json.dump(result, json_file, indent=4)
@@ -101,7 +108,7 @@ def extract_node_settings(settings_path):
         "parameters": {}
     }
 
-    # Extraer configuraciones específicas
+    # Extract parameters from the model
     model = root.find(".//knime:config[@key='model']", namespace)
     if model is not None:
 
@@ -143,7 +150,7 @@ def extract_node_settings(settings_path):
         elif "Row Filter" in node_info["node_name"]:
             row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
             if row_filter is not None:
-                # Extraer rango de filas si está definido
+                # Extract the row range
                 start_entry = row_filter.find("knime:entry[@key='RowRangeStart']", namespace)
                 end_entry = row_filter.find("knime:entry[@key='RowRangeEnd']", namespace)
                 if start_entry is not None and end_entry is not None:
@@ -151,27 +158,27 @@ def extract_node_settings(settings_path):
                         "start": start_entry.attrib["value"],
                         "end": end_entry.attrib["value"]
                     }
-                # Extraer el tipo de filtro (String Comparison)
+                # Extract the filter type (EQUAL, CONTAINS, etc.)
                 filter_type_entry = row_filter.find("knime:entry[@key='RowFilter_TypeID']", namespace)
                 if filter_type_entry is not None:
                     node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
-                # Extraer la columna sobre la que se aplica el filtro
+                # Extract the column name to filter
                 column_name_entry = row_filter.find("knime:entry[@key='ColumnName']", namespace)
                 if column_name_entry is not None:
                     node_info["parameters"]["column_name"] = column_name_entry.attrib["value"]
-                # Determinar si se incluyen o excluyen las filas coincidentes
+                # Determine if the filter is inclusive or exclusive
                 include_entry = row_filter.find("knime:entry[@key='include']", namespace)
                 if include_entry is not None:
                     node_info["parameters"]["include"] = include_entry.attrib["value"] == "true"
-                # Extraer si el filtro es sensible a mayúsculas y minúsculas
+                # Extract the case sensitivity of the filter
                 case_sensitive_entry = row_filter.find("knime:entry[@key='CaseSensitive']", namespace)
                 if case_sensitive_entry is not None:
                     node_info["parameters"]["case_sensitive"] = case_sensitive_entry.attrib["value"] == "true"
-                # Extraer el patrón de comparación (ejemplo: "Africa")
+                # Extract the pattern to match
                 pattern_entry = row_filter.find("knime:entry[@key='Pattern']", namespace)
                 if pattern_entry is not None:
                     node_info["parameters"]["pattern"] = pattern_entry.attrib["value"]
-                # Determinar si el filtro usa comodines o expresiones regulares
+                # Determine if the pattern is a regular expression
                 wildcards_entry = row_filter.find("knime:entry[@key='hasWildCards']", namespace)
                 regex_entry = row_filter.find("knime:entry[@key='isRegExpr']", namespace)
                 if wildcards_entry is not None:
@@ -210,16 +217,16 @@ def extract_node_settings(settings_path):
                 }
 
         elif "String to Number" in node_info["node_name"]:
-            # Extraer el separador decimal
+            # Extract the column to convert
             decimal_separator_entry = model.find(".//knime:entry[@key='decimal_separator']", namespace)
             if decimal_separator_entry is not None:
                 node_info["parameters"]["decimal_separator"] = decimal_separator_entry.attrib["value"]
-            # Extraer las columnas incluidas en la conversión
+            # Extract the column to convert
             included_columns = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
             node_info["parameters"]["included_columns"] = [
                 col.attrib["value"] for col in included_columns if col.attrib["key"] != "array-size"
             ]
-            # Extraer las columnas excluidas en la conversión
+            # Extract the excluded columns
             excluded_columns = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
             node_info["parameters"]["excluded_columns"] = [
                 col.attrib["value"] for col in excluded_columns if col.attrib["key"] != "array-size"
@@ -272,7 +279,7 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
         elif "Auto-Binner" in node_info["node_name"]:
-            # Extraer columnas incluidas y excluidas
+            # Extract columnas incluidas y excluidas
             included_columns = [
                 col.attrib["value"]
                 for col in model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
@@ -281,37 +288,37 @@ def extract_node_settings(settings_path):
                 col.attrib["value"]
                 for col in model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
             ]
-            # Extraer el método de binning
+            # Extract binning method
             binning_method_entry = model.find(".//knime:entry[@key='method']", namespace)
             binning_method = binning_method_entry.attrib["value"] if binning_method_entry is not None else None
-            # Extraer la cantidad de bins
+            # Extract bin count
             bin_count_entry = model.find(".//knime:entry[@key='binCount']", namespace)
             bin_count = int(bin_count_entry.attrib["value"]) if bin_count_entry is not None else None
-            # Extraer el método de igualdad de bins
+            # Extract equality method
             equality_method_entry = model.find(".//knime:entry[@key='equalityMethod']", namespace)
             equality_method = equality_method_entry.attrib["value"] if equality_method_entry is not None else None
-            # Extraer si los límites de bins son enteros
+            # Extract integer bounds
             integer_bounds_entry = model.find(".//knime:entry[@key='integerBounds']", namespace)
             integer_bounds = integer_bounds_entry.attrib[
                                  "value"] == "true" if integer_bounds_entry is not None else False
-            # Extraer cuartiles de la muestra
+            # Extract sample quantiles
             sample_quantiles = [
                 float(q.attrib["value"])
                 for q in model.findall(".//knime:config[@key='sampleQuantiles']/knime:entry", namespace)
             ]
-            # Extraer configuración de nombres de bins
+            # Extract bin naming
             bin_naming_entry = model.find(".//knime:entry[@key='binNaming']", namespace)
             bin_naming = bin_naming_entry.attrib["value"] if bin_naming_entry is not None else None
-            # Extraer si se reemplaza la columna original
+            # Extract replace column
             replace_column_entry = model.find(".//knime:entry[@key='replaceColumn']", namespace)
             replace_column = replace_column_entry.attrib[
                                  "value"] == "true" if replace_column_entry is not None else False
-            # Extraer precisión y formato de salida
+            # Extract precision and output format
             precision_entry = model.find(".//knime:entry[@key='precision']", namespace)
             precision = int(precision_entry.attrib["value"]) if precision_entry is not None else None
             output_format_entry = model.find(".//knime:entry[@key='outputFormat']", namespace)
             output_format = output_format_entry.attrib["value"] if output_format_entry is not None else None
-            # Guardar la información en node_info
+            # Save the parameters in the node_info dictionary
             node_info["parameters"] = {
                 "included_columns": included_columns,
                 "excluded_columns": excluded_columns,
@@ -369,7 +376,7 @@ def extract_node_settings(settings_path):
 
 
         elif "Joiner" in node_info["node_name"]:
-            # Extraer configuraciones clave del Joiner
+            # Extractar configuraciones clave de Joiner
             include_matches_entry = model.find(".//knime:entry[@key='includeMatchesInOutput']", namespace)
             include_left_unmatched_entry = model.find(".//knime:entry[@key='includeLeftUnmatchedInOutput']", namespace)
             include_right_unmatched_entry = model.find(".//knime:entry[@key='includeRightUnmatchedInOutput']",
@@ -390,7 +397,7 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["duplicate_handling"] = duplicate_handling_entry.attrib["value"]
 
         elif "Partitioning" in node_info["node_name"]:
-            # Extraer configuraciones clave de Partitioning
+            # Extract the method used for partitioning
             method_entry = model.find(".//knime:entry[@key='method']", namespace)
             sampling_method_entry = model.find(".//knime:entry[@key='samplingMethod']", namespace)
             fraction_entry = model.find(".//knime:entry[@key='fraction']", namespace)
@@ -408,34 +415,34 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["class_column"] = class_column_entry.attrib["value"]
 
         elif "String Manipulation" in node_info["node_name"]:
-            # Extraer la expresión de manipulación
+            # Extract the expression to apply
             expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
             if expression_entry is not None:
                 node_info["parameters"]["expression"] = expression_entry.attrib["value"]
-            # Extraer la columna resultante
+            # Extract the column to apply the expression
             replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
             if replaced_column_entry is not None:
                 node_info["parameters"]["output_column"] = replaced_column_entry.attrib["value"]
-            # Extraer si se sobrescribe o se crea una nueva columna
+            # Extract the column to append the result
             append_column_entry = model.find(".//knime:entry[@key='append_column']", namespace)
             if append_column_entry is not None:
                 node_info["parameters"]["append_column"] = append_column_entry.attrib["value"] == "true"
 
         elif "String Manipulation (Multi Column)" in node_info["node_name"]:
-            # Extraer la expresión de manipulación de texto
+            # Extract the expression to apply
             expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
             if expression_entry is not None:
                 node_info["parameters"]["expression"] = expression_entry.attrib["value"]
-            # Extraer las columnas incluidas en la transformación
+            # Extract the columns to apply the expression
             included_columns = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
             node_info["parameters"]["included_columns"] = [
                 col.attrib["value"] for col in included_columns if col.attrib["key"] != "array-size"
             ]
-            # Extraer el modo de reemplazo (APPEND_COLUMNS o REPLACE_COLUMNS)
+            # Extract the columns to append the result
             append_or_replace_entry = model.find(".//knime:entry[@key='APPEND_OR_REPLACE']", namespace)
             if append_or_replace_entry is not None:
                 node_info["parameters"]["append_or_replace"] = append_or_replace_entry.attrib["value"]
-            # Extraer el sufijo para nuevas columnas (si se usa APPEND_COLUMNS)
+            # Extract the column to append the result
             append_column_suffix_entry = model.find(".//knime:entry[@key='APPEND_COLUMN_SUFFIX']", namespace)
             if append_column_suffix_entry is not None:
                 node_info["parameters"]["append_column_suffix"] = append_column_suffix_entry.attrib["value"]
