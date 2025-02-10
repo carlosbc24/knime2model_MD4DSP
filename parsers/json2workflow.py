@@ -4,18 +4,6 @@ from xml.dom import minidom
 import xml.etree.ElementTree as ET
 
 
-def prettify_xml(element):
-    """
-    Convierte un elemento XML en un string formateado correctamente, asegurando UTF-8 y correcta indentación.
-    """
-    raw_xml = ET.tostring(element, encoding='utf-8')
-    parsed = minidom.parseString(raw_xml)
-    pretty_xml = "\n".join(line for line in parsed.toprettyxml(indent="    ").split("\n") if line.strip())
-    if pretty_xml.startswith('<?xml'):
-        pretty_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + pretty_xml.split('\n', 1)[1]
-    return pretty_xml
-
-
 def build_input_port(parent, base_name, node_name, index, fields):
     """
     Crea el elemento inputPort y sus hijos (datafield y dataDictionaryDefinition).
@@ -139,6 +127,7 @@ def build_link(link_index, conn, node_mapping):
     """
     source_id = conn.get("sourceID")
     dest_id = conn.get("destID")
+    print("Link_index:", link_index, "Source:", source_id, "Dest:", dest_id)
     # Sólo se crean links si ambos nodos son "normales"
     if source_id in node_mapping and dest_id in node_mapping:
         source_info = node_mapping[source_id]
@@ -189,10 +178,11 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
 
     # Crear elemento raíz (Workflow)
     root = ET.Element("{https://www.example.org/workflow}Workflow", {
-        "{http://www.omg.org/XMI}version": "2.0",
-        "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation":
-            "http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore",
-        "name": workflow_name
+                      "{http://www.omg.org/XMI}version": "2.0",
+                      "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation":
+                      "http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore",
+                      "name": workflow_name,
+                      "xmlns:Library": "http://www.example.org/Library",
     })
 
     # Diccionarios para nodos "normales" y para nodos especiales (Reader/Writer)
@@ -246,13 +236,15 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
             if link_element is not None:
                 root.append(link_element)
 
-    # Convertir a string con formato bonito
-    pretty_xml_as_string = prettify_xml(root)
+    # Convert XML to string and format it
+    raw_xml = ET.tostring(root, encoding='utf-8')
+    parsed = minidom.parseString(raw_xml)
+    formatted_xml = "\n".join(line for line in parsed.toprettyxml(indent="    ").split("\n") if line.strip())
 
-    # Crear directorio de salida (si no existe) y guardar el archivo
+    # Save formatted XML to file
     output_xmi_filepath = os.path.join(xmi_output_path, xmi_output_filename)
     os.makedirs(os.path.dirname(output_xmi_filepath), exist_ok=True)
     with open(output_xmi_filepath, "w", encoding="utf-8") as file:
-        file.write(pretty_xml_as_string)
+        file.write(formatted_xml)
 
-    print(f"Workflow XMI guardado en: {xmi_output_path}/{xmi_output_filename}")
+    print(f"Workflow XMI saved to: {xmi_output_path}/{xmi_output_filename}")
