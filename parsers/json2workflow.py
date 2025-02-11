@@ -1,3 +1,4 @@
+
 import os
 import json
 from xml.dom import minidom
@@ -98,21 +99,27 @@ def build_node(node, index):
         base_name = node_name
         fields = [node_name]
 
-    # # Crear inputPort y outputPort
-    # build_input_port(dp, base_name, node_name, index, fields)
-    # build_output_port(dp, base_name, node_name, index, fields)
-    #
+    # Crear inputPort y outputPort
+    build_input_port(dp, base_name, node_name, index, fields)
+    build_output_port(dp, base_name, node_name, index, fields)
+
     # # Establecer atributos 'in' y 'out' a partir de las referencias de cada datafield
     # input_refs = [f"//@dataprocessing.{index}/@inputPort.0/@datafield.{i}" for i in range(len(fields))]
     # output_refs = [f"//@dataprocessing.{index}/@outputPort.0/@datafield.{i}" for i in range(len(fields))]
     # dp.set("in", " ".join(input_refs))
     # dp.set("out", " ".join(output_refs))
 
-    # # Agregar definición de transformación
-    # ET.SubElement(dp, "dataProcessingDefinition", {
-    #     "xsi:type": "Library:Transformation",
-    #     "href": f"library_validation.xmi#//@dataprocessingdefinition.{index}"
-    # })
+    # Establecer atributos 'in' y 'out' a partir de las referencias de cada datafield
+    input_refs = [f"//@dataprocessing.{index}/@inputPort.0"]
+    output_refs = [f"//@dataprocessing.{index}/@outputPort.0"]
+    dp.set("in", " ".join(input_refs))
+    dp.set("out", " ".join(output_refs))
+
+    # Agregar definición de transformación
+    ET.SubElement(dp, "dataProcessingDefinition", {
+        "xsi:type": "Library:Transformation",
+        "href": f"library_validation.xmi#//@dataprocessingdefinition.{index}"
+    })
 
     # Agregar parámetros (si existen)
     # build_parameters(dp, node_name, node.get("parameters", {}), index)
@@ -165,7 +172,6 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
     # Cargar datos JSON
     with open(json_input_filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
-
     # Registrar namespaces
     ns = {
         "xmi": "http://www.omg.org/XMI",
@@ -190,20 +196,24 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
     reader_mapping = {}    # id -> file_path (para nodos Reader)
     writer_mapping = {}    # id -> file_path (para nodos Writer)
 
+
+
+    reader_node_exists = False
+
     nodes = data.get("nodes", [])
     for index, node in enumerate(nodes):
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
         # Detectar si el nodo es un Reader o Writer (se usa endswith; se puede ajustar la lógica)
         if node_name.strip().endswith("Reader"):
+
             file_path = node.get("parameters", {}).get("file_path", "")
             reader_mapping[node_id] = file_path
+
             # No se crea elemento <dataprocessing>
-            continue
         elif node_name.strip().endswith("Writer"):
             file_path = node.get("parameters", {}).get("file_path", "")
             writer_mapping[node_id] = file_path
-            continue
         else:
             # Nodo "normal": se transforma en <dataprocessing>
             n_id, dp_element, n_name = build_node(node, index)
@@ -215,16 +225,21 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
     for link_index, conn in enumerate(links):
         source_id = conn.get("sourceID")
         dest_id = conn.get("destID")
+
+        print("Link_index main:", link_index, "Source:", source_id, "Dest:", dest_id)
         # Caso 1: conexión desde un nodo Reader a un nodo "normal"
         if source_id in reader_mapping and dest_id in node_mapping:
             target_node = node_mapping[dest_id]["element"]
             input_port = target_node.find("inputPort")
+            reader_node_exists = True
             if input_port is not None:
                 # Se sobrescribe el atributo fileName con el file_path del Reader
                 input_port.set("fileName", reader_mapping[source_id])
             continue  # No se crea elemento <link>
         # Caso 2: conexión desde un nodo "normal" a un nodo Writer
         if dest_id in writer_mapping and source_id in node_mapping:
+            if reader_node_exists:
+                link_index = link_index - 1
             source_node = node_mapping[source_id]["element"]
             output_port = source_node.find("outputPort")
             if output_port is not None:
@@ -232,6 +247,8 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
             continue  # No se crea elemento <link>
         # Caso 3: conexión entre dos nodos "normales"
         if source_id in node_mapping and dest_id in node_mapping:
+            if reader_node_exists:
+                link_index = link_index - 1
             link_element = build_link(link_index, conn, node_mapping)
             if link_element is not None:
                 root.append(link_element)
