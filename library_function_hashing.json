@@ -1,121 +1,134 @@
 {
   "functions_hashing" : [
 	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  "Missing Value": {
+		"knime_function_name": "Missing Value",
+		"library_transformation_name": "imputeByDerivedValue",
+		"library_transformation_id": 0,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
 	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  "Missing Value": {
+		"knime_function_name": "Missing Value",
+		"library_transformation_name": "imputeByFixValue",
+		"library_transformation_id": 1,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "Row Filter": {
+		"knime_function_name": "Row Filter",
+		"library_transformation_name": "rowFilter",
+		"library_transformation_id": 2,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "Column Filter": {
+		"knime_function_name": "Column Filter",
+		"library_transformation_name": "columnFilter",
+		"library_transformation_id": 3,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
+	  {
 	  "Rule Engine": {
 		"knime_function_name": "Rule Engine",
 		"library_transformation_name": "mapping",
+		"library_transformation_id": 4,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "Missing Value": {
+		"knime_function_name": "Missing Value",
+		"library_transformation_name": "imputeByDerivedValue",
+		"library_transformation_id": 5,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "String to Number": {
+		"knime_function_name": "String to Number",
+		"library_transformation_name": "categoricalToContinuous",
+		"library_transformation_id": 6,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "Auto-Binner": {
+		"knime_function_name": "Auto-Binner",
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	},
-	{
-	  "Rule Engine": {
-		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
+	  {
+	  "Row Filter": {
+		"knime_function_name": "Row Filter",
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8,
 		"parameters": [
 		  {
-			"parameter_name": "mapping",
-			"parameter_value": [
-			]
+			"parameter_name": "a",
+			"parameter_value": 0
+		  }
+		]
+	  }
+	},
+	  {
+	  "Row Filter (deprecated)": {
+		"knime_function_name": "Row Filter (deprecated)",
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8,
+		"parameters": [
+		  {
+			"parameter_name": "a",
+			"parameter_value": 0
 		  }
 		]
 	  }
 	}
-  ]
+	    ]
 }

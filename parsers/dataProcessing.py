@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
-from parsers.dataDictionary import build_input_port, build_output_port
+from parsers.dataDictionary import create_input_port, create_output_port
 
 
-def build_node(node, index):
+def create_dataProcessing(node, index):
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
       - node_id: identifier of the node (or its index)
@@ -35,8 +35,8 @@ def build_node(node, index):
         fields = [node_name]
 
     # Create inputPort and outputPort
-    build_input_port(dp, base_name, node_name, index, fields)
-    build_output_port(dp, base_name, node_name, index, fields)
+    create_input_port(dp, base_name, node_name, index, fields)
+    create_output_port(dp, base_name, node_name, index, fields)
 
     # Set 'in' and 'out' attributes from the references of each datafield
     input_refs = [f"//@dataprocessing.{index}/@inputPort.0"]

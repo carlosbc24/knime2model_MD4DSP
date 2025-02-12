@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 
 
-def build_link(link_index, conn, node_mapping):
+def create_link(link_index: int, conn: dict, node_mapping: dict) -> ET.Element:
     """
     Processes a connection (link) between "normal" nodes and updates the 'incoming' and 'outgoing' attributes of the
     source and target node elements. Returns the generated <link> element.

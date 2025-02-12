@@ -3,8 +3,8 @@ import json
 from xml.dom import minidom
 import xml.etree.ElementTree as ET
 
-from parsers.dataLink import build_link
-from parsers.dataProcessing import build_node
+from parsers.dataLink import create_link
+from parsers.dataProcessing import create_dataProcessing
 
 
 def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str):
@@ -66,7 +66,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
             writer_mapping[node_id] = file_path
         else:
             # "Normal" node: transform into <dataprocessing>
-            n_id, dp_element, n_name = build_node(node, index)
+            n_id, dp_element, n_name = create_dataProcessing(node, index)
             root.append(dp_element)
             node_mapping[node_id] = {"element": dp_element, "index": index, "name": n_name}
 
@@ -99,7 +99,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
         if source_id in node_mapping and dest_id in node_mapping:
             if reader_node_exists:
                 link_index = link_index - 1
-            link_element = build_link(link_index, conn, node_mapping)
+            link_element = create_link(link_index, conn, node_mapping)
             if link_element is not None:
                 root.append(link_element)
 

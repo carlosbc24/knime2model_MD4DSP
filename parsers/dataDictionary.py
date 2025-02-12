@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 
 
-def build_input_port(parent, base_name, node_name, index, fields):
+def create_input_port(parent: ET.Element, base_name: str, node_name: str, index: int, fields: list):
     """
     Creates the inputPort element and its children (datafield and dataDictionaryDefinition).
 
@@ -26,7 +26,7 @@ def build_input_port(parent, base_name, node_name, index, fields):
     return input_port
 
 
-def build_output_port(parent, base_name, node_name, index, fields):
+def create_output_port(parent: ET.Element, base_name: str, node_name: str, index: int, fields: list):
     """
     Creates the outputPort element and its children (datafield and dataDictionaryDefinition).
 

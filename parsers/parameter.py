@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import json
 
 
-def build_parameters(parent, node_name, parameters, index):
+def create_parameters(parent, node_name, parameters, index):
     """
     Creates <parameter> elements (and their child <derivedValueDef>) from the node parameters.
 
