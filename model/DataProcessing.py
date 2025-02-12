@@ -1,5 +1,6 @@
 from DataDictionary import DataDictionary
 
+
 class DataProcessing:
     """
     Represents a data processing unit with a name, input ports, and output ports.

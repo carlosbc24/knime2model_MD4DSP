@@ -1,9 +1,10 @@
-
 from enum import Enum
 
+
 class PortType(Enum):
-    INPUT = 1
-    OUTPUT = 2
+    INPUT = 0
+    OUTPUT = 1
+
 
 class DataDictionary:
     """
