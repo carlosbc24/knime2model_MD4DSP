@@ -3,23 +3,24 @@ import json
 from xml.dom import minidom
 import xml.etree.ElementTree as ET
 
-from auxiliar_parsers.dataLink_parser import build_link
-from auxiliar_parsers.dataProcessing_parser import build_node
+from parsers.dataLink import build_link
+from parsers.dataProcessing import build_node
 
 
-def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filename, workflow_name="Model data set with metanode (KNIME)"):
+def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str):
     """
     Converts a JSON structure of a KNIME workflow to a well-formatted XMI file.
-    Processes nodes modularly; nodes whose names end in "Reader" or "Writer" are not transformed into a <dataprocessing> element but their file_path is injected into the <inputPort> or <outputPort> of the connected node (subsequent or previous, respectively).
+    Processes nodes whose names end in "Reader" or "Writer" are not transformed into a <dataprocessing> element
+    but their file_path is injected into the <inputPort> or <outputPort>
+    of the connected node (subsequent or previous, respectively).
 
     Args:
-        json_input_filepath (str): Path to the input JSON file.
-        xmi_output_path (str): Path to the output directory for the XMI file.
-        xmi_output_filename (str): Name of the output XMI file.
-        workflow_name (str): Name of the workflow.
+        json_input_folder (str): Path to the folder containing the JSON files.
+        workflow_filename (str): Name of the JSON file (without extension).
+        xmi_output_folder (str): Path to the folder where the XMI file will be saved.
     """
     # Load JSON data
-    with open(json_input_filepath, "r", encoding="utf-8") as f:
+    with open(os.path.join(json_input_folder, workflow_filename, workflow_filename + ".json"), "r", encoding="utf-8") as f:
         data = json.load(f)
 
     # Register namespaces
@@ -37,7 +38,7 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
                       "{http://www.omg.org/XMI}version": "2.0",
                       "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation":
                       "http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore",
-                      "name": workflow_name,
+                      "name": workflow_filename,
                       "xmlns:Library": "http://www.example.org/Library",
     })
 
@@ -108,9 +109,9 @@ def json_to_xmi_workflow(json_input_filepath, xmi_output_path, xmi_output_filena
     formatted_xml = "\n".join(line for line in parsed.toprettyxml(indent="    ").split("\n") if line.strip())
 
     # Save formatted XML to file
-    output_xmi_filepath = os.path.join(xmi_output_path, xmi_output_filename)
+    output_xmi_filepath = os.path.join(xmi_output_folder, workflow_filename + ".xmi")
     os.makedirs(os.path.dirname(output_xmi_filepath), exist_ok=True)
     with open(output_xmi_filepath, "w", encoding="utf-8") as file:
         file.write(formatted_xml)
 
-    print(f"Workflow XMI saved to: {xmi_output_path}/{xmi_output_filename}")
+    print(f"Workflow XMI saved to: {output_xmi_filepath}")

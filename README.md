@@ -49,7 +49,7 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    
 7. Run the Python script to parse and export data from a KNIME workflow:
     ```bash
-    python3 -m parsers.knwf2workflow
+    python3 -m mapping.knwf2workflow
     ```
 
 8. (Optional) Remove the environment created previously:
@@ -96,7 +96,7 @@ MD4DSP-m2python/
 ├── parsed_json_workflows/
 │   └── ...
 │
-├── parsers/
+├── mapping/
 │ ├── json2workflow.py
 │ ├── knwf2workflow.py
 │ └── knwf2json.py
@@ -106,6 +106,9 @@ MD4DSP-m2python/
 ├── README.md
 └── requirements.txt
 ```
+
+- **`data_model/`**: contains the data model of the project.
+
 
 - **`input_KNIME_workflows/`**: contains the input KNIME workflows to be parsed and exported json via Python script.
 
@@ -122,7 +125,10 @@ MD4DSP-m2python/
 - **`parsed_xmi_workflows/`**: contains the xmi data from the parsed json data.
 
 
-- **`parsers/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
+- **`mapping/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
+
+
+- **`parsers/`**: contains the Python scripts to parse individual elements using the json data and the data model.
 
 
 - **`.gitignore`**: file that contains the files and directories to be ignored by Git.

@@ -1,8 +1,8 @@
 import os
 import yaml
 
-from parsers.json2workflow import json_to_xmi_workflow
-from parsers.knwf2json import extract_data_knime2json
+from mapping.json2workflow import json_to_xmi_workflow
+from mapping.knwf2json import extract_data_knime2json
 
 # Read yaml file configuration variables
 with open("parser_config.yaml", "r") as file:
@@ -15,6 +15,5 @@ with open("parser_config.yaml", "r") as file:
 for file in os.listdir(input_knwf_folder):
     if file.endswith(".knwf"):
         workflow_filename = file.split(".")[0]
-        extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_filename + ".json")
-        json_to_xmi_workflow(os.path.join(output_json_folder, workflow_filename, workflow_filename + ".json"),
-                             output_xmi_folder, workflow_filename + ".xmi")
+        extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_filename)
+        json_to_xmi_workflow(output_json_folder, workflow_filename, output_xmi_folder)

@@ -5,7 +5,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 
 
-def extract_data_knime2json(knwf_filename, input_folder, output_folder, output_json_filename):
+def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder: str, output_json_filename: str):
     """
     Extracts the nodes and connections from a KNIME workflow file and saves them in a JSON file.
 
@@ -88,7 +88,7 @@ def extract_data_knime2json(knwf_filename, input_folder, output_folder, output_j
 
     # Save the extracted data in a JSON file
     result = {"nodes": nodes, "connections": connections}
-    with open(ouput_json_filepath, "w", encoding="utf-8") as json_file:
+    with open(ouput_json_filepath+".json", "w", encoding="utf-8") as json_file:
         json.dump(result, json_file, indent=4)
 
     print(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
@@ -108,8 +108,8 @@ def extract_node_settings(settings_path):
         "parameters": {}
     }
 
-    # Extract parameters from the model
-    model = root.find(".//knime:config[@key='model']", namespace)
+    # Extract parameters from the data_model
+    model = root.find(".//knime:config[@key='data_model']", namespace)
     if model is not None:
 
         if "CSV Reader" in node_info["node_name"]:

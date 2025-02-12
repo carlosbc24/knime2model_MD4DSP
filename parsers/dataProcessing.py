@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from auxiliar_parsers.dataDictionary_parser import build_input_port, build_output_port
+from parsers.dataDictionary import build_input_port, build_output_port
 
 
 def build_node(node, index):

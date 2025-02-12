@@ -1,4 +1,4 @@
-from model.DataProcessing import DataProcessing
+from data_model.DataProcessing import DataProcessing
 
 
 class Link:
