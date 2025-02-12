@@ -11,7 +11,7 @@ with open("parser_config.yaml", "r") as file:
     output_json_folder = config["output_json_folder"]
     output_xmi_folder = config["output_xmi_folder"]
 
-# Extract data from all knwf files in the input folder
+# Extract data from all .knwf files in the input folder
 for file in os.listdir(input_knwf_folder):
     if file.endswith(".knwf"):
         workflow_filename = file.split(".")[0]
