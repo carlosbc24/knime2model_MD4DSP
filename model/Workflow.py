@@ -1,5 +1,6 @@
 from DataProcessing import DataProcessing
 
+
 class Workflow:
     """
     Represents a workflow with a name and a list of data processing units.
