@@ -1,5 +1,10 @@
-# T2M transformations with LLMs for MD4DSP
+# T2M transformations with Python Parsers for MD4DSP
 
+This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`) using Python scripts. The project is divided into three main scripts:
+
+1. **`parsers/knwf2json.py`**: script that parses a KNIME workflow and exports the data to a json intermediate file.
+2. **`parsers/json2workflow.py`**: script that parses the intermediate json file and exports the data to a MD4DSP workflow.
+3. **`parsers/knwf2workflow.py`**: script that combines the previous two scripts to parse a KNIME workflow and export the data to a MD4DSP Workflow instance.
 ## Prerequisites
 
 - Anaconda Environment
@@ -10,7 +15,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/carlosbc24/T2M_LLM_MD4DSP.git
+   git clone https://github.com/carlosbc24/knime2model_MD4DSP.git
     ```
 
 2. Navigate to the project directory:
@@ -20,13 +25,13 @@
    
 3. Crate a new conda environment:
    ```bash
-   conda create --name t2m_llm_md4dsp python=3.11 --yes
+   conda create --name kn2wf_mapping python=3.11 --yes
    ```
    
 4. Deactivate any previous environment and activate the new one:
     ```bash
     conda deactivate
-    conda activate t2m_llm_md4dsp
+    conda activate kn2wf_mapping
     ```
 
 5. Clean conda and pip caches:
@@ -50,7 +55,7 @@
 8. (Optional) Remove the environment created previously:
    ```bash
    conda deactivate
-   conda remove --name t2m_llm_md4dsp --all --yes
+   conda remove --name kn2wf_mapping --all --yes
    ```
 
 ## Project Structure
