@@ -1,8 +1,8 @@
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as elementTree
 from parsers.dataDictionary import create_input_port, create_output_port
 
 
-def create_dataProcessing(node, index):
+def create_data_processing(node, index):
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
       - node_id: identifier of the node (or its index)
@@ -20,7 +20,7 @@ def create_dataProcessing(node, index):
     node_name = node.get("node_name", f"Node_{index}")
 
     # Create dataprocessing element
-    dp = ET.Element("dataprocessing", {
+    dp = elementTree.Element("dataprocessing", {
         "xsi:type": "Workflow:DataProcessing",
         "name": node_name
     })
@@ -45,7 +45,7 @@ def create_dataProcessing(node, index):
     dp.set("out", " ".join(output_refs))
 
     # Add transformation definition
-    ET.SubElement(dp, "dataProcessingDefinition", {
+    elementTree.SubElement(dp, "dataProcessingDefinition", {
         "xsi:type": "Library:Transformation",
         "href": f"library_validation.xmi#//@dataprocessingdefinition.{index}"
     })

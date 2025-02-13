@@ -1,7 +1,7 @@
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as elementTree
 
 
-def create_input_port(parent: ET.Element, base_name: str, node_name: str, index: int, fields: list):
+def create_input_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list):
     """
     Creates the inputPort element and its children (datafield and dataDictionaryDefinition).
 
@@ -15,18 +15,18 @@ def create_input_port(parent: ET.Element, base_name: str, node_name: str, index:
     Returns:
         Element: The created inputPort element.
     """
-    input_port = ET.SubElement(parent, "inputPort", {
+    input_port = elementTree.SubElement(parent, "inputPort", {
         "fileName": f"{base_name.lower().replace(' ', '_')}_input_dataDictionary.csv",
         "name": f"{base_name}_input_dataDictionary",
         "out": f"//@dataprocessing.{index}/@outputPort.0"
     })
-    ET.SubElement(input_port, "dataDictionaryDefinition", {
+    elementTree.SubElement(input_port, "dataDictionaryDefinition", {
         "href": f"library_validation.xmi#//@dataprocessingdefinition.{index}/@inputPort.0"
     })
     return input_port
 
 
-def create_output_port(parent: ET.Element, base_name: str, node_name: str, index: int, fields: list):
+def create_output_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list):
     """
     Creates the outputPort element and its children (datafield and dataDictionaryDefinition).
 
@@ -40,12 +40,12 @@ def create_output_port(parent: ET.Element, base_name: str, node_name: str, index
     Returns:
         Element: The created outputPort element.
     """
-    output_port = ET.SubElement(parent, "outputPort", {
+    output_port = elementTree.SubElement(parent, "outputPort", {
         "fileName": f"{base_name.lower().replace(' ', '_')}_output_dataDictionary.csv",
         "name": f"{base_name}_output_dataDictionary",
         "in": f"//@dataprocessing.{index}/@inputPort.0"
     })
-    ET.SubElement(output_port, "dataDictionaryDefinition", {
+    elementTree.SubElement(output_port, "dataDictionaryDefinition", {
         "href": f"library_validation.xmi#//@dataprocessingdefinition.{index}/@outputPort.0"
     })
     return output_port

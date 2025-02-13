@@ -2,7 +2,7 @@
 import os
 import json
 import zipfile
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as elementTree
 
 from utils.logger import print_and_log
 
@@ -35,7 +35,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     namespace = {"knime": "http://www.knime.org/2008/09/XMLConfig"}
 
     # Parse the XML file
-    tree = ET.parse(workflow_knime_path)
+    tree = elementTree.parse(workflow_knime_path)
     root = tree.getroot()
 
     nodes = []
@@ -98,7 +98,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
 
 def extract_node_settings(settings_path):
     namespace = {"knime": "http://www.knime.org/2008/09/XMLConfig"}
-    tree = ET.parse(settings_path)
+    tree = elementTree.parse(settings_path)
     root = tree.getroot()
 
     node_name_entry = root.find(".//knime:entry[@key='node-name']", namespace)
@@ -375,7 +375,6 @@ def extract_node_settings(settings_path):
             node_info["parameters"]["in_memory"] = in_memory_entry.attrib["value"] == "true" if in_memory_entry is not None else False
             node_info["parameters"]["included_columns"] = included_columns
             node_info["parameters"]["excluded_columns"] = excluded_columns
-
 
         elif "Joiner" in node_info["node_name"]:
             # Extractar configuraciones clave de Joiner
