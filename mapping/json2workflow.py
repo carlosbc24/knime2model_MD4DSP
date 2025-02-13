@@ -52,7 +52,7 @@ def process_nodes(data, root):
     return node_mapping, reader_mapping, writer_mapping
 
 
-def process_links(data, root, node_mapping, reader_mapping, writer_mapping):
+def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
     """
     Processes the links (connections) from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -60,8 +60,6 @@ def process_links(data, root, node_mapping, reader_mapping, writer_mapping):
         data (dict): The JSON data containing the workflow information.
         root (Element): The root XML element to which the links will be appended.
         node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
-        reader_mapping (dict): Mapping of Reader node IDs to their file paths.
-        writer_mapping (dict): Mapping of Writer node IDs to their file paths.
     """
     links = data.get("connections", [])
     link_index = 0
@@ -69,22 +67,7 @@ def process_links(data, root, node_mapping, reader_mapping, writer_mapping):
         source_id = conn.get("sourceID")
         dest_id = conn.get("destID")
 
-        # Case 1: connection from a Reader node to a "normal" node
-        if source_id in reader_mapping and dest_id in node_mapping:
-            target_node = node_mapping[dest_id]["element"]
-            input_port = target_node.find("inputPort")
-            if input_port is not None:
-                # Overwrite the fileName attribute with the file_path of the Reader
-                input_port.set("fileName", reader_mapping[source_id])
-            continue  # Do not create <link> element
-        # Case 2: connection from a "normal" node to a Writer node
-        if dest_id in writer_mapping and source_id in node_mapping:
-            source_node = node_mapping[source_id]["element"]
-            output_port = source_node.find("outputPort")
-            if output_port is not None:
-                output_port.set("fileName", writer_mapping[dest_id])
-            continue  # Do not create <link> element
-        # Case 3: connection between two "normal" nodes
+        # Connection between two "normal" nodes
         if source_id in node_mapping and dest_id in node_mapping:
             print_and_log(f"Link_index:{link_index}, Source: {source_id}, Dest: {dest_id}")
             link_element = create_link(link_index, conn, node_mapping)
@@ -134,7 +117,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
 
     # Process nodes and links
     node_mapping, reader_mapping, writer_mapping = process_nodes(data, root)
-    process_links(data, root, node_mapping, reader_mapping, writer_mapping)
+    process_links(data, root, node_mapping)
 
     # Convert XML to string and format it
     raw_xml = elementTree.tostring(root, encoding='utf-8')
