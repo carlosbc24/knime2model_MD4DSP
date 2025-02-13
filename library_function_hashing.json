@@ -5,10 +5,10 @@
 		"knime_function_name": "Missing Value",
 		"library_transformation_name": "imputeByDerivedValue",
 		"library_transformation_id": 0,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "DerivedValue",
+			"parameter_def_name":"derivedValueDef"
 		  }
 		]
 	  }
@@ -18,10 +18,11 @@
 		"knime_function_name": "Missing Value",
 		"library_transformation_name": "imputeByFixValue",
 		"library_transformation_id": 1,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "FixValue",
+			"parameter_def_name":"fixValueDef"
+			
 		  }
 		]
 	  }
@@ -31,12 +32,24 @@
 		"knime_function_name": "Row Filter",
 		"library_transformation_name": "rowFilter",
 		"library_transformation_id": 2,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "FilterValue",
+			"parameter_def_name":"filterValueDef"
+		  },
+		  {
+			"parameter_name": "Primitive",
+			"parameter_def_name":"primitiveDef"
 		  }
 		]
+	  }
+	},
+	  {
+	  "Duplicate Row Filter": {
+		"knime_function_name": "Duplicate Row Filter",
+		"library_transformation_name": "rowFilter",
+		"library_transformation_id": 2,
+		"library_parameters": []
 	  }
 	},
 	  {
@@ -44,10 +57,36 @@
 		"knime_function_name": "Column Filter",
 		"library_transformation_name": "columnFilter",
 		"library_transformation_id": 3,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "Field",
+			"parameter_def_name":"fieldDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Missing Value Column Filter": {
+		"knime_function_name": "Missing Value Column Filter",
+		"library_transformation_name": "columnFilter",
+		"library_transformation_id": 3,
+		"library_parameters": [
+		  {
+			"parameter_name": "Field",
+			"parameter_def_name":"fieldDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Constant Value Column Filter": {
+		"knime_function_name": "Constant Value Column Filter",
+		"library_transformation_name": "columnFilter",
+		"library_transformation_id": 3,
+		"library_parameters": [
+		  {
+			"parameter_name": "Field",
+			"parameter_def_name":"fieldDef"
 		  }
 		]
 	  }
@@ -57,10 +96,10 @@
 		"knime_function_name": "Rule Engine",
 		"library_transformation_name": "mapping",
 		"library_transformation_id": 4,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "Map",
+			"parameter_def_name":"mapDefinition"
 		  }
 		]
 	  }
@@ -68,12 +107,25 @@
 	  {
 	  "Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByDerivedValue",
+		"library_transformation_name": "imputeByNumericOp",
 		"library_transformation_id": 5,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "NumOp",
+			"parameter_def_name":"numOpDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Numeric Outliers": {
+		"knime_function_name": "Numeric Outliers",
+		"library_transformation_name": "imputeByNumericOp",
+		"library_transformation_id": 5,
+		"library_parameters": [
+		  {
+			"parameter_name": "NumOp",
+			"parameter_def_name":"numOpDef"
 		  }
 		]
 	  }
@@ -83,10 +135,23 @@
 		"knime_function_name": "String to Number",
 		"library_transformation_name": "categoricalToContinuous",
 		"library_transformation_id": 6,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "CastType",
+			"parameter_def_name":"castTypeDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Category to Number": {
+		"knime_function_name": "Category to Number",
+		"library_transformation_name": "categoricalToContinuous",
+		"library_transformation_id": 6,
+		"library_parameters": [
+		  {
+			"parameter_name": "CastType",
+			"parameter_def_name":"castTypeDef"
 		  }
 		]
 	  }
@@ -96,10 +161,31 @@
 		"knime_function_name": "Auto-Binner",
 		"library_transformation_name": "binner",
 		"library_transformation_id": 7,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "DerivedField",
+			"parameter_def_name":"derivedFieldDef"
+		  },
+		  {
+			"parameter_name": "DiscretizeBin",
+			"parameter_def_name":"discretizeBinDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Column Renamer": {
+		"knime_function_name": "Column Renamer",
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7,
+		"library_parameters": [
+		  {
+			"parameter_name": "DerivedField",
+			"parameter_def_name":"derivedFieldDef"
+		  },
+		  {
+			"parameter_name": "DiscretizeBin",
+			"parameter_def_name":"discretizeBinDef"
 		  }
 		]
 	  }
@@ -109,10 +195,31 @@
 		"knime_function_name": "Row Filter",
 		"library_transformation_name": "rowFilterRange",
 		"library_transformation_id": 8,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "FilterValue",
+			"parameter_def_name":"filterValueDef"
+		  },
+		  {
+			"parameter_name": "Range",
+			"parameter_def_name":"rangeDef"
+		  }
+		]
+	  }
+	},
+	  {
+	  "Row Filter (Labs)": {
+		"knime_function_name": "Row Filter (Labs)",
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8,
+		"library_parameters": [
+		  {
+			"parameter_name": "FilterValue",
+			"parameter_def_name":"filterValueDef"
+		  },
+		  {
+			"parameter_name": "Range",
+			"parameter_def_name":"rangeDef"
 		  }
 		]
 	  }
@@ -122,10 +229,14 @@
 		"knime_function_name": "Row Filter (deprecated)",
 		"library_transformation_name": "rowFilterRange",
 		"library_transformation_id": 8,
-		"parameters": [
+		"library_parameters": [
 		  {
-			"parameter_name": "a",
-			"parameter_value": 0
+			"parameter_name": "FilterValue",
+			"parameter_def_name":"filterValueDef"
+		  },
+		  {
+			"parameter_name": "Range",
+			"parameter_def_name":"rangeDef"
 		  }
 		]
 	  }
