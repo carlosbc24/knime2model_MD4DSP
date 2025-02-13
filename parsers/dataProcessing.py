@@ -30,6 +30,30 @@ def get_library_transformation_id(json_file_path, node_name):
     return None
 
 
+def get_library_transformation_name(json_file_path, node_name):
+    """
+    Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
+    Extracts the value of the library_transformation_id attribute from the first matching element.
+
+    Args:
+        json_file_path (str): Path to the JSON file.
+        node_name (str): Name of the node to search for.
+
+    Returns:
+        string: Value of the library_transformation_id attribute of the first matching node
+    """
+    with open(json_file_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    functions_hashing = data.get("functions_hashing", [])
+
+    for function in functions_hashing:
+        if node_name in function:
+            return function[node_name].get("library_transformation_name")
+
+    return None
+
+
 def create_data_processing(node, index):
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
@@ -47,11 +71,20 @@ def create_data_processing(node, index):
     node_id = node.get("id", index)
     node_name = node.get("node_name", f"Node_{index}")
 
+    # Get library transformation ID
+    library_transformation_name = get_library_transformation_name('library_function_hashing.json', node_name)
+
     # Create dataprocessing element
-    dp = elementTree.Element("dataprocessing", {
-        "xsi:type": "Workflow:DataProcessing",
-        "name": node_name
-    })
+    if library_transformation_name is None:
+        dp = elementTree.Element("dataprocessing", {
+            "xsi:type": "Workflow:DataProcessing",
+            "name": node_name
+        })
+    else:
+        dp = elementTree.Element("dataprocessing", {
+            "xsi:type": "Workflow:DataProcessing",
+            "name": f"{library_transformation_name}(from KNIME node: {node_name})"
+        })
 
     # Determine base_name and fields from the node name
     if "(" in node_name and ")" in node_name:
