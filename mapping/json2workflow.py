@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 
 from parsers.dataLink import create_link
 from parsers.dataProcessing import create_dataProcessing
+from utils.logger import print_and_log
 
 
 def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str):
@@ -76,7 +77,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
         source_id = conn.get("sourceID")
         dest_id = conn.get("destID")
 
-        print("Link_index main:", link_index, "Source:", source_id, "Dest:", dest_id)
+        print_and_log(f"Link_index main:{link_index}, Source: {source_id}, Dest: {dest_id}")
         # Case 1: connection from a Reader node to a "normal" node
         if source_id in reader_mapping and dest_id in node_mapping:
             target_node = node_mapping[dest_id]["element"]
@@ -114,4 +115,4 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     with open(output_xmi_filepath, "w", encoding="utf-8") as file:
         file.write(formatted_xml)
 
-    print(f"Workflow XMI saved to: {output_xmi_filepath}")
+    print_and_log(f"Workflow XMI saved to: {output_xmi_filepath}")

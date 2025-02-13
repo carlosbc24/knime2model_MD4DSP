@@ -16,7 +16,6 @@ def create_link(link_index: int, conn: dict, node_mapping: dict) -> ET.Element:
     """
     source_id = conn.get("sourceID")
     dest_id = conn.get("destID")
-    print("Link_index:", link_index, "Source:", source_id, "Dest:", dest_id)
     # Only create links if both nodes are "normal"
     if source_id in node_mapping and dest_id in node_mapping:
         source_info = node_mapping[source_id]

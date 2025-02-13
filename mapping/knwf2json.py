@@ -4,6 +4,8 @@ import json
 import zipfile
 import xml.etree.ElementTree as ET
 
+from utils.logger import print_and_log
+
 
 def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder: str, output_json_filename: str):
     """
@@ -91,7 +93,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     with open(ouput_json_filepath+".json", "w", encoding="utf-8") as json_file:
         json.dump(result, json_file, indent=4)
 
-    print(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
+    print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
 
 
 def extract_node_settings(settings_path):
@@ -458,6 +460,6 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["column_delimiter"] = column_delimiter.attrib["value"]
 
         else:
-            print(f"Node type not recognized: {node_info['node_name']}")
+            print_and_log(f"Node type not recognized: {node_info['node_name']}")
 
     return node_info
