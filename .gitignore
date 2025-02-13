@@ -173,3 +173,7 @@ cython_debug/
 # log files
 *.log
 logs/
+
+# parse files
+parsed_xmi_workflows/*
+parsed_json_workflows/*
