@@ -1,11 +1,8 @@
 from enum import Enum
 
-
 class PortType(Enum):
     INPUT = 0
     OUTPUT = 1
-
-
 class DataDictionary:
     """
     Represents a data dictionary with a name, port type, and file path.
