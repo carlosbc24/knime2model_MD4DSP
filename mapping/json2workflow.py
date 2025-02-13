@@ -32,12 +32,14 @@ def process_nodes(data, root):
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
 
-        # Detect if the node is a Reader or Writer
-        if node_name.strip().endswith("Reader"):
+        # Detect if the node includes the substrings "Reader",
+        # "Writer", "Connector" or "Table"
+
+        if any(substring in node_name for substring in ["Reader", "Connector", "Table"]):
             file_path = node.get("parameters", {}).get("file_path", "")
             reader_mapping[node_id] = file_path
 
-        elif node_name.strip().endswith("Writer"):
+        elif "Writer" in node_name:
             file_path = node.get("parameters", {}).get("file_path", "")
             writer_mapping[node_id] = file_path
         else:
