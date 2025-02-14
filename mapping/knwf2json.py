@@ -111,7 +111,7 @@ def extract_node_settings(settings_path):
     }
 
     # Extract parameters from the data_model
-    model = root.find(".//knime:config[@key='data_model']", namespace)
+    model = root.find(".//knime:config[@key='model']", namespace)
     if model is not None:
 
         if "CSV Reader" in node_info["node_name"]:
