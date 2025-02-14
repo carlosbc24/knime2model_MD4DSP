@@ -4,7 +4,7 @@ from xml.dom import minidom
 import xml.etree.ElementTree as elementTree
 
 from parsers.dataLink import create_link
-from parsers.dataProcessing import create_data_processing
+from parsers.dataProcessing import create_data_processing, modify_last_data_processing
 from utils.logger import print_and_log
 
 
@@ -19,37 +19,63 @@ def process_nodes(data, root):
     Returns:
         tuple: A tuple containing three dictionaries:
             - node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
-            - reader_mapping (dict): Mapping of Reader node IDs to their file paths.
-            - writer_mapping (dict): Mapping of Writer node IDs to their file paths.
     """
     node_mapping = {}
-    reader_mapping = {}
-    writer_mapping = {}
 
     nodes = data.get("nodes", [])
     index = 0
+    input_file_path = None
+    output_file_path = None
+    previous_node = None
+
     for node in nodes:
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
 
         # Detect if the node includes the substrings "Reader",
         # "Writer", "Connector" or "Table"
-
-        if any(substring in node_name for substring in ["Reader", "Connector", "Table"]):
-            file_path = node.get("parameters", {}).get("file_path", "")
-            reader_mapping[node_id] = file_path
+        if any(substring in node_name for substring in ["Reader", "Connector"]):
+            input_file_path = node.get("parameters", {}).get("file_path", "")
+            print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
 
         elif "Writer" in node_name:
-            file_path = node.get("parameters", {}).get("file_path", "")
-            writer_mapping[node_id] = file_path
+            output_file_path = node.get("parameters", {}).get("file_path", "")
+            print_and_log(f"Output data for workflow node {node_id}: {output_file_path}")
+            # get the previous node element from the for loop and its index
+            modify_last_data_processing(previous_node, index - 1, output_file_path)
+
         else:
             # "Normal" node: transform into <dataprocessing>
-            n_id, dp_element, n_name = create_data_processing(node, index)
+
+            node_id = node.get("id", index)
+            node_name = node.get("node_name", f"Node_{index}")
+
+            # Determine base_name and fields from the node name
+            if "(" in node_name and ")" in node_name:
+                base_name = node_name.split("(")[0].strip()
+            else:
+                base_name = node_name
+
+            intermediate_filepath = f"{base_name.lower().replace(' ', '_')}_dataDictionary.csv"
+
+            if output_file_path is None:
+                output_file_path = intermediate_filepath
+
+            if input_file_path is None:
+                input_file_path = intermediate_filepath
+
+            n_id, dp_element, n_name = create_data_processing(node, index, input_file_path, output_file_path)
+
+            input_file_path = output_file_path
+            output_file_path = None
+
             root.append(dp_element)
             node_mapping[node_id] = {"element": dp_element, "index": index, "name": n_name}
             index += 1
 
-    return node_mapping, reader_mapping, writer_mapping
+        previous_node = node
+
+    return node_mapping
 
 
 def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
@@ -116,7 +142,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     })
 
     # Process nodes and links
-    node_mapping, reader_mapping, writer_mapping = process_nodes(data, root)
+    node_mapping = process_nodes(data, root)
     process_links(data, root, node_mapping)
 
     # Convert XML to string and format it

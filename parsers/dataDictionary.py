@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as elementTree
 
 
-def create_input_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list):
+def create_input_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list,
+                      input_data_filename: str):
     """
     Creates the inputPort element and its children (datafield and dataDictionaryDefinition).
 
@@ -11,12 +12,13 @@ def create_input_port(parent: elementTree.Element, base_name: str, node_name: st
         node_name (str): The name of the node.
         index (int): The index of the node.
         fields (list): List of fields for the input port.
+        input_data_filename (str): The name of the input data file.
 
     Returns:
         Element: The created inputPort element.
     """
     input_port = elementTree.SubElement(parent, "inputPort", {
-        "fileName": f"{base_name.lower().replace(' ', '_')}_input_dataDictionary.csv",
+        "fileName": input_data_filename,
         "name": f"{base_name}_input_dataDictionary",
         "out": f"//@dataprocessing.{index}/@outputPort.0"
     })
@@ -26,7 +28,8 @@ def create_input_port(parent: elementTree.Element, base_name: str, node_name: st
     return input_port
 
 
-def create_output_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list):
+def create_output_port(parent: elementTree.Element, base_name: str, node_name: str, index: int, fields: list,
+                       output_data_filename: str = None):
     """
     Creates the outputPort element and its children (datafield and dataDictionaryDefinition).
 
@@ -36,13 +39,14 @@ def create_output_port(parent: elementTree.Element, base_name: str, node_name: s
         node_name (str): The name of the node.
         index (int): The index of the node.
         fields (list): List of fields for the output port.
+        output_data_filename (str): The name of the output
 
     Returns:
         Element: The created outputPort element.
     """
     output_port = elementTree.SubElement(parent, "outputPort", {
-        "fileName": f"{base_name.lower().replace(' ', '_')}_output_dataDictionary.csv",
-        "name": f"{base_name}_output_dataDictionary",
+        "fileName": output_data_filename,
+        "name": f"{base_name}_output_dataDictionary" if output_data_filename is None else output_data_filename,
         "in": f"//@dataprocessing.{index}/@inputPort.0"
     })
     elementTree.SubElement(output_port, "dataDictionaryDefinition", {

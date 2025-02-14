@@ -54,12 +54,14 @@ def get_library_transformation_name(json_file_path, node_name):
     return None
 
 
-def create_data_processing(node, index):
+def create_data_processing(node: dict, index: int, input_data_filename: str = None, output_data_filename: str = None):
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
       - node_id: identifier of the node (or its index)
       - dp: the generated XML 'dataprocessing' element
       - node_name: the name of the node (for reference in links)
+      - input_data_filename: the name of the input data file
+      - output_data_filename: the name of the output data file
 
     Args:
         node (dict): Node data from the JSON.
@@ -96,8 +98,8 @@ def create_data_processing(node, index):
         fields = [node_name]
 
     # Create inputPort and outputPort
-    create_input_port(dp, base_name, node_name, index, fields)
-    create_output_port(dp, base_name, node_name, index, fields)
+    create_input_port(dp, base_name, node_name, index, fields, input_data_filename)
+    create_output_port(dp, base_name, node_name, index, fields, output_data_filename)
 
     # Set 'in' and 'out' attributes from the references of each datafield
     input_refs = [f"//@dataprocessing.{index}/@inputPort.0"]
@@ -123,3 +125,34 @@ def create_data_processing(node, index):
         create_parameters(dp, node_name, library_parameters, library_transformation_id)
 
     return node_id, dp, node_name
+
+
+def modify_last_data_processing(node: dict, index: int, output_data_filename: str):
+    """
+    Modifies the last <dataprocessing> element in the XML tree by updating the outputPort filename.
+
+    Args:
+        node: dict: Node data from the JSON.
+        index: int: Index of the previous node
+        output_data_filename:
+
+    Returns:
+
+    """
+    node_name = node.get("node_name", f"Node_{index}")
+    base_name = node_name.split("(")[0].strip()
+    inner = node_name[node_name.find("(") + 1: node_name.find(")")]
+    fields = [f.strip() for f in inner.split(",") if f.strip()]
+
+    # Get the last <dataprocessing> element
+    dp = elementTree.Element("dataprocessing", {
+        "xsi:type": "Workflow:DataProcessing",
+        "name": node_name
+    })
+
+    # Create outputPort
+    create_output_port(dp, base_name, node_name, index, fields, output_data_filename)
+
+    # Set 'in' and 'out' attributes from the references of each datafield
+    output_refs = [f"//@dataprocessing.{index}/@outputPort.0"]
+    dp.set("out", " ".join(output_refs))
