@@ -177,3 +177,6 @@ logs/
 # parse files
 parsed_xmi_workflows/
 parsed_json_workflows/
+
+# extracted knime data
+input_KNIME_workflows/extracted_data/
