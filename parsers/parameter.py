@@ -2,7 +2,7 @@ import xml.etree.ElementTree as elementTree
 import json
 
 
-def get_node_parameters(json_file_path: str, node_name: str) -> dict:
+def get_node_parameters(json_file_path: str, node_name: str) -> list:
     """
     Reads the JSON function hashing file and returns the library parameters of the node.
 
@@ -22,7 +22,7 @@ def get_node_parameters(json_file_path: str, node_name: str) -> dict:
         if node_name in function:
             return function[node_name].get("library_parameters", {})
 
-    return {}
+    return []
 
 
 def create_parameters(dp: elementTree.Element, node_name: str,

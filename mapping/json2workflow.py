@@ -8,7 +8,7 @@ from parsers.dataProcessing import create_data_processing, modify_last_data_proc
 from utils.logger import print_and_log
 
 
-def process_nodes(data, root):
+def process_nodes(data: dict, root: elementTree.Element) -> dict:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -17,76 +17,45 @@ def process_nodes(data, root):
         root (Element): The root XML element to which the nodes will be appended.
 
     Returns:
-        tuple: A tuple containing three dictionaries:
-            - node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
+        node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
     """
     node_mapping = {}
 
     nodes = data.get("nodes", [])
+    input_file_path = ""
     index = 0
-    input_file_path = None
-    output_file_path = None
-    previous_node = None
 
     for node in nodes:
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
 
-        # Detect if the node includes the substrings "Reader",
-        # "Writer", "Connector" or "Table"
-        if any(substring in node_name for substring in ["Reader", "Connector"]):
+        # Detect if the node includes the substrings "Reader" or "Connector"
+        if any(substring in node_name for substring in ["Reader"]):
             input_file_path = node.get("parameters", {}).get("file_path", "")
             print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
 
-        elif "Writer" in node_name:
-            output_file_path = node.get("parameters", {}).get("file_path", "")
-            print_and_log(f"Output data for workflow node {node_id}: {output_file_path}")
-            # get the previous node element from the for loop and its index
-            modify_last_data_processing(previous_node, index - 1, output_file_path)
+        node_id = node.get("id", index)
+        n_id, dp_element, n_name = create_data_processing(data, node, index, input_file_path)
+        input_file_path = ""
 
-        else:
-            # "Normal" node: transform into <dataprocessing>
+        root.append(dp_element)
+        node_mapping[node_id] = {"element": dp_element, "index": index, "name": n_name}
 
-            node_id = node.get("id", index)
-            node_name = node.get("node_name", f"Node_{index}")
-
-            # Determine base_name and fields from the node name
-            if "(" in node_name and ")" in node_name:
-                base_name = node_name.split("(")[0].strip()
-            else:
-                base_name = node_name
-
-            intermediate_filepath = f"{base_name.lower().replace(' ', '_')}_dataDictionary.csv"
-
-            if output_file_path is None:
-                output_file_path = intermediate_filepath
-
-            if input_file_path is None:
-                input_file_path = intermediate_filepath
-
-            n_id, dp_element, n_name = create_data_processing(node, index, input_file_path, output_file_path)
-
-            input_file_path = output_file_path
-            output_file_path = None
-
-            root.append(dp_element)
-            node_mapping[node_id] = {"element": dp_element, "index": index, "name": n_name}
-            index += 1
-
-        previous_node = node
+        index += 1
 
     return node_mapping
 
 
 def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
     """
-    Processes the links (connections) from the JSON data and appends the corresponding XML elements to the root element.
+    Processes the links between nodes from the JSON data and appends the corresponding XML elements to the root element.
 
     Args:
         data (dict): The JSON data containing the workflow information.
         root (Element): The root XML element to which the links will be appended.
         node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
     """
+
     links = data.get("connections", [])
     link_index = 0
     for conn in links:
@@ -95,7 +64,6 @@ def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
 
         # Connection between two "normal" nodes
         if source_id in node_mapping and dest_id in node_mapping:
-            print_and_log(f"Link_index:{link_index}, Source: {source_id}, Dest: {dest_id}")
             link_element = create_link(link_index, conn, node_mapping)
             if link_element is not None:
                 root.append(link_element)

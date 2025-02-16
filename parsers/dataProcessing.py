@@ -54,18 +54,43 @@ def get_library_transformation_name(json_file_path, node_name):
     return None
 
 
-def create_data_processing(node: dict, index: int, input_data_filename: str = None, output_data_filename: str = None):
+def get_dest_node_from_connections(data: dict, node_id: int) -> str|None:
+    """
+    Get the destination node name from the connections in the JSON data.
+
+    Args:
+        data (dict): JSON data.
+        node_id: ID of the source node.
+
+    Returns:
+        string: Name of the destination node.
+
+    """
+    links = data.get("connections", [])
+    for conn in links:
+        source_id = conn.get("sourceID")
+        dest_id = conn.get("destID")
+        if source_id == node_id:
+            print_and_log(f"Source: {source_id}, Dest: {dest_id}")
+            nodes = data.get("nodes", [])
+            for node in nodes:
+                if node.get("id") == dest_id:
+                    return node.get("node_name")
+
+    return None
+
+
+def create_data_processing(data, node: dict, index: int, input_file_path: str):
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
       - node_id: identifier of the node (or its index)
       - dp: the generated XML 'dataprocessing' element
       - node_name: the name of the node (for reference in links)
-      - input_data_filename: the name of the input data file
-      - output_data_filename: the name of the output data file
 
     Args:
         node (dict): Node data from the JSON.
         index (int): Index of the node.
+        input_file_path (str): Path to the input file (if any).
 
     Returns:
         tuple: (node_id, dp, node_name)
@@ -97,9 +122,16 @@ def create_data_processing(node: dict, index: int, input_data_filename: str = No
         base_name = node_name
         fields = [node_name]
 
+    # Get destination node name
+    dest_node_name = get_dest_node_from_connections(data, node_id)
+    if dest_node_name is not None and "(" in dest_node_name and ")" in dest_node_name:
+        dest_node_name = dest_node_name.split("(")[0].strip()
+    else:
+        dest_node_name = dest_node_name
+
     # Create inputPort and outputPort
-    create_input_port(dp, base_name, node_name, index, fields, input_data_filename)
-    create_output_port(dp, base_name, node_name, index, fields, output_data_filename)
+    create_input_port(dp, base_name, node_name, index, fields, input_file_path)
+    create_output_port(dp, base_name, node_name, index, fields, dest_node_name)
 
     # Set 'in' and 'out' attributes from the references of each datafield
     input_refs = [f"//@dataprocessing.{index}/@inputPort.0"]
@@ -151,7 +183,7 @@ def modify_last_data_processing(node: dict, index: int, output_data_filename: st
     })
 
     # Create outputPort
-    create_output_port(dp, base_name, node_name, index, fields, output_data_filename)
+    create_output_port(dp, base_name, node_name, index, fields)
 
     # Set 'in' and 'out' attributes from the references of each datafield
     output_refs = [f"//@dataprocessing.{index}/@outputPort.0"]
