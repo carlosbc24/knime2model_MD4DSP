@@ -11,19 +11,29 @@ with open("parser_config.yaml", "r") as file:
     input_knwf_folder = config["input_knwf_folder"]
     output_json_folder = config["output_json_folder"]
     output_xmi_folder = config["output_xmi_folder"]
+    workflow_filename = config["workflow_filename"]
 
 # Set logger
 set_logger(logger_name="mapping")
 
+# Extract data from a specific .knwf file
+if workflow_filename is not None and workflow_filename != "":
+    if workflow_filename.endswith(".knwf"):
+        workflow_name = workflow_filename.split(".")[0]
+        extract_data_knime2json(workflow_filename, input_knwf_folder, output_json_folder, workflow_name)
+        json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder)
+        print(f"{workflow_name} workflow mapping completed")
+
 # Extract data from all .knwf files in the input folder
-for file in os.listdir(input_knwf_folder):
-    if file.endswith(".knwf"):
-        workflow_filename = file.split(".")[0]
-        extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_filename)
-        json_to_xmi_workflow(output_json_folder, workflow_filename, output_xmi_folder)
-        print(f"{workflow_filename} workflow mapping completed")
+else:
+    for file in os.listdir(input_knwf_folder):
+        if file.endswith(".knwf"):
+            workflow_name = file.split(".")[0]
+            extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_name)
+            json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder)
+            print(f"{workflow_name} workflow mapping completed")
 
 print("\n--------------------------------------------------\n")
 print("Input workflows in: input_KNIME_workflows")
-print("Intermediate workflows in: input_KNIME_workflows")
-print("Output workflows (Mapping results) in: input_KNIME_workflows")
+print("Intermediate workflows in: parsed_json_workflows")
+print("Output workflows (Mapping results) in: parsed_xmi_workflows")
