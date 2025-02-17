@@ -47,12 +47,26 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    pip install -r requirements.txt
    ```
    
-7. Run the Python script to parse and export data from a KNIME workflow:
+7. Configrue the configruation file `parser_config.json` with the following structure:
+   ```yaml
+   input_knwf_folder : "input_KNIME_workflows" # Folder containing the selected KNIME workflows
+   output_json_folder : "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
+   output_xmi_folder : "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
+
+   workflow_filename :  # Name of the KNIME workflow to be parsed. By default, every KNIME workflow in the input 
+   # folder will be parsed. 
+   #workflow_filename : "01 Data Cleaning.knwf"
+   ```
+   The `workflow_filename` must contain the name of the KNIME workflow to be parsed. By default, this parameter is empty,
+    which means that every KNIME workflow in the input folder will be parsed. If you want to parse a specific KNIME 
+   workflow, you must specify it's filename with the extension `.knwf`.
+   
+8. Run the Python script to parse and export data from a KNIME workflow:
     ```bash
     python3 -m mapping.knwf2workflow
     ```
 
-8. (Optional) Remove the environment created previously:
+9. (Optional) Remove the environment created previously:
    ```bash
    conda deactivate
    conda remove --name kn2wf_mapping --all --yes
@@ -65,6 +79,11 @@ The project structure must follow the next structure:
 ```bash
 MD4DSP-m2python/
 │
+├── data_model/
+│ ├── DataDictionary.py
+│ ├── DataProcessing.py
+│ ├── Link.py
+│ └── Workflow.py
 ├── input_KNIME_workflows/
 │ ├── 01 Data Cleaning.knwf
 │ ├── 01_ Exercises.knwf
@@ -77,9 +96,20 @@ MD4DSP-m2python/
 │ ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.knwf
 │ ├── Interactive Data Cleaning.knwf
 │ ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).knwf
+│ ├── ...
 │ ├── extracted_data/
+│ │ ├── 01 Data Cleaning.png
+│ │ ├── 01_ Exercises.png
+│ │ ├── 01_Column_Row_Filtering.png
+│ │ ├── 02 Data Cleaning.png
+│ │ ├── 02 Data Cleaning and Transformation.png
+│ │ ├── 03_Data_Cleaning_Solution.png
+│ │ ├── DATA CLEANING.png
+│ │ ├── Data Cleaning Project.png
+│ │ ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.png
+│ │ ├── Interactive Data Cleaning.png
+│ │ ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
 │ │ └── ...
-│ │
 │ └── images/
 │   ├── 01 Data Cleaning.png
 │   ├── 01_ Exercises.png
@@ -91,9 +121,13 @@ MD4DSP-m2python/
 │   ├── Data Cleaning Project.png
 │   ├── Decision Tree Modelling - Key Triathlon Discipline Analysis.png
 │   ├── Interactive Data Cleaning.png
-│   └── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
+│   ├── KNIME INTEGRATION WITH POWER  BI (DATA CLEANING).png
+│   └── ...
 │
-├── parsed_json_workflows/
+├── logs/
+│ ├── mapping/
+│   ├── mapping_log_1.log
+│   ├── mapping_log_2.log
 │   └── ...
 │
 ├── mapping/
@@ -101,8 +135,24 @@ MD4DSP-m2python/
 │ ├── knwf2workflow.py
 │ └── knwf2json.py
 │
+├── parsed_json_workflows/
+│   └── ...
+│
+├── parsed_xmi_workflows/
+│   └── ...
+│
+├── parsers/
+│ ├── dataDictionary.py
+│ ├── dataLink.py
+│ ├── dataProcessing.py
+│ └── parameter.py
+│
+├── utils/
+│ └── logger.py
+│
 ├── .gitignore
-├── parser_config.json
+├── library_function_hashing.json
+├── parser_config.yaml
 ├── README.md
 └── requirements.txt
 ```
@@ -119,22 +169,28 @@ MD4DSP-m2python/
 - **`input_KNIME_workflows/images/`**: contains the images of the input KNIME workflows.
 
 
+- **`logs/`**: contains the logs of the project.
+
+
+- **`mapping/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
+
+
 - **`parsed_json_workflows/`**: contains the json data from the parsed input KNIME workflows.
 
 
 - **`parsed_xmi_workflows/`**: contains the xmi data from the parsed json data.
 
 
-- **`mapping/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
-
-
 - **`parsers/`**: contains the Python scripts to parse individual elements using the json data and the data model.
+
+
+- **`utils/`**: contains the utility scripts of the project (e.g., logger).
 
 
 - **`.gitignore`**: file that contains the files and directories to be ignored by Git.
 
 
-- **`parser_config.json`**: file that contains the configuration of the parser.
+- **`parser_config.yaml`**: yaml file that contains the configuration of the parser.
 
 
 - **`README.md`**: file that contains the documentation of the project.
