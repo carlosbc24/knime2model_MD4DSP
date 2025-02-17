@@ -264,9 +264,17 @@ def extract_node_settings(settings_path):
                 included_names = groups_list.find(".//knime:config[@key='included_names']", namespace)
                 excluded_names = groups_list.find(".//knime:config[@key='excluded_names']", namespace)
                 if included_names is not None:
-                    node_info["parameters"]["included_names"] = [entry.attrib["value"] for entry in included_names.findall("knime:entry", namespace)]
+                    node_info["parameters"]["included_columns"] = [
+                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
+                        for entry in included_names.findall("knime:entry", namespace)
+                        if entry.attrib["key"] != "array-size"
+                    ]
                 if excluded_names is not None:
-                    node_info["parameters"]["excluded_names"] = [entry.attrib["value"] for entry in excluded_names.findall("knime:entry", namespace)]
+                    node_info["parameters"]["excluded_columns"] = [
+                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
+                        for entry in excluded_names.findall("knime:entry", namespace)
+                        if entry.attrib["key"] != "array-size"
+                    ]
 
             # Extract iqr-scalar
             iqr_scalar = model.find(".//knime:entry[@key='iqr-scalar']", namespace)
@@ -351,22 +359,26 @@ def extract_node_settings(settings_path):
 
         elif "Missing Value Column Filter" in node_info["node_name"]:
             missing_value_threshold_entry = model.find(".//knime:entry[@key='missing_value_percentage']", namespace)
-            included_columns = [
-                col.attrib["value"]
-                for col in model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-                if col is not None
-            ]
-            excluded_columns = [
-                col.attrib["value"]
-                for col in model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-                if col is not None
-            ]
+            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
+            if included_names is not None:
+                included_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in included_names if col.attrib["key"] != "array-size"
+                ]
+            # Extract the excluded columns
+            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
+            if excluded_names is not None:
+                excluded_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in excluded_names if col.attrib["key"] != "array-size"
+                ]
+
             node_info["parameters"]["missing_value_threshold"] = (
                 float(missing_value_threshold_entry.attrib["value"])
                 if missing_value_threshold_entry is not None else None
             )
-            node_info["parameters"]["included_columns"] = included_columns
-            node_info["parameters"]["excluded_columns"] = excluded_columns
+            node_info["parameters"]["included_columns"] = included_names
+            node_info["parameters"]["excluded_columns"] = excluded_names
 
         elif "Duplicate Row Filter" in node_info["node_name"]:
             remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
@@ -374,21 +386,27 @@ def extract_node_settings(settings_path):
             row_selection_entry = model.find(".//knime:entry[@key='row_selection']", namespace)
             add_row_duplicate_flag_entry = model.find(".//knime:entry[@key='add_row_duplicate_flag']", namespace)
             in_memory_entry = model.find(".//knime:entry[@key='in_memory']", namespace)
-            included_columns = [
-                col.attrib["value"]
-                for col in model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            ]
-            excluded_columns = [
-                col.attrib["value"]
-                for col in model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            ]
+            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
+            if included_names is not None:
+                included_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in included_names if col.attrib["key"] != "array-size"
+                ]
+            # Extract the excluded columns
+            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
+            if excluded_names is not None:
+                excluded_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in excluded_names if col.attrib["key"] != "array-size"
+                ]
+
             node_info["parameters"]["remove_duplicates"] = remove_duplicates_entry.attrib["value"] == "true" if remove_duplicates_entry is not None else False
             node_info["parameters"]["retain_order"] = retain_order_entry.attrib["value"] == "true" if retain_order_entry is not None else False
             node_info["parameters"]["row_selection"] = row_selection_entry.attrib["value"] if row_selection_entry is not None else None
             node_info["parameters"]["add_row_duplicate_flag"] = add_row_duplicate_flag_entry.attrib["value"] == "true" if add_row_duplicate_flag_entry is not None else False
             node_info["parameters"]["in_memory"] = in_memory_entry.attrib["value"] == "true" if in_memory_entry is not None else False
-            node_info["parameters"]["included_columns"] = included_columns
-            node_info["parameters"]["excluded_columns"] = excluded_columns
+            node_info["parameters"]["included_columns"] = included_names
+            node_info["parameters"]["excluded_columns"] = excluded_names
 
         elif "Joiner" in node_info["node_name"]:
             # Extractar configuraciones clave de Joiner
@@ -449,10 +467,21 @@ def extract_node_settings(settings_path):
             if expression_entry is not None:
                 node_info["parameters"]["expression"] = expression_entry.attrib["value"]
             # Extract the columns to apply the expression
-            included_columns = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            node_info["parameters"]["included_columns"] = [
-                col.attrib["value"] for col in included_columns if col.attrib["key"] != "array-size"
-            ]
+            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
+            if included_names is not None:
+                included_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in included_names if col.attrib["key"] != "array-size"
+                ]
+            # Extract the excluded columns
+            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
+            if excluded_names is not None:
+                excluded_names = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in excluded_names if col.attrib["key"] != "array-size"
+                ]
+            node_info["parameters"]["included_columns"] = included_names
+            node_info["parameters"]["excluded_columns"] = excluded_names
             # Extract the columns to append the result
             append_or_replace_entry = model.find(".//knime:entry[@key='APPEND_OR_REPLACE']", namespace)
             if append_or_replace_entry is not None:
