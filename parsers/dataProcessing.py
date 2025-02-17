@@ -94,7 +94,6 @@ def get_node_columns(node: dict) -> list:
     # Add node columns if they exist
     if "columns" in node["parameters"]:
         node_columns = node["parameters"]["columns"]
-        print(f"Node columns: {node_columns}")
 
     # Add included columns if they exist (from column filter)
     if "included_columns" in node["parameters"]:

@@ -7,6 +7,33 @@ import xml.etree.ElementTree as elementTree
 from utils.logger import print_and_log
 
 
+def extract_columns_data(model: elementTree.Element, namespace: dict) -> (list, list):
+    """
+    Extracts the columns data from the data model XML element.
+    Args:
+        model (elementTree.Element): The data model XML element.
+        namespace (dict): The namespace for the XML file.
+
+    Returns:
+        tuple: Tuple containing the included and excluded columns data.
+    """
+    # Extract the included columns
+    included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
+    if included_names is not None:
+        included_names = [
+            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+            for col in included_names if col.attrib["key"] != "array-size"
+        ]
+    # Extract the excluded columns
+    excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
+    if excluded_names is not None:
+        excluded_names = [
+            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+            for col in excluded_names if col.attrib["key"] != "array-size"
+        ]
+    return included_names, excluded_names
+
+
 def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder: str, output_json_filename: str):
     """
     Extracts the nodes and connections from a KNIME workflow file and saves them in a JSON file.
@@ -136,20 +163,9 @@ def extract_node_settings(settings_path):
         elif "Column Filter" in node_info["node_name"]:
             column_filter = model.find(".//knime:config[@key='column-filter']", namespace)
             if column_filter is not None:
-                included_names = column_filter.find(".//knime:config[@key='included_names']", namespace)
-                excluded_names = column_filter.find(".//knime:config[@key='excluded_names']", namespace)
-                if included_names is not None:
-                    node_info["parameters"]["included_columns"] = [
-                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
-                        for entry in included_names.findall("knime:entry", namespace)
-                        if entry.attrib["key"] != "array-size"
-                    ]
-                if excluded_names is not None:
-                    node_info["parameters"]["excluded_columns"] = [
-                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
-                        for entry in excluded_names.findall("knime:entry", namespace)
-                        if entry.attrib["key"] != "array-size"
-                    ]
+                included_names, excluded_names = extract_columns_data(column_filter, namespace)
+                node_info["parameters"]["included_columns"] = included_names
+                node_info["parameters"]["excluded_columns"] = excluded_names
 
         elif "Row Filter" in node_info["node_name"]:
             row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
@@ -227,20 +243,10 @@ def extract_node_settings(settings_path):
             decimal_separator_entry = model.find(".//knime:entry[@key='decimal_separator']", namespace)
             if decimal_separator_entry is not None:
                 node_info["parameters"]["decimal_separator"] = decimal_separator_entry.attrib["value"]
-            # Extract the column to convert
-            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            if included_names is not None:
-                node_info["parameters"]["included_columns"] = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in included_names if col.attrib["key"] != "array-size"
-                ]
-            # Extract the excluded columns
-            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            if excluded_names is not None:
-                node_info["parameters"]["excluded_columns"] = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in excluded_names if col.attrib["key"] != "array-size"
-                ]
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["included_columns"] = included_names
+            node_info["parameters"]["excluded_columns"] = excluded_names
 
         elif "Rule Engine" in node_info["node_name"]:
             rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
@@ -261,20 +267,9 @@ def extract_node_settings(settings_path):
             # Extract groups-list
             groups_list = model.find(".//knime:config[@key='groups-list']", namespace)
             if groups_list is not None:
-                included_names = groups_list.find(".//knime:config[@key='included_names']", namespace)
-                excluded_names = groups_list.find(".//knime:config[@key='excluded_names']", namespace)
-                if included_names is not None:
-                    node_info["parameters"]["included_columns"] = [
-                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
-                        for entry in included_names.findall("knime:entry", namespace)
-                        if entry.attrib["key"] != "array-size"
-                    ]
-                if excluded_names is not None:
-                    node_info["parameters"]["excluded_columns"] = [
-                        {"column_name": entry.attrib["value"], "column_type": entry.attrib["type"]}
-                        for entry in excluded_names.findall("knime:entry", namespace)
-                        if entry.attrib["key"] != "array-size"
-                    ]
+                included_names, excluded_names = extract_columns_data(groups_list, namespace)
+                node_info["parameters"]["included_columns"] = included_names
+                node_info["parameters"]["excluded_columns"] = excluded_names
 
             # Extract iqr-scalar
             iqr_scalar = model.find(".//knime:entry[@key='iqr-scalar']", namespace)
@@ -297,21 +292,8 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
         elif "Auto-Binner" in node_info["node_name"]:
-            # Extract the column to convert
-            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            if included_names is not None:
-                included_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in included_names if col.attrib["key"] != "array-size"
-                ]
-            # Extract the excluded columns
-            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            if excluded_names is not None:
-                excluded_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in excluded_names if col.attrib["key"] != "array-size"
-                ]
-
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
             # Extract binning method
             binning_method_entry = model.find(".//knime:entry[@key='method']", namespace)
             binning_method = binning_method_entry.attrib["value"] if binning_method_entry is not None else None
@@ -358,21 +340,10 @@ def extract_node_settings(settings_path):
             }
 
         elif "Missing Value Column Filter" in node_info["node_name"]:
+            # Extract the missing value threshold
             missing_value_threshold_entry = model.find(".//knime:entry[@key='missing_value_percentage']", namespace)
-            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            if included_names is not None:
-                included_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in included_names if col.attrib["key"] != "array-size"
-                ]
-            # Extract the excluded columns
-            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            if excluded_names is not None:
-                excluded_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in excluded_names if col.attrib["key"] != "array-size"
-                ]
-
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
             node_info["parameters"]["missing_value_threshold"] = (
                 float(missing_value_threshold_entry.attrib["value"])
                 if missing_value_threshold_entry is not None else None
@@ -386,19 +357,7 @@ def extract_node_settings(settings_path):
             row_selection_entry = model.find(".//knime:entry[@key='row_selection']", namespace)
             add_row_duplicate_flag_entry = model.find(".//knime:entry[@key='add_row_duplicate_flag']", namespace)
             in_memory_entry = model.find(".//knime:entry[@key='in_memory']", namespace)
-            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            if included_names is not None:
-                included_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in included_names if col.attrib["key"] != "array-size"
-                ]
-            # Extract the excluded columns
-            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            if excluded_names is not None:
-                excluded_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in excluded_names if col.attrib["key"] != "array-size"
-                ]
+            included_names, excluded_names = extract_columns_data(model, namespace)
 
             node_info["parameters"]["remove_duplicates"] = remove_duplicates_entry.attrib["value"] == "true" if remove_duplicates_entry is not None else False
             node_info["parameters"]["retain_order"] = retain_order_entry.attrib["value"] == "true" if retain_order_entry is not None else False
@@ -466,20 +425,7 @@ def extract_node_settings(settings_path):
             expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
             if expression_entry is not None:
                 node_info["parameters"]["expression"] = expression_entry.attrib["value"]
-            # Extract the columns to apply the expression
-            included_names = model.findall(".//knime:config[@key='included_names']/knime:entry", namespace)
-            if included_names is not None:
-                included_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in included_names if col.attrib["key"] != "array-size"
-                ]
-            # Extract the excluded columns
-            excluded_names = model.findall(".//knime:config[@key='excluded_names']/knime:entry", namespace)
-            if excluded_names is not None:
-                excluded_names = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in excluded_names if col.attrib["key"] != "array-size"
-                ]
+            included_names, excluded_names = extract_columns_data(model, namespace)
             node_info["parameters"]["included_columns"] = included_names
             node_info["parameters"]["excluded_columns"] = excluded_names
             # Extract the columns to append the result

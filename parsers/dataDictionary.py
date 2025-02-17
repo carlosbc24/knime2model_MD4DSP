@@ -52,7 +52,6 @@ def create_input_port(parent: elementTree.Element, base_name: str, node_name: st
     Returns:
         Element: The created inputPort element.
     """
-    print("Columns: ", columns)
     input_port = elementTree.SubElement(parent, "inputPort", {
         "fileName": f"{base_name.lower().replace(' ', '_')}_dataDictionary.csv" if input_file_path == "" else input_file_path,
         "name": f"{base_name.lower().replace(' ', '_')}_input_dataDictionary",
