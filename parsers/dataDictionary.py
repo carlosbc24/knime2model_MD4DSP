@@ -25,12 +25,12 @@ def create_datafield(port: elementTree.Element, columns: list, node_name: str, i
         if column["column_type"] == "xstring":
             elementTree.SubElement(datafield, "categoricalDef", {
                 "href": f"library_validation.xmi#//@dataprocessingdefinition."
-                        f"{index}/@inputPort.0/@datafielddefinition.0"
+                        f"{index}/@inputPort.0/@datafielddefinition.{i}"
             })
         else:
             elementTree.SubElement(datafield, "continuousDef", {
                 "href": f"library_validation.xmi#//@dataprocessingdefinition."
-                        f"{index}/@inputPort.0/@datafielddefinition.0"
+                        f"{index}/@inputPort.0/@datafielddefinition.{i}"
             })
 
     return port
