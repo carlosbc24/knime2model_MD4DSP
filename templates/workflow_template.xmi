@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow:Workflow
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Contract="https://www.example.org/contract"
+    xmlns:Library="http://www.example.org/Library"
+    xmlns:Workflow="https://www.example.org/workflow"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    name={$workflow_name}>
+    {$data_processings}
+    {$links}
+</Workflow:Workflow>

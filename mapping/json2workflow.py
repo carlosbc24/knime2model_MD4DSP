@@ -154,3 +154,49 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     print_and_log(f"Workflow XMI saved to: {output_xmi_filepath}")
 
     return mapped_nodes, nodes_cont
+
+
+def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,
+                                        include_contracts: bool, node_mapping_desired_ratio: float = None):
+    """
+    Converts a JSON structure of a KNIME workflow to a well-formatted XMI file.
+    Processes nodes whose names end in "Reader" or "Writer" are not transformed
+    into a <dataprocessing> element but their file_path is injected into
+    the <inputPort> or <outputPort> of the connected node
+    (subsequent or previous, respectively).
+
+    Args:
+        json_input_folder (str): Path to the folder containing the JSON files.
+        workflow_filename (str): Name of the JSON file (without extension).
+        xmi_output_folder (str): Path to the folder where the XMI file will be saved.
+        include_contracts (bool): Whether to include contracts in the XMI file.
+        node_mapping_desired_ratio (float): Desired ratio of nodes mapped to a library transformation.
+
+    Returns:
+
+    """
+    # Load JSON data
+    with (open(os.path.join(json_input_folder,
+                            workflow_filename, workflow_filename + ".json"),
+               "r", encoding="utf-8")
+          as f):
+        data = json.load(f)
+
+        # Read the workflow template file
+        with open("templates/workflow_template.xmi", "r") as file:
+            template_content = file.read()
+
+        # Define the replacement values
+        values = {
+            "$workflow_name": workflow_filename,
+            "$data_processings": "",
+            "$links": ""
+        }
+
+        # Fill the template
+        filled_content = template_content.format(**values)
+
+        output_xmi_filepath = os.path.join(xmi_output_folder, workflow_filename + ".xmi")
+        os.makedirs(os.path.dirname(output_xmi_filepath), exist_ok=True)
+        with open(output_xmi_filepath, "w", encoding="utf-8") as file:
+            file.write(filled_content)
