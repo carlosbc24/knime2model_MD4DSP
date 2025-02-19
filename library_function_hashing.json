@@ -10,6 +10,24 @@
 			"parameter_name": "DerivedValue",
 			"parameter_def_name":"derivedValueDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue",
+			"quantityDef": "Percent"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "DerivedValue"
+		  }
 		]
 	  }
 	},
@@ -23,6 +41,24 @@
 			"parameter_name": "FixValue",
 			"parameter_def_name":"fixValueDef"
 			
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue",
+			"quantityDef": "Percent"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "FixValue"
 		  }
 		]
 	  }
@@ -41,15 +77,19 @@
 			"parameter_name": "Primitive",
 			"parameter_def_name":"primitiveDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "FixValue"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "FixValue"
+		  }
 		]
-	  }
-	},
-	  {
-	  "Duplicate Row Filter": {
-		"knime_function_name": "Duplicate Row Filter",
-		"library_transformation_name": "rowFilter",
-		"library_transformation_id": 2,
-		"library_parameters": []
 	  }
 	},
 	  {
@@ -62,33 +102,35 @@
 			"parameter_name": "Field",
 			"parameter_def_name":"fieldDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "Field Range",
+			"inDef": "DataDictionary"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "Field Range",
+			"inDef": "DataDictionary"
+		  }
 		]
 	  }
 	},
 	  {
 	  "Missing Value Column Filter": {
 		"knime_function_name": "Missing Value Column Filter",
-		"library_transformation_name": "columnFilter",
-		"library_transformation_id": 3,
-		"library_parameters": [
-		  {
-			"parameter_name": "Field",
-			"parameter_def_name":"fieldDef"
-		  }
-		]
+		"library_transformation_name": null,
+		"library_transformation_id": null,
+		"library_parameters": []
 	  }
 	},
 	  {
 	  "Constant Value Column Filter": {
 		"knime_function_name": "Constant Value Column Filter",
-		"library_transformation_name": "columnFilter",
-		"library_transformation_id": 3,
-		"library_parameters": [
-		  {
-			"parameter_name": "Field",
-			"parameter_def_name":"fieldDef"
-		  }
-		]
+		"library_transformation_name": null,
+		"library_transformation_id": null,
+		"library_parameters": []
 	  }
 	},
 	  {
@@ -100,6 +142,23 @@
 		  {
 			"parameter_name": "Map",
 			"parameter_def_name":"mapDefinition"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "FixValue"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "FixValue"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "FixValue",
+			"thenValueDef": "FixValue"
 		  }
 		]
 	  }
@@ -114,6 +173,24 @@
 			"parameter_name": "NumOp",
 			"parameter_def_name":"numOpDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue",
+			"quantityDef": "Percent"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "NumOp"
+		  }
 		]
 	  }
 	},
@@ -126,6 +203,24 @@
 		  {
 			"parameter_name": "NumOp",
 			"parameter_def_name":"numOpDef"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue",
+			"quantityDef": "Percent"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "SpecialValue"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "NumOp"
 		  }
 		]
 	  }
@@ -140,6 +235,13 @@
 			"parameter_name": "CastType",
 			"parameter_def_name":"castTypeDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "SpecialValue"
+		  }
 		]
 	  }
 	},
@@ -152,6 +254,13 @@
 		  {
 			"parameter_name": "CastType",
 			"parameter_def_name":"castTypeDef"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "SpecialValue",
+			"thenValueDef": "SpecialValue"
 		  }
 		]
 	  }
@@ -170,6 +279,23 @@
 			"parameter_name": "DiscretizeBin",
 			"parameter_def_name":"discretizeBinDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "Interval",
+			"thenValueDef": "FixValue"
+		  }
 		]
 	  }
 	},
@@ -186,6 +312,23 @@
 		  {
 			"parameter_name": "DiscretizeBin",
 			"parameter_def_name":"discretizeBinDef"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "Interval",
+			"thenValueDef": "FixValue"
 		  }
 		]
 	  }
@@ -204,6 +347,18 @@
 			"parameter_name": "Range",
 			"parameter_def_name":"rangeDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  }
 		]
 	  }
 	},
@@ -220,6 +375,18 @@
 		  {
 			"parameter_name": "Range",
 			"parameter_def_name":"rangeDef"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
 		  }
 		]
 	  }
@@ -238,8 +405,20 @@
 			"parameter_name": "Range",
 			"parameter_def_name":"rangeDef"
 		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  }
 		]
 	  }
 	}
-	    ]
+  ]
 }

@@ -4,7 +4,7 @@ output_json_folder : "parsed_json_workflows" # Folder where the parsed KNIME wor
 output_xmi_folder : "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
 
 include_contracts : True # Include contracts in the xmi output
-node_mapping_desired_ratio: 0.8 # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
+node_mapping_desired_ratio: # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
 # By default every KNIME workflow stored in the input_knwf_folder will be parsed,
 # unless a specific workflow is specified in the following variable via its name string.
 workflow_filename :
