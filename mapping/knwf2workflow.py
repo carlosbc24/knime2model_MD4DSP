@@ -13,6 +13,7 @@ with open("parser_config.yaml", "r") as file:
     output_xmi_folder = config["output_xmi_folder"]
     workflow_filename = config["workflow_filename"]
     include_contracts = config["include_contracts"]
+    node_mapping_desired_ratio = config["node_mapping_desired_ratio"]
     if include_contracts is None:
         include_contracts = True
 
@@ -24,8 +25,9 @@ if workflow_filename is not None and workflow_filename != "":
     if workflow_filename.endswith(".knwf"):
         workflow_name = workflow_filename.split(".")[0]
         extract_data_knime2json(workflow_filename, input_knwf_folder, output_json_folder, workflow_name)
-        json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder, include_contracts)
-        print(f"{workflow_name} workflow mapping completed")
+        mapped_nodes, nodes_count = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
+                                                         include_contracts, node_mapping_desired_ratio)
+        print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
 
 # Extract data from all .knwf files in the input folder
 else:
@@ -33,8 +35,9 @@ else:
         if file.endswith(".knwf"):
             workflow_name = file.split(".")[0]
             extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_name)
-            json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder, include_contracts)
-            print(f"{workflow_name} workflow mapping completed")
+            mapped_nodes, nodes_count = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
+                                                             include_contracts, node_mapping_desired_ratio)
+            print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
 
 print("\n--------------------------------------------------\n")
 print("Input workflows in: input_KNIME_workflows")

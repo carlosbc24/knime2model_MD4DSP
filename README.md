@@ -52,14 +52,21 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    input_knwf_folder : "input_KNIME_workflows" # Folder containing the selected KNIME workflows
    output_json_folder : "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
    output_xmi_folder : "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
-
-   workflow_filename :  # Name of the KNIME workflow to be parsed. By default, every KNIME workflow in the input 
-   # folder will be parsed. 
+   
+   include_contracts : True # Include contracts in the xmi output
+   node_mapping_desired_ratio: 0.8 # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
+   # By default every KNIME workflow stored in the input_knwf_folder will be parsed,
+   # unless a specific workflow is specified in the following variable via its name string.
+   workflow_filename :
    #workflow_filename : "01 Data Cleaning.knwf"
    ```
+   The `include_contracts` parameter is a boolean that indicates whether the contracts should be included in the xmi output or not.
+
+   The `node_mapping_desired_ratio` parameter is a float that indicates the desired ratio of nodes to be mapped to the ontology. This parameter must be a float between 0.0 and 1.0. The default value is None, which means that all nodes will be stored in the same output folder. They won't be separated by the desired ratio subfolder.
+
    The `workflow_filename` must contain the name of the KNIME workflow to be parsed. By default, this parameter is empty,
-    which means that every KNIME workflow in the input folder will be parsed. If you want to parse a specific KNIME 
-   workflow, you must specify it's filename with the extension `.knwf`.
+   which means that every KNIME workflow in the input folder will be parsed. If you want to parse a specific KNIME 
+   workflow, you must specify its filename with the extension `.knwf`.
    
 8. Run the Python script to parse and export data from a KNIME workflow:
     ```bash

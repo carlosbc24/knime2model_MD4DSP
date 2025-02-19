@@ -117,14 +117,15 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
         node (dict): Node data from the JSON.
         index (int): Index of the node.
         input_file_path (str): Path to the input file (if any).
+        include_contracts (bool): Whether to include contracts in the XMI file.
 
     Returns:
-        tuple: (node_id, dp, node_name)
+        tuple: (node_id, dp, node_name, library_transformation_id)
     """
     node_id = node.get("id", index)
     node_name = node.get("node_name", f"Node_{index}")
 
-    # Get library transformation ID
+    # Get library transformation name
     library_transformation_name = get_library_transformation_name('library_function_hashing.json', node_name)
 
     # Create dataprocessing element
@@ -176,4 +177,4 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
         library_parameters = get_node_parameters('library_function_hashing.json', node_name)
         create_parameters(dp, node_name, library_parameters, library_transformation_id)
 
-    return node_id, dp, node_name
+    return node_id, dp, node_name, library_transformation_id
