@@ -105,7 +105,7 @@ def get_node_columns(node: dict) -> list:
     return node_columns
 
 
-def create_data_processing(data: dict, node: dict, index: int, input_file_path: str):
+def create_data_processing(data: dict, node: dict, index: int, input_file_path: str, include_contracts: bool) -> tuple:
     """
     Processes a "normal" node (not Reader/Writer) from the JSON and returns:
       - node_id: identifier of the node (or its index)

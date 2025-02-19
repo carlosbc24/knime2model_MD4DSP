@@ -8,13 +8,14 @@ from parsers.dataProcessing import create_data_processing
 from utils.logger import print_and_log
 
 
-def process_nodes(data: dict, root: elementTree.Element) -> dict:
+def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool) -> dict:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
     Args:
         data (dict): The JSON data containing the workflow information.
         root (Element): The root XML element to which the nodes will be appended.
+        include_contracts (bool): Whether to include contracts in the XMI file.
 
     Returns:
         node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
@@ -35,7 +36,7 @@ def process_nodes(data: dict, root: elementTree.Element) -> dict:
             print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
 
         node_id = node.get("id", index)
-        n_id, dp_element, n_name = create_data_processing(data, node, index, input_file_path)
+        n_id, dp_element, n_name = create_data_processing(data, node, index, input_file_path, include_contracts)
         input_file_path = ""
 
         root.append(dp_element)
@@ -70,7 +71,7 @@ def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
             link_index += 1
 
 
-def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str):
+def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str, include_contracts: bool):
     """
     Converts a JSON structure of a KNIME workflow to a well-formatted XMI file.
     Processes nodes whose names end in "Reader" or "Writer" are not transformed
@@ -82,6 +83,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
         json_input_folder (str): Path to the folder containing the JSON files.
         workflow_filename (str): Name of the JSON file (without extension).
         xmi_output_folder (str): Path to the folder where the XMI file will be saved.
+        include_contracts (bool): Whether to include contracts in the XMI file.
     """
     # Load JSON data
     with (open(os.path.join(json_input_folder,
@@ -110,7 +112,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     })
 
     # Process nodes and links
-    node_mapping = process_nodes(data, root)
+    node_mapping = process_nodes(data, root, include_contracts)
     process_links(data, root, node_mapping)
 
     # Convert XML to string and format it
