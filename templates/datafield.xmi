@@ -1,5 +1,5 @@
-<datafield xsi:type="Workflow:Continuous" name="$transformation_name($column_name)_dataField_$inOut"
-dataType="$data_type" displayName="$column_name">
+<datafield xsi:type="Workflow:Continuous" name="${transformation_name}(${column_name})_${inOut}_dataField"
+dataType="${data_type}" displayName="${column_name}">
         <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@${inOut}Port
         .0/@datafielddefinition.0"/>
         <interval rightMargin="5.0" clousure="closedClosed"/>

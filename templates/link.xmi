@@ -1,1 +1,2 @@
-<link source="//@dataprocessing.$source" target="//@dataprocessing.$target" name="$transformation_name_source($source_columns)-$transformation_name_target($target_columns)"/>
+<link source="//@dataprocessing.${source}" target="//@dataprocessing.${target}" name="${transformation_name_source}
+(${source_columns})-${transformation_name_target}($target_columns)"/>

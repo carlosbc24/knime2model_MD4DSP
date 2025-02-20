@@ -105,7 +105,7 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         node_columns = get_node_columns(node)
         column_names = [node_column["column_name"] for node_column in node_columns]
         column_names_str = ", ".join(column_names)
-        print(f"Columns for node {node_id}: {column_names_str}")
+        print_and_log(f"Columns for node {node_id}: {column_names_str}")
 
         if library_transformation_name is not None:
             # Read the workflow template file
