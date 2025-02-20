@@ -1,0 +1,4 @@
+<datafield xsi:type="Workflow:$datafield_type" name="$transformation_name($column_name)_$inOut_dataField" dataType="$datatype" displayName="$column_name">
+    <$datafield_type_def href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+    <interval rightMargin="5.0" clousure="closedClosed"/>
+</datafield>

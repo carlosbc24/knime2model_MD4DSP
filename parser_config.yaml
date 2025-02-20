@@ -1,13 +1,11 @@
 
-input_knwf_folder : "input_KNIME_workflows" # Folder containing the selected KNIME workflows
-output_json_folder : "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
-output_xmi_folder : "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
+input_knwf_folder: "input_KNIME_workflows" # Folder containing the selected KNIME workflows
+output_json_folder: "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
+output_xmi_folder: "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
 
-include_contracts : True # Include contracts in the xmi output
+include_contracts: True # Include contracts in the xmi output
 node_mapping_desired_ratio: # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
 # By default every KNIME workflow stored in the input_knwf_folder will be parsed,
 # unless a specific workflow is specified in the following variable via its name string.
-workflow_filename :
-#workflow_filename : "01 Data Cleaning.knwf"
-
-templates_option: True # Option to use XML templates to convert json2xmi models
+workflow_filename: "01 Data Cleaning_1_node.knwf"
+#workflow_filename: "01 Data Cleaning.knwf"

@@ -7,7 +7,7 @@
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
     xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
-    name={$workflow_name}>
-    {$data_processings}
-    {$links}
+    name="$workflow_name">
+    $data_processing_list
+    $link_list
 </Workflow:Workflow>
