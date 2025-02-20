@@ -2,13 +2,13 @@ import os
 import json
 from xml.dom import minidom
 import xml.etree.ElementTree as elementTree
-
+from tabulate import tabulate
 from parsers.dataLink import create_link
 from parsers.dataProcessing import create_data_processing
 from utils.logger import print_and_log
 
 
-def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool = None) -> tuple[dict, int, int]:
+def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool = None) -> tuple[dict, int, int, dict]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -21,6 +21,7 @@ def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool
         node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
         nodes_cont (int): Number of nodes in the workflow.
         mapped_nodes (int): Number of nodes that were mapped to a library transformation.
+        node_names_count (dict): Dictionary containing the count of nodes that were not mapped to a library transformation.
     """
     node_mapping = {}
 
@@ -28,6 +29,8 @@ def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool
     input_file_path = ""
     index = 0
     mapped_nodes = 0
+
+    no_mapped_nodes_names = []
 
     for node in nodes:
         node_id = node.get("id", index)
@@ -46,6 +49,8 @@ def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool
 
         if library_transformation_id is not None:
             mapped_nodes += 1
+        else:
+            no_mapped_nodes_names.append(n_name)
 
         root.append(dp_element)
         node_mapping[node_id] = {"element": dp_element, "index": index, "name": n_name}
@@ -54,7 +59,19 @@ def process_nodes(data: dict, root: elementTree.Element, include_contracts: bool
 
     nodes_cont = len(nodes)
 
-    return node_mapping, nodes_cont, mapped_nodes
+    # -------------------------------
+    node_names_count = {}
+    for n in no_mapped_nodes_names:
+        node_names_count[n] = node_names_count.get(n, 0) + 1
+
+    # Convert the dictionary to a list of lists for tabulate
+    table_data = [[name, count] for name, count in node_names_count.items()]
+
+    # Print the table
+    print(tabulate(table_data, headers=["Workflow Node Name not mapped", "Count"], tablefmt="grid"))
+    # -------------------------------
+
+    return node_mapping, nodes_cont, mapped_nodes, node_names_count
 
 
 def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
@@ -82,7 +99,7 @@ def process_links(data: dict, root: elementTree.Element, node_mapping: dict):
 
 
 def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,
-                         include_contracts: bool, node_mapping_desired_ratio: float = None) -> tuple[int, int]:
+                         include_contracts: bool, node_mapping_desired_ratio: float = None) -> tuple[int, int, dict]:
     """
     Converts a JSON structure of a KNIME workflow to a well-formatted XMI file.
     Processes nodes whose names end in "Reader" or "Writer" are not transformed
@@ -100,6 +117,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     Returns:
         int: Number of nodes that were mapped to a library transformation.
         int: Number of nodes in the workflow.
+        dict: Dictionary containing the count of nodes that were not mapped to a library transformation.
     """
     # Load JSON data
     with (open(os.path.join(json_input_folder,
@@ -128,7 +146,7 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
     })
 
     # Process nodes and links
-    node_mapping, nodes_cont, mapped_nodes = process_nodes(data, root, include_contracts)
+    node_mapping, nodes_cont, mapped_nodes, no_mapped_nodes = process_nodes(data, root, include_contracts)
     process_links(data, root, node_mapping)
 
     # Convert XML to string and format it
@@ -138,12 +156,17 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
 
     # Save formatted XML to file
     if node_mapping_desired_ratio is not None:
-        if (mapped_nodes/nodes_cont) < node_mapping_desired_ratio:
-            print_and_log(f"WARNING: Only {mapped_nodes}/{nodes_cont} nodes were mapped to a library transformation (less than {node_mapping_desired_ratio*100}%)")
-            output_xmi_filepath = os.path.join(xmi_output_folder, f"less_than_{node_mapping_desired_ratio*100}%_nodes_mapped", workflow_filename + ".xmi")
+        if (mapped_nodes / nodes_cont) < node_mapping_desired_ratio:
+            print_and_log(
+                f"WARNING: Only {mapped_nodes}/{nodes_cont} nodes were mapped to a library transformation (less than {node_mapping_desired_ratio * 100}%)")
+            output_xmi_filepath = os.path.join(xmi_output_folder,
+                                               f"less_than_{node_mapping_desired_ratio * 100}%_nodes_mapped",
+                                               workflow_filename + ".xmi")
         else:
-            print_and_log(f"{mapped_nodes}/{nodes_cont} nodes mapped successfully to their model transformation ({node_mapping_desired_ratio*100}% or more)")
-            output_xmi_filepath = os.path.join(xmi_output_folder, f"{node_mapping_desired_ratio*100}%_or_more_nodes_mapped",
+            print_and_log(
+                f"{mapped_nodes}/{nodes_cont} nodes mapped successfully to their model transformation ({node_mapping_desired_ratio * 100}% or more)")
+            output_xmi_filepath = os.path.join(xmi_output_folder,
+                                               f"{node_mapping_desired_ratio * 100}%_or_more_nodes_mapped",
                                                workflow_filename + ".xmi")
     else:
         output_xmi_filepath = os.path.join(xmi_output_folder, workflow_filename + ".xmi")
@@ -153,4 +176,4 @@ def json_to_xmi_workflow(json_input_folder: str, workflow_filename: str, xmi_out
 
     print_and_log(f"Workflow XMI saved to: {output_xmi_filepath}")
 
-    return mapped_nodes, nodes_cont
+    return mapped_nodes, nodes_cont, no_mapped_nodes
