@@ -182,9 +182,31 @@ def process_links(data: dict, node_mapping: dict) -> str:
             with open("templates/link.xmi", "r") as file:
                 link_template = Template(file.read())
 
+            source_transformation_name = node_mapping[source_id]["name"]
+            target_transformation_name = node_mapping[dest_id]["name"]
+
+            source_node = data["nodes"][source_id]
+            target_node = data["nodes"][dest_id]
+
+            if "included_columns" in source_node["parameters"]:
+                source_columns = source_node["parameters"]["included_columns"]
+                source_columns_str = ", ".join([column["column_name"] for column in source_columns])
+            else:
+                source_columns_str = ""
+
+            if "included_columns" in target_node["parameters"]:
+                target_columns = target_node["parameters"]["included_columns"]
+                target_columns_str = ", ".join([column["column_name"] for column in target_columns])
+            else:
+                target_columns_str = ""
+
             link_values = {
                 "source": source_id,
                 "target": dest_id,
+                "transformation_name_source": source_transformation_name,
+                "transformation_name_target": target_transformation_name,
+                "source_columns": source_columns_str,
+                "target_columns": target_columns_str
             }
 
             # Fill the template
