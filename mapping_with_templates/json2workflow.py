@@ -1,17 +1,86 @@
 import os
 import json
-from xml.dom import minidom
-import xml.etree.ElementTree as elementTree
 from string import Template
-from parsers.dataLink import create_link
-from parsers.dataProcessing import create_data_processing, get_library_transformation_name
+from parsers.dataProcessing import get_library_transformation_name
 from utils.logger import print_and_log
 
-def process_nodes(nodes: list) -> tuple[dict, str]:
+
+def get_node_columns(node: dict) -> list:
+    """
+    Get the columns from the node parameters.
+    Args:
+        node: (dict) The node from the JSON data.
+
+    Returns:
+        node_columns: (list) The list of columns from the node parameters.
+
+    """
+    node_columns = []
+
+    # Add node columns if they exist
+    if "columns" in node["parameters"]:
+        node_columns = node["parameters"]["columns"]
+
+    # Add included columns if they exist (from column filter)
+    if "included_columns" in node["parameters"]:
+        if node_columns == []:
+            node_columns = node["parameters"]["included_columns"]
+        else:
+            node_columns.append(node["parameters"]["included_columns"])
+
+    return node_columns
+
+
+def generate_datafields_content(node_columns: list, library_transformation_name: str) -> tuple:
+    """
+    Generates the filled content for input and output datafields.
+
+    Args:
+        node_columns (list): List of node columns.
+        library_transformation_name (str): The name of the library transformation.
+
+    Returns:
+        tuple: Filled content for input and output datafields.
+    """
+    input_datafields_filled_content = ""
+    output_datafields_filled_content = ""
+
+    for node_column in node_columns:
+        column_name = node_column["column_name"]
+        column_type = node_column["column_type"]
+
+        with open(f"templates/datafield.xmi", "r") as file:
+            datafield_template = Template(file.read())
+
+            input_datafield_values = {
+                "column_name": column_name,
+                "transformation_name": library_transformation_name,
+                "data_type": "String" if column_type == "xstring" else "Integer",
+                "inOut": "input"
+            }
+
+            input_datafields_filled_content += datafield_template.safe_substitute(
+                input_datafield_values) + "\n"
+
+            output_datafield_values = {
+                "column_name": column_name,
+                "transformation_name": library_transformation_name,
+                "data_type": "String" if column_type == "xstring" else "Integer",
+                "inOut": "output"
+            }
+
+            output_datafields_filled_content += datafield_template.safe_substitute(
+                output_datafield_values) + "\n"
+
+    return input_datafields_filled_content, output_datafields_filled_content
+
+
+def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
     Args:
+        data: (dict) The JSON data containing the workflow information.
         nodes: (list) The list of nodes from the JSON data.
 
     Returns:
@@ -32,10 +101,18 @@ def process_nodes(nodes: list) -> tuple[dict, str]:
         # Get library transformation name
         library_transformation_name = get_library_transformation_name('library_function_hashing.json', node_name)
 
+        # Get column names
+        node_columns = get_node_columns(node)
+        column_names = [node_column["column_name"] for node_column in node_columns]
+        column_names_str = ", ".join(column_names)
+        print(f"Columns for node {node_id}: {column_names_str}")
+
         if library_transformation_name is not None:
             # Read the workflow template file
             with open(f"templates/{library_transformation_name}DataProcessing.xmi", "r") as file:
                 dataProcessing_template = Template(file.read())
+
+            input_datafields_filled_content, output_datafields_filled_content = generate_datafields_content(node_columns, library_transformation_name)
 
             dataProcessing_values = {
                 "transformation_name": library_transformation_name,
@@ -45,7 +122,11 @@ def process_nodes(nodes: list) -> tuple[dict, str]:
                 "out": "",
                 "input_filepath": f"{library_transformation_name}_dataDictionary.csv",
                 "output_filepath": f"{library_transformation_name}_dataDictionary.csv",
-                "dataField": "",
+                "input_datafields": input_datafields_filled_content,
+                "output_datafields": output_datafields_filled_content,
+                "datafield_refs": "",
+                "column_names": column_names_str,
+                "fields": "",
             }
 
         else:
@@ -61,7 +142,10 @@ def process_nodes(nodes: list) -> tuple[dict, str]:
                 "out": "",
                 "input_filepath": input_file_path if input_file_path else "",
                 "output_filepath": "",
-                "dataField": "",
+                "datafields": input_datafields_filled_content,
+                "column_names": column_names_str,
+                "fields": "",
+                "datafield_refs": ""
             }
 
         # Fill the template
@@ -159,17 +243,16 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         nodes = data.get("nodes", [])
         connections = data.get("connections", [])
 
+        # Preprocess nodes and connections to map IDs to a new range (0 to n-1)
         nodes, connections = preprocess_nodes_connections(nodes, connections)
 
-        data_processing_filled_content = ""
-
-        # Process nodes
-        node_mapping, data_processing_filled_content = process_nodes(nodes)
+        # Process nodes and get the node mapping
+        node_mapping, data_processing_filled_content = process_nodes(data, nodes)
 
         # Process links
         links_filled_content = process_links(data, node_mapping)
 
-        # Define the replacement values
+        # Define the replacement values to the workflow template
         workflow_values = {
             "workflow_name": workflow_filename,
             "data_processing_list": data_processing_filled_content,

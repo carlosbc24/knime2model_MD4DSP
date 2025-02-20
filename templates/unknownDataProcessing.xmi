@@ -7,7 +7,8 @@
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition xsi:type="Library:Transformation" href="library_validation.xmi#//@dataprocessingdefinition.3"/>
-    <parameter xsi:type="Workflow:Field" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_param_field" dataField="$dataField">
+    <parameter xsi:type="Workflow:Field" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq,
+    interest, stuemail, CONTACT_CODE1)_param_field" dataField="$datafield_refs">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_PRECONDITION">
@@ -17,11 +18,7 @@
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
+        $fields
       </contract>
     </contract>
     <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_POSTCONDITION">
@@ -31,11 +28,7 @@
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
+        $fields
       </contract>
     </contract>
   </dataprocessing>

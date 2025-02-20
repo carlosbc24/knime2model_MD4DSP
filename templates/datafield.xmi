@@ -1,4 +1,6 @@
-<datafield xsi:type="Workflow:$datafield_type" name="$transformation_name($column_name)_$inOut_dataField" dataType="$datatype" displayName="$column_name">
-    <$datafield_type_def href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-    <interval rightMargin="5.0" clousure="closedClosed"/>
-</datafield>
+<datafield xsi:type="Workflow:Continuous" name="$transformation_name($column_name)_dataField_$inOut"
+dataType="$data_type" displayName="$column_name">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@${inOut}Port
+        .0/@datafielddefinition.0"/>
+        <interval rightMargin="5.0" clousure="closedClosed"/>
+      </datafield>

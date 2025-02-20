@@ -1,63 +1,34 @@
 <dataprocessing xsi:type="Workflow:DataProcessing" outgoing="$outgoing" incoming="$incoming" in="$in" out="$out" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)">
-    <inputPort fileName="$input_filepath" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_input_dataDictionary" out="$out">
-      <datafield xsi:type="Workflow:Continuous" name="$transformation_name(TRAVEL_INIT_CNTCTS)_input_dataField" dataType="Integer" displayName="TRAVEL_INIT_CNTCTS">
-        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-        <interval rightMargin="5.0" clousure="closedClosed"/>
-      </datafield>
-      <datafield xsi:type="Workflow:Continuous" name="$transformation_name(REFERRAL_CNCTS)_input_dataField" displayName="REFERRAL_CNTCTS">
-        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-        <interval rightMargin="5.0" clousure="closedClosed"/>
-      </datafield>
-      <datafield xsi:type="Workflow:Continuous" name="$transformation_name(telecq)_input_dataField" displayName="telecq">
-        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-        <interval leftMargin="1.0" rightMargin="4.0" clousure="closedClosed"/>
-      </datafield>
-      <datafield xsi:type="Workflow:Continuous" name="$transformation_name(interest)_input_dataField" displayName="interest">
-        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-        <interval rightMargin="3.0" clousure="closedClosed"/>
-      </datafield>
-      <datafield xsi:type="Workflow:Continuous" name="$transformation_name(stuemail)_input_dataField" displayName="stuemail">
-        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-        <interval rightMargin="1.0" clousure="closedClosed"/>
-      </datafield>
-      <datafield xsi:type="Workflow:Categorical" name="$transformation_name(CONTACT_CODE1)_input_dataField" displayName="CONTACT_CODE1">
-        <categoricalDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
+    <inputPort fileName="$input_filepath" name="$transformation_name($column_names)_input_dataDictionary" out="$out">
+      $input_datafields
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
-    <outputPort fileName="$output_filepath" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_output_dataDictionary" in="$in">
+    <outputPort fileName="$output_filepath" name="$transformation_name($column_names)_output_dataDictionary" in="$in">
+      $output_datafields
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition xsi:type="Library:Transformation" href="library_validation.xmi#//@dataprocessingdefinition.3"/>
-    <parameter xsi:type="Workflow:Field" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_param_field" dataField="$dataField">
+    <parameter xsi:type="Workflow:Field" name="$transformation_name($column_names)_param_field" dataField="$datafield_refs">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
-    <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_PRECONDITION">
+    <contract name="$transformation_name($column_names)_PRECONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
-      <contract xsi:type="Contract:FieldRange" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_PRE_fieldRange">
+      <contract xsi:type="Contract:FieldRange" name="$transformation_name($column_names)_PRE_fieldRange">
         <in xsi:type="Contract:DataDictionary" dataDictionary="$in">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
+        $fields
       </contract>
     </contract>
-    <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_POSTCONDITION">
+    <contract name="$transformation_name($column_names)_POSTCONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
-      <contract xsi:type="Contract:FieldRange" type="POSTCONDITION" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_POST_fieldRange" belongOp="NOTBELONG">
+      <contract xsi:type="Contract:FieldRange" type="POSTCONDITION" name="$transformation_name($column_names)_POST_fieldRange" belongOp="NOTBELONG">
         <in xsi:type="Contract:DataDictionary" dataDictionary="$in">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
-        <field dataField="$dataField"/>
+        $fields
       </contract>
     </contract>
   </dataprocessing>
