@@ -1,34 +1,35 @@
-<dataprocessing xsi:type="Workflow:DataProcessing" outgoing="$outgoing" incoming="$incoming" in="$in" out="$out" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)">
-    <inputPort fileName="rowFilter_output_dataDictionary.csv" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_input_dataDictionary" out="$out">
-      $datafields
+<dataprocessing xsi:type="Workflow:DataProcessing" outgoing="" incoming="" in="" out="" name="columnFilter({{ dataprocessing.columns.names }})">
+    <inputPort fileName="rowFilter_output_dataDictionary.csv" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.columns.names }})_input_dataDictionary" out="">
+      <datafield xsi:type="Workflow:Continuous" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column }})_input_dataField" dataType="Integer" displayName="{{ dataprocessing.column_names }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+        <interval rightMargin="5.0" clousure="closedClosed"/>
+      </datafield>
+      <datafield xsi:type="Workflow:Continuous" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column_names }})_input_dataField" displayName="{{ dataprocessing.column_names }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+        <interval rightMargin="5.0" clousure="closedClosed"/>
+      </datafield>
+      <datafield xsi:type="Workflow:Continuous" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column_names }})_input_dataField" displayName="{{ dataprocessing.column_names }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+        <interval leftMargin="1.0" rightMargin="4.0" clousure="closedClosed"/>
+      </datafield>
+      <datafield xsi:type="Workflow:Continuous" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column_names }})_input_dataField" displayName="{{ dataprocessing.column_names }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+        <interval rightMargin="3.0" clousure="closedClosed"/>
+      </datafield>
+      <datafield xsi:type="Workflow:Continuous" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column_names }})_input_dataField" displayName="{{ dataprocessing.column_names }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
+        <interval rightMargin="1.0" clousure="closedClosed"/>
+      </datafield>
+      <datafield xsi:type="Workflow:Categorical" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.column_names }})_input_dataField" displayName="{{ dataprocessing.column_names }}">
+        <categoricalDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
-    <outputPort fileName="$transformation_name_output_dataDictionary.csv" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_output_dataDictionary" in="$in">
+    <outputPort fileName="{{ dataprocessing.transformation.name }}_output_dataDictionary.csv" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.columns.names }})_output_dataDictionary" in="">
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition xsi:type="Library:Transformation" href="library_validation.xmi#//@dataprocessingdefinition.3"/>
-    <parameter xsi:type="Workflow:Field" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq,
-    interest, stuemail, CONTACT_CODE1)_param_field" dataField="$datafield_refs">
+    <parameter xsi:type="Workflow:Field" name="{{ dataprocessing.transformation.name }}({{ dataprocessing.columns.names }})_param_field" dataField="">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
-    <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_PRECONDITION">
-      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
-      <contract xsi:type="Contract:FieldRange" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_PRE_fieldRange">
-        <in xsi:type="Contract:DataDictionary" dataDictionary="$in">
-          <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
-        </in>
-        <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
-        $fields
-      </contract>
-    </contract>
-    <contract name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_POSTCONDITION">
-      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
-      <contract xsi:type="Contract:FieldRange" type="POSTCONDITION" name="$transformation_name(TRAVEL_INIT_CNTCTS, REFERRAL_CNCTS, telecq, interest, stuemail, CONTACT_CODE1)_POST_fieldRange" belongOp="NOTBELONG">
-        <in xsi:type="Contract:DataDictionary" dataDictionary="$in">
-          <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
-        </in>
-        <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
-        $fields
-      </contract>
-    </contract>
   </dataprocessing>

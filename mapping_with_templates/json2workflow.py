@@ -3,7 +3,7 @@ import json
 from string import Template
 from parsers.dataProcessing import get_library_transformation_name
 from utils.logger import print_and_log
-
+from jinja2 import Template as JinjaTemplate
 
 def get_node_columns(node: dict) -> list:
     """
@@ -85,10 +85,10 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
 
     Returns:
         node_mapping: (dict) The mapping of node IDs to their XML elements and metadata.
-        dataProcessing_filled_content: (str) The filled content of the data processing nodes.
+        dataProcessings_filled_content: (str) The filled content of the data processing nodes.
     """
     node_mapping = {}
-    dataProcessing_filled_content = ""
+    dataProcessings_filled_content = ""
     for index, node in enumerate(nodes):
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
@@ -107,54 +107,39 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         column_names_str = ", ".join(column_names)
         print_and_log(f"Columns for node {node_id}: {column_names_str}")
 
+        dataprocessing = {
+            "transformation": {"name": ""},
+            "column_names": column_names_str,
+            "columns": [
+                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+                for column in node_columns
+            ],
+            "outgoing": "",
+            "incoming": ""
+        }
+
+        # Skip nodes with empty columns list
+        if not dataprocessing["columns"]:
+            print(f"Skipping node {node_id} with empty columns list")
+
         if library_transformation_name is not None:
             # Read the workflow template file
             with open(f"templates/{library_transformation_name}DataProcessing.xmi", "r") as file:
-                dataProcessing_template = Template(file.read())
+                dataProcessing_jinja_template = JinjaTemplate(file.read())
 
-            input_datafields_filled_content, output_datafields_filled_content = generate_datafields_content(node_columns, library_transformation_name)
-
-            dataProcessing_values = {
-                "transformation_name": library_transformation_name,
-                "incoming": "",
-                "outgoing": "",
-                "in": "",
-                "out": "",
-                "input_filepath": f"{library_transformation_name}_dataDictionary.csv",
-                "output_filepath": f"{library_transformation_name}_dataDictionary.csv",
-                "input_datafields": input_datafields_filled_content,
-                "output_datafields": output_datafields_filled_content,
-                "datafield_refs": "",
-                "column_names": column_names_str,
-                "fields": "",
-            }
+            dataprocessing["transformation"]["name"] = library_transformation_name
 
         else:
             # Read the workflow template file
             with open(f"templates/unknownDataProcessing.xmi", "r") as file:
-                dataProcessing_template = Template(file.read())
+                dataProcessing_jinja_template = JinjaTemplate(file.read())
 
-            dataProcessing_values = {
-                "transformation_name": "",
-                "incoming": "",
-                "outgoing": "",
-                "in": "",
-                "out": "",
-                "input_filepath": input_file_path if input_file_path else "",
-                "output_filepath": "",
-                "datafields": input_datafields_filled_content,
-                "column_names": column_names_str,
-                "fields": "",
-                "datafield_refs": ""
-            }
+        # Fill the template with jinja2
+        dataProcessings_filled_content += dataProcessing_jinja_template.render(dataprocessing=dataprocessing) + "\n"
 
-        # Fill the template
-        dataProcessing_filled_content += dataProcessing_template.safe_substitute(
-            dataProcessing_values
-        ) + "\n"
         node_mapping[node_id] = {"index": index, "name": node_name}
 
-    return node_mapping, dataProcessing_filled_content
+    return node_mapping, dataProcessings_filled_content
 
 
 def process_links(data: dict, node_mapping: dict) -> str:

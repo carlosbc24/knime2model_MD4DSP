@@ -1,9 +1,11 @@
 import os
 import yaml
-
 from mapping.knwf2json import extract_data_knime2json
 from mapping_with_templates.json2workflow import json_to_xmi_workflow_with_templates
 from utils.logger import set_logger
+
+# Set logger
+set_logger(logger_name="mapping_with_templates")
 
 # Read yaml file configuration variables
 with open("parser_config.yaml", "r") as file:
@@ -12,9 +14,6 @@ with open("parser_config.yaml", "r") as file:
     output_json_folder = config["output_json_folder"]
     output_xmi_folder = config["output_xmi_folder"]
     workflow_filename = config["workflow_filename"]
-
-# Set logger
-set_logger(logger_name="mapping_with_templates")
 
 # Extract data from a specific .knwf file
 if workflow_filename is not None and workflow_filename != "":
