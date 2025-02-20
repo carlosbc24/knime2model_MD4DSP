@@ -40,7 +40,7 @@ else:
             mapped_nodes, nodes_count, no_mapped_nodes = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
                                                                               include_contracts, node_mapping_desired_ratio)
 
-            print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
+            print(f"{workflow_name.ljust(10)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
 
             for node in no_mapped_nodes:
                 if node not in no_mapped_nodes_global:
