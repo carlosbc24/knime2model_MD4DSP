@@ -1,34 +1,48 @@
 import os
 import json
 from string import Template
-from parsers.dataProcessing import get_library_transformation_name
+
+from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from utils.logger import print_and_log
 from jinja2 import Template as JinjaTemplate
 
-def get_node_columns(node: dict) -> list:
+
+def get_input_columns(node: dict) -> list:
     """
-    Get the columns from the node parameters.
+    Get the input columns from the node parameters.
     Args:
         node: (dict) The node from the JSON data.
 
     Returns:
-        node_columns: (list) The list of columns from the node parameters.
+        in_columns: (list) The list of input columns.
 
     """
-    node_columns = []
-
-    # Add node columns if they exist
-    if "columns" in node["parameters"]:
-        node_columns = node["parameters"]["columns"]
+    in_columns = []
 
     # Add included columns if they exist (from column filter)
-    if "included_columns" in node["parameters"]:
-        if node_columns == []:
-            node_columns = node["parameters"]["included_columns"]
-        else:
-            node_columns.append(node["parameters"]["included_columns"])
+    if "in_columns" in node["parameters"]:
+        in_columns = node["parameters"]["in_columns"]
 
-    return node_columns
+    return in_columns
+
+
+def get_output_columns(node: dict) -> list:
+    """
+    Get the output columns from the node parameters.
+    Args:
+        node: (dict) The node from the JSON data.
+
+    Returns:
+        out_columns: (list) The list of output columns.
+
+    """
+    out_columns = []
+
+    # Add excluded columns if they exist (from column filter)
+    if "out_columns" in node["parameters"]:
+        out_columns = node["parameters"]["out_columns"]
+
+    return out_columns
 
 
 def generate_datafields_content(node_columns: list, library_transformation_name: str) -> tuple:
@@ -75,6 +89,9 @@ def generate_datafields_content(node_columns: list, library_transformation_name:
     return input_datafields_filled_content, output_datafields_filled_content
 
 
+
+
+
 def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
@@ -89,6 +106,8 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
     """
     node_mapping = {}
     dataProcessings_filled_content = ""
+    library_transformation_names = get_library_transformation_names('library_hashing/library_transformation_names.json')
+
     for index, node in enumerate(nodes):
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
@@ -99,44 +118,47 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
             print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
 
         # Get library transformation name
-        library_transformation_name = get_library_transformation_name('library_function_hashing.json', node_name)
+        library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
+                                                                      node_name)
 
-        # Get column names
-        node_columns = get_node_columns(node)
-        column_names = [node_column["column_name"] for node_column in node_columns]
-        column_names_str = ", ".join(column_names)
-        print_and_log(f"Columns for node {node_id}: {column_names_str}")
+        included_columns = get_input_columns(node)
+        included_column_names = [included_column["column_name"] for included_column in included_columns]
+        included_column_names_str = ", ".join(included_column_names)
+        print_and_log(f"Included columns for node {node_id}: {included_column_names_str}")
+
+        excluded_columns = get_output_columns(node)
+        excluded_column_names = [excluded_column["column_name"] for excluded_column in excluded_columns]
+        excluded_column_names_str = ", ".join(excluded_column_names)
+        print_and_log(f"Excluded columns for node {node_id}: {excluded_column_names_str}")
 
         dataprocessing = {
-            "transformation": {"name": ""},
-            "column_names": column_names_str,
-            "columns": [
+            "transformation": {"name": "", "KNIME_name": node_name},
+            "column_names": included_column_names_str,
+            "in_columns": [
                 {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                for column in node_columns
+                for column in included_columns
             ],
-            "outgoing": "",
-            "incoming": ""
+            "out_columns": [
+                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+                for column in excluded_columns
+            ]
         }
 
-        # Skip nodes with empty columns list
-        if not dataprocessing["columns"]:
-            print(f"Skipping node {node_id} with empty columns list")
-
         if library_transformation_name is not None:
-            # Read the workflow template file
-            with open(f"templates/{library_transformation_name}DataProcessing.xmi", "r") as file:
-                dataProcessing_jinja_template = JinjaTemplate(file.read())
 
-            dataprocessing["transformation"]["name"] = library_transformation_name
+            if library_transformation_name in library_transformation_names:
+                # Read the workflow template file
+                with open(f"templates/columnFilterDataProcessing.xmi", "r") as file:
+                    data_processing_jinja_template = JinjaTemplate(file.read())
+                    dataprocessing["transformation"]["name"] = library_transformation_name
 
         else:
             # Read the workflow template file
             with open(f"templates/unknownDataProcessing.xmi", "r") as file:
-                dataProcessing_jinja_template = JinjaTemplate(file.read())
+                data_processing_jinja_template = JinjaTemplate(file.read())
 
         # Fill the template with jinja2
-        dataProcessings_filled_content += dataProcessing_jinja_template.render(dataprocessing=dataprocessing) + "\n"
-
+        dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing) + "\n"
         node_mapping[node_id] = {"index": index, "name": node_name}
 
     return node_mapping, dataProcessings_filled_content

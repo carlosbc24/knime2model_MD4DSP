@@ -3,56 +3,8 @@ from parsers.dataDictionary import create_input_port, create_output_port
 import json
 
 from parsers.parameter import create_parameters, get_node_parameters
+from utils.library_functions import get_library_transformation_name, get_library_transformation_id
 from utils.logger import print_and_log
-
-
-def get_library_transformation_id(json_file_path, node_name):
-    """
-    Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
-    Extracts the value of the library_transformation_id attribute from the first matching element.
-
-    Args:
-        json_file_path (str): Path to the JSON file.
-        node_name (str): Name of the node to search for.
-
-    Returns:
-        int: Value of the library_transformation_id attribute of the first matching element.
-    """
-    with open(json_file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-
-    functions_hashing = data.get("functions_hashing", [])
-
-    for function in functions_hashing:
-        if node_name in function:
-            return function[node_name].get("library_transformation_id")
-
-    return None
-
-
-def get_library_transformation_name(json_file_path, node_name):
-    """
-    Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
-    Extracts the value of the library_transformation_id attribute from the first matching element.
-
-    Args:
-        json_file_path (str): Path to the JSON file.
-        node_name (str): Name of the node to search for.
-
-    Returns:
-        string: Value of the library_transformation_id attribute of the first matching node
-    """
-    with open(json_file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-
-    functions_hashing = data.get("functions_hashing", [])
-
-    for function in functions_hashing:
-        if node_name in function:
-            return function[node_name].get("library_transformation_name")
-
-    return None
-
 
 def get_dest_node_from_connections(data: dict, node_id: int) -> str | None:
     """
@@ -126,7 +78,8 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
     node_name = node.get("node_name", f"Node_{index}")
 
     # Get library transformation name
-    library_transformation_name = get_library_transformation_name('library_function_hashing.json', node_name)
+    library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
+                                                                  node_name)
 
     # Create dataprocessing element
     if library_transformation_name is None:
@@ -161,7 +114,8 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
     create_output_port(dp, base_name, node_name, index, dp_columns, dest_node_name)
 
     # Get library transformation ID
-    library_transformation_id = get_library_transformation_id('library_function_hashing.json', node_name)
+    library_transformation_id = get_library_transformation_id('library_hashing/library_function_hashing.json',
+                                                              node_name)
 
     if library_transformation_id is None:
         print_and_log(f"WARNING: No library transformation ID found for node {node_name}")
@@ -174,7 +128,7 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
         })
 
         # Create parameters
-        library_parameters = get_node_parameters('library_function_hashing.json', node_name)
+        library_parameters = get_node_parameters('library_hashing/library_function_hashing.json', node_name)
         create_parameters(dp, node_name, library_parameters, library_transformation_id)
 
     return node_id, dp, node_name, library_transformation_id
