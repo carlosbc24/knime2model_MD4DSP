@@ -17,6 +17,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
     {% endfor %}
+    {% for precondition in preconditions -%}
     <contract
         name="Mapping({{ dataprocessing.columns.names }})_PRECONDITION">
       <contractDefinition
@@ -47,6 +48,8 @@
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    {% endfor %}
+    {% for postcondition in postconditions -%}
     <contract
         name="Mapping({{ dataprocessing.columns.names }})_POSTCONDITION">
       <contractDefinition
@@ -79,6 +82,8 @@
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition"/>
       </contract>
     </contract>
+    {% endfor %}
+    {% for invariant in invariants -%}
     <contract
         name="Mapping({{ dataprocessing.columns.names }})_INVARIANT">
       <contractDefinition
@@ -155,6 +160,7 @@
         </then>
       </contract>
     </contract>
+    {% endfor %}
     <inputPort
         path="{{ dataprocessing.inputPath }}"
         name="Mapping({{ dataprocessing.columns.names }})_input_dataDictionary">
