@@ -1,0 +1,186 @@
+<dataprocessing
+      outgoing=""
+      incoming=""
+      name="mapping({{ dataprocessing.columns.names }})"
+      in=""
+      out="">
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.4"/>
+    {% for param in parameters -%}
+    <parameter
+        xsi:type="Workflow:Map"
+        name="mapping({{ dataprocessing.columns.names }})_param_map_{{ param.name }}"
+        inValue=""
+        outvalue="">
+      <mapDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
+    </parameter>
+    {% endfor %}
+    <contract
+        name="Mapping({{ dataprocessing.columns.names }})_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="mapping({{ dataprocessing.columns.names }})_PRE_valueRange">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.6/@inputPort.0/@datafield.0"
+            name="mapping({{ dataprocessing.columns.names }})_PRE_valueRange_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@in"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            value="">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <value
+            xsi:type="Contract:FixValue"
+            value="">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="Mapping({{ dataprocessing.columns.names }})_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="mapping({{ dataprocessing.columns.names }})_POST_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.6/@outputPort.0/@datafield.0"
+            name="mapping({{ dataprocessing.columns.names }})_POST_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@in"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            value="">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <value
+            xsi:type="Contract:FixValue"
+            value="">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="Mapping({{ dataprocessing.columns.names }})_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="Mapping({{ dataprocessing.columns.names }})_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.6/@inputPort.0/@datafield.0"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@in"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.6/@outputPort.0/@datafield.0"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_output_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@out"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.6/@contract.2/@contract/@then.0"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_IF_A">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:FixValue"
+              value="">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <if
+            then="//@dataprocessing.6/@contract.2/@contract/@then.1"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_IF_N">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:FixValue"
+              value="">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then
+            if="//@dataprocessing.6/@contract.2/@contract/@if.0"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_THEN_A">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:FixValue"
+              value=""
+              dataType="">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+        <then
+            if="//@dataprocessing.6/@contract.2/@contract/@if.1"
+            name="Mapping({{ dataprocessing.columns.names }})_INV_THEN_N">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:FixValue"
+              value=""
+              dataType="">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+    <inputPort
+        path="{{ dataprocessing.inputPath }}"
+        name="Mapping({{ dataprocessing.columns.names }})_input_dataDictionary">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="Mapping({{ dataprocessing.columns.names }})_input_dataField"
+          displayName="({{ dataprocessing.columns.names }})"
+          out="//@dataprocessing.6/@outputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        path="{{ dataprocessing.outputPath }}"
+        name="Mapping({{ dataprocessing.columns.names }})_output_dataDictionary">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="Mapping({{ dataprocessing.columns.names }})_output_dataField"
+          displayName="({{ dataprocessing.columns.names }})"
+          in="//@dataprocessing.6/@inputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.0/@outputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@outputPort.0"/>
+    </outputPort>
+  </dataprocessing>
