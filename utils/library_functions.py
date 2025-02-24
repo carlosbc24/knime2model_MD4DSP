@@ -1,7 +1,7 @@
 import json
 
 
-def get_library_transformation_id(json_file_path, node_name):
+def get_library_transformation_id(json_file_path: str, node_name: str) -> int:
     """
     Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
     Extracts the value of the library_transformation_id attribute from the first matching element.
@@ -45,7 +45,7 @@ def get_library_transformation_names(json_file_path: str) -> list:
     return librery_transformations_names
 
 
-def get_library_transformation_name(json_file_path, node_name):
+def get_library_transformation_name(json_file_path: str, node_name: str) -> str:
     """
     Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
     Extracts the value of the library_transformation_id attribute from the first matching element.

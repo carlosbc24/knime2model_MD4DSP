@@ -78,7 +78,7 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
     python3 -m mapping_with_templates.knwf2workflow
     ```
 
-9. (Optional) Remove the environment created previously:
+10. (Optional) Remove the environment created previously:
    ```bash
    conda deactivate
    conda remove --name kn2wf_mapping --all --yes

@@ -1,31 +1,44 @@
-<dataprocessing xsi:type="Workflow:DataProcessing" outgoing="" incoming="" in="" out="" name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})">
+<dataprocessing xsi:type="Workflow:DataProcessing"
+                outgoing=""
+                incoming=""
+                in=""
+                out=""
+                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})">
     <inputPort fileName="rowFilter_output_dataDictionary.csv"
-               name="{{ dataprocessing.transformation.KNIME_name }} from KNIME({{ dataprocessing.column_names }})_input_dataDictionary" out="">
+               name="{{ dataprocessing.transformation.KNIME_name }} from KNIME({{ dataprocessing.column_names }})_input_dataDictionary"
+               out="">
         {% for in_column in dataprocessing.in_columns %}
         <datafield xsi:type="Workflow:Continuous"
              name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_input_dataField"
              displayName="{{ in_column.name }}">
             <continuousDef
                  href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
-            <interval rightMargin="1.0" clousure="closedClosed"/>
+            <interval rightMargin="1.0"
+                      clousure="closedClosed"/>
         </datafield>
        {% endfor %}
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
-    <outputPort fileName="{{ dataprocessing.transformation.KNIME_name }}_output_dataDictionary.csv" name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataDictionary" in="">
+    <outputPort fileName="{{ dataprocessing.transformation.KNIME_name }}_output_dataDictionary.csv"
+                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataDictionary"
+                in="">
         {% for out_column in dataprocessing.out_columns %}
         <datafield xsi:type="Workflow:Continuous"
              name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataField"
              displayName="{{ out_column.name }}">
             <continuousDef
                  href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0/@datafielddefinition.0"/>
-            <interval rightMargin="1.0" clousure="closedClosed"/>
+            <interval rightMargin="1.0"
+                      clousure="closedClosed"/>
         </datafield>
        {% endfor %}
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
     </outputPort>
-    <dataProcessingDefinition xsi:type="Library:Transformation" href="library_validation.xmi#//@dataprocessingdefinition.3"/>
-    <parameter xsi:type="Workflow:Field" name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_param_field" dataField="">
+    <dataProcessingDefinition xsi:type="Library:Transformation"
+                              href="library_validation.xmi#//@dataprocessingdefinition.3"/>
+    <parameter xsi:type="Workflow:FieldRange"
+               name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_param_field"
+               dataField="">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
   </dataprocessing>

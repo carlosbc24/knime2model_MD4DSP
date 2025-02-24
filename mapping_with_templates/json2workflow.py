@@ -90,34 +90,19 @@ def generate_datafields_content(node_columns: list, library_transformation_name:
     return input_datafields_filled_content, output_datafields_filled_content
 
 
-def get_column_mapping(node: dict):
+def get_column_mapping_and_parameters(node: dict) -> dict:
     """
-    Get the column mapping from the node parameters.
+    Get the column mapping and parameters from the node parameters.
     Args:
         node: (dict) The node from the JSON data.
 
     Returns:
-        replace_column_name: The column mappings.
-
+        dict: A dictionary containing the replace column name and mapping parameters.
     """
-    replace_column_name=""
-    # Add excluded columns if they exist (from column filter)
+    replace_column_name = ""
     if "replace_column_name" in node["parameters"]:
         replace_column_name = node["parameters"]["replace_column_name"]
 
-    return replace_column_name
-
-
-def get_mapping_parameters(node: dict) -> dict:
-    """
-    Get the output columns from the node parameters.
-    Args:
-        node: (dict) The node from the JSON data.
-
-    Returns:
-        out_columns: (dict) The dictionary of parameters.
-
-    """
     mapping_parameters = dict()
     parameter_list = []
     if "rules" in node["parameters"]:
@@ -128,8 +113,10 @@ def get_mapping_parameters(node: dict) -> dict:
         if match:
             mapping_parameters[match.group(1)] = match.group(2)
 
-    return mapping_parameters
-
+    return {
+        "replace_column_name": replace_column_name,
+        "mapping_parameters": mapping_parameters
+    }
 
 
 def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
@@ -161,53 +148,58 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
                                                                       node_name)
 
-        included_columns = get_input_columns(node)
-        included_column_names = [included_column["column_name"] for included_column in included_columns]
-        included_column_names_str = ", ".join(included_column_names)
-        print_and_log(f"Included columns for node {node_id}: {included_column_names_str}")
+        in_columns = get_input_columns(node)
+        in_column_names = [included_column["column_name"] for included_column in in_columns]
+        in_column_names_str = ", ".join(in_column_names)
+        print_and_log(f"Included columns for node {node_id}: {in_column_names_str}")
 
-        excluded_columns = get_output_columns(node)
-        excluded_column_names = [excluded_column["column_name"] for excluded_column in excluded_columns]
-        excluded_column_names_str = ", ".join(excluded_column_names)
-        print_and_log(f"Excluded columns for node {node_id}: {excluded_column_names_str}")
+        out_columns = get_output_columns(node)
+        out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
+        out_column_names_str = ", ".join(out_column_names)
+        print_and_log(f"Excluded columns for node {node_id}: {out_column_names_str}")
 
-        replace_column_name = get_column_mapping(node)
-        print_and_log(f"Replace column name for node {node_id}: {replace_column_name}")
+        # In columns that are not in the out columns
+        filtered_columns = [{"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+                            for column in in_columns if column["column_name"] not in out_column_names]
+        filtered_column_names = [column["name"] for column in filtered_columns]
+        filtered_column_names_str = ", ".join(filtered_column_names)
+        filtered_columns_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
 
-        mapping_parameters=get_mapping_parameters(node)
-        print_and_log(f"Mapping parameters for node {node_id}: {mapping_parameters}")
+        column_mapping_and_parameters = get_column_mapping_and_parameters(node)
+        replace_column_name = column_mapping_and_parameters["replace_column_name"]
+        mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
+        print_and_log(f"Mapping column name and parameters for node {node_id}: {replace_column_name}, {mapping_parameters}")
 
         dataprocessing = {
             "transformation": {"name": "", "KNIME_name": node_name},
-            "column_names": included_column_names_str,
+            "column_names": in_column_names_str,
             "in_columns": [
                 {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                for column in included_columns
+                for column in in_columns
             ],
             "out_columns": [
                 {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                for column in excluded_columns
+                for column in out_columns
             ],
             "replace_column_name": replace_column_name,
             "mapping_parameters": [
-                {"key": key, "value":value} for key, value in mapping_parameters.items()
+                {"key": key, "value": value} for key, value in mapping_parameters.items()
             ],
-            "index": node_id
+            "index": node_id,
+            "filtered_columns": filtered_columns_dict
         }
 
-        if library_transformation_name is not None:
+        if library_transformation_name is not None and library_transformation_name in library_transformation_names:
 
-            if library_transformation_name in library_transformation_names:
-                if library_transformation_name == "columnFilter":
-                    # Read the workflow template file
-                    with open(f"templates/columnFilterDataProcessing.xmi", "r") as file:
-                        data_processing_jinja_template = JinjaTemplate(file.read())
-                        dataprocessing["transformation"]["name"] = library_transformation_name
-                elif library_transformation_name == "mapping":
-                    # Read the workflow template file
-                    with open(f"templates/mapping_template.xmi", "r") as file:
-                        data_processing_jinja_template = JinjaTemplate(file.read())
-                        dataprocessing["transformation"]["name"] = library_transformation_name
+            template_filepath = f"templates/{library_transformation_name}_template.xmi"
+
+            if os.path.exists(template_filepath):
+
+                # Read the workflow template file
+                with open(template_filepath, "r") as file:
+                    data_processing_jinja_template = JinjaTemplate(file.read())
+                    dataprocessing["transformation"]["name"] = library_transformation_name
+                    node_name = library_transformation_name
 
         else:
             # Read the workflow template file
@@ -252,14 +244,14 @@ def process_links(data: dict, node_mapping: dict) -> str:
             source_node = data["nodes"][source_id]
             target_node = data["nodes"][dest_id]
 
-            if "included_columns" in source_node["parameters"]:
-                source_columns = source_node["parameters"]["included_columns"]
+            if "in_columns" in source_node["parameters"]:
+                source_columns = source_node["parameters"]["in_columns"]
                 source_columns_str = ", ".join([column["column_name"] for column in source_columns])
             else:
                 source_columns_str = ""
 
-            if "included_columns" in target_node["parameters"]:
-                target_columns = target_node["parameters"]["included_columns"]
+            if "in_columns" in target_node["parameters"]:
+                target_columns = target_node["parameters"]["in_columns"]
                 target_columns_str = ", ".join([column["column_name"] for column in target_columns])
             else:
                 target_columns_str = ""

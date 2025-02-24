@@ -187,7 +187,7 @@ def extract_node_settings(settings_path):
                     {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
                     for col in columns
                 ]
-                print("Columns: ", node_info["parameters"]["columns"])
+                # print("Columns: ", node_info["parameters"]["columns"])
                 # Determine if the filter is inclusive or exclusive
                 include_entry = row_filter.find("knime:entry[@key='include']", namespace)
                 if include_entry is not None:
@@ -258,6 +258,14 @@ def extract_node_settings(settings_path):
             node_info["parameters"]["new_column_name"] = new_column.attrib["value"] if new_column is not None else None
             node_info["parameters"]["replace_column_name"] = replace_column.attrib["value"] if replace_column is not None else None
             node_info["parameters"]["append_column"] = append_column.attrib["value"] == "true" if append_column is not None else False
+            replace_column = model.findall(".//knime:entry[@key='replace-column-name']", namespace)
+            in_columns = []
+            if replace_column is not None:
+                in_columns = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in replace_column if col.attrib["key"] != "array-size"
+                ]
+            node_info["parameters"]["in_columns"] = in_columns
 
         elif "Numeric Outliers" in node_info["node_name"]:
             # Extract estimation-type
