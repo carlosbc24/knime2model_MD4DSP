@@ -21,7 +21,7 @@
           name="mapping({{ dataprocessing.replace_column_name }})_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.6/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
             name="mapping({{ dataprocessing.replace_column_name }})_PRE_valueRange_input_datafield">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@in"/>
@@ -49,7 +49,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.6/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
             name="mapping({{ dataprocessing.replace_column_name }})_POST_input_datafield">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@in"/>
@@ -57,7 +57,7 @@
         {% for m_parameter in dataprocessing.mapping_parameters %}
         <value
             xsi:type="Contract:FixValue"
-            value="{{ m_parameter.value }}">
+            value="{{ m_parameter.key }}">
           <valueFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -76,14 +76,14 @@
           name="Mapping({{ dataprocessing.replace_column_name }})_INV_condition">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.6/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
             name="Mapping({{ dataprocessing.replace_column_name }})_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@in"/>
         </in>
         <out
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.6/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
             name="Mapping({{ dataprocessing.replace_column_name }})_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@out"/>
@@ -92,7 +92,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition"/>
         {% for m_parameter in dataprocessing.mapping_parameters %}
         <if
-            then=""
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.{{ loop.index0 }}"
             name="Mapping({{ dataprocessing.replace_column_name }})_INV_IF_{{ m_parameter.key }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
@@ -104,7 +104,7 @@
           </valueCondition>
         </if>
         <then
-            if=""
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.{{ loop.index0 }}"
             name="Mapping({{ dataprocessing.replace_column_name }})_INV_THEN_{{ m_parameter.key }}">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
@@ -124,7 +124,7 @@
           xsi:type="Workflow:Categorical"
           name="Mapping({{ dataprocessing.replace_column_name }})_input_dataField"
           displayName="({{ dataprocessing.replace_column_name }})"
-          out="//@dataprocessing.6/@outputPort.0/@datafield.0">
+          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
@@ -137,7 +137,7 @@
           xsi:type="Workflow:Categorical"
           name="Mapping({{ dataprocessing.replace_column_name }})_output_dataField"
           displayName="({{ dataprocessing.replace_column_name }})"
-          in="//@dataprocessing.6/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.0/@outputPort.0/@datafielddefinition.0"/>
       </datafield>

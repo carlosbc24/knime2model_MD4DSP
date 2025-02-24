@@ -191,7 +191,8 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
             "replace_column_name": replace_column_name,
             "mapping_parameters": [
                 {"key": key, "value":value} for key, value in mapping_parameters.items()
-            ]
+            ],
+            "index": node_id
         }
 
         if library_transformation_name is not None:
