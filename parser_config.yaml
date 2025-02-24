@@ -7,5 +7,5 @@ include_contracts: True # Include contracts in the xmi output
 node_mapping_desired_ratio: # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
 # By default every KNIME workflow stored in the input_knwf_folder will be parsed,
 # unless a specific workflow is specified in the following variable via its name string.
-workflow_filename: #"01 Data Cleaning_1_node.knwf"
+workflow_filename: "wf_validation_KNIME.knwf"
 #workflow_filename: "01 Data Cleaning.knwf"

@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from string import Template
 
@@ -89,6 +90,45 @@ def generate_datafields_content(node_columns: list, library_transformation_name:
     return input_datafields_filled_content, output_datafields_filled_content
 
 
+def get_column_mapping(node: dict):
+    """
+    Get the column mapping from the node parameters.
+    Args:
+        node: (dict) The node from the JSON data.
+
+    Returns:
+        replace_column_name: The column mappings.
+
+    """
+    replace_column_name=""
+    # Add excluded columns if they exist (from column filter)
+    if "replace_column_name" in node["parameters"]:
+        replace_column_name = node["parameters"]["replace_column_name"]
+
+    return replace_column_name
+
+
+def get_mapping_parameters(node: dict) -> dict:
+    """
+    Get the output columns from the node parameters.
+    Args:
+        node: (dict) The node from the JSON data.
+
+    Returns:
+        out_columns: (dict) The dictionary of parameters.
+
+    """
+    mapping_parameters = dict()
+    parameter_list = []
+    if "rules" in node["parameters"]:
+        parameter_list = [rule for rule in node["parameters"]["rules"] if rule.startswith('$')]
+
+    for value in parameter_list:
+        match = re.search(r'\*(\w)\*.*"(\d)"', value)
+        if match:
+            mapping_parameters[match.group(1)] = match.group(2)
+
+    return mapping_parameters
 
 
 
@@ -131,6 +171,12 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         excluded_column_names_str = ", ".join(excluded_column_names)
         print_and_log(f"Excluded columns for node {node_id}: {excluded_column_names_str}")
 
+        replace_column_name = get_column_mapping(node)
+        print_and_log(f"Replace column name for node {node_id}: {replace_column_name}")
+
+        mapping_parameters=get_mapping_parameters(node)
+        print_and_log(f"Mapping parameters for node {node_id}: {mapping_parameters}")
+
         dataprocessing = {
             "transformation": {"name": "", "KNIME_name": node_name},
             "column_names": included_column_names_str,
@@ -141,16 +187,26 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
             "out_columns": [
                 {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
                 for column in excluded_columns
+            ],
+            "replace_column_name": replace_column_name,
+            "mapping_parameters": [
+                {"key": key, "value":value} for key, value in mapping_parameters.items()
             ]
         }
 
         if library_transformation_name is not None:
 
             if library_transformation_name in library_transformation_names:
-                # Read the workflow template file
-                with open(f"templates/columnFilterDataProcessing.xmi", "r") as file:
-                    data_processing_jinja_template = JinjaTemplate(file.read())
-                    dataprocessing["transformation"]["name"] = library_transformation_name
+                if library_transformation_name == "columnFilter":
+                    # Read the workflow template file
+                    with open(f"templates/columnFilterDataProcessing.xmi", "r") as file:
+                        data_processing_jinja_template = JinjaTemplate(file.read())
+                        dataprocessing["transformation"]["name"] = library_transformation_name
+                elif library_transformation_name == "mapping":
+                    # Read the workflow template file
+                    with open(f"templates/mapping_template.xmi", "r") as file:
+                        data_processing_jinja_template = JinjaTemplate(file.read())
+                        dataprocessing["transformation"]["name"] = library_transformation_name
 
         else:
             # Read the workflow template file
