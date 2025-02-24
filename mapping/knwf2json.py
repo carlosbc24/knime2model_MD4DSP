@@ -140,7 +140,6 @@ def extract_node_settings(settings_path):
     # Extract parameters from the data_model
     model = root.find(".//knime:config[@key='model']", namespace)
     if model is not None:
-
         if "CSV Reader" in node_info["node_name"]:
             csv_reader = model.find(".//knime:config[@key='settings']", namespace)
             if csv_reader is not None:
@@ -164,8 +163,8 @@ def extract_node_settings(settings_path):
             column_filter = model.find(".//knime:config[@key='column-filter']", namespace)
             if column_filter is not None:
                 included_names, excluded_names = extract_columns_data(column_filter, namespace)
-                node_info["parameters"]["included_columns"] = included_names
-                node_info["parameters"]["excluded_columns"] = excluded_names
+                node_info["parameters"]["in_columns"] = included_names + excluded_names
+                node_info["parameters"]["out_columns"] = included_names
 
         elif "Row Filter" in node_info["node_name"]:
             row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
@@ -188,6 +187,7 @@ def extract_node_settings(settings_path):
                     {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
                     for col in columns
                 ]
+                print("Columns: ", node_info["parameters"]["columns"])
                 # Determine if the filter is inclusive or exclusive
                 include_entry = row_filter.find("knime:entry[@key='include']", namespace)
                 if include_entry is not None:
@@ -245,8 +245,8 @@ def extract_node_settings(settings_path):
                 node_info["parameters"]["decimal_separator"] = decimal_separator_entry.attrib["value"]
             # Extract the included and excluded columns
             included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["included_columns"] = included_names
-            node_info["parameters"]["excluded_columns"] = excluded_names
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
 
         elif "Rule Engine" in node_info["node_name"]:
             rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
@@ -268,8 +268,8 @@ def extract_node_settings(settings_path):
             groups_list = model.find(".//knime:config[@key='groups-list']", namespace)
             if groups_list is not None:
                 included_names, excluded_names = extract_columns_data(groups_list, namespace)
-                node_info["parameters"]["included_columns"] = included_names
-                node_info["parameters"]["excluded_columns"] = excluded_names
+                node_info["parameters"]["in_columns"] = included_names + excluded_names
+                node_info["parameters"]["out_columns"] = included_names
 
             # Extract iqr-scalar
             iqr_scalar = model.find(".//knime:entry[@key='iqr-scalar']", namespace)
@@ -326,8 +326,8 @@ def extract_node_settings(settings_path):
             output_format = output_format_entry.attrib["value"] if output_format_entry is not None else None
             # Save the parameters in the node_info dictionary
             node_info["parameters"] = {
-                "included_columns": included_names,
-                "excluded_columns": excluded_names,
+                "in_columns": included_names + excluded_names,
+                "out_columns": included_names,
                 "binning_method": binning_method,
                 "bin_count": bin_count,
                 "equality_method": equality_method,
@@ -348,8 +348,8 @@ def extract_node_settings(settings_path):
                 float(missing_value_threshold_entry.attrib["value"])
                 if missing_value_threshold_entry is not None else None
             )
-            node_info["parameters"]["included_columns"] = included_names
-            node_info["parameters"]["excluded_columns"] = excluded_names
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
 
         elif "Duplicate Row Filter" in node_info["node_name"]:
             remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
@@ -364,8 +364,8 @@ def extract_node_settings(settings_path):
             node_info["parameters"]["row_selection"] = row_selection_entry.attrib["value"] if row_selection_entry is not None else None
             node_info["parameters"]["add_row_duplicate_flag"] = add_row_duplicate_flag_entry.attrib["value"] == "true" if add_row_duplicate_flag_entry is not None else False
             node_info["parameters"]["in_memory"] = in_memory_entry.attrib["value"] == "true" if in_memory_entry is not None else False
-            node_info["parameters"]["included_columns"] = included_names
-            node_info["parameters"]["excluded_columns"] = excluded_names
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
 
         elif "Joiner" in node_info["node_name"]:
             # Extractar configuraciones clave de Joiner
@@ -426,8 +426,8 @@ def extract_node_settings(settings_path):
             if expression_entry is not None:
                 node_info["parameters"]["expression"] = expression_entry.attrib["value"]
             included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["included_columns"] = included_names
-            node_info["parameters"]["excluded_columns"] = excluded_names
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
             # Extract the columns to append the result
             append_or_replace_entry = model.find(".//knime:entry[@key='APPEND_OR_REPLACE']", namespace)
             if append_or_replace_entry is not None:
