@@ -34,22 +34,23 @@ def process_nodes(data: dict, nodes: list, include_contracts: bool) -> tuple[dic
                                                                       node_name)
 
         # Get the data processing values for the node type
-        dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts)
+        dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts,
+                                                             library_transformation_name)
 
-        template_filepath = f"templates/{library_transformation_name}_template.xmi"
         # Check if the library transformation name exists and the template file exists. If so, use the template file.
         # Otherwise, use the unknownDataProcessing template.
-        if library_transformation_name in library_transformation_names and os.path.exists(template_filepath):
+        dp_templates_path = "templates/data_processing"
+        dp_template_filepath = f"{dp_templates_path}/{library_transformation_name}_template.xmi"
+        if library_transformation_name in library_transformation_names and os.path.exists(dp_template_filepath):
 
             # Read the workflow template file
-            with open(template_filepath, "r") as file:
+            with open(dp_template_filepath, "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
-                dataprocessing_values["transformation"]["name"] = library_transformation_name
                 node_name = library_transformation_name
 
         else:
             # Read the workflow template file
-            with open(f"templates/unknownDataProcessing.xmi", "r") as file:
+            with open(f"{dp_templates_path}/unknownDataProcessing.xmi", "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         # Fill the template with jinja2

@@ -3,7 +3,7 @@ import re
 from utils.logger import print_and_log
 
 
-def get_transformation_dp_values(node: dict, node_id: int, node_name: str, include_contracts: bool) -> dict:
+def get_transformation_dp_values(node: dict, node_id: int, node_name: str, include_contracts: bool, library_transformation_name: str) -> dict:
     """
     Get the values for the data processing node from the node parameters.
 
@@ -12,6 +12,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         node_id (int): The ID of the node.
         node_name (str): The name of the node.
         include_contracts (bool): Flag to include the contracts in the data processing nodes.
+        library_transformation_name (str): The name of the library transformation.
 
     Returns:
         dict: The values for the data processing node.
@@ -34,21 +35,29 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     out_column_names_str = ", ".join(out_column_names)
     print_and_log(f"Excluded columns for node {node_id}: {out_column_names_str}")
 
-    # Filter columns that are not in the output
-    filtered_columns = [
-        {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-        for column in in_columns if column["column_name"] not in out_column_names]
-    filtered_column_names = [column["name"] for column in filtered_columns]
-    filtered_column_names_str = ", ".join(filtered_column_names)
-    filtered_columns_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
+    column_filter_dict = {}
+    mapping_dict = {}
+    if library_transformation_name == "columnFilter":
+        # Filter columns that are not in the output
+        filtered_columns = [
+            {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+            for column in in_columns if column["column_name"] not in out_column_names]
+        filtered_column_names = [column["name"] for column in filtered_columns]
+        filtered_column_names_str = ", ".join(filtered_column_names)
+        column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
+        print_and_log(f"Filtered columns for node {node_id}: {filtered_column_names_str}")
 
-    column_mapping_and_parameters = get_column_mapping_and_parameters(node)
-    replace_column_name = column_mapping_and_parameters["replace_column_name"]
-    mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
-    print_and_log(f"Mapping column name and parameters for node {node_id}: {replace_column_name}, {mapping_parameters}")
+    elif library_transformation_name == "mapping":
+        # Get the column mapping and parameters
+        column_mapping_and_parameters = get_column_mapping_and_parameters(node)
+        replace_column_name = column_mapping_and_parameters["replace_column_name"]
+        mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
+        mapping_parameters = [{"key": key, "value": value} for key, value in mapping_parameters.items()]
+        mapping_dict = {"mapping_parameters": mapping_parameters, "replace_column_name": replace_column_name}
+        print_and_log(f"Mapping column name and parameters for node {node_id}: {replace_column_name}, {mapping_parameters}")
 
     dataprocessing_values = {
-        "transformation": {"name": "", "KNIME_name": node_name},
+        "transformation": {"name": library_transformation_name, "KNIME_name": node_name},
         "input_filepath": input_file_path,
         "output_filepath": "",
         "column_names": in_column_names_str,
@@ -60,13 +69,10 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
             {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
             for column in out_columns
         ],
-        "replace_column_name": replace_column_name,
-        "mapping_parameters": [
-            {"key": key, "value": value} for key, value in mapping_parameters.items()
-        ],
-        "index": node_id,
-        "filtered_columns": filtered_columns_dict,
-        "include_contracts": include_contracts
+        "mapping": mapping_dict,
+        "column_filter": column_filter_dict,
+        "include_contracts": include_contracts,
+        "index": node_id
     }
 
     return dataprocessing_values

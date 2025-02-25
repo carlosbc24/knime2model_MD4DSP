@@ -3,11 +3,11 @@
                 incoming=""
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
                 out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-                name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})">
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})">
     <inputPort fileName="{{ dataprocessing.input_filepath }}"
-               name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_input_dataDictionary"
+               name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_input_dataDictionary"
                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
-        {% for filtered_column in dataprocessing.filtered_columns.filtered_columns %}
+        {% for filtered_column in dataprocessing.column_filter.filtered_columns %}
         {% if filtered_column.type == 'String' %}
         <datafield xsi:type="Workflow:Categorical"
                  name="columnFilter({{ filtered_column.name }})_input_dataField"
@@ -31,44 +31,44 @@
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
     <outputPort fileName="{{ dataprocessing.output_filepath }}"
-                name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_output_dataDictionary"
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_output_dataDictionary"
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition xsi:type="Library:Transformation"
                               href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter xsi:type="Workflow:FieldRange"
-               name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_param_field"
+               name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_param_field"
                dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0 //@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     {% if dataprocessing.include_contracts %}
-    <contract name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_PRECONDITION">
+    <contract name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRECONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract xsi:type="Contract:FieldRange"
-                name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_PRE_fieldRange">
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRE_fieldRange">
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
-        {% for in_column in dataprocessing.filtered_columns.filtered_columns %}
+        {% for in_column in dataprocessing.column_filter.filtered_columns %}
         <field dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"/>
         {% endfor %}
       </contract>
     </contract>
-    <contract name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_POSTCONDITION">
+    <contract name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POSTCONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract xsi:type="Contract:FieldRange"
                 type="POSTCONDITION"
-                name="columnFilter({{ dataprocessing.filtered_columns.filtered_column_names }})_POST_fieldRange"
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POST_fieldRange"
                 belongOp="NOTBELONG">
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
-        {% for in_column in dataprocessing.filtered_columns.filtered_columns %}
+        {% for in_column in dataprocessing.column_filter.filtered_columns %}
         <field dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"/>
         {% endfor %}
       </contract>
