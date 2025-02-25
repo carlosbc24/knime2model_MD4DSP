@@ -13,7 +13,7 @@ with open("parser_config.yaml", "r") as file:
     output_xmi_folder = config["output_xmi_folder"]
     workflow_filename = config["workflow_filename"]
     include_contracts = config["include_contracts"]
-    node_mapping_desired_ratio = config["node_mapping_desired_ratio"]
+    node_mapping_desired_ratio = 0.80
     if include_contracts is None:
         include_contracts = True
 
@@ -36,7 +36,7 @@ else:
             workflow_name = file.split(".")[0]
             extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_name)
             mapped_nodes, nodes_count = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
-                                                                 include_contracts, node_mapping_desired_ratio)
+                                                             include_contracts, node_mapping_desired_ratio)
             print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
 
 print("\n--------------------------------------------------\n")

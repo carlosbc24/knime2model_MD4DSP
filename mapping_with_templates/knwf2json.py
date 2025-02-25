@@ -154,7 +154,7 @@ def extract_node_settings(settings_path):
                 if column_delimiter_entry is not None:
                     node_info["parameters"]["column_delimiter"] = column_delimiter_entry.attrib["value"]
 
-        elif "Excel Reader" in node_info["node_name"]:
+        elif "Excel Reader" in node_info["node_name"] or "File Reader" in node_info["node_name"]:
             file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
             if file_path_entry is not None:
                 node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]

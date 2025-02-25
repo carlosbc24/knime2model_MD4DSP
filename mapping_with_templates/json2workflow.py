@@ -119,13 +119,83 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
     }
 
 
-def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
+def get_transformation_dp_values(node: dict, node_id: int, node_name: str, include_contracts: bool) -> dict:
+    """
+    Get the values for the data processing node from the node parameters.
+
+    Args:
+        node (dict): The node from the JSON data.
+        node_id (int): The ID of the node.
+        node_name (str): The name of the node.
+        include_contracts (bool): Flag to include the contracts in the data processing nodes.
+
+    Returns:
+        dict: The values for the data processing node.
+    """
+    input_file_path = ""
+    # Detect if the node includes the substrings "Reader" or "Connector"
+    if any(substring in node_name for substring in ["Reader"]):
+        input_file_path = node.get("parameters", {}).get("file_path", "")
+        print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
+
+    # Get input and output columns
+    in_columns = get_input_columns(node)
+    in_column_names = [included_column["column_name"] for included_column in in_columns]
+    in_column_names_str = ", ".join(in_column_names)
+    print_and_log(f"Included columns for node {node_id}: {in_column_names_str}")
+
+    # Output columns
+    out_columns = get_output_columns(node)
+    out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
+    out_column_names_str = ", ".join(out_column_names)
+    print_and_log(f"Excluded columns for node {node_id}: {out_column_names_str}")
+
+    # Filter columns that are not in the output
+    filtered_columns = [
+        {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+        for column in in_columns if column["column_name"] not in out_column_names]
+    filtered_column_names = [column["name"] for column in filtered_columns]
+    filtered_column_names_str = ", ".join(filtered_column_names)
+    filtered_columns_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
+
+    column_mapping_and_parameters = get_column_mapping_and_parameters(node)
+    replace_column_name = column_mapping_and_parameters["replace_column_name"]
+    mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
+    print_and_log(f"Mapping column name and parameters for node {node_id}: {replace_column_name}, {mapping_parameters}")
+
+    dataprocessing_values = {
+        "transformation": {"name": "", "KNIME_name": node_name},
+        "input_filepath": input_file_path,
+        "output_filepath": "",
+        "column_names": in_column_names_str,
+        "in_columns": [
+            {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+            for column in in_columns
+        ],
+        "out_columns": [
+            {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+            for column in out_columns
+        ],
+        "replace_column_name": replace_column_name,
+        "mapping_parameters": [
+            {"key": key, "value": value} for key, value in mapping_parameters.items()
+        ],
+        "index": node_id,
+        "filtered_columns": filtered_columns_dict,
+        "include_contracts": include_contracts
+    }
+
+    return dataprocessing_values
+
+
+def process_nodes(data: dict, nodes: list, include_contracts: bool) -> tuple[dict, str]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
     Args:
         data: (dict) The JSON data containing the workflow information.
         nodes: (list) The list of nodes from the JSON data.
+        include_contracts: (bool) Flag to include the contracts in the data processing nodes.
 
     Returns:
         node_mapping: (dict) The mapping of node IDs to their XML elements and metadata.
@@ -139,66 +209,22 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         node_id = node.get("id", index)
         node_name = node.get("node_name", f"Node_{index}")
 
-        # Detect if the node includes the substrings "Reader" or "Connector"
-        if any(substring in node_name for substring in ["Reader"]):
-            input_file_path = node.get("parameters", {}).get("file_path", "")
-            print_and_log(f"Input data for workflow node {node_id}: {input_file_path}")
-
         # Get library transformation name
         library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
                                                                       node_name)
 
-        # Get input and output columns
-        in_columns = get_input_columns(node)
-        in_column_names = [included_column["column_name"] for included_column in in_columns]
-        in_column_names_str = ", ".join(in_column_names)
-        print_and_log(f"Included columns for node {node_id}: {in_column_names_str}")
-
-        # Output columns
-        out_columns = get_output_columns(node)
-        out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
-        out_column_names_str = ", ".join(out_column_names)
-        print_and_log(f"Excluded columns for node {node_id}: {out_column_names_str}")
-
-        # Filter columns that are not in the output
-        filtered_columns = [{"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                            for column in in_columns if column["column_name"] not in out_column_names]
-        filtered_column_names = [column["name"] for column in filtered_columns]
-        filtered_column_names_str = ", ".join(filtered_column_names)
-        filtered_columns_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
-
-        column_mapping_and_parameters = get_column_mapping_and_parameters(node)
-        replace_column_name = column_mapping_and_parameters["replace_column_name"]
-        mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
-        print_and_log(f"Mapping column name and parameters for node {node_id}: {replace_column_name}, {mapping_parameters}")
-
-        dataprocessing = {
-            "transformation": {"name": "", "KNIME_name": node_name},
-            "column_names": in_column_names_str,
-            "in_columns": [
-                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                for column in in_columns
-            ],
-            "out_columns": [
-                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-                for column in out_columns
-            ],
-            "replace_column_name": replace_column_name,
-            "mapping_parameters": [
-                {"key": key, "value": value} for key, value in mapping_parameters.items()
-            ],
-            "index": node_id,
-            "filtered_columns": filtered_columns_dict
-        }
+        # Get the data processing values for the node type
+        dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts)
 
         template_filepath = f"templates/{library_transformation_name}_template.xmi"
-
+        # Check if the library transformation name exists and the template file exists. If so, use the template file.
+        # Otherwise, use the unknownDataProcessing template.
         if library_transformation_name in library_transformation_names and os.path.exists(template_filepath):
 
             # Read the workflow template file
             with open(template_filepath, "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
-                dataprocessing["transformation"]["name"] = library_transformation_name
+                dataprocessing_values["transformation"]["name"] = library_transformation_name
                 node_name = library_transformation_name
 
         else:
@@ -207,7 +233,7 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         # Fill the template with jinja2
-        dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing) + "\n"
+        dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
         node_mapping[node_id] = {"index": index, "name": node_name}
 
     return node_mapping, dataProcessings_filled_content
@@ -297,7 +323,8 @@ def preprocess_nodes_connections(nodes, connections):
     return nodes, connections
 
 
-def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str):
+def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,
+                                        include_contracts=True):
     """
     Converts a JSON workflow file to an XMI file using templates for the data processing nodes.
 
@@ -305,6 +332,7 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         json_input_folder (str): Path to the folder containing the JSON files.
         workflow_filename (str): Name of the JSON file (without extension).
         xmi_output_folder (str): Path to the folder where the XMI file will be saved.
+        include_contracts (bool): Flag to include the contracts in the data processing nodes.
 
     Returns:
 
@@ -325,7 +353,7 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         nodes, connections = preprocess_nodes_connections(nodes, connections)
 
         # Process nodes and get the node mapping
-        node_mapping, data_processing_filled_content = process_nodes(data, nodes)
+        node_mapping, data_processing_filled_content = process_nodes(data, nodes, include_contracts)
 
         # Process links
         links_filled_content = process_links(data, node_mapping)
