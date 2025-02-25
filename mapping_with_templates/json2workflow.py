@@ -7,8 +7,10 @@ from parsers.json_parser_functions import get_transformation_dp_values
 from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from jinja2 import Template as JinjaTemplate
 
+from utils.logger import print_and_log
 
-def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> str:
+
+def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: list) -> str:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -41,7 +43,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         dp_template_filepath = f"{dp_templates_path}/{library_transformation_name}_template.xmi"
         if library_transformation_name in library_transformation_names and os.path.exists(dp_template_filepath):
 
-            print("Node ", node_name, " mapped to ", library_transformation_name)
+            print_and_log(f"KNIME node: {node_name} -> mapped to library transformation: {library_transformation_name}")
 
             # Read the workflow template file
             with open(dp_template_filepath, "r") as file:

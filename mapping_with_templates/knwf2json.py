@@ -310,7 +310,6 @@ def extract_node_settings(settings_path: str) -> dict:
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
         elif "Numeric Binner" in node_info["node_name"]:
-            print("Debugging Numeric Binner extraction")
             binned_columns = model.findall(".//knime:config[@key='binned_columns']/knime:entry", namespace)
             for column_entry in binned_columns:
                 column_name = column_entry.attrib["value"]
