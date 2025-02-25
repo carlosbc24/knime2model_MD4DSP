@@ -123,7 +123,17 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
 
 
-def extract_node_settings(settings_path):
+def extract_node_settings(settings_path: str) -> dict:
+    """
+    Extracts the node settings from the settings file of a KNIME node.
+
+    Args:
+        settings_path (str): Path to the settings file of a KNIME node.
+
+    Returns:
+        dict: Dictionary with the extracted node settings.
+
+    """
     namespace = {"knime": "http://www.knime.org/2008/09/XMLConfig"}
     tree = elementTree.parse(settings_path)
     root = tree.getroot()
@@ -298,6 +308,37 @@ def extract_node_settings(settings_path):
             detection_option = model.find(".//knime:entry[@key='detection-option']", namespace)
             if detection_option is not None:
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
+
+        elif "Numeric Binner" in node_info["node_name"]:
+            print("Debugging Numeric Binner extraction")
+            binned_columns = model.findall(".//knime:config[@key='binned_columns']/knime:entry", namespace)
+            for column_entry in binned_columns:
+                column_name = column_entry.attrib["value"]
+                new_column_name_entry = model.find(f".//knime:entry[@key='{column_name}_is_appended']", namespace)
+                new_column_name = new_column_name_entry.attrib["value"] if new_column_name_entry is not None else None
+                bins = model.findall(f".//knime:config[@key='{column_name}']/knime:config", namespace)
+                bin_info = []
+                for bin in bins:
+                    bin_name = bin.find("knime:entry[@key='bin_name']", namespace).attrib["value"]
+                    left_open = bin.find("knime:entry[@key='left_open']", namespace).attrib["value"] == "true"
+                    right_open = bin.find("knime:entry[@key='right_open']", namespace).attrib["value"] == "true"
+                    left_value = bin.find("knime:entry[@key='left_value']", namespace).attrib["value"]
+                    right_value = bin.find("knime:entry[@key='right_value']", namespace).attrib["value"]
+                    bin_info.append({
+                        "bin_name": bin_name,
+                        "left_open": left_open,
+                        "right_open": right_open,
+                        "left_value": left_value,
+                        "right_value": right_value
+                    })
+                if new_column_name is not None and bin_info:
+                    if "bins" not in node_info["parameters"]:
+                        node_info["parameters"]["bins"] = []
+                    node_info["parameters"]["bins"].append({
+                        "original_column_name": column_name,
+                        "new_column_name": new_column_name,
+                        "bins": bin_info
+                    })
 
         elif "Auto-Binner" in node_info["node_name"]:
             # Extract the included and excluded columns
