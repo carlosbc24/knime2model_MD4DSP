@@ -91,11 +91,6 @@ The project structure must follow the next structure:
 ```bash
 MD4DSP-m2python/
 │
-├── data_model/
-│ ├── DataDictionary.py
-│ ├── DataProcessing.py
-│ ├── Link.py
-│ └── Workflow.py
 ├── input_KNIME_workflows/
 │ ├── 01 Data Cleaning.knwf
 │ ├── 01_ Exercises.knwf
@@ -160,6 +155,7 @@ MD4DSP-m2python/
 │ └── parameter.py
 │
 ├── utils/
+│ ├── library_functions.py
 │ └── logger.py
 │
 ├── .gitignore
