@@ -8,20 +8,18 @@ from utils.library_functions import get_library_transformation_name, get_library
 from jinja2 import Template as JinjaTemplate
 
 
-def process_nodes(data: dict, nodes: list, include_contracts: bool) -> tuple[dict, str]:
+def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> str:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
     Args:
-        data: (dict) The JSON data containing the workflow information.
         nodes: (list) The list of nodes from the JSON data.
         include_contracts: (bool) Flag to include the contracts in the data processing nodes.
+        node_flow_mapping: (dict) The mapping of the nodes and their connections.
 
     Returns:
-        node_mapping: (dict) The mapping of node IDs to their XML elements and metadata.
         dataProcessings_filled_content: (str) The filled content of the data processing nodes.
     """
-    node_mapping = {}
     dataProcessings_filled_content = ""
     library_transformation_names = get_library_transformation_names('library_hashing/library_transformation_names.json')
 
@@ -43,10 +41,11 @@ def process_nodes(data: dict, nodes: list, include_contracts: bool) -> tuple[dic
         dp_template_filepath = f"{dp_templates_path}/{library_transformation_name}_template.xmi"
         if library_transformation_name in library_transformation_names and os.path.exists(dp_template_filepath):
 
+            print("Node ", node_name, " mapped to ", library_transformation_name)
+
             # Read the workflow template file
             with open(dp_template_filepath, "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
-                node_name = library_transformation_name
 
         else:
             # Read the workflow template file
@@ -55,22 +54,35 @@ def process_nodes(data: dict, nodes: list, include_contracts: bool) -> tuple[dic
 
         # Fill the template with jinja2
         dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
-        node_mapping[node_id] = {"index": index, "name": node_name}
 
-    return node_mapping, dataProcessings_filled_content
+    return dataProcessings_filled_content
 
 
-def process_links(data: dict, node_mapping: dict) -> str:
+def process_links(data: dict, nodes: list) -> tuple[str, list]:
     """
     Processes the links between nodes from the JSON data and appends the corresponding XML elements to the root element.
+    It also return a dict in which we have the node_name, the previous node_id and the next node_id. The dict is ordered
+    so the connections between next_node_id and previous_node_id are consecutive.
 
     Args:
         data (dict): The JSON data containing the workflow information.
-        node_mapping (dict): Mapping of node IDs to their XML elements and metadata.
+        nodes (list): The list of nodes from the JSON data.
 
     Returns:
         links_filled_content: (str) The filled content of the links.
+        node_flow_mapping: (list) an ordered list of dictionaries with the node_name, the previous node_id
+        and the next node_id.
     """
+
+    node_mapping = {}
+    # The node_flow_mapping is a list of dictionaries with the node_name, the previous node_id and the next node_id.
+    node_flow_mapping = {}
+
+    for index, node in enumerate(nodes):
+        node_id = node.get("id", index)
+        node_name = node.get("node_name", f"Node_{index}")
+        node_mapping[node_id] = {"index": index, "name": node_name}
+        node_flow_mapping[node_id] = {"node_name": node_name, "previous_node_id": None, "next_node_id": None}
 
     links = data.get("connections", [])
     links_filled_content = ""
@@ -88,29 +100,16 @@ def process_links(data: dict, node_mapping: dict) -> str:
             source_transformation_name = node_mapping[source_id]["name"]
             target_transformation_name = node_mapping[dest_id]["name"]
 
-            source_node = data["nodes"][source_id]
-            target_node = data["nodes"][dest_id]
-
-            if "in_columns" in source_node["parameters"]:
-                source_columns = source_node["parameters"]["in_columns"]
-                source_columns_str = ", ".join([column["column_name"] for column in source_columns])
-            else:
-                source_columns_str = ""
-
-            if "in_columns" in target_node["parameters"]:
-                target_columns = target_node["parameters"]["in_columns"]
-                target_columns_str = ", ".join([column["column_name"] for column in target_columns])
-            else:
-                target_columns_str = ""
-
             link_values = {
                 "source": source_id,
                 "target": dest_id,
                 "transformation_name_source": source_transformation_name,
-                "transformation_name_target": target_transformation_name,
-                "source_columns": source_columns_str,
-                "target_columns": target_columns_str
+                "transformation_name_target": target_transformation_name
             }
+
+            # Update the node flow link mapping
+            node_flow_mapping[source_id]["next_node_id"] = dest_id
+            node_flow_mapping[dest_id]["previous_node_id"] = source_id
 
             # Fill the template
             links_filled_content += link_template.safe_substitute(
@@ -118,7 +117,17 @@ def process_links(data: dict, node_mapping: dict) -> str:
             ) + "\n"
             link_index += 1
 
-    return links_filled_content
+    # Order the node_flow_mapping so the conncetions between next_node_id and previous_node_id are consecutive.
+    ordered_mapping = {}
+    current_node_id = next(
+        node_id for node_id, details in node_flow_mapping.items() if details['previous_node_id'] is None)
+
+    while current_node_id is not None:
+        ordered_mapping[current_node_id] = node_flow_mapping[current_node_id]
+        next_node_id = node_flow_mapping[current_node_id]['next_node_id']
+        current_node_id = next_node_id if next_node_id in node_flow_mapping else None
+
+    return links_filled_content, node_flow_mapping
 
 
 def preprocess_nodes_connections(nodes, connections):
@@ -173,11 +182,11 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         # Preprocess nodes and connections to map IDs to a new range (0 to n-1)
         nodes, connections = preprocess_nodes_connections(nodes, connections)
 
-        # Process nodes and get the node mapping
-        node_mapping, data_processing_filled_content = process_nodes(data, nodes, include_contracts)
-
         # Process links
-        links_filled_content = process_links(data, node_mapping)
+        links_filled_content, node_flow_mapping = process_links(data, nodes)
+
+        # Process nodes and get the node mapping
+        data_processing_filled_content = process_nodes(nodes, include_contracts, node_flow_mapping)
 
         # Define the replacement values to the workflow template
         workflow_values = {

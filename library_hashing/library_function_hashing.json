@@ -266,6 +266,41 @@
 	  }
 	},
 	  {
+	  "Numeric Binner": {
+		"knime_function_name": "Numeric Binner",
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7,
+		"library_parameters": [
+		  {
+			"parameter_name": "DerivedField",
+			"parameter_def_name":"derivedFieldDef"
+		  },
+		  {
+			"parameter_name": "DiscretizeBin",
+			"parameter_def_name":"discretizeBinDef"
+		  }
+		],
+		"contracts": [
+		  {
+			"contractType": "PRECONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "POSTCONDITION",
+			"contractDef": "ValueRange",
+			"valueDef": "Interval"
+		  },
+		  {
+			"contractType": "INVARIANT",
+			"ifValueDef": "Interval",
+			"thenValueDef": "FixValue"
+		  }
+		]
+	  }
+	},
+	
+	  {
 	  "Auto-Binner": {
 		"knime_function_name": "Auto-Binner",
 		"library_transformation_name": "binner",
