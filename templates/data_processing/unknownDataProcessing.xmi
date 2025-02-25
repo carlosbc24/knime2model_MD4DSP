@@ -3,13 +3,13 @@
                 incoming=""
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
                 out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})">
+                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})">
     <inputPort fileName="{{ dataprocessing.input_filepath }}"
-               name="{{ dataprocessing.transformation.KNIME_name }} from KNIME({{ dataprocessing.column_names }})_input_dataDictionary"
+               name="{{ dataprocessing.transformation.KNIME_name }} from KNIME({{ dataprocessing.in_column_names }})_input_dataDictionary"
                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
         {% for in_column in dataprocessing.in_columns %}
         <datafield xsi:type="Workflow:Continuous"
-             name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_input_dataField"
+             name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})_input_dataField"
              displayName="{{ in_column.name }}">
             <continuousDef
                  href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.0"/>
@@ -20,11 +20,11 @@
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
     <outputPort fileName="{{ dataprocessing.output_filepath }}"
-                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataDictionary"
+                name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})_output_dataDictionary"
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
         {% for out_column in dataprocessing.out_columns %}
         <datafield xsi:type="Workflow:Continuous"
-             name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataField"
+             name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})_output_dataField"
              displayName="{{ out_column.name }}">
             <continuousDef
                  href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0/@datafielddefinition.0"/>
@@ -37,7 +37,7 @@
     <dataProcessingDefinition xsi:type="Library:Transformation"
                               href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter xsi:type="Workflow:FieldRange"
-               name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_param_field"
+               name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})_param_field"
                dataField="">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>

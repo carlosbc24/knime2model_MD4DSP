@@ -4,39 +4,34 @@
       incoming=""
       in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
       out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-      name="stringToNumber(TERRITORY, Instate)">
+      name="stringToNumber({{ dataprocessing.out_column_names }})">
     <inputPort
-        fileName="ruleEngine_instate_output_dataDictionary.csv"
-        name="stringToNumber(TERRITORY, Instate)_input_dataDictionary"
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="stringToNumber({{ dataprocessing.out_column_names }})_input_dataDictionary"
         out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
       <datafield
           xsi:type="Workflow:Categorical"
-          name="stringToNumber(TERRITORY)_input_dataField"
-          displayName="TERRITORY"
+          name="stringToNumber({{ out_column.name }})_input_dataField"
+          displayName="{{ out_column.name }}"
           out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.6/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="stringToNumber(Instate)_input_dataField"
-          displayName="Instate"
-          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.1">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.6/@inputPort.0/@datafielddefinition.0"/>
-      </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.6/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="stringToNumber_output_dataDictionary.csv"
-        name="stringToNumber(TERRITORY, Instate)_output_dataDictionary"
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="stringToNumber({{ dataprocessing.out_column_names }})_output_dataDictionary"
         in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="stringToNumber(TERRITORY)_output_dataField"
+          name="stringToNumber({{ out_column.name }})_output_dataField"
           dataType="Integer"
-          displayName="TERRITORY"
+          displayName="{{ out_column.name }}"
           in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.6/@outputPort.0/@datafielddefinition.0"/>
@@ -44,18 +39,7 @@
             rightMargin="8.0"
             clousure="closedClosed"/>
       </datafield>
-      <datafield
-          xsi:type="Workflow:Continuous"
-          name="stringToNumber(Instate)_output_dataField"
-          dataType="Integer"
-          displayName="Instate"
-          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1">
-        <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.6/@outputPort.0/@datafielddefinition.0"/>
-        <interval
-            rightMargin="1.0"
-            clousure="closedClosed"/>
-      </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.6/@outputPort.0"/>
     </outputPort>
@@ -64,30 +48,31 @@
         href="library_validation.xmi#//@dataprocessingdefinition.6"/>
     <parameter
         xsi:type="Workflow:CastType"
-        name="stringToNumber(TERRITORY, Instate)_param_castType"
+        name="stringToNumber({{ dataprocessing.out_column_names }})_param_castType"
         type="Integer">
       <castTypeDef
           href="library_validation.xmi#//@dataprocessingdefinition.6/@parameterdefinition.0"/>
     </parameter>
+  {% for out_column in dataprocessing.out_columns %}
     <contract
-        name="stringToNumber(TERRITORY)_INVARIANT">
+        name="stringToNumber({{ out_column.name }})_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="INV_condition_TERRITORY">
+          name="INV_condition_{{ out_column.name }}">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
-            name="INV_input_datafield_TERRITORY">
+            name="INV_input_datafield_{{ out_column.name }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
-            name="INV_output_datafield_TERRITORY">
+            name="INV_output_datafield_{{ out_column.name }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
         </out>
@@ -96,7 +81,7 @@
         <if
             belongOp="NOTBELONG"
             then="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@then.0"
-            name="INV_if_TERRITORY">
+            name="INV_if_{{ out_column.name }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
@@ -107,7 +92,7 @@
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@if.0"
-            name="INV_if_TERRITORY"
+            name="INV_if_{{ out_column.name }}"
             belongOp="NOTBELONG">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
@@ -119,54 +104,5 @@
         </then>
       </contract>
     </contract>
-    <contract
-        name="stringToNumber(Instate)_INVARIANT">
-      <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
-      <contract
-          xsi:type="Contract:Condition"
-          type="INVARIANT"
-          name="INV_condition_Instate">
-        <in
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1"
-            name="INV_input_datafield_Instate">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
-        </in>
-        <out
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.1"
-            name="INV_output_datafield_Instate">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
-        </out>
-        <conditionDef
-            href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
-        <if
-            belongOp="NOTBELONG"
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0"
-            name="INV_if_Instate">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@if.0"
-            name="INV_if_Instate"
-            belongOp="NOTBELONG">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
-        </then>
-      </contract>
-    </contract>
+    {% endfor %}
   </dataprocessing>
