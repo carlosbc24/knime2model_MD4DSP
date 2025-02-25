@@ -26,6 +26,12 @@
 	},
 	{
 	  "name": "rowFilterRange"
+	},
+		{
+	  "name": "mathOperationFieldFixValue"
+	},
+		{
+	  "name": "mathOperationFieldField"
 	}
-	]
+  ]
 }
