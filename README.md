@@ -137,7 +137,7 @@ MD4DSP-m2python/
 │   ├── mapping_log_2.log
 │   └── ...
 │
-├── mapping/
+├── mapping_with_templates/
 │ ├── json2workflow.py
 │ ├── knwf2workflow.py
 │ └── knwf2json.py
@@ -165,8 +165,6 @@ MD4DSP-m2python/
 └── requirements.txt
 ```
 
-- **`data_model/`**: contains the data model of the project.
-
 
 - **`input_KNIME_workflows/`**: contains the input KNIME workflows to be parsed and exported json via Python script.
 
@@ -180,7 +178,9 @@ MD4DSP-m2python/
 - **`logs/`**: contains the logs of the project.
 
 
-- **`mapping/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json file and from a json file to a MD4DSP workflow.
+- **`mapping_with_templates/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json 
+  file 
+  and from a json file to a MD4DSP workflow
 
 
 - **`parsed_json_workflows/`**: contains the json data from the parsed input KNIME workflows.
@@ -205,7 +205,7 @@ MD4DSP-m2python/
   
 
 - **`requirements.txt`**: file that contains the libraries needed to run the project.
-  
+
 ## Authors
 - Carlos Breuer Carrasco
 - Carlos Cambero Rojas
