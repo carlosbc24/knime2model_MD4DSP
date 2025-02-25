@@ -1,6 +1,6 @@
 import os
 import yaml
-from mapping.knwf2json import extract_data_knime2json
+from mapping_with_templates.knwf2json import extract_data_knime2json
 from mapping_with_templates.json2workflow import json_to_xmi_workflow_with_templates
 from utils.logger import set_logger
 

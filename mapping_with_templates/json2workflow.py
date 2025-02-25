@@ -148,17 +148,19 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
         library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
                                                                       node_name)
 
+        # Get input and output columns
         in_columns = get_input_columns(node)
         in_column_names = [included_column["column_name"] for included_column in in_columns]
         in_column_names_str = ", ".join(in_column_names)
         print_and_log(f"Included columns for node {node_id}: {in_column_names_str}")
 
+        # Output columns
         out_columns = get_output_columns(node)
         out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
         out_column_names_str = ", ".join(out_column_names)
         print_and_log(f"Excluded columns for node {node_id}: {out_column_names_str}")
 
-        # In columns that are not in the out columns
+        # Filter columns that are not in the output
         filtered_columns = [{"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
                             for column in in_columns if column["column_name"] not in out_column_names]
         filtered_column_names = [column["name"] for column in filtered_columns]
@@ -189,17 +191,15 @@ def process_nodes(data: dict, nodes: list) -> tuple[dict, str]:
             "filtered_columns": filtered_columns_dict
         }
 
-        if library_transformation_name is not None and library_transformation_name in library_transformation_names:
+        template_filepath = f"templates/{library_transformation_name}_template.xmi"
 
-            template_filepath = f"templates/{library_transformation_name}_template.xmi"
+        if library_transformation_name in library_transformation_names and os.path.exists(template_filepath):
 
-            if os.path.exists(template_filepath):
-
-                # Read the workflow template file
-                with open(template_filepath, "r") as file:
-                    data_processing_jinja_template = JinjaTemplate(file.read())
-                    dataprocessing["transformation"]["name"] = library_transformation_name
-                    node_name = library_transformation_name
+            # Read the workflow template file
+            with open(template_filepath, "r") as file:
+                data_processing_jinja_template = JinjaTemplate(file.read())
+                dataprocessing["transformation"]["name"] = library_transformation_name
+                node_name = library_transformation_name
 
         else:
             # Read the workflow template file

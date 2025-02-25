@@ -2,7 +2,7 @@ import os
 import yaml
 
 from mapping.json2workflow import json_to_xmi_workflow
-from mapping.knwf2json import extract_data_knime2json
+from mapping_with_templates.knwf2json import extract_data_knime2json
 from utils.logger import set_logger
 
 # Read yaml file configuration variables
