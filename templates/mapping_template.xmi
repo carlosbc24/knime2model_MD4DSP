@@ -17,6 +17,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
     {% endfor %}
+    {% if dataprocessing.include_contracts %}
     <contract
         name="mapping({{ dataprocessing.replace_column_name }})_PRECONDITION">
       <contractDefinition
@@ -124,7 +125,8 @@
         {% endfor %}
       </contract>
     </contract>
-    <inputPort fileName="{{ dataprocessing.inputPath }}"
+    {% endif %}
+    <inputPort fileName="{{ dataprocessing.input_filepath }}"
                name="mapping({{ dataprocessing.replace_column_name }})_input_dataDictionary"
                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
       <datafield
@@ -139,7 +141,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="{{ dataprocessing.outputPath }}"
+        fileName="{{ dataprocessing.output_filepath }}"
         name="mapping({{ dataprocessing.replace_column_name }})_output_dataDictionary"
         in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
       <datafield

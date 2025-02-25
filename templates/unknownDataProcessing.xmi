@@ -1,12 +1,12 @@
 <dataprocessing xsi:type="Workflow:DataProcessing"
                 outgoing=""
                 incoming=""
-                in=""
-                out=""
+                in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
+                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
                 name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})">
-    <inputPort fileName="rowFilter_output_dataDictionary.csv"
+    <inputPort fileName="{{ dataprocessing.input_filepath }}"
                name="{{ dataprocessing.transformation.KNIME_name }} from KNIME({{ dataprocessing.column_names }})_input_dataDictionary"
-               out="">
+               out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
         {% for in_column in dataprocessing.in_columns %}
         <datafield xsi:type="Workflow:Continuous"
              name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_input_dataField"
@@ -19,9 +19,9 @@
        {% endfor %}
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
-    <outputPort fileName="{{ dataprocessing.transformation.KNIME_name }}_output_dataDictionary.csv"
+    <outputPort fileName="{{ dataprocessing.output_filepath }}"
                 name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataDictionary"
-                in="">
+                in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
         {% for out_column in dataprocessing.out_columns %}
         <datafield xsi:type="Workflow:Continuous"
              name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.column_names }})_output_dataField"
