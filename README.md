@@ -70,7 +70,7 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    
 8. Run the Python script to parse and export data from a KNIME workflow:
     ```bash
-    python3 -m mapping.knwf2workflow
+    python3 -m mapping_deprecated.knwf2workflow
     ```
    
 9. Run the Python script to parse and export data to a MD4DSP workflow from a KNIME workflow using templates:

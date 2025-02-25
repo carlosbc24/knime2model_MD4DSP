@@ -3,8 +3,8 @@ import json
 from xml.dom import minidom
 import xml.etree.ElementTree as elementTree
 
-from parsers.dataLink import create_link
-from parsers.dataProcessing import create_data_processing
+from parsers_deprecated.dataLink import create_link
+from parsers_deprecated.dataProcessing import create_data_processing
 from utils.logger import print_and_log
 
 

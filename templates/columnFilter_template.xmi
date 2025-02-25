@@ -12,7 +12,7 @@
         <datafield xsi:type="Workflow:Categorical"
                  name="columnFilter({{ filtered_column.name }})_input_dataField"
                  displayName="{{ filtered_column.name }}"
-                   dataType="{{ filtered_column.type }}">
+                 dataType="{{ filtered_column.type }}">
           <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
       </datafield>
@@ -28,11 +28,6 @@
       </datafield>
         {% endif %}
         {% endfor %}
-      <datafield xsi:type="Workflow:Categorical"
-                 name="columnFilter()_input_dataField"
-                 displayName="">
-        <categoricalDef href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
       <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
     <outputPort fileName="{{ dataprocessing.output_filepath }}"

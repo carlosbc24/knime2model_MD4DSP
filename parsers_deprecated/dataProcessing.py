@@ -1,10 +1,10 @@
-import xml.etree.ElementTree as elementTree
-from parsers.dataDictionary import create_input_port, create_output_port
-import json
 
-from parsers.parameter import create_parameters, get_node_parameters
+import xml.etree.ElementTree as elementTree
+from parsers_deprecated.parameter import create_parameters, get_node_parameters
 from utils.library_functions import get_library_transformation_name, get_library_transformation_id
+from parsers_deprecated.dataDictionary import create_input_port, create_output_port
 from utils.logger import print_and_log
+
 
 def get_dest_node_from_connections(data: dict, node_id: int) -> str | None:
     """
