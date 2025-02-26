@@ -34,6 +34,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     column_filter_dict = {}
     mapping_dict = {}
     binner_dict = {}
+    row_dict = {}
     if library_transformation_name == "columnFilter":
         # Filter columns that are not in the output
         filtered_columns = [
@@ -42,6 +43,11 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         filtered_column_names = [column["name"] for column in filtered_columns]
         filtered_column_names_str = ", ".join(filtered_column_names)
         column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
+
+    if library_transformation_name == "rowFilterRange":
+        row_dict = {"lower_bound": node["parameters"]["lower_bound"], "upper_bound": node["parameters"]["upper_bound"],
+                    "has_lower_bound": node["parameters"]["has_lower_bound"],
+                    "has_upper_bound": node["parameters"]["has_upper_bound"]}
 
     elif library_transformation_name == "mapping":
         # Get the column mapping and parameters
@@ -70,6 +76,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         ],
         "mapping": mapping_dict,
         "column_filter": column_filter_dict,
+        "row_filter": row_dict,
         "binner": binner_dict,
         "include_contracts": include_contracts,
         "index": node_id

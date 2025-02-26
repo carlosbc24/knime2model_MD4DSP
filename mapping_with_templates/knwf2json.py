@@ -216,7 +216,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
             nodes_info.append(node_info)
 
-        elif "Row Filter" in node_info["node_name"]:
+        elif "Row Filter (deprecated)" in node_info["node_name"]:
             row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
             if row_filter is not None:
                 # Extract the row range
@@ -229,35 +229,40 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     }
                 # Extract the filter type (EQUAL, CONTAINS, etc.)
                 filter_type_entry = row_filter.find("knime:entry[@key='RowFilter_TypeID']", namespace)
-                if filter_type_entry is not None:
+                if filter_type_entry is not None and filter_type_entry.attrib["value"] == "RangeVal_RowFilter":
                     node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
-                # Extract the columns to filter
-                columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
-                node_info["parameters"]["columns"] = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in columns
-                ]
-                # print("Columns: ", node_info["parameters"]["columns"])
-                # Determine if the filter is inclusive or exclusive
-                include_entry = row_filter.find("knime:entry[@key='include']", namespace)
-                if include_entry is not None:
-                    node_info["parameters"]["include"] = include_entry.attrib["value"] == "true"
-                # Extract the case sensitivity of the filter
-                case_sensitive_entry = row_filter.find("knime:entry[@key='CaseSensitive']", namespace)
-                if case_sensitive_entry is not None:
-                    node_info["parameters"]["case_sensitive"] = case_sensitive_entry.attrib["value"] == "true"
-                # Extract the pattern to match
-                pattern_entry = row_filter.find("knime:entry[@key='Pattern']", namespace)
-                if pattern_entry is not None:
-                    node_info["parameters"]["pattern"] = pattern_entry.attrib["value"]
-                # Determine if the pattern is a regular expression
-                wildcards_entry = row_filter.find("knime:entry[@key='hasWildCards']", namespace)
-                regex_entry = row_filter.find("knime:entry[@key='isRegExpr']", namespace)
-                if wildcards_entry is not None:
-                    node_info["parameters"]["has_wildcards"] = wildcards_entry.attrib["value"] == "true"
-                if regex_entry is not None:
-                    node_info["parameters"]["is_regex"] = regex_entry.attrib["value"] == "true"
-
+                    # Extract the columns to filter
+                    columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
+                    node_info["parameters"]["in_columns"] = [
+                        {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                        for col in columns
+                    ]
+                    node_info["parameters"]["out_columns"] = [
+                        {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                        for col in columns
+                    ]
+                    # Extract lower value and upper value
+                    lower_bound = row_filter.find(
+                        "knime:config[@key='lowerBound']/knime:config/knime:entry[@key='IntCell']", namespace)
+                    upper_bound = row_filter.find("knime:config[@key='upperBound']/knime:entry[@key='datacell']",
+                                                  namespace)
+                    lower_bound_value = lower_bound.attrib[
+                        "value"] if lower_bound is not None else None
+                    upper_bound_value = upper_bound.attrib[
+                        "value"] if upper_bound is not None else None
+                    if lower_bound_value is not None and lower_bound_value != "":
+                        node_info["parameters"]["lower_bound"] = lower_bound_value
+                    else:
+                        node_info["parameters"]["lower_bound"] = 0
+                    if upper_bound_value is not None and upper_bound_value != "":
+                        node_info["parameters"]["upper_bound"] = upper_bound_value
+                    else:
+                        node_info["parameters"]["upper_bound"] = 0
+                    # Flags to indicate if the upeer and lower bounds are not None
+                    node_info["parameters"]["has_lower_bound"] = lower_bound is not None and lower_bound.attrib.get(
+                        "value") != ""
+                    node_info["parameters"]["has_upper_bound"] = upper_bound is not None and upper_bound.attrib.get(
+                        "value") != ""
             nodes_info.append(node_info)
 
         elif "Column Renamer" in node_info["node_name"]:

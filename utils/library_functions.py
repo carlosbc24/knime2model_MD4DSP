@@ -45,18 +45,20 @@ def get_library_transformation_names(json_file_path: str) -> list:
     return librery_transformations_names
 
 
-def get_library_transformation_name(json_file_path: str, node_name: str) -> str:
+def get_library_transformation_name(json_file_path: str, node: dict, index: int) -> str:
     """
     Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
     Extracts the value of the library_transformation_id attribute from the first matching element.
 
     Args:
         json_file_path (str): Path to the JSON file.
-        node_name (str): Name of the node to search for.
+        node (dict): Node to search for.
 
     Returns:
         string: Value of the library_transformation_id attribute of the first matching node
     """
+    node_name = node.get("node_name", f"Node_{index}")
+
     with open(json_file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
 
@@ -64,6 +66,10 @@ def get_library_transformation_name(json_file_path: str, node_name: str) -> str:
 
     for function in functions_hashing:
         if node_name in function:
-            return function[node_name].get("library_transformation_name")
+            if node_name == "Row Filter (deprecated)":
+                if node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter":
+                    return function[node_name].get("library_transformation_name")
+            else:
+                return function[node_name].get("library_transformation_name")
 
     return None

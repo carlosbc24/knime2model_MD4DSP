@@ -1,0 +1,123 @@
+<dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      outgoing=""
+      incoming=""
+      in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+      name="rowFilterRange({{ dataprocessing.in_column_names }})">
+    <inputPort
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="rowFilterRange({{ dataprocessing.in_column_names }})_input_dataDictionary"
+        out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
+        <datafield
+          xsi:type="Workflow:Continuous"
+          name="rowFilterRange({{ in_column.name }})_input_dataField"
+          dataType="Integer"
+          displayName="{{ in_column.name }}">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
+        <interval
+            leftMargin="-1000.0"
+            rightMargin="1000.0"
+            clousure="closedClosed"/>
+      </datafield>
+        {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="rowFilterRange({{ dataprocessing.out_column_names }})_output_dataDictionary"
+        in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
+        <datafield
+          xsi:type="Workflow:Continuous"
+          name="rowFilterRange({{ out_column.name }})_output_dataField"
+          dataType="Integer"
+          displayName="{{ out_column.name }}">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
+        <interval
+            rightMargin="1000.0"
+            clousure="closedClosed"/>
+      </datafield>
+        {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.8"/>
+    {% for in_column in dataprocessing.in_columns %}
+    <parameter
+        xsi:type="Workflow:FilterValue"
+        name="rowFilterRange({{ in_column.name }})_param_rowFilter">
+      <filterValueDef
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.0"/>
+      <matchingvalue
+          xsi:type="Workflow:Range"
+          name="rowFilterRange({{ in_column.name }})_param_range"
+          minInfinity="{{ dataprocessing.row_filter.has_lower_bound }}"
+          maxInfinity="{{ dataprocessing.row_filter.has_upper_bound }}"
+          max="{{ dataprocessing.row_filter.upper_bound }}"
+          min="{{ dataprocessing.row_filter.lower_bound }}">
+        <rangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.1"/>
+      </matchingvalue>
+    </parameter>
+    <contract
+        name="rowFilterRange({{ in_column.name }})_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="rowFilter({{ in_column.name }})_PRE_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            name="rowFilter({{ in_column.name }})_PRE_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:Interval"
+            rightMargin="1000.0"
+            closureType="closedOpen">
+          <intervalDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="rowFilter({{ in_column.name }})_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="rowFilter({{ in_column.name }})_POST_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="POST_input_datafield_row_filter">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            value="-216"
+            dataType="Integer">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    {% endfor %}
+  </dataprocessing>

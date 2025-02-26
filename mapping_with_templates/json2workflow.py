@@ -2,11 +2,9 @@
 import os
 import json
 from string import Template
-
 from parsers.json_parser_functions import get_transformation_dp_values
 from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from jinja2 import Template as JinjaTemplate
-
 from utils.logger import print_and_log
 
 
@@ -31,7 +29,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: list)
 
         # Get library transformation name
         library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
-                                                                      node_name)
+                                                                      node, index)
 
         # Get the data processing values for the node type
         dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts,
