@@ -4,115 +4,81 @@
       incoming=""
       in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
       out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
-      name="binner(TERRITORY)">
+      name="binner({{ dataprocessing.in_column_names }})">
     <inputPort
-        fileName="numericOutliers_output_dataDictionary.csv"
-        name="binner(TERRITORY)_input_dataDictionary"
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="binner({{ dataprocessing.in_column_names }})_input_dataDictionary"
         out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="binner(TERRITORY)_input_dataField"
+          name="binner({{ in_column.name }})_input_dataField"
           dataType="Integer"
-          displayName="TERRITORY"
+          displayName="{{ in_column.name }}"
           out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0/@datafielddefinition.0"/>
         <interval
             rightMargin="8.0"/>
       </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="numericBinner_output_dataDictionary.csv"
-        name="binner(TERRITORY)_output_dataDictionary"
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="binner({{ dataprocessing.in_column_names }})_output_dataDictionary"
         in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
       <datafield
           xsi:type="Workflow:Categorical"
-          name="binner(TERRITORY)_output_dataField"
-          displayName="TERRITORY_binned"
+          name="binner({{ out_column.name }})_output_dataField"
+          displayName="{{ out_column.name }}"
           in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@outputPort.0/@datafielddefinition.0"/>
       </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
+    {% for in_column in dataprocessing.in_columns %}
     <parameter
         xsi:type="Workflow:DerivedField"
-        name="binner(TERRITORY)_param_derivedField"
+        name="binner({{ in_column.name }})_param_derivedField"
         der_dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
     </parameter>
+    {% endfor %}
+    {% for bin in dataprocessing.binner.bins %}
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(TERRITORY)_param_bin_Unknown"
-        binValue="Unknown">
+        name="binner({{ dataprocessing.in_column_names }})_param_bin_Unknown"
+        binValue="{{ bin.binName }}">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          leftMargin="-1000.0"
-          rightMargin="1.0"/>
+          clousure="{{ bin.closureType }}"
+          leftMargin="{{ bin.leftMargin }}"
+          rightMargin="{{ bin.rightMargin }}"/>
     </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(TERRITORY)_param_bin_Zone1"
-        binValue="Zone 1">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="1.0"
-          rightMargin="3.0"
-          clousure="closedOpen"/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(TERRITORY)_param_bin_Zone2"
-        binValue="Zone 2">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="3.0"
-          rightMargin="5.0"
-          clousure="closedOpen"/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(TERRITORY)_param_bin_Zone3"
-        binValue="Zone 3">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="5.0"
-          rightMargin="7.0"
-          clousure="closedOpen"/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(TERRITORY)_param_bin_Zone4"
-        binValue="Zone 4">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="7.0"
-          rightMargin="1000.0"
-          clousure="closedClosed"/>
-    </parameter>
+    {% endfor %}
+  {% for in_column in dataprocessing.in_columns %}
     <contract
-        name="binner(TERRITORY)_PRECONDITION">
+        name="binner({{ in_column.name }})_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="binner(TERRITORY)_PRE_valueRange">
+          name="binner({{ in_column.name }})_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
-            name="binner(TERRITORY)_PRE_input_dataField">
+            name="binner({{ in_column.name }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -128,24 +94,25 @@
       </contract>
     </contract>
     <contract
-        name="binner(TERRITORY)_POSTCONDITION">
+        name="binner({{ in_column.name }})_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(TERRITORY)_POST_valueRange"
+          name="binner({{ in_column.name }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
-            name="binner(TERRITORY)_POST_input_dataField">
+            name="binner({{ in_column.name }})_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:Interval"
-            rightMargin="1000.0">
+            rightMargin="1000.0"
+            closureType="openOpen">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -154,158 +121,58 @@
       </contract>
     </contract>
     <contract
-        name="binner(TERRITORY)_INVARIANT">
+        name="binner({{ in_column.name }})_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="binner(TERRITORY)_INV_condition">
+          name="binner({{ in_column.name }})_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
-            name="binner(TERRITORY)_INV_input_dataField">
+            name="binner({{ in_column.name }})_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
-            name="binner(TERRITORY)_INV_output_dataField">
+            name="binner({{ in_column.name }})_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
+        {% for bin in dataprocessing.binner.bins %}
         <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0"
-            name="binner(TERRITORY)_INV_IF_Unknown">
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.{{ loop.index0 }}"
+            name="binner({{ in_column.name }})_INV_IF_{{ bin.binName }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
               xsi:type="Contract:Interval"
-              leftMargin="-1000.0"
-              rightMargin="1.0">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
-        <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.1"
-            name="binner(TERRITORY)_INV_IF_Zone1">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:Interval"
-              leftMargin="1.0"
-              rightMargin="3.0"
-              closureType="closedOpen">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
-        <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.2"
-            name="binner(TERRITORY)_INV_IF_Zone2">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:Interval"
-              leftMargin="3.0"
-              rightMargin="5.0"
-              closureType="closedOpen">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
-        <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.3"
-            name="binner(TERRITORY)_INV_IF_Zone3">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:Interval"
-              leftMargin="5.0"
-              rightMargin="7.0"
-              closureType="closedOpen">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
-        <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.4"
-            name="binner(TERRITORY)_INV_IF_Zone4">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:Interval"
-              leftMargin="7.0"
-              rightMargin="1000.0"
-              closureType="closedOpen">
+              leftMargin="{{ bin.leftMargin }}"
+              rightMargin="{{ bin.rightMargin }}"
+              closureType="{{ bin.closureType }}">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.0"
-            name="binner(TERRITORY)_INV_THEN_Unknown">
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.{{ loop.index0 }}"
+            name="binner({{ in_column.name }})_INV_THEN_{{ bin.binName }}">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:FixValue"
-              value="Unknown">
+              value="{{ bin.binName }}">
             <valueFieldDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.1"
-            name="binner(TERRITORY)_INV_THEN_Zone1">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:FixValue"
-              value="Zone 1">
-            <valueFieldDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
-        </then>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.2"
-            name="binner(TERRITORY)_INV_THEN_Zone2">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:FixValue"
-              value="Zone 2">
-            <valueFieldDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
-        </then>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.3"
-            name="binner(TERRITORY)_INV_THEN_Zone3">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:FixValue"
-              value="Zone 3">
-            <valueFieldDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
-        </then>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.4"
-            name="binner(TERRITORY)_INV_THEN_Zone4">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:FixValue"
-              value="Zone 4">
-            <valueFieldDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
-        </then>
+        {% endfor %}
       </contract>
     </contract>
+  {% endfor %}
   </dataprocessing>
