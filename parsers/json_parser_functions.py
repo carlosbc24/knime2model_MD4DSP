@@ -33,6 +33,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
 
     column_filter_dict = {}
     mapping_dict = {}
+    binner_dict = {}
     if library_transformation_name == "columnFilter":
         # Filter columns that are not in the output
         filtered_columns = [
@@ -50,6 +51,9 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         mapping_parameters = [{"key": key, "value": value} for key, value in mapping_parameters.items()]
         mapping_dict = {"mapping_parameters": mapping_parameters, "replace_column_name": replace_column_name}
 
+    elif library_transformation_name == "binner":
+        binner_dict = {"bins": node["parameters"]["bins"]}
+
     dataprocessing_values = {
         "transformation": {"name": library_transformation_name, "KNIME_name": node_name},
         "input_filepath": input_file_path,
@@ -66,9 +70,11 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         ],
         "mapping": mapping_dict,
         "column_filter": column_filter_dict,
+        "binner": binner_dict,
         "include_contracts": include_contracts,
         "index": node_id
     }
+
 
     return dataprocessing_values
 
@@ -86,7 +92,7 @@ def get_input_columns(node: dict) -> list:
     in_columns = []
 
     # Add included columns if they exist (from column filter)
-    if "in_columns" in node["parameters"]:
+    if "parameters" in node and "in_columns" in node["parameters"]:
         in_columns = node["parameters"]["in_columns"]
 
     return in_columns
@@ -105,7 +111,7 @@ def get_output_columns(node: dict) -> list:
     out_columns = []
 
     # Add excluded columns if they exist (from column filter)
-    if "out_columns" in node["parameters"]:
+    if "parameters" in node and "out_columns" in node["parameters"]:
         out_columns = node["parameters"]["out_columns"]
 
     return out_columns

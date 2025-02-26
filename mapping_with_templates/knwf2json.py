@@ -3,7 +3,7 @@ import os
 import json
 import zipfile
 import xml.etree.ElementTree as elementTree
-
+import copy
 from utils.logger import print_and_log
 
 
@@ -91,14 +91,46 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
             })
 
     # Extract node settings
+    new_nodes = []
+    new_connections = []
+    max_node_id = max(node["id"] for node in nodes)  # Get the current maximum node ID
+
     for node in nodes:
         settings_path = os.path.join(extract_path, knwf_filename_without_extension, node["node_settings_file"])
         if os.path.exists(settings_path):
-            node.update(extract_node_settings(settings_path))
+            nodes_info = extract_node_settings(settings_path)
+            if len(nodes_info) == 1:
+                node.update(nodes_info[0])
+            else:
+                original_node_id = node["id"]
+                previous_node_id = original_node_id
+                for i, node_info in enumerate(nodes_info):
+                    new_node = node.copy()
+                    new_node.update(node_info)
+                    if i == 0:
+                        new_node["id"] = original_node_id
+                    else:
+                        max_node_id += 1
+                        new_node["id"] = max_node_id
+                    new_nodes.append(new_node)
+                    if i > 0:
+                        new_connections.append({
+                            "sourceID": previous_node_id,
+                            "destID": new_node["id"]
+                        })
+                    previous_node_id = new_node["id"]
+
+
+    nodes.extend(new_nodes)
+    connections.extend(new_connections)
+
+    # Filtrar nodos que tienen 'node_name'
+    nodes = [node for node in nodes if "node_name" in node]
 
     # Remove node_settings_file key
     for node in nodes:
-        del node["node_settings_file"]
+        if "node_settings_file" in node:
+            del node["node_settings_file"]
 
     # Save the extracted data in a JSON file
     ouput_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
@@ -123,7 +155,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
 
 
-def extract_node_settings(settings_path: str) -> dict:
+def extract_node_settings(settings_path: str) -> list[dict]:
     """
     Extracts the node settings from the settings file of a KNIME node.
 
@@ -131,7 +163,7 @@ def extract_node_settings(settings_path: str) -> dict:
         settings_path (str): Path to the settings file of a KNIME node.
 
     Returns:
-        dict: Dictionary with the extracted node settings.
+        list[dict]: List of dictionaries with the node settings.
 
     """
     namespace = {"knime": "http://www.knime.org/2008/09/XMLConfig"}
@@ -140,6 +172,8 @@ def extract_node_settings(settings_path: str) -> dict:
 
     node_name_entry = root.find(".//knime:entry[@key='node-name']", namespace)
     node_type_entry = root.find(".//knime:entry[@key='factory']", namespace)
+
+    nodes_info = []
 
     node_info = {
         "node_name": node_name_entry.attrib["value"] if node_name_entry is not None else "Unknown",
@@ -164,10 +198,14 @@ def extract_node_settings(settings_path: str) -> dict:
                 if column_delimiter_entry is not None:
                     node_info["parameters"]["column_delimiter"] = column_delimiter_entry.attrib["value"]
 
+            nodes_info.append(node_info)
+
         elif "Excel Reader" in node_info["node_name"] or "File Reader" in node_info["node_name"]:
             file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
             if file_path_entry is not None:
                 node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]
+
+            nodes_info.append(node_info)
 
         elif "Column Filter" in node_info["node_name"]:
             column_filter = model.find(".//knime:config[@key='column-filter']", namespace)
@@ -175,6 +213,8 @@ def extract_node_settings(settings_path: str) -> dict:
                 included_names, excluded_names = extract_columns_data(column_filter, namespace)
                 node_info["parameters"]["in_columns"] = included_names + excluded_names
                 node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
 
         elif "Row Filter" in node_info["node_name"]:
             row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
@@ -218,12 +258,16 @@ def extract_node_settings(settings_path: str) -> dict:
                 if regex_entry is not None:
                     node_info["parameters"]["is_regex"] = regex_entry.attrib["value"] == "true"
 
+            nodes_info.append(node_info)
+
         elif "Column Renamer" in node_info["node_name"]:
             renamings = model.findall(".//knime:config[@key='renamings']/knime:config", namespace)
             node_info["parameters"]["renamings"] = [{
                 "old": r.find("knime:entry[@key='oldName']", namespace).attrib["value"],
                 "new": r.find("knime:entry[@key='newName']", namespace).attrib["value"]
             } for r in renamings if r.find("knime:entry[@key='oldName']", namespace) is not None]
+
+            nodes_info.append(node_info)
 
         elif "Missing Value" in node_info["node_name"]:
             data_types = model.findall(".//knime:config[@key='dataTypeSettings']/knime:config", namespace)
@@ -237,6 +281,21 @@ def extract_node_settings(settings_path: str) -> dict:
                     value = value_entry.attrib["value"] if value_entry is not None else None
                     node_info["parameters"]["missing_value_strategy"][key] = {"strategy": strategy, "value": value}
 
+            # Extract in_columns and out_columns
+            column_settings = model.findall(".//knime:config[@key='columnSettings']/knime:config", namespace)
+            in_columns = []
+            for col_setting in column_settings:
+                col_names = col_setting.find(".//knime:config[@key='colNames']", namespace)
+                if col_names is not None:
+                    for entry in col_names.findall("knime:entry", namespace):
+                        if entry.attrib["key"] != "array-size":
+                            in_columns.append({"column_name": entry.attrib["value"], "column_type": "xstring"})  # Assuming column_type is unknown
+
+            node_info["parameters"]["in_columns"] = in_columns
+            node_info["parameters"]["out_columns"] = in_columns  # Same as in_columns
+
+            nodes_info.append(node_info)
+
         elif "String Replacer" in node_info["node_name"]:
             column_entry = model.find("knime:entry[@key='colName']", namespace)
             pattern_entry = model.find("knime:entry[@key='pattern']", namespace)
@@ -248,6 +307,8 @@ def extract_node_settings(settings_path: str) -> dict:
                     "replacement": replacement_entry.attrib["value"]
                 }
 
+            nodes_info.append(node_info)
+
         elif "String to Number" in node_info["node_name"]:
             # Extract the column to convert
             decimal_separator_entry = model.find(".//knime:entry[@key='decimal_separator']", namespace)
@@ -257,6 +318,8 @@ def extract_node_settings(settings_path: str) -> dict:
             included_names, excluded_names = extract_columns_data(model, namespace)
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
 
         elif "Rule Engine" in node_info["node_name"]:
             rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
@@ -276,6 +339,8 @@ def extract_node_settings(settings_path: str) -> dict:
                     for col in replace_column if col.attrib["key"] != "array-size"
                 ]
             node_info["parameters"]["in_columns"] = in_columns
+
+            nodes_info.append(node_info)
 
         elif "Numeric Outliers" in node_info["node_name"]:
             # Extract estimation-type
@@ -309,7 +374,10 @@ def extract_node_settings(settings_path: str) -> dict:
             if detection_option is not None:
                 node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
+            nodes_info.append(node_info)
+
         elif "Numeric Binner" in node_info["node_name"]:
+
             binned_columns = model.findall(".//knime:config[@key='binned_columns']/knime:entry", namespace)
             for column_entry in binned_columns:
                 column_name = column_entry.attrib["value"]
@@ -323,21 +391,21 @@ def extract_node_settings(settings_path: str) -> dict:
                     right_open = bin.find("knime:entry[@key='right_open']", namespace).attrib["value"] == "true"
                     left_value = bin.find("knime:entry[@key='left_value']", namespace).attrib["value"]
                     right_value = bin.find("knime:entry[@key='right_value']", namespace).attrib["value"]
+                    closureType = "openOpen" if left_open and right_open else "openClosed" if left_open and not right_open else "closedOpen" if not left_open and right_open else "closedClosed"
                     bin_info.append({
-                        "bin_name": bin_name,
-                        "left_open": left_open,
-                        "right_open": right_open,
-                        "left_value": left_value,
-                        "right_value": right_value
+                        "binName": bin_name,
+                        "closureType": closureType,
+                        "leftMargin": left_value,
+                        "rightMargin": right_value
                     })
                 if new_column_name is not None and bin_info:
-                    if "bins" not in node_info["parameters"]:
-                        node_info["parameters"]["bins"] = []
-                    node_info["parameters"]["bins"].append({
-                        "original_column_name": column_name,
-                        "new_column_name": new_column_name,
-                        "bins": bin_info
-                    })
+                    new_node_info = copy.deepcopy(node_info)  # Usar deepcopy para evitar referencias compartidas
+                    new_node_info["parameters"] = {
+                        "bins": bin_info,
+                        "in_columns": [{"column_name": column_name, "column_type": "xstring"}],
+                        "out_columns": [{"column_name": new_column_name, "column_type": "xstring"}]
+                    }
+                    nodes_info.append(new_node_info)
 
         elif "Auto-Binner" in node_info["node_name"]:
             # Extract the included and excluded columns
@@ -387,6 +455,8 @@ def extract_node_settings(settings_path: str) -> dict:
                 "output_format": output_format
             }
 
+            nodes_info.append(node_info)
+
         elif "Missing Value Column Filter" in node_info["node_name"]:
             # Extract the missing value threshold
             missing_value_threshold_entry = model.find(".//knime:entry[@key='missing_value_percentage']", namespace)
@@ -398,6 +468,8 @@ def extract_node_settings(settings_path: str) -> dict:
             )
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
 
         elif "Duplicate Row Filter" in node_info["node_name"]:
             remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
@@ -414,6 +486,8 @@ def extract_node_settings(settings_path: str) -> dict:
             node_info["parameters"]["in_memory"] = in_memory_entry.attrib["value"] == "true" if in_memory_entry is not None else False
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
 
         elif "Joiner" in node_info["node_name"]:
             # Extractar configuraciones clave de Joiner
@@ -436,6 +510,8 @@ def extract_node_settings(settings_path: str) -> dict:
             if duplicate_handling_entry is not None:
                 node_info["parameters"]["duplicate_handling"] = duplicate_handling_entry.attrib["value"]
 
+            nodes_info.append(node_info)
+
         elif "Partitioning" in node_info["node_name"]:
             # Extract the method used for partitioning
             method_entry = model.find(".//knime:entry[@key='method']", namespace)
@@ -454,6 +530,8 @@ def extract_node_settings(settings_path: str) -> dict:
             if class_column_entry is not None:
                 node_info["parameters"]["class_column"] = class_column_entry.attrib["value"]
 
+            nodes_info.append(node_info)
+
         elif "String Manipulation" in node_info["node_name"]:
             # Extract the expression to apply
             expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
@@ -467,6 +545,8 @@ def extract_node_settings(settings_path: str) -> dict:
             append_column_entry = model.find(".//knime:entry[@key='append_column']", namespace)
             if append_column_entry is not None:
                 node_info["parameters"]["append_column"] = append_column_entry.attrib["value"] == "true"
+
+            nodes_info.append(node_info)
 
         elif "String Manipulation (Multi Column)" in node_info["node_name"]:
             # Extract the expression to apply
@@ -485,6 +565,8 @@ def extract_node_settings(settings_path: str) -> dict:
             if append_column_suffix_entry is not None:
                 node_info["parameters"]["append_column_suffix"] = append_column_suffix_entry.attrib["value"]
 
+            nodes_info.append(node_info)
+
         elif "CSV Writer" in node_info["node_name"]:
             file_chooser = model.find(".//knime:config[@key='file_chooser_settings']/knime:config[@key='path']", namespace)
             column_delimiter = model.find(".//knime:entry[@key='column_delimiter']", namespace)
@@ -495,7 +577,9 @@ def extract_node_settings(settings_path: str) -> dict:
             if column_delimiter is not None:
                 node_info["parameters"]["column_delimiter"] = column_delimiter.attrib["value"]
 
+            nodes_info.append(node_info)
+
         else:
             print_and_log(f"Node type not recognized: {node_info['node_name']}")
 
-    return node_info
+    return nodes_info
