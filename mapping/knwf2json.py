@@ -274,31 +274,50 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         elif "Missing Value" in node_info["node_name"]:
-            data_types = model.findall(".//knime:config[@key='dataTypeSettings']/knime:config", namespace)
-            node_info["parameters"]["missing_value_strategy"] = {}
-            for dt in data_types:
-                key = dt.attrib["key"]
-                factory_id_entry = dt.find("knime:entry[@key='factoryID']", namespace)
-                value_entry = dt.find("knime:entry[@key='fixDoubleValue']", namespace)
-                if factory_id_entry is not None:
-                    strategy = factory_id_entry.attrib["value"]
-                    value = value_entry.attrib["value"] if value_entry is not None else None
-                    node_info["parameters"]["missing_value_strategy"][key] = {"strategy": strategy, "value": value}
 
-            # Extract in_columns and out_columns
-            column_settings = model.findall(".//knime:config[@key='columnSettings']/knime:config", namespace)
-            in_columns = []
-            for col_setting in column_settings:
-                col_names = col_setting.find(".//knime:config[@key='colNames']", namespace)
-                if col_names is not None:
-                    for entry in col_names.findall("knime:entry", namespace):
-                        if entry.attrib["key"] != "array-size":
-                            in_columns.append({"column_name": entry.attrib["value"], "column_type": "xstring"})  # Assuming column_type is unknown
+            column_settings = root.findall(".//knime:config[@key='columnSettings']/knime:config", namespace)
+            factory_dict = {}
 
-            node_info["parameters"]["in_columns"] = in_columns
-            node_info["parameters"]["out_columns"] = in_columns  # Same as in_columns
+            for column in column_settings:
+                col_name_entry = column.find(".//knime:config[@key='colNames']/knime:entry[@key='0']", namespace)
+                factory_id_entry = column.find(".//knime:config[@key='settings']/knime:entry[@key='factoryID']",
+                                               namespace)
+                fix_string_value_entry = column.find(
+                    ".//knime:config[@key='settings']/knime:entry[@key='fixStringValue']", namespace)
 
-            nodes_info.append(node_info)
+                if col_name_entry is not None and factory_id_entry is not None:
+                    factory_id = factory_id_entry.attrib["value"]
+                    column_name = col_name_entry.attrib["value"]
+                    fix_string_value = fix_string_value_entry.attrib[
+                        "value"] if fix_string_value_entry is not None else None
+
+                    if factory_id not in factory_dict:
+                        factory_dict[factory_id] = {
+                            "in_columns": [],
+                            "out_columns": [],
+                            "fixStringValues": []
+                        }
+
+                    factory_dict[factory_id]["in_columns"].append(
+                        {"column_name": column_name, "column_type": "xstring"})
+                    factory_dict[factory_id]["out_columns"].append(
+                        {"column_name": column_name, "column_type": "xstring"})
+                    factory_dict[factory_id]["fixStringValues"].append(fix_string_value)
+
+            for factory_id, data in factory_dict.items():
+                node_info = {
+                    "node_name": "Missing Value",
+                    "parameters": {
+                        "in_columns": data["in_columns"],
+                        "out_columns": data["out_columns"],
+                        "imputationType": "LINEAR_INTERPOLATION" if "Interpolation" in factory_id else "Mean" if
+                        "Mean" in factory_id else "MostFrequent" if "MostFrequent" in factory_id else "Fixed Value" if
+                        "Fixed" in factory_id else "Previous Value" if "Previous" in factory_id else "Next Value" if
+                        "Next" in factory_id else None,
+                        "fixStringValues": data["fixStringValues"]
+                    }
+                }
+                nodes_info.append(node_info)
 
         elif "String Replacer" in node_info["node_name"]:
             column_entry = model.find("knime:entry[@key='colName']", namespace)
