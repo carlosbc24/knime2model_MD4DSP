@@ -68,7 +68,7 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    which means that every KNIME workflow in the input folder will be parsed. If you want to parse a specific KNIME 
    workflow, you must specify its filename with the extension `.knwf`.
    
-8. Run the Python script to parse and export data from a KNIME workflow:
+8. Run the Python script to count the number of KNIME nodes that can be mapped from the KNIME workflows to the project models:
     ```bash
     python3 -m mapping_deprecated.knwf2workflow
     ```
