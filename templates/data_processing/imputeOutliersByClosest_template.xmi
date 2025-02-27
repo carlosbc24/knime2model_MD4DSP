@@ -44,6 +44,7 @@
                operation="Closest">
       <numOpDef href="library_validation.xmi#//@dataprocessingdefinition.5/@parameterdefinition.0"/>
     </parameter>
+{% if dataprocessing.include_contracts %}
 {% for in_column in dataprocessing.in_columns %}
     {% set in_index = loop.index0 %}
     {% set contract_index = dataprocessing.in_columns|length * loop.index0 + 2 %}
@@ -120,4 +121,5 @@
       </contract>
     </contract>
 {% endfor %}
+{% endif %}
   </dataprocessing>

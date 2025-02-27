@@ -39,7 +39,7 @@
                               href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter xsi:type="Workflow:FieldRange"
                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_param_field"
-               dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0 //@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1">
+               dataField="{% for filtered_column in dataprocessing.column_filter.filtered_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     {% if dataprocessing.include_contracts %}

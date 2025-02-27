@@ -120,7 +120,6 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
                         })
                     previous_node_id = new_node["id"]
 
-
     nodes.extend(new_nodes)
     connections.extend(new_connections)
 
@@ -348,7 +347,6 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         elif "Numeric Outliers" in node_info["node_name"]:
-            # TODO: Extract in_columns and out_columns
             included_names = root.findall(
                 ".//knime:config[@key='outlier-list']/knime:config[@key='included_names']/knime:entry", namespace)
 

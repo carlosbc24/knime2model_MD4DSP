@@ -14,7 +14,7 @@
           xsi:type="Workflow:Categorical"
           name="stringToNumber({{ out_column.name }})_input_dataField"
           displayName="{{ out_column.name }}"
-          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
+          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.6/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
@@ -32,7 +32,7 @@
           name="stringToNumber({{ out_column.name }})_output_dataField"
           dataType="Integer"
           displayName="{{ out_column.name }}"
-          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.6/@outputPort.0/@datafielddefinition.0"/>
         <interval
@@ -53,6 +53,7 @@
       <castTypeDef
           href="library_validation.xmi#//@dataprocessingdefinition.6/@parameterdefinition.0"/>
     </parameter>
+  {% if dataprocessing.include_contracts %}
   {% for out_column in dataprocessing.out_columns %}
     <contract
         name="stringToNumber({{ out_column.name }})_INVARIANT">
@@ -64,14 +65,14 @@
           name="INV_condition_{{ out_column.name }}">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
             name="INV_input_datafield_{{ out_column.name }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
             name="INV_output_datafield_{{ out_column.name }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
@@ -80,7 +81,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
         <if
             belongOp="NOTBELONG"
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@then.0"
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ loop.index0 }}/@contract/@then.0"
             name="INV_if_{{ out_column.name }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
@@ -91,7 +92,7 @@
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@if.0"
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ loop.index0 }}/@contract/@if.0"
             name="INV_if_{{ out_column.name }}"
             belongOp="NOTBELONG">
           <thenDefinition
@@ -105,4 +106,5 @@
       </contract>
     </contract>
     {% endfor %}
+    {% endif %}
   </dataprocessing>

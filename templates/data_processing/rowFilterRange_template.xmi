@@ -2,8 +2,8 @@
       xsi:type="Workflow:DataProcessing"
       outgoing=""
       incoming=""
-      in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
-      out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+      in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
       name="rowFilterRange({{ dataprocessing.in_column_names }})">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"
@@ -66,6 +66,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.1"/>
       </matchingvalue>
     </parameter>
+    {% if dataprocessing.include_contracts %}
     <contract
         name="rowFilterRange({{ in_column.name }})_PRECONDITION">
       <contractDefinition
@@ -76,7 +77,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
             name="rowFilter({{ in_column.name }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@in.0"/>
@@ -103,7 +104,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
             name="POST_input_datafield_row_filter">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@in.0"/>
@@ -119,5 +120,6 @@
             href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    {% endif %}
     {% endfor %}
   </dataprocessing>
