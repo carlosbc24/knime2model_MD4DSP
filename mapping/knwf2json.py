@@ -104,6 +104,9 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
             else:
                 original_node_id = node["id"]
                 previous_node_id = original_node_id
+                destID_from_original_node = next(
+                    (connection["destID"] for connection in connections if connection["sourceID"] == original_node_id),
+                    None)
                 for i, node_info in enumerate(nodes_info):
                     new_node = node.copy()
                     new_node.update(node_info)
@@ -114,6 +117,17 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
                         new_node["id"] = max_node_id
                     new_nodes.append(new_node)
                     if i > 0:
+                        # Si se trata del último nodo, añadir una conexión entre el id del nodo actual
+                        # y el destID del nodo siguiente al original presente en la lista de links
+                        if i == len(nodes_info) - 1 and destID_from_original_node is not None:
+                            # Remove from connections the connection that has destID equal to destID_from_original_node if it exists
+                            connections = [connection for connection in connections if connection["destID"] != destID_from_original_node]
+                            new_connections.append({
+                                "sourceID": new_node["id"],
+                                "destID": destID_from_original_node
+                            })
+                        # If it is not the first node or the last node,
+                        # add a connection between the previous node and the new node
                         new_connections.append({
                             "sourceID": previous_node_id,
                             "destID": new_node["id"]

@@ -8,7 +8,7 @@ from jinja2 import Template as JinjaTemplate
 from utils.logger import print_and_log
 
 
-def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: list) -> str:
+def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> str:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -58,7 +58,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: list)
     return dataProcessings_filled_content
 
 
-def process_links(data: dict, nodes: list) -> tuple[str, list]:
+def process_links(data: dict, nodes: list) -> tuple[str, dict]:
     """
     Processes the links between nodes from the JSON data and appends the corresponding XML elements to the root element.
     It also return a dict in which we have the node_name, the previous node_id and the next node_id. The dict is ordered
@@ -70,8 +70,7 @@ def process_links(data: dict, nodes: list) -> tuple[str, list]:
 
     Returns:
         links_filled_content: (str) The filled content of the links.
-        node_flow_mapping: (list) an ordered list of dictionaries with the node_name, the previous node_id
-        and the next node_id.
+        node_flow_mapping: (dict) an ordered dict with the node_name, the previous node_id and the next node_id.
     """
 
     node_mapping = {}
