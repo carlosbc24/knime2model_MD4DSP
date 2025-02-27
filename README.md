@@ -75,7 +75,7 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    
 9. Run the Python script to parse and export data to a MD4DSP workflow from a KNIME workflow using templates:
     ```bash
-    python3 -m mapping_with_templates.knwf2workflow
+    python3 -m mapping.knwf2workflow
     ```
 
 10. (Optional) Remove the environment created previously:
@@ -137,7 +137,7 @@ MD4DSP-m2python/
 │   ├── mapping_log_2.log
 │   └── ...
 │
-├── mapping_with_templates/
+├── mapping/
 │ ├── json2workflow.py
 │ ├── knwf2workflow.py
 │ └── knwf2json.py
@@ -178,7 +178,7 @@ MD4DSP-m2python/
 - **`logs/`**: contains the logs of the project.
 
 
-- **`mapping_with_templates/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json 
+- **`mapping/`**: contains the Python scripts to parse and export data from a KNIME workflow to a json 
   file 
   and from a json file to a MD4DSP workflow
 

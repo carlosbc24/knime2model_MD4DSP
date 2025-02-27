@@ -2,7 +2,7 @@ import os
 import yaml
 
 from mapping_deprecated.json2workflow import json_to_xmi_workflow
-from mapping_with_templates.knwf2json import extract_data_knime2json
+from mapping.knwf2json import extract_data_knime2json
 from utils.logger import set_logger
 
 # Read yaml file configuration variables
@@ -18,7 +18,7 @@ with open("parser_config.yaml", "r") as file:
         include_contracts = True
 
 # Set logger
-set_logger(logger_name="mapping")
+set_logger(logger_name="mapping_deprecated")
 
 # Extract data from a specific .knwf file
 if workflow_filename is not None and workflow_filename != "":
