@@ -79,7 +79,7 @@ def create_data_processing(data: dict, node: dict, index: int, input_file_path: 
 
     # Get library transformation name
     library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
-                                                                  node_name)
+                                                                  node, index)
 
     # Create dataprocessing element
     if library_transformation_name is None:

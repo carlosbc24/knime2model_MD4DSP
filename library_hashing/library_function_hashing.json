@@ -1,107 +1,102 @@
 {
-  "functions_hashing" : [
+"functions_hashing" : [
 	{
-	  "Missing Value": {
+	"Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByDerivedValue"
-	  }
+		"library_transformation_name": "imputeByDerivedValue",
+		"library_transformation_id": 0
+		}
 	},
 	{
-	  "Missing Value": {
+	"Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByFixValue"
-	  }
+		"library_transformation_name": "imputeByFixValue",
+		"library_transformation_id": 1
+		}
 	},
-	  {
-	  "Row Filter": {
+	{
+	"Row Filter": {
 		"knime_function_name": "Row Filter",
-		"library_transformation_name": "rowFilter"
-	  }
+		"library_transformation_name": "rowFilter",
+		"library_transformation_id": 2
+		}
 	},
-	  {
-	  "Column Filter": {
+	{
+	"Column Filter": {
 		"knime_function_name": "Column Filter",
-		"library_transformation_name": "columnFilter"
-	  }
+		"library_transformation_name": "columnFilter",
+		"library_transformation_id": 3
+		}
 	},
-	  {
-	  "Missing Value Column Filter": {
-		"knime_function_name": "Missing Value Column Filter",
-		"library_transformation_name": null
-	  }
-	},
-	  {
-	  "Constant Value Column Filter": {
-		"knime_function_name": "Constant Value Column Filter",
-		"library_transformation_name": null
-	  }
-	},
-	  {
-	  "Rule Engine": {
+	{
+	"Rule Engine": {
 		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping"
-	  }
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
 	},
-	  {
-	  "Missing Value": {
+	{
+	"Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByNumericOp"
-	  }
+		"library_transformation_name": "imputeByNumericOp",
+		"library_transformation_id": 5
+	  	}
 	},
-	  {
-	  "Numeric Outliers": {
+	{
+	"Numeric Outliers": {
 		"knime_function_name": "Numeric Outliers",
-		"library_transformation_name": "imputeOutliersByClosest"
-	  }
+		"library_transformation_name": "imputeOutliersByClosest",
+		"library_transformation_id": 5
+		}
 	},
-	  {
-	  "String to Number": {
+	{
+	"String to Number": {
 		"knime_function_name": "String to Number",
-		"library_transformation_name": "categoricalToContinuous"
-	  }
+		"library_transformation_name": "categoricalToContinuous",
+		"library_transformation_id": 6
+		}
 	},
-	  {
-	  "Category to Number": {
+	{
+	"Category to Number": {
 		"knime_function_name": "Category to Number",
-		"library_transformation_name": "categoricalToContinuous"
-	  }
+		"library_transformation_name": "categoricalToContinuous",
+		"library_transformation_id": 6
+		}
 	},
-	  {
-	  "Numeric Binner": {
+	{
+	"Numeric Binner": {
 		"knime_function_name": "Numeric Binner",
-		"library_transformation_name": "binner"
-	  }
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7
+	  	}
 	},
-	
-	  {
-	  "Auto-Binner": {
+	{
+	"Auto-Binner": {
 		"knime_function_name": "Auto-Binner",
-		"library_transformation_name": "binner"
-	  }
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7
+		}
 	},
-	  {
-	  "Column Renamer": {
-		"knime_function_name": "Column Renamer",
-		"library_transformation_name": "binner"
-	  }
-	},
-	  {
-	  "Row Filter": {
+	{
+	"Row Filter": {
 		"knime_function_name": "Row Filter",
-		"library_transformation_name": "rowFilterRange"
-	  }
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8
+		}
 	},
 	  {
 	  "Row Filter (Labs)": {
 		"knime_function_name": "Row Filter (Labs)",
-		"library_transformation_name": "rowFilterRange"
-	  }
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8
+		}
 	},
-	  {
-	  "Row Filter (deprecated)": {
+	{
+	"Row Filter (deprecated)": {
 		"knime_function_name": "Row Filter (deprecated)",
-		"library_transformation_name": "rowFilterRange"
-	  }
+		"library_transformation_name": "rowFilterRange",
+		"library_transformation_id": 8
+		}
 	}
-  ]
+]
 }
