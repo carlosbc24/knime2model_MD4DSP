@@ -3,456 +3,104 @@
 	{
 	  "Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByDerivedValue",
-		"library_transformation_id": 0,
-		"library_parameters": [
-		  {
-			"parameter_name": "DerivedValue",
-			"parameter_def_name":"derivedValueDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue",
-			"quantityDef": "Percent"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "DerivedValue"
-		  }
-		]
+		"library_transformation_name": "imputeByDerivedValue"
 	  }
 	},
 	{
 	  "Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByFixValue",
-		"library_transformation_id": 1,
-		"library_parameters": [
-		  {
-			"parameter_name": "FixValue",
-			"parameter_def_name":"fixValueDef"
-			
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue",
-			"quantityDef": "Percent"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "imputeByFixValue"
 	  }
 	},
 	  {
 	  "Row Filter": {
 		"knime_function_name": "Row Filter",
-		"library_transformation_name": "rowFilter",
-		"library_transformation_id": 2,
-		"library_parameters": [
-		  {
-			"parameter_name": "FilterValue",
-			"parameter_def_name":"filterValueDef"
-		  },
-		  {
-			"parameter_name": "Primitive",
-			"parameter_def_name":"primitiveDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "FixValue"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "rowFilter"
 	  }
 	},
 	  {
 	  "Column Filter": {
 		"knime_function_name": "Column Filter",
-		"library_transformation_name": "columnFilter",
-		"library_transformation_id": 3,
-		"library_parameters": [
-		  {
-			"parameter_name": "Field",
-			"parameter_def_name":"fieldDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "Field Range",
-			"inDef": "DataDictionary"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "Field Range",
-			"inDef": "DataDictionary"
-		  }
-		]
+		"library_transformation_name": "columnFilter"
 	  }
 	},
 	  {
 	  "Missing Value Column Filter": {
 		"knime_function_name": "Missing Value Column Filter",
-		"library_transformation_name": null,
-		"library_transformation_id": null,
-		"library_parameters": []
+		"library_transformation_name": null
 	  }
 	},
 	  {
 	  "Constant Value Column Filter": {
 		"knime_function_name": "Constant Value Column Filter",
-		"library_transformation_name": null,
-		"library_transformation_id": null,
-		"library_parameters": []
+		"library_transformation_name": null
 	  }
 	},
 	  {
 	  "Rule Engine": {
 		"knime_function_name": "Rule Engine",
-		"library_transformation_name": "mapping",
-		"library_transformation_id": 4,
-		"library_parameters": [
-		  {
-			"parameter_name": "Map",
-			"parameter_def_name":"mapDefinition"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "FixValue"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "FixValue"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "FixValue",
-			"thenValueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "mapping"
 	  }
 	},
 	  {
 	  "Missing Value": {
 		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByNumericOp",
-		"library_transformation_id": 5,
-		"library_parameters": [
-		  {
-			"parameter_name": "NumOp",
-			"parameter_def_name":"numOpDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue",
-			"quantityDef": "Percent"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "NumOp"
-		  }
-		]
+		"library_transformation_name": "imputeByNumericOp"
 	  }
 	},
 	  {
 	  "Numeric Outliers": {
 		"knime_function_name": "Numeric Outliers",
-		"library_transformation_name": "imputeByNumericOp",
-		"library_transformation_id": 5,
-		"library_parameters": [
-		  {
-			"parameter_name": "NumOp",
-			"parameter_def_name":"numOpDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue",
-			"quantityDef": "Percent"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "SpecialValue"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "NumOp"
-		  }
-		]
+		"library_transformation_name": "imputeOutliersByClosest"
 	  }
 	},
 	  {
 	  "String to Number": {
 		"knime_function_name": "String to Number",
-		"library_transformation_name": "categoricalToContinuous",
-		"library_transformation_id": 6,
-		"library_parameters": [
-		  {
-			"parameter_name": "CastType",
-			"parameter_def_name":"castTypeDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "SpecialValue"
-		  }
-		]
+		"library_transformation_name": "categoricalToContinuous"
 	  }
 	},
 	  {
 	  "Category to Number": {
 		"knime_function_name": "Category to Number",
-		"library_transformation_name": "categoricalToContinuous",
-		"library_transformation_id": 6,
-		"library_parameters": [
-		  {
-			"parameter_name": "CastType",
-			"parameter_def_name":"castTypeDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "SpecialValue",
-			"thenValueDef": "SpecialValue"
-		  }
-		]
+		"library_transformation_name": "categoricalToContinuous"
 	  }
 	},
 	  {
 	  "Numeric Binner": {
 		"knime_function_name": "Numeric Binner",
-		"library_transformation_name": "binner",
-		"library_transformation_id": 7,
-		"library_parameters": [
-		  {
-			"parameter_name": "DerivedField",
-			"parameter_def_name":"derivedFieldDef"
-		  },
-		  {
-			"parameter_name": "DiscretizeBin",
-			"parameter_def_name":"discretizeBinDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "Interval",
-			"thenValueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "binner"
 	  }
 	},
 	
 	  {
 	  "Auto-Binner": {
 		"knime_function_name": "Auto-Binner",
-		"library_transformation_name": "binner",
-		"library_transformation_id": 7,
-		"library_parameters": [
-		  {
-			"parameter_name": "DerivedField",
-			"parameter_def_name":"derivedFieldDef"
-		  },
-		  {
-			"parameter_name": "DiscretizeBin",
-			"parameter_def_name":"discretizeBinDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "Interval",
-			"thenValueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "binner"
 	  }
 	},
 	  {
 	  "Column Renamer": {
 		"knime_function_name": "Column Renamer",
-		"library_transformation_name": "binner",
-		"library_transformation_id": 7,
-		"library_parameters": [
-		  {
-			"parameter_name": "DerivedField",
-			"parameter_def_name":"derivedFieldDef"
-		  },
-		  {
-			"parameter_name": "DiscretizeBin",
-			"parameter_def_name":"discretizeBinDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "INVARIANT",
-			"ifValueDef": "Interval",
-			"thenValueDef": "FixValue"
-		  }
-		]
+		"library_transformation_name": "binner"
 	  }
 	},
 	  {
 	  "Row Filter": {
 		"knime_function_name": "Row Filter",
-		"library_transformation_name": "rowFilterRange",
-		"library_transformation_id": 8,
-		"library_parameters": [
-		  {
-			"parameter_name": "FilterValue",
-			"parameter_def_name":"filterValueDef"
-		  },
-		  {
-			"parameter_name": "Range",
-			"parameter_def_name":"rangeDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  }
-		]
+		"library_transformation_name": "rowFilterRange"
 	  }
 	},
 	  {
 	  "Row Filter (Labs)": {
 		"knime_function_name": "Row Filter (Labs)",
-		"library_transformation_name": "rowFilterRange",
-		"library_transformation_id": 8,
-		"library_parameters": [
-		  {
-			"parameter_name": "FilterValue",
-			"parameter_def_name":"filterValueDef"
-		  },
-		  {
-			"parameter_name": "Range",
-			"parameter_def_name":"rangeDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  }
-		]
+		"library_transformation_name": "rowFilterRange"
 	  }
 	},
 	  {
 	  "Row Filter (deprecated)": {
 		"knime_function_name": "Row Filter (deprecated)",
-		"library_transformation_name": "rowFilterRange",
-		"library_transformation_id": 8,
-		"library_parameters": [
-		  {
-			"parameter_name": "FilterValue",
-			"parameter_def_name":"filterValueDef"
-		  },
-		  {
-			"parameter_name": "Range",
-			"parameter_def_name":"rangeDef"
-		  }
-		],
-		"contracts": [
-		  {
-			"contractType": "PRECONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  },
-		  {
-			"contractType": "POSTCONDITION",
-			"contractDef": "ValueRange",
-			"valueDef": "Interval"
-		  }
-		]
+		"library_transformation_name": "rowFilterRange"
 	  }
 	}
   ]

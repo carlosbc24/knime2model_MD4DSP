@@ -348,16 +348,20 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         elif "Numeric Outliers" in node_info["node_name"]:
+            # TODO: Extract in_columns and out_columns
+            included_names = root.findall(
+                ".//knime:config[@key='outlier-list']/knime:config[@key='included_names']/knime:entry", namespace)
+
+            node_info["parameters"]["in_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
+                                                    col in included_names if col.attrib["key"] != "array-size"]
+
+            node_info["parameters"]["out_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
+                                                     col in included_names if col.attrib["key"] != "array-size"]
+
             # Extract estimation-type
             estimation_type = model.find(".//knime:entry[@key='estimation-type']", namespace)
             if estimation_type is not None:
                 node_info["parameters"]["estimation_type"] = estimation_type.attrib["value"]
-            # Extract groups-list
-            groups_list = model.find(".//knime:config[@key='groups-list']", namespace)
-            if groups_list is not None:
-                included_names, excluded_names = extract_columns_data(groups_list, namespace)
-                node_info["parameters"]["in_columns"] = included_names + excluded_names
-                node_info["parameters"]["out_columns"] = included_names
 
             # Extract iqr-scalar
             iqr_scalar = model.find(".//knime:entry[@key='iqr-scalar']", namespace)

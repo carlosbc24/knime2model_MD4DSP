@@ -82,7 +82,6 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         "index": node_id
     }
 
-
     return dataprocessing_values
 
 

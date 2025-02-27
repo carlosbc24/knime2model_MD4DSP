@@ -19,6 +19,9 @@
 	  "name": "imputeByNumericOp"
 	},
 	{
+	  "name": "imputeOutliersByClosest"
+	},
+	{
 	  "name": "categoricalToContinuous"
 	},
 	{

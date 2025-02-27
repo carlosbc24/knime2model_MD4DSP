@@ -1,0 +1,123 @@
+<dataprocessing xsi:type="Workflow:DataProcessing"
+                outgoing=""
+                incoming=""
+                in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+                out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+                name="imputeOutlierByClosest({{ dataprocessing.in_column_names }})">
+    <inputPort fileName="{{ dataprocessing.input_filepath }}"
+               name="imputeOutlierByClosest({{ dataprocessing.in_column_names }})_input_dataDictionary"
+               out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
+      <datafield xsi:type="Workflow:Continuous"
+                 name="imputeOutlierByClosest({{ in_column.name }})_input_dataField"
+                 dataType="Double"
+                 displayName="{{ in_column.name }}"
+                 out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.5/@inputPort.0/@datafielddefinition.0"/>
+        <interval leftMargin="9.0"
+                  rightMargin="202.0"/>
+      </datafield>
+      {% endfor %}
+      <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@inputPort.0"/>
+    </inputPort>
+    <outputPort fileName="{{ dataprocessing.output_filepath }}"
+                name="imputeOutlierByClosest({{ dataprocessing.in_column_names }})_output_dataDictionary"
+                in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+        {% for out_column in dataprocessing.out_columns %}
+      <datafield xsi:type="Workflow:Continuous"
+                 name="imputeOutlierByClosest({{ out_column.name }})_output_dataField"
+                 dataType="Double"
+                 displayName="{{ out_column.name }}"
+                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}">
+        <continuousDef href="library_validation.xmi#//@dataprocessingdefinition.5/@outputPort.0/@datafielddefinition.0"/>
+        <interval leftMargin="9.0"
+                  rightMargin="202.0"/>
+      </datafield>
+      {% endfor %}
+      <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition xsi:type="Library:Transformation"
+                              href="library_validation.xmi#//@dataprocessingdefinition.5"/>
+    <parameter xsi:type="Workflow:NumOp"
+               name="imputeOutlierByClosest({{ dataprocessing.in_column_names }})_param_numOp"
+               imputeValue="Outlier"
+               operation="Closest">
+      <numOpDef href="library_validation.xmi#//@dataprocessingdefinition.5/@parameterdefinition.0"/>
+    </parameter>
+{% for in_column in dataprocessing.in_columns %}
+    {% set in_index = loop.index0 %}
+    {% set contract_index = dataprocessing.in_columns|length * loop.index0 + 2 %}
+    <contract name="imputeOutlierByClosest({{ in_column.name }})_PRECONDITION">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0"/>
+      <contract xsi:type="Contract:ValueRange"
+                name="imputeOutlierByClosest({{ in_column.name }})_PRE_valueRange">
+        <in xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
+            name="imputeOutlierByClosest({{ in_column.name }})_PRE_input_dataField">
+          <dataFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <value xsi:type="Contract:SpecialValue"
+               specialType="OUTLIER">
+          <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract name="imputeOutlierByClosest({{ in_column.name }})_POSTCONDITION">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.1"/>
+      <contract xsi:type="Contract:ValueRange"
+                type="POSTCONDITION"
+                name="imputeOutlierByClosest({{ in_column.name }})_POST_valueRange"
+                belongOp="NOTBELONG">
+        <in xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
+            name="imputeOutlierByClosest({{ in_column.name }})_POST_input_dataField">
+          <dataFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value xsi:type="Contract:SpecialValue"
+               specialType="OUTLIER">
+          <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract name="imputeOutlierByClosest({{ in_column.name }})_INVARIANT">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2"/>
+      <contract xsi:type="Contract:Condition"
+                type="INVARIANT"
+                name="imputeOutlierByClosest({{ in_column.name }})_INV_condition">
+        <in xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
+            name="imputeOutlierByClosest({{ in_column.name }})_INV_input_dataField">
+          <dataFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out xsi:type="Contract:DataField"
+             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
+             name="imputeOutlierByClosest({{ in_column.name }})_INV_output_dataField">
+          <dataFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition"/>
+        <if then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@then.0"
+            name="imputeOutlierByClosest({{ in_column.name }})_INV_IF">
+          <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition xsi:type="Contract:SpecialValue"
+                          specialType="OUTLIER">
+            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@if.0"
+              name="imputeOutlierByClosest({{ in_column.name }})_INV_THEN">
+          <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <valueResult xsi:type="Contract:NumOp"
+                       operation="Closest">
+            <numOpDef href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+{% endfor %}
+  </dataprocessing>
