@@ -67,8 +67,10 @@
           rightMargin="{{ bin.rightMargin }}"/>
     </parameter>
     {% endfor %}
-  {% if dataprocessing.include_contracts %}
-  {% for in_column in dataprocessing.in_columns %}
+{% if dataprocessing.include_contracts %}
+{% for in_column in dataprocessing.in_columns %}
+  {% set in_index = loop.index0 %}
+  {% set contract_index = 3 * loop.index0 + 2 %}
     <contract
         name="binner({{ in_column.name }})_PRECONDITION">
       <contractDefinition
@@ -147,7 +149,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
         {% for bin in dataprocessing.binner.bins %}
         <if
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.{{ loop.index0 }}"
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@then.{{ loop.index0 }}"
             name="binner({{ in_column.name }})_INV_IF_{{ bin.binName }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
@@ -161,7 +163,7 @@
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.{{ loop.index0 }}"
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@if.{{ loop.index0 }}"
             name="binner({{ in_column.name }})_INV_THEN_{{ bin.binName }}">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>

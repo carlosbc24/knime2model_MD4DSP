@@ -36,9 +36,4 @@
     </outputPort>
     <dataProcessingDefinition xsi:type="Library:Transformation"
                               href="library_validation.xmi#//@dataprocessingdefinition.3"/>
-    <parameter xsi:type="Workflow:FieldRange"
-               name="{{ dataprocessing.transformation.KNIME_name }}({{ dataprocessing.in_column_names }})_param_field"
-               dataField="">
-      <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
-    </parameter>
   </dataprocessing>

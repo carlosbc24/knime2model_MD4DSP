@@ -310,10 +310,11 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     "parameters": {
                         "in_columns": data["in_columns"],
                         "out_columns": data["out_columns"],
-                        "imputationType": "LINEAR_INTERPOLATION" if "Interpolation" in factory_id else "Mean" if
+                        "imputationType": "Interpolation" if "Interpolation" in factory_id else "Mean" if
                         "Mean" in factory_id else "MostFrequent" if "MostFrequent" in factory_id else "Fixed Value" if
-                        "Fixed" in factory_id else "Previous Value" if "Previous" in factory_id else "Next Value" if
-                        "Next" in factory_id else None,
+                        "Fixed" in factory_id else "Previous" if "Previous" in factory_id else "Next" if
+                        "Next" in factory_id else "Median" if "Median" in factory_id else "Closest" if "Closest" in
+                        factory_id else "None",
                         "fixStringValues": data["fixStringValues"]
                     }
                 }

@@ -31,10 +31,13 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
     out_column_names_str = ", ".join(out_column_names)
 
+    # Initialize the dictionaries
     column_filter_dict = {}
     mapping_dict = {}
     binner_dict = {}
     row_dict = {}
+    imputation_dict = {}
+
     if library_transformation_name == "columnFilter":
         # Filter columns that are not in the output
         filtered_columns = [
@@ -60,6 +63,9 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
 
+    elif library_transformation_name in ["imputeByDerivedValue", "imputeByFixValue", "imputeByNumericOp"]:
+        imputation_dict = {"imputationType": node["parameters"]["imputationType"], "fixStringValues": node["parameters"]["fixStringValues"]}
+
     dataprocessing_values = {
         "transformation": {"name": library_transformation_name, "KNIME_name": node_name},
         "input_filepath": input_file_path,
@@ -78,6 +84,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         "column_filter": column_filter_dict,
         "row_filter": row_dict,
         "binner": binner_dict,
+        "imputation": imputation_dict,
         "include_contracts": include_contracts,
         "index": node_id
     }
