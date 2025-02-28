@@ -1,9 +1,11 @@
 
 import os
 import json
+import re
 import zipfile
 import xml.etree.ElementTree as elementTree
 import copy
+
 from utils.logger import print_and_log
 
 
@@ -217,6 +219,13 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
             if file_path_entry is not None:
                 node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]
+
+            nodes_info.append(node_info)
+
+        elif "Table Reader" in node_info["node_name"]:
+            file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
+            if file_path_entry is not None:
+                node_info["parameters"]["database_path"] = file_path_entry.attrib["value"]
 
             nodes_info.append(node_info)
 
@@ -498,6 +507,48 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
             nodes_info.append(node_info)
 
+        elif "Math Formula" in node_info["node_name"]:
+                    expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
+                    replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
+                    append_column_entry = model.find(".//knime:entry[@key='append_column']", namespace)
+
+                    if expression_entry is not None:
+                        expression = expression_entry.attrib["value"]
+                        # Extract operands and operator from the expression
+                        match = re.search(r'(\$[^$]+\$|[^$]+)\s*([\+\-\*/])\s*(\$[^$]+\$|[^$]+)', expression)
+                        if match:
+                            first_operand = match.group(1).strip()
+                            operator = match.group(2).strip()
+                            second_operand = match.group(3).strip()
+
+                            # Determine if operands are fixed values or columns
+                            first_operand_type = "column" if first_operand.startswith('$') and first_operand.endswith('$') else "fixed_value"
+                            second_operand_type = "column" if second_operand.startswith('$') and second_operand.endswith('$') else "fixed_value"
+
+                            node_info["parameters"]["operator"] = operator
+                            node_info["parameters"]["first_operand"] = {
+                                "type": first_operand_type,
+                                "value": first_operand.strip('$') if first_operand_type == "column" else first_operand
+                            }
+                            node_info["parameters"]["second_operand"] = {
+                                "type": second_operand_type,
+                                "value": second_operand.strip('$') if second_operand_type == "column" else second_operand
+                            }
+
+                    # Determine the output column
+                    out_column = None
+                    if replaced_column_entry is not None and replaced_column_entry.attrib["value"].lower() not in ["false", "true"]:
+                        out_column = replaced_column_entry.attrib["value"]
+                    elif append_column_entry is not None and append_column_entry.attrib["value"].lower() not in ["false", "true"]:
+                        out_column = append_column_entry.attrib["value"]
+
+                    if out_column is not None:
+                        node_info["parameters"]["out_column"] = out_column
+
+                    print("Node info: ", node_info)
+
+                    nodes_info.append(node_info)
+
         elif "Missing Value Column Filter" in node_info["node_name"]:
             # Extract the missing value threshold
             missing_value_threshold_entry = model.find(".//knime:entry[@key='missing_value_percentage']", namespace)
@@ -529,48 +580,6 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["out_columns"] = included_names
 
             nodes_info.append(node_info)
-
-        elif "Joiner" in node_info["node_name"]:
-            # Extractar configuraciones clave de Joiner
-            include_matches_entry = model.find(".//knime:entry[@key='includeMatchesInOutput']", namespace)
-            include_left_unmatched_entry = model.find(".//knime:entry[@key='includeLeftUnmatchedInOutput']", namespace)
-            include_right_unmatched_entry = model.find(".//knime:entry[@key='includeRightUnmatchedInOutput']",
-                                                       namespace)
-            composition_mode_entry = model.find(".//knime:entry[@key='compositionMode']", namespace)
-            duplicate_handling_entry = model.find(".//knime:entry[@key='duplicateHandling']", namespace)
-            if include_matches_entry is not None:
-                node_info["parameters"]["include_matches"] = include_matches_entry.attrib["value"] == "true"
-            if include_left_unmatched_entry is not None:
-                node_info["parameters"]["include_left_unmatched"] = include_left_unmatched_entry.attrib[
-                                                                        "value"] == "true"
-            if include_right_unmatched_entry is not None:
-                node_info["parameters"]["include_right_unmatched"] = include_right_unmatched_entry.attrib[
-                                                                         "value"] == "true"
-            if composition_mode_entry is not None:
-                node_info["parameters"]["composition_mode"] = composition_mode_entry.attrib["value"]
-            if duplicate_handling_entry is not None:
-                node_info["parameters"]["duplicate_handling"] = duplicate_handling_entry.attrib["value"]
-
-            nodes_info.append(node_info)
-
-        elif "Partitioning" in node_info["node_name"]:
-            # Extract the method used for partitioning
-            method_entry = model.find(".//knime:entry[@key='method']", namespace)
-            sampling_method_entry = model.find(".//knime:entry[@key='samplingMethod']", namespace)
-            fraction_entry = model.find(".//knime:entry[@key='fraction']", namespace)
-            count_entry = model.find(".//knime:entry[@key='count']", namespace)
-            class_column_entry = model.find(".//knime:entry[@key='class_column']", namespace)
-            if method_entry is not None:
-                node_info["parameters"]["method"] = method_entry.attrib["value"]
-            if sampling_method_entry is not None:
-                node_info["parameters"]["sampling_method"] = sampling_method_entry.attrib["value"]
-            if fraction_entry is not None:
-                node_info["parameters"]["fraction"] = float(fraction_entry.attrib["value"])
-            if count_entry is not None:
-                node_info["parameters"]["count"] = int(count_entry.attrib["value"])
-            if class_column_entry is not None:
-                node_info["parameters"]["class_column"] = class_column_entry.attrib["value"]
-
             nodes_info.append(node_info)
 
         elif "String Manipulation" in node_info["node_name"]:
