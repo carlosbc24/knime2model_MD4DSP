@@ -97,6 +97,34 @@
 		"library_transformation_name": "rowFilterRange",
 		"library_transformation_id": 8
 		}
+	},
+  	{
+	"Math Formula": {
+	  	"knime_function_name": "Math Formula",
+		"library_transformation_name": "mathOperationFieldFixValue",
+		"library_transformation_id": 9
+		}
+	},
+  	{
+	"String Manipulation": {
+	  	"knime_function_name": "String Manipulation",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
+	},
+  	{
+	"String Manipulation (Multi Column)": {
+	  	"knime_function_name": "String Manipulation (Multi Column)",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
+	},
+  	{
+	"String Replacer": {
+	  	"knime_function_name": "String Replacer",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
 	}
 ]
 }

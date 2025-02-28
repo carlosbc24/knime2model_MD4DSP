@@ -368,6 +368,22 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
             nodes_info.append(node_info)
 
+        elif "Number To String" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "String To Date&Time" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
         elif "Rule Engine" in node_info["node_name"]:
             rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
             rules = [entry.attrib["value"] for entry in rules_entries if entry.attrib["key"].isdigit()]
@@ -386,6 +402,14 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     for col in replace_column if col.attrib["key"] != "array-size"
                 ]
             node_info["parameters"]["in_columns"] = in_columns
+
+            nodes_info.append(node_info)
+
+        elif "Column Expressions" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
 
             nodes_info.append(node_info)
 
@@ -545,8 +569,6 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     if out_column is not None:
                         node_info["parameters"]["out_column"] = out_column
 
-                    print("Node info: ", node_info)
-
                     nodes_info.append(node_info)
 
         elif "Missing Value Column Filter" in node_info["node_name"]:
@@ -558,6 +580,46 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                 float(missing_value_threshold_entry.attrib["value"])
                 if missing_value_threshold_entry is not None else None
             )
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "Constant Value Column Filter" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "Column Expressions" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "String Cleaner" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "Sorter" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = included_names + excluded_names
+            node_info["parameters"]["out_columns"] = included_names
+
+            nodes_info.append(node_info)
+
+        elif "Category to Number (Apply)" in node_info["node_name"]:
+            # Extract the included and excluded columns
+            included_names, excluded_names = extract_columns_data(model, namespace)
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 

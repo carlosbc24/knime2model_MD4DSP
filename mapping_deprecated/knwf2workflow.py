@@ -1,3 +1,4 @@
+import math
 import os
 import yaml
 
@@ -13,7 +14,6 @@ with open("parser_config.yaml", "r") as file:
     output_xmi_folder = config["output_xmi_folder"]
     workflow_filename = config["workflow_filename"]
     include_contracts = config["include_contracts"]
-    node_mapping_desired_ratio = 0.80
     if include_contracts is None:
         include_contracts = True
 
@@ -26,18 +26,35 @@ if workflow_filename is not None and workflow_filename != "":
         workflow_name = workflow_filename.split(".")[0]
         extract_data_knime2json(workflow_filename, input_knwf_folder, output_json_folder, workflow_name)
         mapped_nodes, nodes_count = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
-                                                         include_contracts, node_mapping_desired_ratio)
-        print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
+                                                         include_contracts)
+        print(f"{workflow_name.ljust(70)} {round((mapped_nodes/nodes_count), 4)*100}% ({mapped_nodes}/{nodes_count}) nodes mapped "
+              f"successfully to it's model "
+              f"transformation")
 
 # Extract data from all .knwf files in the input folder
 else:
+    # Create a new file to store the mapping information
+    with open("node_mapping_info.csv", "w") as file:
+        file.write("Workflow name,Mapping percentage,Nodes mapped\n")
     for file in os.listdir(input_knwf_folder):
         if file.endswith(".knwf"):
             workflow_name = file.split(".")[0]
             extract_data_knime2json(file, input_knwf_folder, output_json_folder, workflow_name)
             mapped_nodes, nodes_count = json_to_xmi_workflow(output_json_folder, workflow_name, output_xmi_folder,
-                                                             include_contracts, node_mapping_desired_ratio)
-            print(f"{workflow_name.ljust(70)} {mapped_nodes}/{nodes_count} nodes mapped successfully to it's model transformation")
+                                                             include_contracts)
+            formated_wf_mapping_info = f"{workflow_name.ljust(70)} {round((mapped_nodes/nodes_count), 4)*100}% ({mapped_nodes}/{nodes_count}) nodes mapped successfully to it's model transformation"
+            print(formated_wf_mapping_info)
+
+            with open("node_mapping_info.csv", "a") as file:
+                # In one row, write the workflow name in a cell
+                # workflow name without commas
+                workflow_name = workflow_name.replace(",", "")
+                file.write(workflow_name + ",")
+                # In the next cell, write the mapping percentage
+                file.write(str(round((mapped_nodes/nodes_count), 4)*100) + "%,")
+                # In the next cell, write the proportion of nodes mapped
+                file.write(f" ({mapped_nodes}/{nodes_count}) nodes mapped successfully to it's model transformation\n")
+
 
 print("\n--------------------------------------------------\n")
 print("Input workflows in: input_KNIME_workflows")

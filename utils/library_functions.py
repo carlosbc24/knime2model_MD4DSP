@@ -53,6 +53,7 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
     Args:
         json_file_path (str): Path to the JSON file.
         node (dict): Node to search for.
+        index (int): Index of the node.
 
     Returns:
         string: Value of the library_transformation_id attribute of the first matching node
