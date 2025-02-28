@@ -18,7 +18,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     """
     input_file_path = ""
     # Detect if the node includes the substrings "Reader" or "Connector"
-    if any(substring in node_name for substring in ["Reader"]):
+    if any(substring in node_name for substring in ["Reader", "Table", "Connector", "Writer"]):
         input_file_path = node.get("parameters", {}).get("file_path", "")
 
     # Get input and output columns
@@ -48,9 +48,9 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
 
     if library_transformation_name == "rowFilterRange":
-        row_dict = {"lower_bound": node["parameters"]["lower_bound"], "upper_bound": node["parameters"]["upper_bound"],
-                    "has_lower_bound": node["parameters"]["has_lower_bound"],
-                    "has_upper_bound": node["parameters"]["has_upper_bound"]}
+        row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "", "upper_bound": node["parameters"]["upper_bound"] if "upper_bound" in node["parameters"] else "",
+                    "has_lower_bound": node["parameters"]["has_lower_bound"] if "has_lower_bound" in node["parameters"] else "",
+                    "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else ""}
 
     elif library_transformation_name == "mapping":
         # Get the column mapping and parameters

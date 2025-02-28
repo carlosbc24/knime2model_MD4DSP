@@ -200,33 +200,44 @@ def extract_node_settings(settings_path: str) -> list[dict]:
     model = root.find(".//knime:config[@key='model']", namespace)
     if model is not None:
         if "CSV Reader" in node_info["node_name"]:
-            csv_reader = model.find(".//knime:config[@key='settings']", namespace)
-            if csv_reader is not None:
+            settings_reader = model.find(".//knime:config[@key='settings']", namespace)
+            if settings_reader is not None:
                 # Extract CSV path
-                path_entry = csv_reader.find(
+                path_entry = settings_reader.find(
                     ".//knime:config[@key='file_selection']/knime:config[@key='path']/knime:entry[@key='path']",
                     namespace)
                 if path_entry is not None:
                     node_info["parameters"]["file_path"] = path_entry.attrib["value"]
                 # Extract column delimiter
-                column_delimiter_entry = csv_reader.find(".//knime:entry[@key='column_delimiter']", namespace)
+                column_delimiter_entry = settings_reader.find(".//knime:entry[@key='column_delimiter']", namespace)
                 if column_delimiter_entry is not None:
                     node_info["parameters"]["column_delimiter"] = column_delimiter_entry.attrib["value"]
 
             nodes_info.append(node_info)
 
-        elif "Excel Reader" in node_info["node_name"] or "File Reader" in node_info["node_name"]:
-            file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
+        elif "Excel Reader" in node_info["node_name"]:
+            # Find the file path under the correct structure
+            file_path_entry = root.find(
+                ".//knime:config[@key='file_selection']/knime:config[@key='path']/knime:entry[@key='path']", namespace)
+            # Extract and store the file path if found
             if file_path_entry is not None:
                 node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]
+            nodes_info.append(node_info)
 
+        elif "File Reader" in node_info["node_name"]:
+            # Find the file path under the correct structure
+            file_path_entry = root.find(
+                ".//knime:config[@key='file_selection']/knime:config[@key='path']/knime:entry[@key='path']", namespace)
+            # Extract and store the file path if found
+            if file_path_entry is not None:
+                node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]
             nodes_info.append(node_info)
 
         elif "Table Reader" in node_info["node_name"]:
-            file_path_entry = model.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
+            settings_reader = model.find(".//knime:config[@key='settings']", namespace)
+            file_path_entry = settings_reader.find(".//knime:config[@key='path']/knime:entry[@key='path']", namespace)
             if file_path_entry is not None:
-                node_info["parameters"]["database_path"] = file_path_entry.attrib["value"]
-
+                node_info["parameters"]["file_path"] = file_path_entry.attrib["value"]
             nodes_info.append(node_info)
 
         elif "Column Filter" in node_info["node_name"]:
@@ -339,6 +350,19 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                         "Next" in factory_id else "Median" if "Median" in factory_id else "Closest" if "Closest" in
                         factory_id else "None",
                         "fixStringValues": data["fixStringValues"]
+                    }
+                }
+                nodes_info.append(node_info)
+
+            # If there werent factorials, add a node with default values
+            if not factory_dict:
+                node_info = {
+                    "node_name": "Missing Value",
+                    "parameters": {
+                        "in_columns": [{"column_name": "column_name", "column_type": "xstring"}],
+                        "out_columns": [{"column_name": "column_name", "column_type": "xstring"}],
+                        "imputationType": "Mean",
+                        "fixStringValues": None
                     }
                 }
                 nodes_info.append(node_info)
@@ -526,7 +550,13 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                 "bin_naming": bin_naming,
                 "replace_column": replace_column,
                 "precision": precision,
-                "output_format": output_format
+                "output_format": output_format,
+                "bins": [{
+                        "binName": "binName",
+                        "closureType": "openOpen",
+                        "leftMargin": 7,
+                        "rightMargin": 8
+                    }]
             }
 
             nodes_info.append(node_info)

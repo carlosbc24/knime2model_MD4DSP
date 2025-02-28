@@ -8,7 +8,7 @@ from jinja2 import Template as JinjaTemplate
 from utils.logger import print_and_log
 
 
-def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> str:
+def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> tuple[str, int, int]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -19,9 +19,13 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
 
     Returns:
         dataProcessings_filled_content: (str) The filled content of the data processing nodes.
+        nodes_cont (int): Number of nodes in the workflow.
+        mapped_nodes (int): Number of nodes that were mapped to a library transformation.
     """
     dataProcessings_filled_content = ""
     library_transformation_names = get_library_transformation_names('library_hashing/library_transformation_names.json')
+    mapped_nodes = 0
+    nodes_cont = 0
 
     for index, node in enumerate(nodes):
         node_id = node.get("id", index)
@@ -35,6 +39,10 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts,
                                                              library_transformation_name)
 
+        # If the node is not a reader/writer/connector node, increment the nodes_cont counter
+        if dataprocessing_values["input_filepath"] == "":
+            nodes_cont += 1
+
         # Check if the library transformation name exists and the template file exists. If so, use the template file.
         # Otherwise, use the unknownDataProcessing template.
         dp_templates_path = "templates/data_processing"
@@ -45,6 +53,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
 
             # Read the workflow template file
             with open(dp_template_filepath, "r") as file:
+                mapped_nodes += 1
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         else:
@@ -55,7 +64,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         # Fill the template with jinja2
         dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
 
-    return dataProcessings_filled_content
+    return dataProcessings_filled_content, nodes_cont, mapped_nodes
 
 
 def process_links(data: dict, nodes: list) -> tuple[str, dict]:
@@ -146,6 +155,10 @@ def preprocess_nodes_connections(nodes, connections):
         node['id'] = id_mapping[node['id']]
 
     for connection in connections:
+        # Si el connection['sourceID'] o el connection['destID'] no están en el id_mapping, seelimina la conexión
+        if connection['sourceID'] not in id_mapping or connection['destID'] not in id_mapping:
+            connections.remove(connection)
+            continue
         connection['sourceID'] = id_mapping[connection['sourceID']]
         connection['destID'] = id_mapping[connection['destID']]
 
@@ -153,7 +166,7 @@ def preprocess_nodes_connections(nodes, connections):
 
 
 def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,
-                                        include_contracts=True):
+                                        include_contracts=True) -> tuple[int, int]:
     """
     Converts a JSON workflow file to an XMI file using templates for the data processing nodes.
 
@@ -164,6 +177,7 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         include_contracts (bool): Flag to include the contracts in the data processing nodes.
 
     Returns:
+        tuple: Number of nodes mapped successfully and total number of nodes.
 
     """
     # Load JSON data
@@ -185,7 +199,8 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         links_filled_content, node_flow_mapping = process_links(data, nodes)
 
         # Process nodes and get the node mapping
-        data_processing_filled_content = process_nodes(nodes, include_contracts, node_flow_mapping)
+        data_processing_filled_content, nodes_cont, mapped_nodes = process_nodes(nodes,
+                                                                                 include_contracts,node_flow_mapping)
 
         # Define the replacement values to the workflow template
         workflow_values = {
@@ -201,3 +216,5 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         os.makedirs(os.path.dirname(output_xmi_filepath), exist_ok=True)
         with open(output_xmi_filepath, "w", encoding="utf-8") as file:
             file.write(filled_content)
+
+    return mapped_nodes, nodes_cont

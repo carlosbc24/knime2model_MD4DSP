@@ -33,7 +33,13 @@
 		{
 	  "name": "mathOperationFieldFixValue"
 	},
-		{
+	{
+	  "name": "mathOperationFieldField"
+	},
+	{
+	  "name": "mathOperationFieldFixValue"
+	},
+	{
 	  "name": "mathOperationFieldField"
 	}
   ]

@@ -47,38 +47,39 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    pip install -r requirements.txt
    ```
    
-7. Configrue the configruation file `parser_config.json` with the following structure:
+7. Edit the configuration file `parser_config.json` with the following structure:
    ```yaml
-   input_knwf_folder : "input_KNIME_workflows" # Folder containing the selected KNIME workflows
-   output_json_folder : "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
-   output_xmi_folder : "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
+   input_knwf_folder: "input_KNIME_workflows/paper_workflows" # Folder containing the selected KNIME workflows
+   output_json_folder: "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
+   output_xmi_folder: "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
    
-   include_contracts : True # Include contracts in the xmi output
-   node_mapping_desired_ratio: 0.8 # Desired ratio of nodes to be mapped to the ontology (0.0 to 1.0)
-   # By default every KNIME workflow stored in the input_knwf_folder will be parsed,
-   # unless a specific workflow is specified in the following variable via its name string.
-   workflow_filename :
-   #workflow_filename : "01 Data Cleaning.knwf"
+   include_contracts: True # Include contracts in the xmi output
+   workflow_filename: "Model data set with metanode.knwf"
+   #workflow_filename: "01 Data Cleaning.knwf"
+   
+   export_mapped_nodes_report: True # Export a report with the mapped nodes percentage
    ```
-   The `include_contracts` parameter is a boolean that indicates whether the contracts should be included in the xmi output or not.
+   
+    The `input_knwf_folder` parameter must contain the path to the folder containing the KNIME workflows to be parsed and mapped.
 
-   The `node_mapping_desired_ratio` parameter is a float that indicates the desired ratio of nodes to be mapped to the ontology. This parameter must be a float between 0.0 and 1.0. The default value is None, which means that all nodes will be stored in the same output folder. They won't be separated by the desired ratio subfolder.
+    The `output_json_folder` parameter must contain the path to the folder where the parsed KNIME workflows will be saved in json format.
+
+    The `output_xmi_folder` parameter must contain the path to the folder where the mapped KNIME workflows will be saved in xmi format, which is the MD4DSP workflow xml instance format.
+
+   The `include_contracts` parameter is a boolean that indicates whether the contracts should be included in the xmi output or not.
 
    The `workflow_filename` must contain the name of the KNIME workflow to be parsed. By default, this parameter is empty,
    which means that every KNIME workflow in the input folder will be parsed. If you want to parse a specific KNIME 
    workflow, you must specify its filename with the extension `.knwf`.
+
+    The `export_mapped_nodes_report` parameter is a boolean that indicates whether a report about the mapped nodes respect to the susceptible nodes to be mapped to the library should be exported or not.
    
-8. Run the Python script to count the number of KNIME nodes that can be mapped from the KNIME workflows to the project models:
-    ```bash
-    python3 -m mapping_deprecated.knwf2workflow
-    ```
-   
-9. Run the Python script to parse and export data to a MD4DSP workflow from a KNIME workflow using templates:
+8. Run the Python script to parse and export data to a MD4DSP workflow from a KNIME workflow using templates:
     ```bash
     python3 -m mapping.knwf2workflow
     ```
 
-10. (Optional) Remove the environment created previously:
+9. (Optional) Remove the environment created previously:
    ```bash
    conda deactivate
    conda remove --name kn2wf_mapping --all --yes
