@@ -70,13 +70,18 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
             if node_name == "Row Filter (deprecated)":
                 if node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter":
                     return function[node_name].get("library_transformation_name")
-            if node_name == "Missing Value":
+            elif node_name == "Missing Value":
                 if node.get("parameters", {}).get("imputationType") in ["MostFrequent", "Previous", "Next"]:
                     return "imputeByDerivedValue"
                 elif node.get("parameters", {}).get("imputationType") == "Fixed Value":
                     return "imputeByFixValue"
                 elif node.get("parameters", {}).get("imputationType") in ["Mean", "Interpolation", "Median", "Closest"]:
                     return "imputeByNumericOp"
+            elif node_name == "Math Formula":
+                if node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldFixValue":
+                    return "mathOperationFieldFixValue"
+                elif node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldField":
+                    return "mathOperationFieldField"
                 else:
                     raise ValueError(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
             else:

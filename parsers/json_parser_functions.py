@@ -37,6 +37,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     binner_dict = {}
     row_dict = {}
     imputation_dict = {}
+    math_op_dict = {}
 
     if library_transformation_name == "columnFilter":
         # Filter columns that are not in the output
@@ -66,6 +67,12 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     elif library_transformation_name in ["imputeByDerivedValue", "imputeByFixValue", "imputeByNumericOp"]:
         imputation_dict = {"imputationType": node["parameters"]["imputationType"], "fixStringValues": node["parameters"]["fixStringValues"]}
 
+    elif library_transformation_name in ["mathOperationFieldFixValue", "mathOperationFieldField"]:
+        math_op_dict = {"mathOpTransformation": node["parameters"]["mathOpTransformation"],
+                        "operator": node["parameters"]["operator"], "fix_value": node["parameters"]["fix_value"],
+                        "first_operand": node["parameters"]["first_operand"],
+                        "second_operand": node["parameters"]["second_operand"], "out_column": node["parameters"]["out_column"]}
+
     dataprocessing_values = {
         "transformation": {"name": library_transformation_name, "KNIME_name": node_name},
         "input_filepath": input_file_path,
@@ -85,6 +92,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         "row_filter": row_dict,
         "binner": binner_dict,
         "imputation": imputation_dict,
+        "math_op": math_op_dict,
         "include_contracts": include_contracts,
         "index": node_id
     }

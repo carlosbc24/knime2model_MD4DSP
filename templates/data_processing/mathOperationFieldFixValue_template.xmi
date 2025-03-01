@@ -1,19 +1,21 @@
 <dataprocessing
       xsi:type="Workflow:DataProcessing"
-      incoming="//@link.12"
-      in="//@dataprocessing.14/@inputPort.0/@datafield.0"
-      out="//@dataprocessing.14/@outputPort.0/@datafield.0"
-      name="mathOperationFieldFixValue(satscore)">
+      incoming=""
+      outgoing=""
+      in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})">
     <inputPort
-        fileName="mathOperationFieldFixValue_input_dataDictionary.csv"
-        name="mathOperationFieldFixValue(satscore)_input_dataDictionary"
-        out="//@dataprocessing.14/@outputPort.0">
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_input_dataDictionary"
+        out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldFixValue(satscore)_input_dataField"
+          name="mathOperationFieldFixValue({{ in_column.name }})_input_dataField"
           dataType="Integer"
-          displayName="satscore"
-          out="//@dataprocessing.14/@outputPort.0/@datafield.0">
+          displayName="{{ in_column.name }}"
+          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
@@ -21,19 +23,21 @@
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="missing_output_dataDictionary.csv"
-        name="mathOperationFieldFixValue(satscore)_output_dataDictionary"
-        in="//@dataprocessing.14/@inputPort.0">
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_output_dataDictionary"
+        in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldFixValue(satscore)_output_dataField"
+          name="mathOperationFieldFixValue({{ out_column.name }})_output_dataField"
           dataType="Integer"
-          displayName="satscore"
-          in="//@dataprocessing.14/@inputPort.0/@datafield.0">
+          displayName="{{ out_column.name }}"
+          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
@@ -41,6 +45,7 @@
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
+      {% endfor %}
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0"/>
     </outputPort>
@@ -49,23 +54,23 @@
         href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
         xsi:type="Workflow:MathOp"
-        name="mathOperationFieldFixValue(satscore)_param_mathop"
-        operator="SUBSTRACT">
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_mathop"
+        operator="{{ dataprocessing.math_op.operator }}">
       <firstOperand
           xsi:type="Workflow:OpField"
-          name="mathOperationFieldFixValue(satscore)_param_op_field"
-          datafield="//@dataprocessing.14/@inputPort.0/@datafield.0">
+          name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_op_field"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <opFixValueDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
       </firstOperand>
       <secondOperand
           xsi:type="Workflow:OpFixValue"
-          name="mathOperationFieldFixValue(satscore)_param_op_fix_value">
+          name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_op_fix_value">
         <opFieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
         <value
-            name="mathOperationFieldFixValue(satscore)_param_primitive"
-            value="1994">
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_primitive"
+            value="{{ dataprocessing.math_op.fix_value }}">
           <primitiveDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand/@value"/>
         </value>
@@ -74,16 +79,16 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="mathOperationFieldFixValue(satscore)_PRECONDITION">
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="mathOperationFieldFixValue(satscore)_PRE_valueRange">
+          name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.14/@inputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(satscore)_PRE_input_dataField">
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -97,18 +102,18 @@
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldFixValue(satscore)_POSTCONDITION">
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperationFieldFixValue(satscore)_POST_valueRange"
+          name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.14/@outputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(satscore)_POST_input_dataField">
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
@@ -122,32 +127,32 @@
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldFixValue(satscore)_INVARIANT">
+        name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="mathOperationFieldFixValue(satscore)_INV_condition">
+          name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_condition">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.14/@inputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(satscore)_INV_input_dataField">
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.14/@outputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(satscore)_INV_output_dataField">
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
-            then="//@dataprocessing.14/@contract.2/@contract/@then.0"
-            name="mathOperationFieldFixValue(satscore)_INV_IF">
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_IF">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
@@ -158,8 +163,8 @@
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.14/@contract.2/@contract/@if.0"
-            name="mathOperationFieldFixValue(satscore)_INV_THEN">
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.0"
+            name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_THEN">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
@@ -167,15 +172,19 @@
               mathOp="SUBSTRACT">
             <firstOperand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldFixValue(satscore)_INV_THEN_OP_FIELD">
+                name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_THEN_OP_FIELD">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
+              <field
+                  dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"/>
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
             </firstOperand>
             <secondOperand
                 xsi:type="Contract:OpFixValue"
-                name="mathOperationFieldFixValue(satscore)_INV_THEN_FIX_VALUE">
+                name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_INV_THEN_FIX_VALUE">
               <value
-                  value="1994"
+                  value="{{ dataprocessing.math_op.fix_value }}"
                   dataType="Double">
                 <valueFieldDef
                     href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>

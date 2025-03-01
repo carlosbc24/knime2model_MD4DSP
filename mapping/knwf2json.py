@@ -579,7 +579,18 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                             first_operand_type = "column" if first_operand.startswith('$') and first_operand.endswith('$') else "fixed_value"
                             second_operand_type = "column" if second_operand.startswith('$') and second_operand.endswith('$') else "fixed_value"
 
-                            node_info["parameters"]["operator"] = operator
+                            # Determine the fix value
+                            fix_value = None
+                            if first_operand_type == "fixed_value":
+                                fix_value = first_operand
+                            elif second_operand_type == "fixed_value":
+                                fix_value = second_operand
+                            node_info["parameters"]["fix_value"] = fix_value
+
+                            if operator == "-":
+                                node_info["parameters"]["operator"] = "SUBSTRACT"
+                            elif operator == "+":
+                                node_info["parameters"]["operator"] = "SUM"
                             node_info["parameters"]["first_operand"] = {
                                 "type": first_operand_type,
                                 "value": first_operand.strip('$') if first_operand_type == "column" else first_operand
@@ -588,6 +599,17 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                                 "type": second_operand_type,
                                 "value": second_operand.strip('$') if second_operand_type == "column" else second_operand
                             }
+                            if first_operand_type == "column" and second_operand_type == "column":
+                                node_info["parameters"]["mathOpTransformation"] = "mathOperationFieldField"
+                            elif (first_operand_type == "column" and second_operand_type == "fixed_value") or (first_operand_type == "fixed_value" and second_operand_type == "column"):
+                                node_info["parameters"]["mathOpTransformation"] = "mathOperationFieldFixValue"
+
+                            in_columns = []
+                            if first_operand_type == "column":
+                                in_columns.append({"column_name": first_operand.strip('$'), "column_type": "xstring"})
+                            if second_operand_type == "column":
+                                in_columns.append({"column_name": second_operand.strip('$'), "column_type": "xstring"})
+                            node_info["parameters"]["in_columns"] = in_columns
 
                     # Determine the output column
                     out_column = None
@@ -596,8 +618,11 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     elif append_column_entry is not None and append_column_entry.attrib["value"].lower() not in ["false", "true"]:
                         out_column = append_column_entry.attrib["value"]
 
+
                     if out_column is not None:
                         node_info["parameters"]["out_column"] = out_column
+
+                    node_info["parameters"]["out_columns"] = [{"column_name": out_column, "column_type": "xstring"}]
 
                     nodes_info.append(node_info)
 
