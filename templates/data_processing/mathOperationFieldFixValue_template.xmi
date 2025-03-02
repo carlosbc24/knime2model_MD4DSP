@@ -60,14 +60,14 @@
           xsi:type="Workflow:OpField"
           name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_op_field"
           datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
-        <opFixValueDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
+        <opFieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
       </firstOperand>
       <secondOperand
           xsi:type="Workflow:OpFixValue"
           name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_op_fix_value">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
+        <opFixValueDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
         <value
             name="mathOperationFieldFixValue({{ dataprocessing.in_column_names }})_param_primitive"
             value="{{ dataprocessing.math_op.fix_value }}">

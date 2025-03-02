@@ -1,0 +1,196 @@
+<dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      incoming=""
+      outgoing=""
+      in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      name="mathOperationFieldField({{ dataprocessing.in_column_names }})">
+    <inputPort
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_input_dataDictionary"
+        out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="mathOperationFieldField({{ in_column.name }})_input1_dataField"
+          dataType="Integer"
+          displayName="{{ in_column.name }}">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+        <interval
+            leftMargin="440.0"
+            rightMargin="1600.0"
+            clousure="closedClosed"/>
+      </datafield>
+      {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_output_dataDictionary"
+        in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="mathOperationFieldField({{ out_column.name }})_output_dataField"
+          dataType="Integer"
+          displayName="{{ out_column.name }}"
+          in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0/@datafielddefinition.0"/>
+        <interval
+            leftMargin="440.0"
+            rightMargin="1600.0"
+            clousure="closedClosed"/>
+      </datafield>
+      {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.10"/>
+    <parameter
+        xsi:type="Workflow:MathOp"
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_param_mathop"
+        operator="{{ dataprocessing.math_op.operator }}">
+      <firstOperand
+          xsi:type="Workflow:OpField"
+          name="mathOperationFieldField({{ dataprocessing.in_column_names }})_param_op_field_1"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
+        <opFieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
+      </firstOperand>
+      <secondOperand
+          xsi:type="Workflow:OpField"
+          name="mathOperationFieldField({{ dataprocessing.in_column_names }})_param_op_field_2"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1">
+        <opFieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
+      </secondOperand>
+      <mathOpDef
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
+    </parameter>
+    <contract
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="mathOperationFieldField({{ dataprocessing.in_column_names }})_PRE_valueRange">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_PRE_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:SpecialValue">
+          <specialValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="mathOperationFieldField({{ dataprocessing.in_column_names }})_POST_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_POST_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:SpecialValue">
+          <specialValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_input1_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_input2_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_output_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.1"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:Interval"
+              leftMargin="440.0"
+              rightMargin="1600.0"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.0"
+            name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:MathOperation"
+              mathOp="{{ dataprocessing.math_op.operator }}">
+            <firstOperand
+                xsi:type="Contract:OpField"
+                name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_THEN_OP1_FIELD">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
+              <field
+                  dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"/>
+            </firstOperand>
+            <secondOperand
+                xsi:type="Contract:OpField"
+                name="mathOperationFieldField({{ dataprocessing.in_column_names }})_INV_THEN_OP2_FIELD">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
+              <field
+                  dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1"/>
+            </secondOperand>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+  </dataprocessing>

@@ -145,7 +145,7 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         node: (dict) The node from the JSON data.
 
     Returns:
-        dict: A dictionary containing the replace column name and mapping parameters.
+        dict: A dictionary containing the replace_column name and mapping parameters.
     """
     replace_column_name = ""
     if "replace_column_name" in node["parameters"]:

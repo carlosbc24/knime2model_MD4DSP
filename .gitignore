@@ -180,3 +180,4 @@ parsed_json_workflows/
 
 # extracted knime data
 input_KNIME_workflows/*/extracted_data/
+input_KNIME_workflows/extracted_data/
