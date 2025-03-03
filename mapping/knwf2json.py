@@ -570,6 +570,11 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                                 node_info["parameters"]["operator"] = "SUBSTRACT"
                             elif operator == "+":
                                 node_info["parameters"]["operator"] = "SUM"
+                            elif operator == "*":
+                                node_info["parameters"]["operator"] = "MULTIPLY"
+                            elif operator == "/":
+                                node_info["parameters"]["operator"] = "DIVIDE"
+
                             node_info["parameters"]["first_operand"] = {
                                 "type": first_operand_type,
                                 "value": first_operand.strip('$') if first_operand_type == "column" else first_operand

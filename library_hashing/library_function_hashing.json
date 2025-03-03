@@ -35,6 +35,27 @@
 		"library_transformation_id": 4
 		}
 	},
+  	{
+	"String Manipulation": {
+	  	"knime_function_name": "String Manipulation",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
+	},
+  	{
+	"String Manipulation (Multi Column)": {
+	  	"knime_function_name": "String Manipulation (Multi Column)",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
+	},
+  	{
+	"String Replacer": {
+	  	"knime_function_name": "String Replacer",
+		"library_transformation_name": "mapping",
+		"library_transformation_id": 4
+		}
+	},
 	{
 	"Missing Value": {
 		"knime_function_name": "Missing Value",
@@ -106,24 +127,10 @@
 		}
 	},
   	{
-	"String Manipulation": {
-	  	"knime_function_name": "String Manipulation",
-		"library_transformation_name": "mapping",
-		"library_transformation_id": 4
-		}
-	},
-  	{
-	"String Manipulation (Multi Column)": {
-	  	"knime_function_name": "String Manipulation (Multi Column)",
-		"library_transformation_name": "mapping",
-		"library_transformation_id": 4
-		}
-	},
-  	{
-	"String Replacer": {
-	  	"knime_function_name": "String Replacer",
-		"library_transformation_name": "mapping",
-		"library_transformation_id": 4
+	"Math Formula": {
+	  	"knime_function_name": "Math Formula",
+		"library_transformation_name": "mathOperationFieldField",
+		"library_transformation_id": 9
 		}
 	}
 ]

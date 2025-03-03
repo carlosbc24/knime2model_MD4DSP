@@ -1,5 +1,5 @@
 
-input_knwf_folder: "input_KNIME_workflows/paper_workflows" # Folder containing the selected KNIME workflows
+input_knwf_folder: "input_KNIME_workflows/" # Folder containing the selected KNIME workflows
 output_json_folder: "parsed_json_workflows" # Folder where the parsed KNIME workflows will be saved
 output_xmi_folder: "parsed_xmi_workflows" # Folder where the parsed KNIME workflows will be saved
 
