@@ -149,13 +149,8 @@ MD4DSP-m2python/
 ├── parsed_xmi_workflows/
 │   └── ...
 │
-├── parsers/
-│ ├── dataDictionary.py
-│ ├── dataLink.py
-│ ├── dataProcessing.py
-│ └── parameter.py
-│
 ├── utils/
+│ ├── json_parser_functions.py
 │ ├── library_functions.py
 │ └── logger.py
 │
@@ -190,10 +185,7 @@ MD4DSP-m2python/
 - **`parsed_xmi_workflows/`**: contains the xmi data from the parsed json data.
 
 
-- **`parsers/`**: contains the Python scripts to parse individual elements using the json data and the data model.
-
-
-- **`utils/`**: contains the utility scripts of the project (e.g., logger).
+- **`utils/`**: contains the utility scripts of the project (e.g., logger, library functions, json parser functions).
 
 
 - **`.gitignore`**: file that contains the files and directories to be ignored by Git.

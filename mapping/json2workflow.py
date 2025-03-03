@@ -2,7 +2,7 @@
 import os
 import json
 from string import Template
-from parsers.json_parser_functions import get_transformation_dp_values
+from utils.json_parser_functions import get_transformation_dp_values
 from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from jinja2 import Template as JinjaTemplate
 from utils.logger import print_and_log
