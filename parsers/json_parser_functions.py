@@ -56,10 +56,11 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     elif library_transformation_name == "mapping":
         # Get the column mapping and parameters
         column_mapping_and_parameters = get_column_mapping_and_parameters(node)
-        replace_column_name = column_mapping_and_parameters["replace_column_name"]
         mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
         mapping_parameters = [{"key": key, "value": value} for key, value in mapping_parameters.items()]
-        mapping_dict = {"mapping_parameters": mapping_parameters, "replace_column_name": replace_column_name}
+        mapping_dict = {"mapping_parameters": mapping_parameters,
+                        "replace_column_name": column_mapping_and_parameters["replace_column_name"],
+                        "map_operation": column_mapping_and_parameters["map_operation"]}
 
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
@@ -152,16 +153,28 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         replace_column_name = node["parameters"]["replace_column_name"]
 
     mapping_parameters = dict()
-    parameter_list = []
-    if "rules" in node["parameters"]:
-        parameter_list = [rule for rule in node["parameters"]["rules"] if rule.startswith('$')]
+    map_operation = ""
 
-    for value in parameter_list:
-        match = re.search(r'\*(\w)\*.*"(\d)"', value)
-        if match:
-            mapping_parameters[match.group(1)] = match.group(2)
+    if "rules" in node["parameters"]:
+
+        expression = node["parameters"]["rules"]
+
+        if "replace(" in expression or "replaceChars(" in expression:
+            match = re.search(r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)', expression)
+            if match:
+                map_operation = "SUBSTRING"
+                replace_column_name = match.group(2)
+                mapping_parameters[match.group(3)] = match.group(4)
+        else:
+            parameter_list = [rule for rule in expression if rule.startswith('$')]
+            map_operation = "VALUE_MAPPING"
+            for value in parameter_list:
+                match = re.search(r'\*(\w)\*.*"(\d)"', value)
+                if match:
+                    mapping_parameters[match.group(1)] = match.group(2)
 
     return {
         "replace_column_name": replace_column_name,
-        "mapping_parameters": mapping_parameters
+        "mapping_parameters": mapping_parameters,
+        "map_operation": map_operation
     }

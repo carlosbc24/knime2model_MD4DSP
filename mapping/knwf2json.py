@@ -408,27 +408,6 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
             nodes_info.append(node_info)
 
-        elif "Rule Engine" in node_info["node_name"]:
-            rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
-            rules = [entry.attrib["value"] for entry in rules_entries if entry.attrib["key"].isdigit()]
-            new_column = model.find(".//knime:entry[@key='new-column-name']", namespace)
-            replace_column = model.find(".//knime:entry[@key='replace-column-name']", namespace)
-            append_column = model.find(".//knime:entry[@key='append-column']", namespace)
-            node_info["parameters"]["rules"] = rules
-            node_info["parameters"]["new_column_name"] = new_column.attrib["value"] if new_column is not None else None
-            node_info["parameters"]["replace_column_name"] = replace_column.attrib["value"] if replace_column is not None else None
-            node_info["parameters"]["append_column"] = append_column.attrib["value"] == "true" if append_column is not None else False
-            replace_column = model.findall(".//knime:entry[@key='replace-column-name']", namespace)
-            in_columns = []
-            if replace_column is not None:
-                in_columns = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in replace_column if col.attrib["key"] != "array-size"
-                ]
-            node_info["parameters"]["in_columns"] = in_columns
-
-            nodes_info.append(node_info)
-
         elif "Column Expressions" in node_info["node_name"]:
             # Extract the included and excluded columns
             included_names, excluded_names = extract_columns_data(model, namespace)
@@ -699,38 +678,64 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
             nodes_info.append(node_info)
 
+        elif "Rule Engine" in node_info["node_name"]:
+            rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
+            rules = [entry.attrib["value"] for entry in rules_entries if entry.attrib["key"].isdigit()]
+            new_column = model.find(".//knime:entry[@key='new-column-name']", namespace)
+            replace_column = model.find(".//knime:entry[@key='replace-column-name']", namespace)
+            append_column = model.find(".//knime:entry[@key='append-column']", namespace)
+            node_info["parameters"]["rules"] = rules
+            node_info["parameters"]["new_column_name"] = new_column.attrib["value"] if new_column is not None else None
+            node_info["parameters"]["replace_column_name"] = replace_column.attrib["value"] if replace_column is not None else None
+            node_info["parameters"]["append_column"] = append_column.attrib["value"] == "true" if append_column is not None else False
+            replace_column = model.findall(".//knime:entry[@key='replace-column-name']", namespace)
+            in_columns = []
+            if replace_column is not None:
+                in_columns = [
+                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                    for col in replace_column if col.attrib["key"] != "array-size"
+                ]
+            node_info["parameters"]["in_columns"] = in_columns
+
+            nodes_info.append(node_info)
+
         elif "String Manipulation" in node_info["node_name"]:
-            # Extract the expression to apply
+            # Extract the expression and replaced column values
             expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
-            if expression_entry is not None:
-                node_info["parameters"]["expression"] = expression_entry.attrib["value"]
-            # Extract the column to apply the expression
             replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
+
+            if expression_entry is not None:
+                node_info["parameters"]["rules"] = expression_entry.attrib["value"]
+
             if replaced_column_entry is not None:
-                node_info["parameters"]["output_column"] = replaced_column_entry.attrib["value"]
-            # Extract the column to append the result
-            append_column_entry = model.find(".//knime:entry[@key='append_column']", namespace)
-            if append_column_entry is not None:
-                node_info["parameters"]["append_column"] = append_column_entry.attrib["value"] == "true"
+                node_info["parameters"]["replace_column_name"] = replaced_column_entry.attrib["value"]
+
+            in_columns = []
+            if replaced_column_entry is not None:
+                in_columns = [
+                    {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
+                ]
+            node_info["parameters"]["in_columns"] = in_columns
 
             nodes_info.append(node_info)
 
         elif "String Manipulation (Multi Column)" in node_info["node_name"]:
-            # Extract the expression to apply
-            expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
+            # Extract the expression and replaced column values
+            expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
+            replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
+
             if expression_entry is not None:
-                node_info["parameters"]["expression"] = expression_entry.attrib["value"]
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
-            # Extract the columns to append the result
-            append_or_replace_entry = model.find(".//knime:entry[@key='APPEND_OR_REPLACE']", namespace)
-            if append_or_replace_entry is not None:
-                node_info["parameters"]["append_or_replace"] = append_or_replace_entry.attrib["value"]
-            # Extract the column to append the result
-            append_column_suffix_entry = model.find(".//knime:entry[@key='APPEND_COLUMN_SUFFIX']", namespace)
-            if append_column_suffix_entry is not None:
-                node_info["parameters"]["append_column_suffix"] = append_column_suffix_entry.attrib["value"]
+                node_info["parameters"]["rules"] = expression_entry.attrib["value"]
+
+            if replaced_column_entry is not None:
+                node_info["parameters"]["replace_column_name"] = replaced_column_entry.attrib["value"]
+
+            in_columns = []
+            if replaced_column_entry is not None:
+                in_columns = [
+                    {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
+                ]
+            node_info["parameters"]["in_columns"] = in_columns
 
             nodes_info.append(node_info)
 

@@ -11,6 +11,7 @@
     <parameter
         xsi:type="Workflow:Map"
         name="mapping({{ dataprocessing.mapping.replace_column_name }})_param_{{ m_parameter.key }}"
+        mapOperation="{{ dataprocessing.mapping.map_operation }}"
         inValue="{{ m_parameter.key }}"
         outvalue="{{ m_parameter.value }}">
       <mapDefinition
