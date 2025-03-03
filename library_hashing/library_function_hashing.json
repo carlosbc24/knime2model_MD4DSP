@@ -15,6 +15,13 @@
 		}
 	},
 	{
+	"Missing Value": {
+		"knime_function_name": "Missing Value",
+		"library_transformation_name": "imputeByNumericOp",
+		"library_transformation_id": 5
+	  	}
+	},
+	{
 	"Row Filter": {
 		"knime_function_name": "Row Filter",
 		"library_transformation_name": "rowFilter",
@@ -57,13 +64,6 @@
 		}
 	},
 	{
-	"Missing Value": {
-		"knime_function_name": "Missing Value",
-		"library_transformation_name": "imputeByNumericOp",
-		"library_transformation_id": 5
-	  	}
-	},
-	{
 	"Numeric Outliers": {
 		"knime_function_name": "Numeric Outliers",
 		"library_transformation_name": "imputeOutliersByClosest",
@@ -78,25 +78,11 @@
 		}
 	},
 	{
-	"Category to Number": {
-		"knime_function_name": "Category to Number",
-		"library_transformation_name": "categoricalToContinuous",
-		"library_transformation_id": 6
-		}
-	},
-	{
 	"Numeric Binner": {
 		"knime_function_name": "Numeric Binner",
 		"library_transformation_name": "binner",
 		"library_transformation_id": 7
 	  	}
-	},
-	{
-	"Auto-Binner": {
-		"knime_function_name": "Auto-Binner",
-		"library_transformation_name": "binner",
-		"library_transformation_id": 7
-		}
 	},
 	{
 	"Row Filter": {
