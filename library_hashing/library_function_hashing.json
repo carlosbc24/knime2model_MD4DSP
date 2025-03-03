@@ -85,6 +85,13 @@
 	  	}
 	},
 	{
+	"Auto-Binner": {
+		"knime_function_name": "Auto-Binner",
+		"library_transformation_name": "binner",
+		"library_transformation_id": 7
+	  	}
+	},
+	{
 	"Row Filter": {
 		"knime_function_name": "Row Filter",
 		"library_transformation_name": "rowFilterRange",

@@ -243,9 +243,9 @@ def extract_node_settings(settings_path: str) -> list[dict]:
         elif "Column Filter" in node_info["node_name"]:
             column_filter = model.find(".//knime:config[@key='column-filter']", namespace)
             if column_filter is not None:
-                included_names, excluded_names = extract_columns_data(column_filter, namespace)
-                node_info["parameters"]["in_columns"] = included_names + excluded_names
-                node_info["parameters"]["out_columns"] = included_names
+                out_columns, in_columns = extract_columns_data(column_filter, namespace)
+                node_info["parameters"]["in_columns"] = out_columns + in_columns
+                node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
@@ -270,7 +270,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                         {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
                         for col in columns
                     ]
-                    node_info["parameters"]["out_columns"] = [
+                    node_info["parameters"]["in_columns"] = [
                         {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
                         for col in columns
                     ]
@@ -328,13 +328,13 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     if factory_id not in factory_dict:
                         factory_dict[factory_id] = {
                             "in_columns": [],
-                            "out_columns": [],
+                            "in_columns": [],
                             "fixStringValues": []
                         }
 
                     factory_dict[factory_id]["in_columns"].append(
                         {"column_name": column_name, "column_type": "xstring"})
-                    factory_dict[factory_id]["out_columns"].append(
+                    factory_dict[factory_id]["in_columns"].append(
                         {"column_name": column_name, "column_type": "xstring"})
                     factory_dict[factory_id]["fixStringValues"].append(fix_string_value)
 
@@ -343,7 +343,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     "node_name": "Missing Value",
                     "parameters": {
                         "in_columns": data["in_columns"],
-                        "out_columns": data["out_columns"],
+                        "in_columns": data["in_columns"],
                         "imputationType": "Interpolation" if "Interpolation" in factory_id else "Mean" if
                         "Mean" in factory_id else "MostFrequent" if "MostFrequent" in factory_id else "Fixed Value" if
                         "Fixed" in factory_id else "Previous" if "Previous" in factory_id else "Next" if
@@ -360,7 +360,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     "node_name": "Missing Value",
                     "parameters": {
                         "in_columns": [{"column_name": "column_name", "column_type": "xstring"}],
-                        "out_columns": [{"column_name": "column_name", "column_type": "xstring"}],
+                        "in_columns": [{"column_name": "column_name", "column_type": "xstring"}],
                         "imputationType": "Mean",
                         "fixStringValues": None
                     }
@@ -386,45 +386,45 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             if decimal_separator_entry is not None:
                 node_info["parameters"]["decimal_separator"] = decimal_separator_entry.attrib["value"]
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Number To String" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "String To Date&Time" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Column Expressions" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Numeric Outliers" in node_info["node_name"]:
-            included_names = root.findall(
+            out_columns = root.findall(
                 ".//knime:config[@key='outlier-list']/knime:config[@key='included_names']/knime:entry", namespace)
 
             node_info["parameters"]["in_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
-                                                    col in included_names if col.attrib["key"] != "array-size"]
+                                                    col in out_columns if col.attrib["key"] != "array-size"]
 
-            node_info["parameters"]["out_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
-                                                     col in included_names if col.attrib["key"] != "array-size"]
+            node_info["parameters"]["in_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
+                                                     col in out_columns if col.attrib["key"] != "array-size"]
 
             # Extract estimation-type
             estimation_type = model.find(".//knime:entry[@key='estimation-type']", namespace)
@@ -480,13 +480,15 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     new_node_info["parameters"] = {
                         "bins": bin_info,
                         "in_columns": [{"column_name": column_name, "column_type": "xstring"}],
-                        "out_columns": [{"column_name": new_column_name, "column_type": "xstring"}]
+                        "in_columns": [{"column_name": new_column_name, "column_type": "xstring"}]
                     }
                     nodes_info.append(new_node_info)
 
         elif "Auto-Binner" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            for column in out_columns:
+                column["column_name"] = column["column_name"]+"_binned"
             # Extract binning method
             binning_method_entry = model.find(".//knime:entry[@key='method']", namespace)
             binning_method = binning_method_entry.attrib["value"] if binning_method_entry is not None else None
@@ -508,6 +510,24 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             # Extract bin naming
             bin_naming_entry = model.find(".//knime:entry[@key='binNaming']", namespace)
             bin_naming = bin_naming_entry.attrib["value"] if bin_naming_entry is not None else None
+            bins = []
+            if binning_method == "fixedNumber":
+                if bin_naming == "numbered":
+                    for column in out_columns:
+                        for bin_index in range(bin_count):
+                            bins.append({
+                                "binName": f'{column["column_name"]}_{bin_index + 1}',
+                                "closureType": "openOpen",
+                                "leftMargin": 0,
+                                "rightMargin": 100
+                            })
+            elif binning_method == "Sample quantiles":
+                print("Sample quantiles")
+            elif binning_method == "Equal width":
+                print("Equal width")
+            else:
+                print("Equal frequency")
+
             # Extract replace column
             replace_column_entry = model.find(".//knime:entry[@key='replaceColumn']", namespace)
             replace_column = replace_column_entry.attrib[
@@ -519,8 +539,8 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             output_format = output_format_entry.attrib["value"] if output_format_entry is not None else None
             # Save the parameters in the node_info dictionary
             node_info["parameters"] = {
-                "in_columns": included_names + excluded_names,
-                "out_columns": included_names,
+                "in_columns": in_columns,
+                "out_columns": out_columns,
                 "binning_method": binning_method,
                 "bin_count": bin_count,
                 "equality_method": equality_method,
@@ -530,12 +550,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                 "replace_column": replace_column,
                 "precision": precision,
                 "output_format": output_format,
-                "bins": [{
-                        "binName": "binName",
-                        "closureType": "openOpen",
-                        "leftMargin": 7,
-                        "rightMargin": 8
-                    }]
+                "bins": bins
             }
 
             nodes_info.append(node_info)
@@ -588,12 +603,12 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                             elif (first_operand_type == "column" and second_operand_type == "fixed_value") or (first_operand_type == "fixed_value" and second_operand_type == "column"):
                                 node_info["parameters"]["mathOpTransformation"] = "mathOperationFieldFixValue"
 
-                            in_columns = []
+                            out_columns = []
                             if first_operand_type == "column":
-                                in_columns.append({"column_name": first_operand.strip('$'), "column_type": "xstring"})
+                                out_columns.append({"column_name": first_operand.strip('$'), "column_type": "xstring"})
                             if second_operand_type == "column":
-                                in_columns.append({"column_name": second_operand.strip('$'), "column_type": "xstring"})
-                            node_info["parameters"]["in_columns"] = in_columns
+                                out_columns.append({"column_name": second_operand.strip('$'), "column_type": "xstring"})
+                            node_info["parameters"]["in_columns"] = out_columns
 
                     # Determine the output column
                     out_column = None
@@ -606,7 +621,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                     if out_column is not None:
                         node_info["parameters"]["out_column"] = out_column
 
-                    node_info["parameters"]["out_columns"] = [{"column_name": out_column, "column_type": "xstring"}]
+                    node_info["parameters"]["in_columns"] = [{"column_name": out_column, "column_type": "xstring"}]
 
                     nodes_info.append(node_info)
 
@@ -614,53 +629,53 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             # Extract the missing value threshold
             missing_value_threshold_entry = model.find(".//knime:entry[@key='missing_value_percentage']", namespace)
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
+            out_columns, in_columns = extract_columns_data(model, namespace)
             node_info["parameters"]["missing_value_threshold"] = (
                 float(missing_value_threshold_entry.attrib["value"])
                 if missing_value_threshold_entry is not None else None
             )
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Constant Value Column Filter" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Column Expressions" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "String Cleaner" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Sorter" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
         elif "Category to Number (Apply)" in node_info["node_name"]:
             # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            out_columns, in_columns = extract_columns_data(model, namespace)
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
@@ -670,15 +685,15 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             row_selection_entry = model.find(".//knime:entry[@key='row_selection']", namespace)
             add_row_duplicate_flag_entry = model.find(".//knime:entry[@key='add_row_duplicate_flag']", namespace)
             in_memory_entry = model.find(".//knime:entry[@key='in_memory']", namespace)
-            included_names, excluded_names = extract_columns_data(model, namespace)
+            out_columns, in_columns = extract_columns_data(model, namespace)
 
             node_info["parameters"]["remove_duplicates"] = remove_duplicates_entry.attrib["value"] == "true" if remove_duplicates_entry is not None else False
             node_info["parameters"]["retain_order"] = retain_order_entry.attrib["value"] == "true" if retain_order_entry is not None else False
             node_info["parameters"]["row_selection"] = row_selection_entry.attrib["value"] if row_selection_entry is not None else None
             node_info["parameters"]["add_row_duplicate_flag"] = add_row_duplicate_flag_entry.attrib["value"] == "true" if add_row_duplicate_flag_entry is not None else False
             node_info["parameters"]["in_memory"] = in_memory_entry.attrib["value"] == "true" if in_memory_entry is not None else False
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
+            node_info["parameters"]["in_columns"] = out_columns + in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
             nodes_info.append(node_info)
@@ -694,13 +709,13 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["replace_column_name"] = replace_column.attrib["value"] if replace_column is not None else None
             node_info["parameters"]["append_column"] = append_column.attrib["value"] == "true" if append_column is not None else False
             replace_column = model.findall(".//knime:entry[@key='replace-column-name']", namespace)
-            in_columns = []
+            out_columns = []
             if replace_column is not None:
-                in_columns = [
+                out_columns = [
                     {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
                     for col in replace_column if col.attrib["key"] != "array-size"
                 ]
-            node_info["parameters"]["in_columns"] = in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
@@ -715,12 +730,12 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             if replaced_column_entry is not None:
                 node_info["parameters"]["replace_column_name"] = replaced_column_entry.attrib["value"]
 
-            in_columns = []
+            out_columns = []
             if replaced_column_entry is not None:
-                in_columns = [
+                out_columns = [
                     {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
                 ]
-            node_info["parameters"]["in_columns"] = in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 
@@ -735,12 +750,12 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             if replaced_column_entry is not None:
                 node_info["parameters"]["replace_column_name"] = replaced_column_entry.attrib["value"]
 
-            in_columns = []
+            out_columns = []
             if replaced_column_entry is not None:
-                in_columns = [
+                out_columns = [
                     {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
                 ]
-            node_info["parameters"]["in_columns"] = in_columns
+            node_info["parameters"]["in_columns"] = out_columns
 
             nodes_info.append(node_info)
 

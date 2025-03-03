@@ -64,6 +64,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
 
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
+        print()
 
     elif library_transformation_name in ["imputeByDerivedValue", "imputeByFixValue", "imputeByNumericOp"]:
         imputation_dict = {"imputationType": node["parameters"]["imputationType"], "fixStringValues": node["parameters"]["fixStringValues"]}
