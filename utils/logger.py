@@ -43,3 +43,18 @@ def print_and_log(message, level=logging.INFO):
     """
     # print(message)
     logging.log(level, message)
+
+
+def print_and_log_dict(dictionary, level=logging.INFO):
+    """
+    Print a dictionary on screen and save it in the log
+
+    Parameters:
+    dictionary (dict): dictionary to print and save in the log
+    level (int): level of the message
+    """
+    print_and_log("Mapped data dictionary:", level=level)
+    for key, value in dictionary.items():
+        print_and_log(f"{key}: {value}", level=level)
+    print_and_log("", level=level)
+    print_and_log("", level=level)

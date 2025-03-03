@@ -6,7 +6,7 @@ import zipfile
 import xml.etree.ElementTree as elementTree
 import copy
 
-from utils.logger import print_and_log
+from utils.logger import print_and_log, print_and_log_dict
 
 
 def extract_columns_data(model: elementTree.Element, namespace: dict) -> (list, list):
@@ -753,5 +753,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
         else:
             print_and_log(f"Node type not recognized: {node_info['node_name']}")
+
+        print_and_log_dict(node_info)
 
     return nodes_info
