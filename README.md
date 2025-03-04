@@ -169,10 +169,12 @@ MD4DSP-m2python/
 │ └── logger.py
 │
 ├── .gitignore
+├── KNIME_nodes_MD4DSP_mapping.xlsx
 ├── library_function_hashing.json
 ├── parser_config.yaml
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── TODO.md
 ```
 
 - **`doc_images/`**: contains the images of the documentation.
@@ -220,6 +222,9 @@ MD4DSP-m2python/
   
 
 - **`requirements.txt`**: file that contains the libraries needed to run the project.
+
+
+- **`TODO.md`**: file that contains the pending tasks of the project.
 
 ## Authors
 - Carlos Breuer Carrasco
