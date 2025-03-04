@@ -33,7 +33,6 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
 
     # Initialize the dictionaries
     column_filter_dict = {}
-    mapping_dict = {}
     binner_dict = {}
     row_dict = {}
     imputation_dict = {}
@@ -54,18 +53,8 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
                     "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else "",
                     "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
-    elif library_transformation_name == "mapping":
-        # Get the column mapping and parameters
-        column_mapping_and_parameters = get_column_mapping_and_parameters(node)
-        mapping_parameters = column_mapping_and_parameters["mapping_parameters"]
-        mapping_parameters = [{"key": key, "value": value} for key, value in mapping_parameters.items()]
-        mapping_dict = {"mapping_parameters": mapping_parameters,
-                        "replace_column_name": column_mapping_and_parameters["replace_column_name"],
-                        "map_operation": column_mapping_and_parameters["map_operation"]}
-
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
-        print()
 
     elif library_transformation_name in ["imputeByDerivedValue", "imputeByFixValue", "imputeByNumericOp"]:
         imputation_dict = {"imputationType": node["parameters"]["imputationType"], "fixStringValues": node["parameters"]["fixStringValues"]}
@@ -90,7 +79,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
             {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
             for column in out_columns
         ],
-        "mapping": mapping_dict,
+        "mapping": node.get("parameters", {}).get("mapping", "") if "mapping" in node.get("parameters", {}) else "",
         "column_filter": column_filter_dict,
         "row_filter": row_dict,
         "binner": binner_dict,
@@ -141,71 +130,3 @@ def get_output_columns(node: dict) -> list:
     return out_columns
 
 
-def get_column_mapping_and_parameters(node: dict) -> dict:
-    """
-    Get the column mapping and parameters from the node parameters.
-    Args:
-        node: (dict) The node from the JSON data.
-
-    Returns:
-        dict: A dictionary containing the replace_column name and mapping parameters.
-    """
-    replace_column_name = ""
-    if "replace_column_name" in node["parameters"]:
-        replace_column_name = node["parameters"]["replace_column_name"]
-
-    mapping_parameters = dict()
-    map_operation = ""
-
-    if "rules" in node["parameters"]:
-
-        expression = node["parameters"]["rules"]
-
-        if "replace(" in expression or "replaceChars(" in expression:
-            match = re.search(
-                r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
-                expression)
-            if match:
-                map_operation = "SUBSTRING"
-                replace_column_name = match.group(2)
-                mapping_parameters[match.group(3)] = match.group(4)
-        else:
-            parameter_list = [rule for rule in expression if rule.startswith('$')]
-            map_operation = "VALUE_MAPPING"
-            for value in parameter_list:
-                match = re.search(r'\*(\w)\*.*"(\d)"', value)
-                if match:
-                    mapping_parameters[match.group(1)] = match.group(2)
-
-    elif "rules_multiColumn" in node["parameters"]:
-
-        expression = node["parameters"]["rules_multiColumn"]
-
-        if "replace(" in expression or "replaceChars(" in expression:
-            match = re.search(
-                       r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\']('
-                       r'.*?)["\']\s*\)\s*,'
-                              r'\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)', expression)
-            if match:
-                map_operation = "SUBSTRING"
-                replace_column_name = match.group(1)
-                mapping_parameters[match.group(2)] = match.group(3)
-        else:
-            parameter_list = [rule for rule in expression if rule.startswith('$')]
-            map_operation = "VALUE_MAPPING"
-            for value in parameter_list:
-                match = re.search(r'\*(\w)\*.*"(\d)"', value)
-                if match:
-                    mapping_parameters[match.group(1)] = match.group(2)
-
-    elif "replacement" in node["parameters"]:
-        map_operation = "SUBSTRING"
-        string_replacement = node["parameters"]["replacement"]
-        replace_column_name = string_replacement["column"]
-        mapping_parameters[string_replacement["pattern"]] = string_replacement["replacement"]
-
-    return {
-        "replace_column_name": replace_column_name,
-        "mapping_parameters": mapping_parameters,
-        "map_operation": map_operation
-    }

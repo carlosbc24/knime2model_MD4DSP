@@ -1,7 +1,9 @@
 import json
 
+from utils.logger import print_and_log
 
-def get_library_transformation_id(json_file_path: str, node_name: str) -> int:
+
+def get_library_transformation_id(json_file_path: str, node_name: str) -> int | None:
     """
     Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
     Extracts the value of the library_transformation_id attribute from the first matching element.
@@ -45,7 +47,7 @@ def get_library_transformation_names(json_file_path: str) -> list:
     return librery_transformations_names
 
 
-def get_library_transformation_name(json_file_path: str, node: dict, index: int) -> str:
+def get_library_transformation_name(json_file_path: str, node: dict, index: int) -> str | None:
     """
     Reads the JSON file and finds the hashing function whose identifier matches the value of the node_name variable.
     Extracts the value of the library_transformation_id attribute from the first matching element.
@@ -67,24 +69,42 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
 
     for function in functions_hashing:
         if node_name in function:
-            if node_name == "Row Filter (deprecated)":
-                if node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter":
-                    return function[node_name].get("library_transformation_name")
-            elif node_name == "Missing Value":
+            # 100% mapped imputation KNIME node
+            if node_name == "Missing Value":
                 if node.get("parameters", {}).get("imputationType") in ["MostFrequent", "Previous", "Next"]:
                     return "imputeByDerivedValue"
                 elif node.get("parameters", {}).get("imputationType") == "Fixed Value":
                     return "imputeByFixValue"
                 elif node.get("parameters", {}).get("imputationType") in ["Mean", "Interpolation", "Median", "Closest"]:
                     return "imputeByNumericOp"
-            elif node_name == "Math Formula":
+                else:
+                    print_and_log(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
+
+            # 20% mapped row filter KNIME node
+            elif node_name == "Row Filter (deprecated)":
+                if (node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter" and
+                        (node.get("parameters", {}).get("filter_type_inclusion") == "INCLUDE" or node.get("parameters",
+                                                                                                          {}).get(
+                            "filter_type_inclusion") == "EXCLUDE")):
+                    return function[node_name].get("library_transformation_name")
+
+            # 100% mapped KNIME nodes
+            elif node_name == "Column Filter" or node_name == "String to Number" or node_name == "Numeric Outliers" or node_name == "Numeric Binner" or node_name == "String Replacer":
+                return function[node_name].get("library_transformation_name")
+
+            # Just mapped sum and substract operations from Math Formula KNIME node when the operation has 2 operands
+            elif node_name == "Math Formula" and node.get("parameters", {}).get("operator") in ["SUM", "SUBSTRACT"]:
                 if node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldFixValue":
                     return "mathOperationFieldFixValue"
                 elif node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldField":
                     return "mathOperationFieldField"
                 else:
-                    raise ValueError(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
-            else:
+                    print_and_log(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
+
+            # Just mapped LIKE operation from Rule Engine KNIME node
+            elif node_name == "Rule Engine" and "LIKE" in node.get("parameters", {}).get("function_types"):
                 return function[node_name].get("library_transformation_name")
 
-    return None
+            else:
+                print_and_log(f"Not mapped unknown KNIME node: {node_name}")
+                return None

@@ -32,6 +32,83 @@ def extract_columns_data(model: elementTree.Element, namespace: dict) -> (list, 
     return included_names, excluded_names
 
 
+def get_column_mapping_and_parameters(node: dict) -> dict:
+    """
+    Get the column mapping and parameters from the node parameters.
+    Args:
+        node: (dict) The node from the JSON data.
+
+    Returns:
+        dict: A dictionary containing the replace_column name and mapping parameters.
+    """
+    replace_column_name = ""
+    if "replace_column_name" in node["parameters"]:
+        replace_column_name = node["parameters"]["replace_column_name"]
+
+    mapping_parameters = dict()
+    map_operation = ""
+    unique_replacement_one_column = False
+
+    # Define the regular expressions for different types of functions
+    patterns = {
+        "replace": r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+        # Add other patterns here as needed
+    }
+
+    if "rules" in node["parameters"]:
+
+        expression = node["parameters"]["rules"]
+
+        if any(func in expression for func in ["replace(", "replaceChars("]):
+            match = re.search(patterns["replace"], expression)
+            if match:
+                map_operation = "SUBSTRING"
+                replace_column_name = match.group(2)
+                mapping_parameters[match.group(4)] = match.group(5)
+                if (expression.count("replace(") == 1 or expression.count("replaceChars(") == 1) and expression.count("$") == 2:
+                    unique_replacement_one_column = True
+        else:
+            parameter_list = [rule for rule in expression if rule.startswith('$')]
+            map_operation = "VALUE_MAPPING"
+            for value in parameter_list:
+                match = re.search(r'\*(\w)\*.*"(\d)"', value)
+                if match:
+                    mapping_parameters[match.group(1)] = match.group(2)
+
+    elif "rules_multiColumn" in node["parameters"]:
+
+        expression = node["parameters"]["rules_multiColumn"]
+
+        if any(func in expression for func in ["replace(", "replaceChars("]):
+            match = re.search(patterns["nested_replace"], expression)
+            if match:
+                map_operation = "SUBSTRING"
+                replace_column_name = match.group(1)
+                mapping_parameters[match.group(2)] = match.group(3)
+        else:
+            parameter_list = [rule for rule in expression if rule.startswith('$')]
+            map_operation = "VALUE_MAPPING"
+            for value in parameter_list:
+                match = re.search(r'\*(\w)\*.*"(\d)"', value)
+                if match:
+                    mapping_parameters[match.group(1)] = match.group(2)
+
+    elif "replacement" in node["parameters"]:
+        map_operation = "SUBSTRING"
+        string_replacement = node["parameters"]["replacement"]
+        replace_column_name = string_replacement["column"]
+        mapping_parameters[string_replacement["pattern"]] = string_replacement["replacement"]
+        unique_replacement_one_column = True
+
+    return {
+        "replace_column_name": replace_column_name,
+        "mapping_parameters": [{"key": key, "value": value} for key, value in mapping_parameters.items()],
+        "map_operation": map_operation,
+        "unique_replacement_one_column": unique_replacement_one_column
+    }
+
+
 def extract_input_output_node_settings(node_info: dict, root: elementTree.Element,
                                        model: elementTree.Element, namespace: dict) -> dict:
     """
@@ -308,6 +385,46 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
     return node_info
 
 
+def extract_function_types(rules: list) -> list:
+    """
+    Extracts the function types from the rules.
+
+    Args:
+        rules (list): List of rules.
+
+    Returns:
+        list: List with the function types.
+    """
+    function_types = []
+    patterns = {
+        "LIKE": r'\$.*?\$ LIKE ".*?"',
+        "<": r'\$.*?\$ < .*?',
+        "<=": r'\$.*?\$ <= .*?',
+        "=": r'\$.*?\$ = .*?',
+        ">": r'\$.*?\$ > .*?',
+        ">=": r'\$.*?\$ >= .*?',
+        "AND": r'\$.*?\$ AND \$.*?\$',
+        "IN": r'\$.*?\$ IN \(.*?\)',
+        "MATCHES": r'\$.*?\$ MATCHES ".*?"',
+        "OR": r'\$.*?\$ OR \$.*?\$',
+        "XOR": r'\$.*?\$ XOR \$.*?\$',
+        "FALSE": r'FALSE',
+        "MISSING": r'MISSING \$.*?\$',
+        "NOT": r'NOT \$.*?\$',
+        "TRUE": r'TRUE'
+    }
+
+    for rule in rules:
+        if rule.strip().startswith('//'):
+            continue
+        for func_type, pattern in patterns.items():
+            if re.search(pattern, rule):
+                function_types.append(func_type)
+                break
+
+    return function_types
+
+
 def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, namespace: dict) -> dict:
     """
     Extracts the mapping settings from the data model XML element.
@@ -329,7 +446,7 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
             node_info["parameters"]["replacement"] = {
                 "column": column_entry.attrib["value"],
                 "pattern": pattern_entry.attrib["value"],
-                "replacement": replacement_entry.attrib["value"]
+                "replacement": replacement_entry.attrib["value"],
             }
 
     elif "Rule Engine" in node_info["node_name"]:
@@ -339,6 +456,7 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         replace_column = model.find(".//knime:entry[@key='replace-column-name']", namespace)
         append_column = model.find(".//knime:entry[@key='append-column']", namespace)
         node_info["parameters"]["rules"] = rules
+        node_info["parameters"]["function_types"] = extract_function_types(node_info["parameters"]["rules"])
         node_info["parameters"]["new_column_name"] = new_column.attrib["value"] if new_column is not None else None
         node_info["parameters"]["replace_column_name"] = replace_column.attrib[
             "value"] if replace_column is not None else None
@@ -373,12 +491,13 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         node_info["parameters"]["in_columns"] = out_columns
         node_info["parameters"]["out_columns"] = out_columns
 
-    elif node_info["node_name"] == "String Manipulation (Multi Column)": # String Manipulation (Multi Column)
+    elif node_info["node_name"] == "String Manipulation (Multi Column)":  # String Manipulation (Multi Column)
         # Extract the expression and replaced column values
         expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
         if expression_entry is not None:
             node_info["parameters"]["rules_multiColumn"] = expression_entry.attrib["value"]
 
+    node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
     return node_info
 
 
