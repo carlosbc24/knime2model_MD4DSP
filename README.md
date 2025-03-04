@@ -149,8 +149,12 @@ MD4DSP-m2python/
 ├── parsed_xmi_workflows/
 │   └── ...
 │
+├── reports/
+│   └── ...
+│
 ├── utils/
 │ ├── json_parser_functions.py
+│ ├── knime_nodes_data_extraction.py
 │ ├── library_functions.py
 │ └── logger.py
 │
@@ -183,6 +187,9 @@ MD4DSP-m2python/
 
 
 - **`parsed_xmi_workflows/`**: contains the xmi data from the parsed json data.
+
+
+- **`reports/`**: contains the reports of the project.
 
 
 - **`utils/`**: contains the utility scripts of the project (e.g., logger, library functions, json parser functions).

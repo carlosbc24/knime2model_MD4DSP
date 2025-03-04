@@ -7,6 +7,11 @@ from utils.logger import set_logger
 # Set logger
 set_logger(logger_name="mapping")
 
+# Set report filepath and create reports folder if it does not exist
+report_filepath = "reports/node_mapping_report.csv"
+if not os.path.exists("reports"):
+    os.makedirs("reports")
+
 # Read yaml file configuration variables
 with open("parser_config.yaml", "r") as file:
     config = yaml.safe_load(file)
@@ -27,9 +32,9 @@ if workflow_filename is not None and workflow_filename != "":
         print(formated_wf_mapping_info)
 
         if export_mapped_nodes_report:
-            with open("node_mapping_report.csv", "w") as file:
+            with open(report_filepath, "w") as file:
                 file.write("Workflow name,Mapping percentage,Nodes mapped\n")
-            with open("node_mapping_report.csv", "a") as file:
+            with open(report_filepath, "a") as file:
                 # In one row, write the workflow name in a cell
                 # workflow name without commas
                 workflow_name = workflow_name.replace(",", "")
@@ -42,7 +47,7 @@ if workflow_filename is not None and workflow_filename != "":
 # Extract data from all .knwf files in the input folder
 else:
     # Create a new file to store the mapping information
-    with open("node_mapping_report.csv", "w") as file:
+    with open(report_filepath, "w") as file:
         file.write("Workflow name,Mapping percentage,Nodes mapped\n")
     for file in os.listdir(input_knwf_folder):
         if file.endswith(".knwf"):
@@ -53,7 +58,7 @@ else:
             print(formated_wf_mapping_info)
 
             if export_mapped_nodes_report:
-                with open("node_mapping_report.csv", "a") as file:
+                with open(report_filepath, "a") as file:
                     # In one row, write the workflow name in a cell
                     # workflow name without commas
                     workflow_name = workflow_name.replace(",", "")
