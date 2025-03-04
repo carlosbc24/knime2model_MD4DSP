@@ -1,6 +1,10 @@
 # T2M transformations with Python Parsers for MD4DSP
 
-This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`) using Python scripts. The project is divided into three main scripts:
+This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`) using Python scripts.
+
+![MappingDesign](doc_images/mapping_knwf_design.png)
+
+The project is divided into three main scripts:
 
 1. **`parsers/knwf2json.py`**: script that parses a KNIME workflow and exports the data to a json intermediate file.
 2. **`parsers/json2workflow.py`**: script that parses the intermediate json file and exports the data to a MD4DSP workflow.
@@ -84,6 +88,12 @@ This project aims to map a KNIME workflow (`.knwf`) to a MD4DSP workflow (`.xmi`
    conda deactivate
    conda remove --name kn2wf_mapping --all --yes
    ```
+   
+## KNIME nodes mapping relation state with MD4DSP library transformation (library_validation.xmi)
+In green you can distinguish the nodes that have been completely mapped to the Workflow with a DataProcessing with the respective parameters and transformation dependencies.
+In red the nodes that have not been mapped to the library.
+In yellow the nodes that have not been completely mapped to the library yet, as it can be mapped with a limited configuration subset.
+![RelationMappedNodes](doc_images/mapping_KNIME_nodes_config_relation.png)
 
 ## Project Structure
 
@@ -165,6 +175,8 @@ MD4DSP-m2python/
 └── requirements.txt
 ```
 
+- **`doc_images/`**: contains the images of the documentation.
+
 
 - **`input_KNIME_workflows/`**: contains the input KNIME workflows to be parsed and exported json via Python script.
 
@@ -196,6 +208,9 @@ MD4DSP-m2python/
 
 
 - **`.gitignore`**: file that contains the files and directories to be ignored by Git.
+
+
+- **`KNIME_nodes_MD4DSP_mapping.xlsx`**: Excel file that contains the relation of mapping of the KNIME nodes with its specific configuration with the MD4DSP dataProcessing nodes.
 
 
 - **`parser_config.yaml`**: yaml file that contains the configuration of the parser.
