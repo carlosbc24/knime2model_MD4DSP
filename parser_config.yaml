@@ -5,6 +5,6 @@ output_xmi_folder: "parsed_xmi_workflows" # Folder where the parsed KNIME workfl
 
 include_contracts: True # Include contracts in the xmi output
 workflow_filename: ""
-#workflow_filename: "01 Data Cleaning.knwf"
+#workflow_filename: "Model data set with metanode.knwf"
 
 export_mapped_nodes_report: False # Export a report with the mapped nodes percentage

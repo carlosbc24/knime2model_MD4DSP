@@ -51,6 +51,7 @@
         href="library_validation.xmi#//@dataprocessingdefinition.8"/>
     <parameter
         xsi:type="Workflow:FilterValue"
+        filterType="{{ dataprocessing.row_filter.filter_type_inclusion }}"
         name="rowFilterRange({{ dataprocessing.in_column_names }})_param_rowFilter">
       <filterValueDef
           href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.0"/>

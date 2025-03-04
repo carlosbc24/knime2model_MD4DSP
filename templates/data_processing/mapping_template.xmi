@@ -1,8 +1,8 @@
 <dataprocessing xsi:type="Workflow:DataProcessing"
                 outgoing=""
                 incoming=""
-                in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
-                out="{% for out_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+                in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
+                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
                 name="mapping({{ dataprocessing.mapping.replace_column_name }})">
     <dataProcessingDefinition
         xsi:type="Library:Transformation"

@@ -49,11 +49,11 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         dp_template_filepath = f"{dp_templates_path}/{library_transformation_name}_template.xmi"
         if library_transformation_name in library_transformation_names and os.path.exists(dp_template_filepath):
 
+            mapped_nodes += 1
             print_and_log(f"KNIME node: {node_name} -> mapped to library transformation: {library_transformation_name}")
 
             # Read the workflow template file
             with open(dp_template_filepath, "r") as file:
-                mapped_nodes += 1
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         else:

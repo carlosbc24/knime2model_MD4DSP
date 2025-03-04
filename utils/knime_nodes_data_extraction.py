@@ -276,6 +276,14 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                 node_info["parameters"]["has_upper_bound"] = upper_bound is not None and upper_bound.attrib.get(
                     "value") != ""
 
+                # Extract the include or exclude parameter
+                include_entry = row_filter.find("knime:entry[@key='include']", namespace)
+                exclude_entry = row_filter.find("knime:entry[@key='exclude']", namespace)
+                if include_entry is not None and include_entry.attrib["value"] == "true":
+                    node_info["parameters"]["filter_type_inclusion"] = "INCLUDE"
+                if exclude_entry is not None and exclude_entry.attrib["value"] == "true":
+                    node_info["parameters"]["filter_type_inclusion"] = "EXCLUDE"
+
     elif "Duplicate Row Filter" in node_info["node_name"]:
         remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
         retain_order_entry = model.find(".//knime:entry[@key='retain_order']", namespace)
@@ -344,8 +352,9 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
                 for col in replace_column if col.attrib["key"] != "array-size"
             ]
         node_info["parameters"]["in_columns"] = out_columns
+        node_info["parameters"]["out_columns"] = out_columns
 
-    elif "String Manipulation" in node_info["node_name"]:
+    elif node_info["node_name"] == "String Manipulation":
         # Extract the expression and replaced column values
         expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
         replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
@@ -362,24 +371,13 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
                 {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
             ]
         node_info["parameters"]["in_columns"] = out_columns
+        node_info["parameters"]["out_columns"] = out_columns
 
-    elif "String Manipulation (Multi Column)" in node_info["node_name"]:
+    elif node_info["node_name"] == "String Manipulation (Multi Column)": # String Manipulation (Multi Column)
         # Extract the expression and replaced column values
-        expression_entry = model.find(".//knime:entry[@key='expression']", namespace)
-        replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
-
+        expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
         if expression_entry is not None:
-            node_info["parameters"]["rules"] = expression_entry.attrib["value"]
-
-        if replaced_column_entry is not None:
-            node_info["parameters"]["replace_column_name"] = replaced_column_entry.attrib["value"]
-
-        out_columns = []
-        if replaced_column_entry is not None:
-            out_columns = [
-                {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
-            ]
-        node_info["parameters"]["in_columns"] = out_columns
+            node_info["parameters"]["rules_multiColumn"] = expression_entry.attrib["value"]
 
     return node_info
 

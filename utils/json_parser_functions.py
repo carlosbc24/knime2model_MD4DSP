@@ -51,7 +51,8 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     if library_transformation_name == "rowFilterRange":
         row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "", "upper_bound": node["parameters"]["upper_bound"] if "upper_bound" in node["parameters"] else "",
                     "has_lower_bound": node["parameters"]["has_lower_bound"] if "has_lower_bound" in node["parameters"] else "",
-                    "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else ""}
+                    "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else "",
+                    "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
     elif library_transformation_name == "mapping":
         # Get the column mapping and parameters
@@ -161,7 +162,9 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         expression = node["parameters"]["rules"]
 
         if "replace(" in expression or "replaceChars(" in expression:
-            match = re.search(r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)', expression)
+            match = re.search(
+                r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+                expression)
             if match:
                 map_operation = "SUBSTRING"
                 replace_column_name = match.group(2)
@@ -173,6 +176,33 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
                 match = re.search(r'\*(\w)\*.*"(\d)"', value)
                 if match:
                     mapping_parameters[match.group(1)] = match.group(2)
+
+    elif "rules_multiColumn" in node["parameters"]:
+
+        expression = node["parameters"]["rules_multiColumn"]
+
+        if "replace(" in expression or "replaceChars(" in expression:
+            match = re.search(
+                       r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\']('
+                       r'.*?)["\']\s*\)\s*,'
+                              r'\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)', expression)
+            if match:
+                map_operation = "SUBSTRING"
+                replace_column_name = match.group(1)
+                mapping_parameters[match.group(2)] = match.group(3)
+        else:
+            parameter_list = [rule for rule in expression if rule.startswith('$')]
+            map_operation = "VALUE_MAPPING"
+            for value in parameter_list:
+                match = re.search(r'\*(\w)\*.*"(\d)"', value)
+                if match:
+                    mapping_parameters[match.group(1)] = match.group(2)
+
+    elif "replacement" in node["parameters"]:
+        map_operation = "SUBSTRING"
+        string_replacement = node["parameters"]["replacement"]
+        replace_column_name = string_replacement["column"]
+        mapping_parameters[string_replacement["pattern"]] = string_replacement["replacement"]
 
     return {
         "replace_column_name": replace_column_name,
