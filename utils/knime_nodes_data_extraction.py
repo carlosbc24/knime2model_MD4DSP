@@ -1,4 +1,3 @@
-
 import copy
 import re
 import xml.etree.ElementTree as elementTree
@@ -66,7 +65,8 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
                 map_operation = "SUBSTRING"
                 replace_column_name = match.group(2)
                 mapping_parameters[match.group(4)] = match.group(5)
-                if (expression.count("replace(") == 1 or expression.count("replaceChars(") == 1) and expression.count("$") == 2:
+                if (expression.count("replace(") == 1 or expression.count("replaceChars(") == 1) and expression.count(
+                        "$") == 2:
                     unique_replacement_one_column = True
         else:
             parameter_list = [rule for rule in expression if rule.startswith('$')]
@@ -260,7 +260,7 @@ def extract_imputation_node_settings(node_info: dict, model: elementTree.Element
                                                  col in out_columns if col.attrib["key"] != "array-size"]
 
         node_info["parameters"]["out_columns"] = [{"column_name": col.attrib["value"], "column_type": "xstring"} for
-                                                 col in out_columns if col.attrib["key"] != "array-size"]
+                                                  col in out_columns if col.attrib["key"] != "array-size"]
 
         # Extract estimation-type
         estimation_type = model.find(".//knime:entry[@key='estimation-type']", namespace)
@@ -305,31 +305,26 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
         dict: Dictionary with the node information.
 
     """
-    if "Row Filter (deprecated)" in node_info["node_name"] or "Row Filter" in node_info["node_name"]:
+    if "Row Filter (deprecated)" in node_info["node_name"]:
         row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
         if row_filter is not None:
-            # Extract the row range
-            start_entry = row_filter.find("knime:entry[@key='RowRangeStart']", namespace)
-            end_entry = row_filter.find("knime:entry[@key='RowRangeEnd']", namespace)
-            if start_entry is not None and end_entry is not None:
-                node_info["parameters"]["row_range"] = {
-                    "start": start_entry.attrib["value"],
-                    "end": end_entry.attrib["value"]
-                }
             # Extract the filter type (EQUAL, CONTAINS, etc.)
             filter_type_entry = row_filter.find("knime:entry[@key='RowFilter_TypeID']", namespace)
-            if filter_type_entry is not None and filter_type_entry.attrib["value"] == "RangeVal_RowFilter":
-                node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
-                # Extract the columns to filter
-                columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
-                node_info["parameters"]["in_columns"] = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in columns
-                ]
-                node_info["parameters"]["out_columns"] = [
-                    {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-                    for col in columns
-                ]
+
+            # Filter type value
+            node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
+
+            # If the filter type is RangeVal_RowFilter, extract the columns to filter, lower and upper bounds, and
+            if filter_type_entry is not None and node_info["parameters"]["filter_type"] == "RangeVal_RowFilter":
+
+                # Extract the row range
+                start_entry = row_filter.find("knime:entry[@key='RowRangeStart']", namespace)
+                end_entry = row_filter.find("knime:entry[@key='RowRangeEnd']", namespace)
+                if start_entry is not None and end_entry is not None:
+                    node_info["parameters"]["row_range"] = {
+                        "start": start_entry.attrib["value"],
+                        "end": end_entry.attrib["value"]
+                    }
                 # Extract lower value and upper value
                 lower_bound = row_filter.find(
                     "knime:config[@key='lowerBound']/knime:config/knime:entry[@key='IntCell']", namespace)
@@ -353,13 +348,34 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                 node_info["parameters"]["has_upper_bound"] = upper_bound is not None and upper_bound.attrib.get(
                     "value") != ""
 
-                # Extract the include or exclude parameter
-                include_entry = row_filter.find("knime:entry[@key='include']", namespace)
-                exclude_entry = row_filter.find("knime:entry[@key='exclude']", namespace)
-                if include_entry is not None and include_entry.attrib["value"] == "true":
-                    node_info["parameters"]["filter_type_inclusion"] = "INCLUDE"
-                if exclude_entry is not None and exclude_entry.attrib["value"] == "true":
-                    node_info["parameters"]["filter_type_inclusion"] = "EXCLUDE"
+            elif filter_type_entry is not None and node_info["parameters"]["filter_type"] == "StringComp_RowFilter":
+                # Extract the pattern
+                pattern_entry = row_filter.find("knime:entry[@key='Pattern']", namespace)
+                node_info["parameters"]["pattern"] = pattern_entry.attrib[
+                    "value"] if pattern_entry is not None else None
+
+        # Extract the include or exclude parameter
+        include_entry = row_filter.find("knime:entry[@key='include']", namespace)
+        exclude_entry = row_filter.find("knime:entry[@key='exclude']", namespace)
+        if (include_entry is not None and include_entry.attrib["value"] == "true") or (exclude_entry is not None and
+                                                                                       exclude_entry.attrib["value"]
+                                                                                       == "false"):
+            node_info["parameters"]["filter_type_inclusion"] = "INCLUDE"
+        elif (exclude_entry is not None and exclude_entry.attrib["value"] == "true") or (include_entry is not None and
+                                                                                         include_entry.attrib["value"]
+                                                                                         == "false"):
+            node_info["parameters"]["filter_type_inclusion"] = "EXCLUDE"
+
+        # Extract the columns to filter
+        columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
+        node_info["parameters"]["in_columns"] = [
+            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+            for col in columns
+        ]
+        node_info["parameters"]["out_columns"] = [
+            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+            for col in columns
+        ]
 
     elif "Duplicate Row Filter" in node_info["node_name"]:
         remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
@@ -501,7 +517,8 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
     return node_info
 
 
-def extract_binner_node_settings(node_info: dict, model: elementTree.Element, namespace: dict, nodes_info: list) -> list:
+def extract_binner_node_settings(node_info: dict, model: elementTree.Element, namespace: dict,
+                                 nodes_info: list) -> list:
     """
     Extracts the binner settings from the data model XML element.
 
@@ -709,5 +726,3 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
         nodes_info.append(node_info)
 
     return nodes_info
-
-

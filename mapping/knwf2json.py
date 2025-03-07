@@ -194,7 +194,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         # Extract the row filter node info
-        elif "Row Filter" in node_info["node_name"] or "Row Filter (deprecated)" in node_info["node_name"]:
+        elif "Row Filter" in node_info["node_name"]:
             node_info = extract_row_filter_node_settings(node_info, model, namespace)
             nodes_info.append(node_info)
 

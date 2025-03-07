@@ -82,11 +82,10 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
 
             # 20% mapped row filter KNIME node
             elif node_name == "Row Filter (deprecated)":
-                if (node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter" and
-                        (node.get("parameters", {}).get("filter_type_inclusion") == "INCLUDE" or node.get("parameters",
-                                                                                                          {}).get(
-                            "filter_type_inclusion") == "EXCLUDE")):
-                    return function[node_name].get("library_transformation_name")
+                if node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter":
+                    return "rowFilterRange"
+                elif node.get("parameters", {}).get("filter_type") == "StringComp_RowFilter":
+                    return "rowFilter"
 
             # 100% mapped KNIME nodes
             elif node_name == "Column Filter" or node_name == "String to Number" or node_name == "Numeric Outliers" or node_name == "Numeric Binner" or node_name == "String Replacer":
