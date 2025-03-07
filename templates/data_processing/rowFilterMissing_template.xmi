@@ -77,6 +77,13 @@
         </in>
         <value
             xsi:type="Contract:SpecialValue">
+            <quantity
+              xsi:type="Contract:Percent"
+              operator="less"
+              percent="60.0">
+            <percentDef
+                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
+          </quantity>
           <specialValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
