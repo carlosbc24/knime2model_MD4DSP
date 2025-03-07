@@ -4,15 +4,15 @@
       incoming=""
       in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
       out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
-      name="rowFilter({{ dataprocessing.in_column_names }})">
+      name="rowFilterPrimitive({{ dataprocessing.in_column_names }})">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"
-        name="rowFilter({{ dataprocessing.in_column_names }})_input_dataDictionary"
+        name="rowFilterPrimitive({{ dataprocessing.in_column_names }})_input_dataDictionary"
         out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
       {% for in_column in dataprocessing.in_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="rowFilter({{ in_column.name }})_input_dataField"
+          name="rowFilterPrimitive({{ in_column.name }})_input_dataField"
           dataType="{{ in_column.type }}"
           displayName="{{ in_column.name }}">
         <invalidValues
@@ -30,12 +30,12 @@
     </inputPort>
     <outputPort
         fileName="{{ dataprocessing.output_filepath }}"
-        name="rowFilter({{ dataprocessing.out_column_names }})_output_dataDictionary"
+        name="rowFilterPrimitive({{ dataprocessing.out_column_names }})_output_dataDictionary"
         in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
       {% for out_column in dataprocessing.out_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="rowFilter({{ out_column.name }})_output_dataField"
+          name="rowFilterPrimitive({{ out_column.name }})_output_dataField"
           dataType="{{ out_column.type }}"
           displayName="{{ out_column.name }}">
         <invalidValues
@@ -57,11 +57,11 @@
     <parameter
         xsi:type="Workflow:FilterValue"
         filterType="{{ dataprocessing.row_filter.filter_type_inclusion }}"
-        name="rowFilter({{ dataprocessing.in_column_names }})_param_rowFilter">
+        name="rowFilterPrimitive({{ dataprocessing.in_column_names }})_param_rowFilterPrimitive">
       <filterValueDef
           href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0"/>
       <primitive
-          name="rowFilter({{ dataprocessing.in_column_names }})_param_primitive"
+          name="rowFilterPrimitive({{ dataprocessing.in_column_names }})_param_primitive"
           value="{{ dataprocessing.row_filter.pattern }}">
         <primitiveDef
             href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0/@primitivedef.0"/>
@@ -70,17 +70,17 @@
     {% for in_column in dataprocessing.in_columns %}
     {% if dataprocessing.include_contracts %}
     <contract
-        name="rowFilter({{ in_column.name }})_PRECONDITION">
+        name="rowFilterPrimitive({{ in_column.name }})_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilter({{ in_column.name }})_PRE_valueRange"
+          name="rowFilterPrimitive({{ in_column.name }})_PRE_valueRange"
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
-            name="rowFilter({{ in_column.name }})_PRE_input_dataField">
+            name="rowFilterPrimitive({{ in_column.name }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -95,13 +95,13 @@
       </contract>
     </contract>
     <contract
-        name="rowFilter({{ in_column.name }})_POSTCONDITION">
+        name="rowFilterPrimitive({{ in_column.name }})_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilter({{ in_column.name }})_POST_valueRange"
+          name="rowFilterPrimitive({{ in_column.name }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"

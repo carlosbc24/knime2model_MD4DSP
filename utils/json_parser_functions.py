@@ -47,13 +47,13 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         filtered_column_names_str = ", ".join(filtered_column_names)
         column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
 
-    if library_transformation_name == "rowFilterRange":
+    elif library_transformation_name == "rowFilterRange":
         row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "", "upper_bound": node["parameters"]["upper_bound"] if "upper_bound" in node["parameters"] else "",
                     "has_lower_bound": node["parameters"]["has_lower_bound"] if "has_lower_bound" in node["parameters"] else "",
                     "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else "",
                     "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
-    if library_transformation_name == "rowFilter":
+    elif library_transformation_name == "rowFilterPrimitive":
         row_dict = {
             "pattern": node["parameters"]["pattern"] if "pattern" in node["parameters"] else "",
             "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in

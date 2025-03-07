@@ -1,0 +1,114 @@
+<dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      outgoing=""
+      incoming=""
+      in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+      name="rowFilterMissing({{ dataprocessing.in_column_names }})">
+    <inputPort
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="rowFilterMissing({{ dataprocessing.in_column_names }})_input_dataDictionary"
+        out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for in_column in dataprocessing.in_columns %}
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="rowFilterMissing({{ in_column.name }})_input_dataField"
+          displayName="{{ in_column.name }}">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
+        <interval
+            rightMargin="1.0"
+            clousure="closedClosed"/>
+      </datafield>
+        {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="rowFilterMissing({{ dataprocessing.out_column_names }})_output_dataDictionary"
+        in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      {% for out_column in dataprocessing.out_columns %}
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="rowFilterMissing({{ out_column.name }})_output_dataField"
+          displayName="{{ out_column.name }}">
+        <continuousDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0/@datafielddefinition.0"/>
+        <interval
+            rightMargin="1.0"
+            clousure="closedClosed"/>
+      </datafield>
+        {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.11"/>
+    <parameter
+        xsi:type="Workflow:FilterValue"
+        name="rowFilterMissing({{ dataprocessing.in_column_names }})_param_rowFilter">
+      <filterValueDef
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0"/>
+      <matchingvalue
+          xsi:type="Workflow:SpecialValues"
+          name="rowFilterMissing({{ dataprocessing.in_column_names }})_param_missing_values">
+        <specialValuesDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@matchingvaluedef.0"/>
+      </matchingvalue>
+    </parameter>
+    {% for in_column in dataprocessing.in_columns %}
+    {% if dataprocessing.include_contracts %}
+    <contract
+        name="rowFilterMissing({{ in_column.name }})_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="rowFilterMissing({{ in_column.name }})_PRE_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
+            name="rowFilterMissing({{ in_column.name }})_PRE_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:SpecialValue">
+          <specialValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="rowFilterMissing({{ in_column.name }})_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="rowFilterMissing({{ in_column.name }})_POST_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
+            name="rowFilterMissing({{ in_column.name }})_POST_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:SpecialValue">
+          <specialValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    {% endif %}
+    {% endfor %}
+  </dataprocessing>

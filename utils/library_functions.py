@@ -81,11 +81,13 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
                     print_and_log(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
 
             # 20% mapped row filter KNIME node
-            elif node_name == "Row Filter (deprecated)":
+            elif node_name == "Row Filter (deprecated)" or node_name == "Row Filter":
                 if node.get("parameters", {}).get("filter_type") == "RangeVal_RowFilter":
                     return "rowFilterRange"
                 elif node.get("parameters", {}).get("filter_type") == "StringComp_RowFilter":
-                    return "rowFilter"
+                    return "rowFilterPrimitive"
+                elif node.get("parameters", {}).get("filter_type") == "MissingVal_RowFilter":
+                    return "rowFilterMissing"
 
             # 100% mapped KNIME nodes
             elif node_name == "Column Filter" or node_name == "String to Number" or node_name == "Numeric Outliers" or node_name == "Numeric Binner" or node_name == "String Replacer":

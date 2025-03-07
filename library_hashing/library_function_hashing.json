@@ -24,8 +24,15 @@
 	{
 	"Row Filter": {
 		"knime_function_name": "Row Filter",
-		"library_transformation_name": "rowFilter",
+		"library_transformation_name": "rowFilterPrimitive",
 		"library_transformation_id": 2
+		}
+	},
+	{
+	"Row Filter": {
+		"knime_function_name": "Row Filter",
+		"library_transformation_name": "rowFilterMissing",
+		"library_transformation_id": 11
 		}
 	},
 	{
@@ -110,6 +117,13 @@
 		"knime_function_name": "Row Filter (deprecated)",
 		"library_transformation_name": "rowFilterRange",
 		"library_transformation_id": 8
+		}
+	},
+	{
+	"Row Filter (deprecated)": {
+		"knime_function_name": "Row Filter (deprecated)",
+		"library_transformation_name": "rowFilterMissing",
+		"library_transformation_id": 11
 		}
 	},
   	{

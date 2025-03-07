@@ -7,7 +7,7 @@
 	  "name": "imputeByFixValue"
 	},
 	{
-	  "name": "rowFilter"
+	  "name": "rowFilterPrimitive"
 	},
 	{
 	  "name": "columnFilter"
@@ -41,6 +41,9 @@
 	},
 	{
 	  "name": "mathOperationFieldField"
+	},
+	{
+	  "name": "rowFilterMissing"
 	}
   ]
 }
