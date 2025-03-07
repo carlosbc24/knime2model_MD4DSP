@@ -53,6 +53,12 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
                     "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else "",
                     "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
+    if library_transformation_name == "rowFilter":
+        row_dict = {
+            "pattern": node["parameters"]["pattern"] if "pattern" in node["parameters"] else "",
+            "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in
+                                                                                            node["parameters"] else ""}
+
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
 
@@ -128,5 +134,3 @@ def get_output_columns(node: dict) -> list:
         out_columns = node["parameters"]["out_columns"]
 
     return out_columns
-
-

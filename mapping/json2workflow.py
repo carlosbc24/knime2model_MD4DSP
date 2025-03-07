@@ -59,6 +59,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         else:
             # Read the workflow template file
             with open(f"{dp_templates_path}/unknownDataProcessing.xmi", "r") as file:
+                print("Nodo no mapeado: ", node_name)
                 data_processing_jinja_template = JinjaTemplate(file.read())
             print_and_log(f"KNIME node: {node_name} -> unknown library transformation: {library_transformation_name}")
 
