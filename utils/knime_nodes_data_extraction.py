@@ -448,15 +448,7 @@ def extract_function_types(rules: list) -> list:
         "=": r'\$.*?\$ = .*?',
         ">": r'\$.*?\$ > .*?',
         ">=": r'\$.*?\$ >= .*?',
-        "AND": r'\$.*?\$ AND \$.*?\$',
-        "IN": r'\$.*?\$ IN \(.*?\)',
-        "MATCHES": r'\$.*?\$ MATCHES ".*?"',
-        "OR": r'\$.*?\$ OR \$.*?\$',
-        "XOR": r'\$.*?\$ XOR \$.*?\$',
-        "FALSE": r'FALSE',
-        "MISSING": r'MISSING \$.*?\$',
-        "NOT": r'NOT \$.*?\$',
-        "TRUE": r'TRUE'
+        "MATCHES": r'\$.*?\$ MATCHES ".*?"'
     }
 
     for rule in rules:
@@ -500,6 +492,10 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         new_column = model.find(".//knime:entry[@key='new-column-name']", namespace)
         replace_column = model.find(".//knime:entry[@key='replace-column-name']", namespace)
         append_column = model.find(".//knime:entry[@key='append-column']", namespace)
+        # Filter those columns that are commented (starting with //)
+        # Filter those columns that are commented (starting with //)
+        filtered_rules = [rule for rule in rules if not rule.strip().startswith('//')]
+        rules = filtered_rules
         node_info["parameters"]["rules"] = rules
         node_info["parameters"]["function_types"] = extract_function_types(node_info["parameters"]["rules"])
         node_info["parameters"]["new_column_name"] = new_column.attrib["value"] if new_column is not None else None

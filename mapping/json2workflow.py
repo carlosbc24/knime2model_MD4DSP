@@ -57,6 +57,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         else:
+            print("No mapped node:", node_name)
             # Read the workflow template file
             with open(f"{dp_templates_path}/unknownDataProcessing.xmi", "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
