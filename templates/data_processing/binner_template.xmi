@@ -9,12 +9,12 @@
         fileName="{{ dataprocessing.input_filepath }}"
         name="binner({{ dataprocessing.in_column_names }})_input_dataDictionary"
         out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
-      {% for out_column in dataprocessing.out_columns %}
+      {% for in_column in dataprocessing.in_columns %}
       <datafield
           xsi:type="Workflow:Continuous"
-          name="binner({{ out_column.name }})_input_dataField"
+          name="binner({{ in_column.name }})_input_dataField"
           dataType="Integer"
-          displayName="{{ out_column.name }}"
+          displayName="{{ in_column.name }}"
           out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0/@datafielddefinition.0"/>
@@ -45,10 +45,10 @@
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
-    {% for out_column in dataprocessing.out_columns %}
+    {% for in_column in dataprocessing.in_columns %}
     <parameter
         xsi:type="Workflow:DerivedField"
-        name="binner({{ out_column.name }})_param_derivedField"
+        name="binner({{ in_column.name }})_param_derivedField"
         der_dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}">
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
@@ -68,20 +68,20 @@
     </parameter>
     {% endfor %}
 {% if dataprocessing.include_contracts %}
-{% for out_column in dataprocessing.out_columns %}
+{% for in_column in dataprocessing.in_columns %}
   {% set in_index = loop.index0 %}
   {% set contract_index = 3 * loop.index0 + 2 %}
     <contract
-        name="binner({{ out_column.name }})_PRECONDITION">
+        name="binner({{ in_column.name }})_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="binner({{ out_column.name }})_PRE_valueRange">
+          name="binner({{ in_column.name }})_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_PRE_input_dataField">
+            name="binner({{ in_column.name }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -97,18 +97,18 @@
       </contract>
     </contract>
     <contract
-        name="binner({{ out_column.name }})_POSTCONDITION">
+        name="binner({{ in_column.name }})_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner({{ out_column.name }})_POST_valueRange"
+          name="binner({{ in_column.name }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_POST_input_dataField">
+            name="binner({{ in_column.name }})_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -124,24 +124,24 @@
       </contract>
     </contract>
     <contract
-        name="binner({{ out_column.name }})_INVARIANT">
+        name="binner({{ in_column.name }})_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="binner({{ out_column.name }})_INV_condition">
+          name="binner({{ in_column.name }})_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_INV_input_dataField">
+            name="binner({{ in_column.name }})_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_INV_output_dataField">
+            name="binner({{ in_column.name }})_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
@@ -150,7 +150,7 @@
         {% for bin in dataprocessing.binner.bins %}
         <if
             then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@then.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_INV_IF_{{ bin.binName }}">
+            name="binner({{ in_column.name }})_INV_IF_{{ bin.binName }}">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
@@ -164,7 +164,7 @@
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@if.{{ loop.index0 }}"
-            name="binner({{ out_column.name }})_INV_THEN_{{ bin.binName }}">
+            name="binner({{ in_column.name }})_INV_THEN_{{ bin.binName }}">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult

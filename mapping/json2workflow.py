@@ -2,6 +2,9 @@
 import os
 import json
 from string import Template
+
+from pandas.io.sas.sas_constants import dataset_offset
+
 from utils.json_parser_functions import get_transformation_dp_values
 from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from jinja2 import Template as JinjaTemplate
@@ -22,7 +25,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         nodes_cont (int): Number of nodes in the workflow.
         mapped_nodes (int): Number of nodes that were mapped to a library transformation.
     """
-    dataProcessings_filled_content = ""
+    dataset_processing_filled_content = ""
     library_transformation_names = get_library_transformation_names('library_hashing/library_transformation_names.json')
     mapped_nodes = 0
     nodes_cont = 0
@@ -42,6 +45,12 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         # If the node is not a reader/writer/connector node, increment the nodes_cont counter
         if dataprocessing_values["input_filepath"] == "":
             nodes_cont += 1
+            # Get the input file path from the previous node
+            previous_node_id = node_flow_mapping[node_id]["previous_node_id"]
+            if previous_node_id is not None:
+                dataprocessing_values["input_filepath"] = f"output/{node_flow_mapping[previous_node_id]['node_name'].replace(' ', '_')}_output_dataDictionary.csv"
+
+        dataprocessing_values["output_filepath"] = f"output/{node_name.replace(' ', '_')}_output_dataDictionary.csv"
 
         # Check if the library transformation name exists and the template file exists. If so, use the template file.
         # Otherwise, use the unknownDataProcessing template.
@@ -57,16 +66,16 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
         else:
-            print_and_log("No mapped node:", node_name)
+            print_and_log(f"No mapped node: {node_name}")
             # Read the workflow template file
             with open(f"{dp_templates_path}/unknownDataProcessing.xmi", "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
             print_and_log(f"KNIME node: {node_name} -> unknown library transformation: {library_transformation_name}")
 
         # Fill the template with jinja2
-        dataProcessings_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
+        dataset_processing_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
 
-    return dataProcessings_filled_content, nodes_cont, mapped_nodes
+    return dataset_processing_filled_content, nodes_cont, mapped_nodes
 
 
 def process_links(data: dict, nodes: list) -> tuple[str, dict]:

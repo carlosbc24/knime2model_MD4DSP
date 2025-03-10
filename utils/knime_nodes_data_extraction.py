@@ -1,7 +1,7 @@
 import copy
 import re
 import xml.etree.ElementTree as elementTree
-from utils.logger import print_and_log
+from utils.logger import print_and_log, print_and_log_dict
 
 
 def extract_columns_data(model: elementTree.Element, namespace: dict) -> (list, list):
@@ -237,6 +237,7 @@ def extract_imputation_node_settings(node_info: dict, model: elementTree.Element
                     "fixStringValues": data["fixStringValues"]
                 }
             }
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # If there werent factorials, add a node with default values
@@ -250,6 +251,7 @@ def extract_imputation_node_settings(node_info: dict, model: elementTree.Element
                     "fixStringValues": None
                 }
             }
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
     elif "Numeric Outliers" in node_info["node_name"]:
@@ -287,6 +289,7 @@ def extract_imputation_node_settings(node_info: dict, model: elementTree.Element
         if detection_option is not None:
             node_info["parameters"]["detection_option"] = detection_option.attrib["value"]
 
+        print_and_log_dict(node_info)
         nodes_info.append(node_info)
 
     return nodes_info
@@ -462,6 +465,92 @@ def extract_function_types(rules: list) -> list:
     return function_types
 
 
+def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operator_types: list) -> dict:
+    """
+    Extracts the binner settings from the Rule Engine binner configuration.
+
+    Args:
+        node_info: (dict) The node information.
+        binner_operator_types: (list) The list of binner operator types.
+
+    Returns:
+        node_info: (dict) The node information with the binner settings.
+
+    """
+    node_info["parameters"]["bins"] = []
+
+    for rule in node_info["parameters"]["rules"]:
+        if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
+            # Extract the numeric operator
+            numeric_operator = ""
+            first_operand = "0"
+            second_operand = "0"
+            match = re.search(r'(<=|>=|=>|<|>)', rule)
+            if match:
+                numeric_operator = match.group(1)
+
+            # Extract the bin name
+            match = re.findall(r'"([^"]*)"', rule)
+            bin_name = match[-1] if match else ""
+
+            if numeric_operator != "=>":
+                # Extract the number, which is located just after the numeric operator
+                parts = rule.split()
+                operator_part = parts[1]
+                if bool(re.match(r'([<>=]{1,2})(\d+)', operator_part)):
+                    match = re.search(r'([<>=]{1,2})(\d+)', operator_part)
+                    if match:
+                        numeric_operator = match.group(1)
+                        second_operand = match.group(2)
+                else:
+                    for i, part in enumerate(parts):
+                        if part == numeric_operator:
+                            second_operand = parts[i + 1]
+                            if second_operand.startswith('"') and second_operand.endswith('"'):
+                                second_operand = second_operand[1:-1]
+                            break
+
+            else:
+                second_operand = 1000000
+
+            if numeric_operator == "<":
+                closure_type = "openOpen"
+                first_operand = -1000000
+            elif numeric_operator == "<=":
+                closure_type = "openClosed"
+                first_operand = -1000000
+            elif numeric_operator == ">":
+                closure_type = "openOpen"
+                first_operand = second_operand
+                second_operand = 1000000
+            elif numeric_operator == ">=":
+                closure_type = "closedOpen"
+                first_operand = second_operand
+                second_operand = 1000000
+            elif numeric_operator == "=>":
+                closure_type = "openOpen"
+                second_operand = 1000000
+                first_operand = -1000000
+            else:
+                closure_type = ""
+
+            # Add the bin to the list of bins
+            node_info["parameters"]["bins"].append(
+                {
+                    "binName": bin_name,
+                    "closureType": closure_type,
+                    "leftMargin": first_operand,
+                    "rightMargin": second_operand
+                }
+            )
+
+            # Insert
+            if node_info["parameters"]["bins"]:
+                node_info["parameters"]["bins"].insert(0, node_info["parameters"]["bins"].pop())
+
+    return node_info
+
+
 def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, namespace: dict) -> dict:
     """
     Extracts the mapping settings from the data model XML element.
@@ -485,6 +574,8 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
                 "pattern": pattern_entry.attrib["value"],
                 "replacement": replacement_entry.attrib["value"],
             }
+
+        node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
 
     elif "Rule Engine" in node_info["node_name"]:
         rules_entries = model.findall(".//knime:config[@key='rules']/knime:entry", namespace)
@@ -510,84 +601,18 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
                 for col in replace_column if col.attrib["key"] != "array-size"
             ]
         node_info["parameters"]["in_columns"] = out_columns
-        node_info["parameters"]["out_columns"] = out_columns
+        node_info["parameters"]["out_columns"] = [{"column_name": node_info["parameters"]["new_column_name"],
+                                                   "column_type": "xstring"}] if node_info["parameters"][
+            "new_column_name"] is not None else out_columns
 
         # Specify the binning parameters
-        binner_operator_types = ["<=", ">=", "=>", "<", ">"]
-
-        # Initialize the bins list
+        binner_operator_types = ["<=", ">=", "<", ">"]
+        # Check if the function types contain any of the binner operator types and extract the binner settings if so
         if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
-            node_info["parameters"]["bins"] = []
-
-        for rule in node_info["parameters"]["rules"]:
-            if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
-                # Extract the numeric operator
-                numeric_operator = ""
-                first_operand = "0"
-                second_operand = "0"
-                match = re.search(r'(<=|>=|=>|<|>)', rule)
-                if match:
-                    numeric_operator = match.group(1)
-
-                # Extract the bin name
-                match = re.findall(r'"([^"]*)"', rule)
-                bin_name = match[-1] if match else ""
-
-                if numeric_operator != "=>":
-                    # Extract the number, which is located just after the numeric operator
-                    parts = rule.split()
-                    operator_part = parts[1]
-                    if bool(re.match(r'([<>=]{1,2})(\d+)', operator_part)):
-                        match = re.search(r'([<>=]{1,2})(\d+)', operator_part)
-                        if match:
-                            numeric_operator = match.group(1)
-                            second_operand = match.group(2)
-                    else:
-                        for i, part in enumerate(parts):
-                            if part == numeric_operator:
-                                second_operand = parts[i + 1]
-                                if second_operand.startswith('"') and second_operand.endswith('"'):
-                                    second_operand = second_operand[1:-1]
-                                break
-
-                else:
-                    second_operand = float("inf")
-
-                if numeric_operator == "<":
-                    closure_type = "openOpen"
-                    first_operand = float("-inf")
-                elif numeric_operator == "<=":
-                    closure_type = "openClosed"
-                    first_operand = float("-inf")
-                elif numeric_operator == ">":
-                    closure_type = "openOpen"
-                    first_operand = second_operand
-                    second_operand = float("inf")
-                elif numeric_operator == ">=":
-                    closure_type = "closedOpen"
-                    first_operand = second_operand
-                    second_operand = float("inf")
-                elif numeric_operator == "=>":
-                    closure_type = "openOpen"
-                    second_operand = float("inf")
-                    first_operand = float("-inf")
-                else:
-                    closure_type = ""
-
-
-                # Agregar el bin a la lista
-                node_info["parameters"]["bins"].append(
-                    {
-                        "binName": bin_name,
-                        "closureType": closure_type,
-                        "leftMargin": first_operand,
-                        "rightMargin": second_operand
-                    }
-                )
-
-                # Insertar el último bin de la lista de bins en la primera posición
-                if node_info["parameters"]["bins"]:
-                    node_info["parameters"]["bins"].insert(0, node_info["parameters"]["bins"].pop())
+            extract_binner_node_settings_from_rule_engine(node_info, binner_operator_types)
+        # If not, extract the mapping parameters
+        else:
+            node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
 
     elif node_info["node_name"] == "String Manipulation":
         # Extract the expression and replaced column values
@@ -608,13 +633,16 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         node_info["parameters"]["in_columns"] = out_columns
         node_info["parameters"]["out_columns"] = out_columns
 
+        node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
+
     elif node_info["node_name"] == "String Manipulation (Multi Column)":  # String Manipulation (Multi Column)
         # Extract the expression and replaced column values
         expression_entry = model.find(".//knime:entry[@key='EXPRESSION']", namespace)
         if expression_entry is not None:
             node_info["parameters"]["rules_multiColumn"] = expression_entry.attrib["value"]
 
-    node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
+        node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
+
     return node_info
 
 
@@ -662,6 +690,7 @@ def extract_binner_node_settings(node_info: dict, model: elementTree.Element, na
                     "in_columns": [{"column_name": column_name, "column_type": "xstring"}],
                     "out_columns": [{"column_name": new_column_name, "column_type": "xstring"}]
                 }
+                print_and_log_dict(new_node_info)
                 nodes_info.append(new_node_info)
 
     elif "Auto-Binner" in node_info["node_name"]:
@@ -732,6 +761,7 @@ def extract_binner_node_settings(node_info: dict, model: elementTree.Element, na
             "output_format": output_format,
             "bins": bins
         }
+        print_and_log_dict(node_info)
         nodes_info.append(node_info)
 
     return nodes_info
@@ -824,6 +854,7 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
 
         node_info["parameters"]["in_columns"] = [{"column_name": out_column, "column_type": "xstring"}]
 
+        print_and_log_dict(node_info)
         nodes_info.append(node_info)
 
     return nodes_info

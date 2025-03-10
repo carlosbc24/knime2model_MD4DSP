@@ -177,6 +177,8 @@ def extract_node_settings(settings_path: str) -> list[dict]:
         # Extract the input and output KNIME nodes
         if "CSV Reader" in node_info["node_name"] or "Excel Reader" in node_info["node_name"] or "File Reader" in node_info["node_name"] or "Table Reader" in node_info["node_name"] or "CSV Writer" in node_info["node_name"]:
             node_info = extract_input_output_node_settings(node_info, root, model, namespace)
+
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # Extract the imputation nodes info
@@ -191,16 +193,21 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                 node_info["parameters"]["in_columns"] = included_names + excluded_names
                 node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # Extract the row filter node info
         elif "Row Filter" in node_info["node_name"]:
             node_info = extract_row_filter_node_settings(node_info, model, namespace)
+
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # Extract the mapping node info
         elif "String Replacer" in node_info["node_name"] or "Rule Engine" in node_info["node_name"] or "String Manipulation" in node_info["node_name"] or "String Manipulation (Multi Column)" in node_info["node_name"]:
             node_info = extract_mapping_node_settings(node_info, model, namespace)
+
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # Extract the binner node info
@@ -218,6 +225,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         # Extract the math formula node info
@@ -231,6 +239,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
                 "new": r.find("knime:entry[@key='newName']", namespace).attrib["value"]
             } for r in renamings if r.find("knime:entry[@key='oldName']", namespace) is not None]
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Number To String" in node_info["node_name"]:
@@ -239,6 +248,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "String To Date&Time" in node_info["node_name"]:
@@ -247,6 +257,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Column Expressions" in node_info["node_name"]:
@@ -255,6 +266,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Missing Value Column Filter" in node_info["node_name"]:
@@ -269,6 +281,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Constant Value Column Filter" in node_info["node_name"]:
@@ -277,6 +290,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Column Expressions" in node_info["node_name"]:
@@ -285,6 +299,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "String Cleaner" in node_info["node_name"]:
@@ -293,6 +308,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Sorter" in node_info["node_name"]:
@@ -301,6 +317,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         elif "Category to Number (Apply)" in node_info["node_name"]:
@@ -309,11 +326,11 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             node_info["parameters"]["in_columns"] = included_names + excluded_names
             node_info["parameters"]["out_columns"] = included_names
 
+            print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
         else:
             print_and_log(f"Node type not recognized: {node_info['node_name']}")
 
-        print_and_log_dict(node_info)
 
     return nodes_info
