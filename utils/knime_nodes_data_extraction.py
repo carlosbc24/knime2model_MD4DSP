@@ -515,7 +515,7 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         # Specify the binning parameters
         binner_operator_types = ["<=", ">=", "=>", "<", ">"]
 
-        # Inicializar la lista de bins
+        # Initialize the bins list
         if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
             node_info["parameters"]["bins"] = []
 
@@ -529,21 +529,19 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
                 if match:
                     numeric_operator = match.group(1)
 
-                # Extraer el binName
+                # Extract the bin name
                 match = re.findall(r'"([^"]*)"', rule)
                 bin_name = match[-1] if match else ""
 
                 if numeric_operator != "=>":
                     # Extract the number, which is located just after the numeric operator
                     parts = rule.split()
-                    print("Numeric operator: ", numeric_operator)
-                    if bool(re.match(r'([<>=]{1,2})(\d+)', numeric_operator)):
-                        match = re.search(r'([<>=]{1,2})(\d+)', numeric_operator)
+                    operator_part = parts[1]
+                    if bool(re.match(r'([<>=]{1,2})(\d+)', operator_part)):
+                        match = re.search(r'([<>=]{1,2})(\d+)', operator_part)
                         if match:
                             numeric_operator = match.group(1)
                             second_operand = match.group(2)
-                            print("Numeric operator: ", numeric_operator)
-                            print("Second operand: ", second_operand)
                     else:
                         for i, part in enumerate(parts):
                             if part == numeric_operator:
