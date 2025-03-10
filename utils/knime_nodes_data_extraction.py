@@ -443,12 +443,12 @@ def extract_function_types(rules: list) -> list:
     function_types = []
     patterns = {
         "LIKE": r'\$.*?\$ LIKE ".*?"',
-        "<": r'\$.*?\$ < .*?',
-        "<=": r'\$.*?\$ <= .*?',
-        "=": r'\$.*?\$ = .*?',
-        ">": r'\$.*?\$ > .*?',
-        ">=": r'\$.*?\$ >= .*?',
-        "MATCHES": r'\$.*?\$ MATCHES ".*?"'
+        "<=": r'\$.*?\$\s*<=\s*.*?',
+        ">=": r'\$.*?\$\s*>=\s*.*?',
+        "<": r'\$.*?\$\s*<\s*.*?',
+        "=": r'\$.*?\$\s*=\s*.*?',
+        ">": r'\$.*?\$\s*>\s*.*?',
+        "MATCHES": r'\$.*?\$ MATCHES ".*?"',
     }
 
     for rule in rules:
@@ -493,7 +493,6 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
         replace_column = model.find(".//knime:entry[@key='replace-column-name']", namespace)
         append_column = model.find(".//knime:entry[@key='append-column']", namespace)
         # Filter those columns that are commented (starting with //)
-        # Filter those columns that are commented (starting with //)
         filtered_rules = [rule for rule in rules if not rule.strip().startswith('//')]
         rules = filtered_rules
         node_info["parameters"]["rules"] = rules
@@ -512,6 +511,85 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
             ]
         node_info["parameters"]["in_columns"] = out_columns
         node_info["parameters"]["out_columns"] = out_columns
+
+        # Specify the binning parameters
+        binner_operator_types = ["<=", ">=", "=>", "<", ">"]
+
+        # Inicializar la lista de bins
+        if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
+            node_info["parameters"]["bins"] = []
+
+        for rule in node_info["parameters"]["rules"]:
+            if any(func in node_info["parameters"]["function_types"] for func in binner_operator_types):
+                # Extract the numeric operator
+                numeric_operator = ""
+                first_operand = "0"
+                second_operand = "0"
+                match = re.search(r'(<=|>=|=>|<|>)', rule)
+                if match:
+                    numeric_operator = match.group(1)
+
+                # Extraer el binName
+                match = re.findall(r'"([^"]*)"', rule)
+                bin_name = match[-1] if match else ""
+
+                if numeric_operator != "=>":
+                    # Extract the number, which is located just after the numeric operator
+                    parts = rule.split()
+                    print("Numeric operator: ", numeric_operator)
+                    if bool(re.match(r'([<>=]{1,2})(\d+)', numeric_operator)):
+                        match = re.search(r'([<>=]{1,2})(\d+)', numeric_operator)
+                        if match:
+                            numeric_operator = match.group(1)
+                            second_operand = match.group(2)
+                            print("Numeric operator: ", numeric_operator)
+                            print("Second operand: ", second_operand)
+                    else:
+                        for i, part in enumerate(parts):
+                            if part == numeric_operator:
+                                second_operand = parts[i + 1]
+                                if second_operand.startswith('"') and second_operand.endswith('"'):
+                                    second_operand = second_operand[1:-1]
+                                break
+
+                else:
+                    second_operand = float("inf")
+
+                if numeric_operator == "<":
+                    closure_type = "openOpen"
+                    first_operand = float("-inf")
+                elif numeric_operator == "<=":
+                    closure_type = "openClosed"
+                    first_operand = float("-inf")
+                elif numeric_operator == ">":
+                    closure_type = "openOpen"
+                    first_operand = second_operand
+                    second_operand = float("inf")
+                elif numeric_operator == ">=":
+                    closure_type = "closedOpen"
+                    first_operand = second_operand
+                    second_operand = float("inf")
+                elif numeric_operator == "=>":
+                    closure_type = "openOpen"
+                    second_operand = float("inf")
+                    first_operand = float("-inf")
+                else:
+                    closure_type = ""
+
+
+                # Agregar el bin a la lista
+                node_info["parameters"]["bins"].append(
+                    {
+                        "binName": bin_name,
+                        "closureType": closure_type,
+                        "leftMargin": first_operand,
+                        "rightMargin": second_operand
+                    }
+                )
+
+                # Insertar el último bin de la lista de bins en la primera posición
+                if node_info["parameters"]["bins"]:
+                    node_info["parameters"]["bins"].insert(0, node_info["parameters"]["bins"].pop())
 
     elif node_info["node_name"] == "String Manipulation":
         # Extract the expression and replaced column values

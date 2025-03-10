@@ -103,8 +103,11 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
                     print_and_log(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
 
             # Just mapped LIKE operation from Rule Engine KNIME node
+            elif node_name == "Rule Engine" and all(func in ["<=", ">=", "=>", "<", ">"] for func in node.get("parameters", {}).get("function_types")):
+
+                return "binner"
             elif node_name == "Rule Engine" and "LIKE" in node.get("parameters", {}).get("function_types"):
-                return function[node_name].get("library_transformation_name")
+                return "mapping"
 
             else:
                 print_and_log(f"Not mapped unknown KNIME node: {node_name}")
