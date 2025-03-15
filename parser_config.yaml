@@ -7,4 +7,4 @@ include_contracts: True # Include contracts in the xmi output
 workflow_filename: ""
 #workflow_filename: "Model data set with metanode.knwf"
 
-export_mapped_nodes_report: False # Export a report with the mapped nodes percentage
+export_mapped_nodes_report: True # Export a report with the mapped nodes percentage
