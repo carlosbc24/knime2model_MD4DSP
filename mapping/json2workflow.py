@@ -11,7 +11,7 @@ from jinja2 import Template as JinjaTemplate
 from utils.logger import print_and_log
 
 
-def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> tuple[str, int, int]:
+def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict) -> tuple[str, int, int, dict]:
     """
     Processes the nodes from the JSON data and appends the corresponding XML elements to the root element.
 
@@ -21,14 +21,16 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         node_flow_mapping: (dict) The mapping of the nodes and their connections.
 
     Returns:
-        dataProcessings_filled_content: (str) The filled content of the data processing nodes.
+        dataset_processing_filled_content: (str) The filled content of the data processing nodes.
         nodes_cont (int): Number of nodes in the workflow.
         mapped_nodes (int): Number of nodes that were mapped to a library transformation.
+        mapped_nodes_info (dict): Dictionary with the mapping information.
     """
     dataset_processing_filled_content = ""
     library_transformation_names = get_library_transformation_names('library_hashing/library_transformation_names.json')
     mapped_nodes = 0
     nodes_cont = 0
+    mapped_nodes_info = {}
 
     for index, node in enumerate(nodes):
         node_id = node.get("id", index)
@@ -65,6 +67,12 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
             with open(dp_template_filepath, "r") as file:
                 data_processing_jinja_template = JinjaTemplate(file.read())
 
+            # Update the mapped_nodes_info dict with the node_name and the number of times it has been mapped
+            if node_name in mapped_nodes_info:
+                mapped_nodes_info[node_name]["mapped_count"] = mapped_nodes_info[node_name].get("mapped_count", 0) + 1
+            else:
+                mapped_nodes_info[node_name] = {"mapped_count": 1, "not_mapped_count": 0}
+
         else:
             print_and_log(f"No mapped node: {node_name}")
             # Read the workflow template file
@@ -72,10 +80,17 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
                 data_processing_jinja_template = JinjaTemplate(file.read())
             print_and_log(f"KNIME node: {node_name} -> unknown library transformation: {library_transformation_name}")
 
+            # Update the mapped_nodes_info dict with the node_name and the number of times it has not been mapped
+            if node_name in mapped_nodes_info:
+                mapped_nodes_info[node_name]["not_mapped_count"] = mapped_nodes_info[node_name].get("not_mapped_count",
+                                                                                                    0) + 1
+            else:
+                mapped_nodes_info[node_name] = {"mapped_count": 0, "not_mapped_count": 1}
+
         # Fill the template with jinja2
         dataset_processing_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
 
-    return dataset_processing_filled_content, nodes_cont, mapped_nodes
+    return dataset_processing_filled_content, nodes_cont, mapped_nodes, mapped_nodes_info
 
 
 def process_links(data: dict, nodes: list) -> tuple[str, dict]:
@@ -177,7 +192,7 @@ def preprocess_nodes_connections(nodes, connections):
 
 
 def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,
-                                        include_contracts=True) -> tuple[int, int]:
+                                        include_contracts=True) -> tuple[int, int, dict]:
     """
     Converts a JSON workflow file to an XMI file using templates for the data processing nodes.
 
@@ -188,8 +203,9 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         include_contracts (bool): Flag to include the contracts in the data processing nodes.
 
     Returns:
-        tuple: Number of nodes mapped successfully and total number of nodes.
-
+        mapped_nodes: (int) Number of nodes that were mapped to a library transformation.
+        nodes_cont: (int) Number of nodes in the workflow.
+        mapped_nodes_info: (dict) Dictionary with the mapping information.
     """
     # Load JSON data
     with (open(os.path.join(json_input_folder, workflow_filename, workflow_filename + ".json"),
@@ -209,9 +225,10 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         # Process links
         links_filled_content, node_flow_mapping = process_links(data, nodes)
 
-        # Process nodes and get the node mapping
-        data_processing_filled_content, nodes_cont, mapped_nodes = process_nodes(nodes,
-                                                                                 include_contracts,node_flow_mapping)
+        # Process nodes and get the node mapping information
+        data_processing_filled_content, nodes_cont, mapped_nodes, mapped_nodes_info = process_nodes(nodes,
+                                                                                                    include_contracts,
+                                                                                                    node_flow_mapping)
 
         # Define the replacement values to the workflow template
         workflow_values = {
@@ -228,4 +245,4 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
         with open(output_xmi_filepath, "w", encoding="utf-8") as file:
             file.write(filled_content)
 
-    return mapped_nodes, nodes_cont
+    return mapped_nodes, nodes_cont, mapped_nodes_info
