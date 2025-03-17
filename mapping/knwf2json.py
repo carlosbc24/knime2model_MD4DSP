@@ -26,6 +26,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     extract_path = f"{input_folder}/extracted_data/{knwf_filename_without_extension}"
     if not os.path.exists(extract_path):
         os.makedirs(extract_path)
+    print(f"Extracting {knwf_filename_without_extension} workflow...")
     with zipfile.ZipFile(knwf_file_path, 'r') as zip_ref:
         zip_ref.extractall(extract_path)
 

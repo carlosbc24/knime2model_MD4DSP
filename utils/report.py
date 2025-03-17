@@ -1,6 +1,7 @@
 import csv
 import os
 import matplotlib.pyplot as plt
+from matplotlib import ticker
 
 
 def generate_workflow_nodes_mapping_table_report(workflows_summary: list):
@@ -96,10 +97,13 @@ def generate_nodes_mapping_chart(global_mapped_nodes_info: dict):
     # Set x-axis limit to ensure all bars are fully visible
     ax.set_xlim(0, max_total_nodes * 1.1)
 
+    # Set x-axis to use integer ticks
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+
     # Labels and title
     ax.set_xlabel("Number of Nodes")
-    ax.set_ylabel("Node Type")
-    ax.set_title("Nodes Mapping Report")
+    ax.set_ylabel("Node Name")
+    ax.set_title("KNIME nodes to MD4DSP models Mapping Report")
     ax.legend()
 
     # Save the chart in the reports folder
