@@ -1,12 +1,77 @@
+import csv
 import os
 import matplotlib.pyplot as plt
+
+
+def generate_workflow_nodes_mapping_table_report(workflows_summary: list):
+    """
+    Generate a CSV report where each row corresponds to a workflow, and columns represent
+    the different node types mapped across all workflows. For each workflow, the table
+    shows how many nodes of each type were mapped, plus a final column showing the total
+    number of not mapped nodes across all node types for that workflow.
+
+    Args:
+        workflows_summary (list): A list of dictionaries, each containing:
+            - "workflow_name" (str): Name of the workflow
+            - "mapped_nodes_info" (dict): Node mapping information per node type.
+              Example:
+              {
+                "CSV Reader": {"mapped_count": x, "not_mapped_count": y},
+                "Excel Reader": {"mapped_count": x, "not_mapped_count": y},
+                ...
+              }
+    """
+    # Collect all node types that appear across all workflows
+    all_node_types = set()
+    for wf in workflows_summary:
+        for node_type in wf["mapped_nodes_info"].keys():
+            all_node_types.add(node_type)
+    # Sort node types for consistent column ordering
+    all_node_types = sorted(list(all_node_types))
+
+    # Prepare column headers: one for workflow name, one per node type, plus "Not mapped nodes"
+    column_labels = ["Workflow Name"] + all_node_types + ["Not mapped nodes"]
+
+    # Prepare the table data
+    data = []
+    for wf in workflows_summary:
+        workflow_name = wf["workflow_name"]
+        mapped_nodes_info = wf["mapped_nodes_info"]
+
+        # Build the row for this workflow
+        row = [workflow_name]
+        # Add mapped counts for each node type in the sorted list
+        for node_type in all_node_types:
+            mapped_count = mapped_nodes_info.get(node_type, {}).get("mapped_count", 0)
+            row.append(mapped_count)
+
+        # Compute the total number of not mapped nodes
+        total_not_mapped = sum(info.get("not_mapped_count", 0) for info in mapped_nodes_info.values())
+        row.append(total_not_mapped)
+
+        data.append(row)
+
+    # Ensure the 'reports' directory exists
+    report_dir = "reports"
+    if not os.path.exists(report_dir):
+        os.makedirs(report_dir)
+
+    # Define the CSV file path
+    csv_path = os.path.join(report_dir, "workflows_summary_report.csv")
+
+    # Write the data to the CSV file
+    with open(csv_path, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(column_labels)  # Write header
+        writer.writerows(data)  # Write data rows
 
 
 def generate_nodes_mapping_chart(global_mapped_nodes_info: dict):
     """
     Generate a horizontal bar chart showing the number of mapped and not mapped nodes per node type.
 
-    This function dynamically adjusts the figure width to ensure all bars fit properly.
+    This function dynamically adjusts the figure width to ensure all bars fit properly
+    and sets the x-axis limit to avoid cutting off any bars.
 
     Args:
         global_mapped_nodes_info (dict): Dictionary with node types as keys and mapping counts as values.
@@ -21,12 +86,15 @@ def generate_nodes_mapping_chart(global_mapped_nodes_info: dict):
     max_total_nodes = max(total_counts)  # Maximum total number of nodes for scaling
 
     # Adjust figure width dynamically based on the max total nodes with extra margin
-    fig_width = max(12, max_total_nodes / 40)  # Increased minimum width and scaling factor
-    fig, ax = plt.subplots(figsize=(fig_width, 8))  # Increased height slightly for clarity
+    fig_width = max(12, max_total_nodes / 40)
+    fig, ax = plt.subplots(figsize=(fig_width, 8))
 
     # Create stacked horizontal bar chart
     ax.barh(node_types, mapped_counts, color="blue", label="Mapped Nodes")
     ax.barh(node_types, not_mapped_counts, left=mapped_counts, color="orange", label="Not Mapped Nodes")
+
+    # Set x-axis limit to ensure all bars are fully visible
+    ax.set_xlim(0, max_total_nodes * 1.1)
 
     # Labels and title
     ax.set_xlabel("Number of Nodes")
@@ -44,7 +112,7 @@ def generate_nodes_mapping_chart(global_mapped_nodes_info: dict):
     plt.close()
 
 
-def write_resumed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int):
+def generate_resumed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int):
     """
     Write the mapping information to the report file.
 
@@ -65,7 +133,7 @@ def write_resumed_workflow_report(report_filepath: str, workflow_name: str, mapp
         report_file.write(report_line)
 
 
-def write_nodes_mapping_report(global_mapped_nodes_info: dict, export_mapped_nodes_report: bool):
+def generate_nodes_mapping_report(global_mapped_nodes_info: dict, export_mapped_nodes_report: bool):
     """
     Write the mapping information for each node type to the report file.
 
@@ -84,8 +152,8 @@ def write_nodes_mapping_report(global_mapped_nodes_info: dict, export_mapped_nod
                 individual_nodes_report_file.write(report_line)
 
 
-def write_detailed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int,
-                                   mapped_nodes_info: dict):
+def generate_detailed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int,
+                                      mapped_nodes_info: dict):
     """
     Write the mapping information to the report file.
 

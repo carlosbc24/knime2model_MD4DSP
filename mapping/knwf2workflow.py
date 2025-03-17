@@ -3,8 +3,9 @@ import yaml
 from mapping.knwf2json import extract_data_knime2json
 from mapping.json2workflow import json_to_xmi_workflow_with_templates
 from utils.logger import set_logger
-from utils.report import (write_resumed_workflow_report, write_detailed_workflow_report,
-                          update_global_mapped_nodes_info, write_nodes_mapping_report, generate_nodes_mapping_chart)
+from utils.report import (generate_resumed_workflow_report, generate_detailed_workflow_report,
+                          update_global_mapped_nodes_info, generate_nodes_mapping_report, generate_nodes_mapping_chart,
+                          generate_workflow_nodes_mapping_table_report)
 
 
 def process_workflow(file_name: str, input_knwf_folder: str, output_json_folder: str, output_xmi_folder: str,
@@ -72,30 +73,43 @@ def main():
         with open(detailed_wf_report_filepath, "w") as detailed_report_file:
             detailed_report_file.write("Workflow name,Mapping percentage,Nodes mapped\n")
 
+    workflows_summary = []
+    global_mapped_nodes_info = {}
     # Process a specific workflow or all workflows in the folder
     if workflow_filename and workflow_filename.endswith(".knwf"):
         workflow_name, mapped_nodes, nodes_count, mapped_nodes_info = process_workflow(
             workflow_filename, input_knwf_folder, output_json_folder, output_xmi_folder, include_contracts
         )
+        # Store the mapping information for each workflow
+        workflows_summary.append({
+            "workflow_name": workflow_name,
+            "mapped_nodes_info": mapped_nodes_info
+        })
+        global_mapped_nodes_info = update_global_mapped_nodes_info(global_mapped_nodes_info, mapped_nodes_info)
         if export_mapped_nodes_report:
-            write_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
-            write_detailed_workflow_report(detailed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count,
-                                           mapped_nodes_info)
+            generate_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
+            generate_detailed_workflow_report(detailed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count,
+                                              mapped_nodes_info)
     # Process all workflows in the folder
     else:
-        global_mapped_nodes_info = {}
         for file in os.listdir(input_knwf_folder):
             if file.endswith(".knwf"):
                 workflow_name, mapped_nodes, nodes_count, mapped_nodes_info = process_workflow(
                     file, input_knwf_folder, output_json_folder, output_xmi_folder, include_contracts
                 )
+                # Store the mapping information for each workflow
+                workflows_summary.append({
+                    "workflow_name": workflow_name,
+                    "mapped_nodes_info": mapped_nodes_info
+                })
                 global_mapped_nodes_info = update_global_mapped_nodes_info(global_mapped_nodes_info, mapped_nodes_info)
                 if export_mapped_nodes_report:
-                    write_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
-                    write_detailed_workflow_report(detailed_wf_report_filepath, workflow_name,
-                                                   mapped_nodes, nodes_count, mapped_nodes_info)
-        write_nodes_mapping_report(global_mapped_nodes_info, export_mapped_nodes_report)
-        generate_nodes_mapping_chart(global_mapped_nodes_info)
+                    generate_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
+                    generate_detailed_workflow_report(detailed_wf_report_filepath, workflow_name,
+                                                      mapped_nodes, nodes_count, mapped_nodes_info)
+    generate_nodes_mapping_report(global_mapped_nodes_info, export_mapped_nodes_report)
+    generate_nodes_mapping_chart(global_mapped_nodes_info)
+    generate_workflow_nodes_mapping_table_report(workflows_summary)
 
     print("\n--------------------------------------------------\n")
     print(f"Input workflows in: {input_knwf_folder}")
