@@ -58,7 +58,6 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
     if "rules" in node["parameters"]:
 
         expression = node["parameters"]["rules"]
-        print("HOLA")
 
         if any(func in expression for func in ["replace(", "replaceChars("]):
             match = re.search(patterns["replace"], expression)
