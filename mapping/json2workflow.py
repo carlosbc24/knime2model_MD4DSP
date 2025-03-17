@@ -37,6 +37,8 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
                                                                       node, index)
 
+        print(f"Node: {node_name} -> Library transformation: {library_transformation_name}")
+
         # Get the data processing values for the node type
         dataprocessing_values = get_transformation_dp_values(node, node_id, node_name, include_contracts,
                                                              library_transformation_name)
@@ -83,7 +85,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
             if node_name in mapped_nodes_info:
                 mapped_nodes_info[node_name]["not_mapped_count"] = mapped_nodes_info[node_name].get("not_mapped_count",
                                                                                                     0) + 1
-            else:
+            elif all(substring not in node_name for substring in ["Reader", "Table", "Connector", "Writer"]):
                 mapped_nodes_info[node_name] = {"mapped_count": 0, "not_mapped_count": 1}
 
         # Fill the template with jinja2

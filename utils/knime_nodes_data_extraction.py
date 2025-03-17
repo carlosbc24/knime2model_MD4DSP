@@ -50,22 +50,22 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
 
     # Define the regular expressions for different types of functions
     patterns = {
-        "replace": r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
-        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\']('
-                          r'.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+        "replace": r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
         # Add other patterns here as needed
     }
 
     if "rules" in node["parameters"]:
 
         expression = node["parameters"]["rules"]
+        print("HOLA")
 
         if any(func in expression for func in ["replace(", "replaceChars("]):
             match = re.search(patterns["replace"], expression)
             if match:
                 map_operation = "SUBSTRING"
                 replace_column_name = match.group(2)
-                mapping_parameters[match.group(4)] = match.group(5)
+                mapping_parameters[match.group(3)] = match.group(4)
                 if (expression.count("replace(") == 1 or expression.count("replaceChars(") == 1) and expression.count(
                         "$") == 2:
                     unique_replacement_one_column = True

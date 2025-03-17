@@ -110,6 +110,13 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
             elif node_name == "Rule Engine" and "LIKE" in node.get("parameters", {}).get("function_types"):
                 return "mapping"
 
+            # Just mapped String Manipulation KNIME node when the operation is
+            # "replace or replaceChars" and there is just one column
+            elif ((node_name == "String Manipulation" or node_name == "String Manipulation (Multi Column)") and
+                  node.get("parameters", {}).get("mapping").get(
+                    "unique_replacement_one_column") is True):
+                return "mapping"
+
             else:
                 print_and_log(f"Not mapped unknown KNIME node: {node_name}")
                 return None
