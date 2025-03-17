@@ -1,4 +1,3 @@
-
 import os
 import json
 import zipfile
@@ -92,12 +91,13 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
                         new_node["id"] = max_node_id
                     new_nodes.append(new_node)
                     if i > 0:
-                        # Si se trata del último nodo, añadir una conexión entre el id del nodo actual
-                        # y el destID del nodo siguiente al original presente en la lista de links
+                        # If it is the last node, add a connection between the current node's id
+                        # and the destID of the next node in the original list of links
                         if i == len(nodes_info) - 1 and dest_id_from_original_node is not None:
                             # Remove from connections the connection that has destID equal to
                             # dest_id_from_original_node if it exists
-                            connections = [connection for connection in connections if connection["destID"] != dest_id_from_original_node]
+                            connections = [connection for connection
+                                           in connections if connection["destID"] != dest_id_from_original_node]
                             new_connections.append({
                                 "sourceID": new_node["id"],
                                 "destID": dest_id_from_original_node
@@ -113,7 +113,7 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
     nodes.extend(new_nodes)
     connections.extend(new_connections)
 
-    # Filtrar nodos que tienen 'node_name'
+    # Filter nodes without node_name
     nodes = [node for node in nodes if "node_name" in node]
 
     # Remove node_settings_file key
@@ -122,26 +122,25 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
             del node["node_settings_file"]
 
     # Save the extracted data in a JSON file
-    ouput_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
-                           f"/{output_json_filename}")
+    output_json_filepath = f"{output_folder}/{knwf_filename_without_extension}/{output_json_filename}"
 
-    if not os.path.exists(os.path.dirname(ouput_json_filepath)):
-        os.makedirs(os.path.dirname(ouput_json_filepath))
+    if not os.path.exists(os.path.dirname(output_json_filepath)):
+        os.makedirs(os.path.dirname(output_json_filepath))
     # Check if the file already exists. If the file does exist, add the suffix "_1" to the filename. If the file
     # exists, add a suffix "_n" to the filename, where n is the lowest integer that makes the filename unique.
-    if os.path.exists(ouput_json_filepath):
+    if os.path.exists(output_json_filepath):
         i = 1
-        while os.path.exists(ouput_json_filepath):
-            ouput_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
-                                   f"/{output_json_filename.split('.')[0]}_{i}.json")
+        while os.path.exists(output_json_filepath):
+            output_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
+                                    f"/{output_json_filename.split('.')[0]}_{i}.json")
             i += 1
 
     # Save the extracted data in a JSON file
     result = {"nodes": nodes, "connections": connections}
-    with open(ouput_json_filepath+".json", "w", encoding="utf-8") as json_file:
+    with open(output_json_filepath + ".json", "w", encoding="utf-8") as json_file:
         json.dump(result, json_file, indent=4)
 
-    print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {ouput_json_filepath}")
+    print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {output_json_filepath}")
 
 
 def extract_node_settings(settings_path: str) -> list[dict]:
@@ -175,7 +174,9 @@ def extract_node_settings(settings_path: str) -> list[dict]:
     if model is not None:
 
         # Extract the input and output KNIME nodes
-        if "CSV Reader" in node_info["node_name"] or "Excel Reader" in node_info["node_name"] or "File Reader" in node_info["node_name"] or "Table Reader" in node_info["node_name"] or "CSV Writer" in node_info["node_name"]:
+        if ("CSV Reader" in node_info["node_name"] or "Excel Reader" in node_info["node_name"] or "File Reader"
+                in node_info["node_name"] or "Table Reader"
+                in node_info["node_name"] or "CSV Writer" in node_info["node_name"]):
             node_info = extract_input_output_node_settings(node_info, root, model, namespace)
 
             print_and_log_dict(node_info)
@@ -204,7 +205,10 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         # Extract the mapping node info
-        elif "String Replacer" in node_info["node_name"] or "Rule Engine" in node_info["node_name"] or "String Manipulation" in node_info["node_name"] or "String Manipulation (Multi Column)" in node_info["node_name"]:
+        elif ("String Replacer" in node_info["node_name"] or "Rule Engine"
+              in node_info["node_name"] or "String Manipulation"
+              in node_info["node_name"] or "String Manipulation (Multi Column)"
+              in node_info["node_name"]):
             node_info = extract_mapping_node_settings(node_info, model, namespace)
 
             print_and_log_dict(node_info)
@@ -331,6 +335,5 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
         else:
             print_and_log(f"Node type not recognized: {node_info['node_name']}")
-
 
     return nodes_info

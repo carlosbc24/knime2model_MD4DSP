@@ -2,9 +2,6 @@
 import os
 import json
 from string import Template
-
-from pandas.io.sas.sas_constants import dataset_offset
-
 from utils.json_parser_functions import get_transformation_dp_values
 from utils.library_functions import get_library_transformation_name, get_library_transformation_names
 from jinja2 import Template as JinjaTemplate
@@ -50,8 +47,10 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
             # Get the input file path from the previous node
             previous_node_id = node_flow_mapping[node_id]["previous_node_id"]
             if previous_node_id is not None:
-                dataprocessing_values["input_filepath"] = f"output/{node_flow_mapping[previous_node_id]['node_name'].replace(' ', '_')}_output_dataDictionary.csv"
-
+                dataprocessing_values["input_filepath"] = (
+                    f"output/{node_flow_mapping[previous_node_id]['node_name'].replace(' ', '_')}"
+                    "_output_dataDictionary.csv"
+                )
         dataprocessing_values["output_filepath"] = f"output/{node_name.replace(' ', '_')}_output_dataDictionary.csv"
 
         # Check if the library transformation name exists and the template file exists. If so, use the template file.
@@ -88,7 +87,8 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
                 mapped_nodes_info[node_name] = {"mapped_count": 0, "not_mapped_count": 1}
 
         # Fill the template with jinja2
-        dataset_processing_filled_content += data_processing_jinja_template.render(dataprocessing=dataprocessing_values) + "\n"
+        dataset_processing_filled_content += data_processing_jinja_template.render(
+            dataprocessing=dataprocessing_values) + "\n"
 
     return dataset_processing_filled_content, nodes_cont, mapped_nodes, mapped_nodes_info
 
@@ -96,8 +96,8 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
 def process_links(data: dict, nodes: list) -> tuple[str, dict]:
     """
     Processes the links between nodes from the JSON data and appends the corresponding XML elements to the root element.
-    It also return a dict in which we have the node_name, the previous node_id and the next node_id. The dict is ordered
-    so the connections between next_node_id and previous_node_id are consecutive.
+    It also returns a dict in which we have the node_name, the previous node_id and the next node_id.
+    The dict is ordered so the connections between next_node_id and previous_node_id are consecutive.
 
     Args:
         data (dict): The JSON data containing the workflow information.
@@ -151,7 +151,7 @@ def process_links(data: dict, nodes: list) -> tuple[str, dict]:
             ) + "\n"
             link_index += 1
 
-    # Order the node_flow_mapping so the conncetions between next_node_id and previous_node_id are consecutive.
+    # Order the node_flow_mapping so the connections between next_node_id and previous_node_id are consecutive.
     ordered_mapping = {}
     current_node_id = next(
         node_id for node_id, details in node_flow_mapping.items() if details['previous_node_id'] is None)
@@ -181,7 +181,7 @@ def preprocess_nodes_connections(nodes, connections):
         node['id'] = id_mapping[node['id']]
 
     for connection in connections:
-        # Si el connection['sourceID'] o el connection['destID'] no están en el id_mapping, seelimina la conexión
+        # If the connection['sourceID'] or connection['destID'] are not in the id_mapping, remove the connection
         if connection['sourceID'] not in id_mapping or connection['destID'] not in id_mapping:
             connections.remove(connection)
             continue

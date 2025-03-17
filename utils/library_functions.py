@@ -35,16 +35,16 @@ def get_library_transformation_names(json_file_path: str) -> list:
         json_file_path (str): Path to the JSON file.
 
     Returns:
-        librery_transformations_names: List with the library transformation names.
+        library_transformations_names: List with the library transformation names.
     """
     with open(json_file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # Get the library transformation names
-    librery_transformations = data.get("library_transformation_names", [])
-    librery_transformations_names = [function.get("name") for function in librery_transformations]
+    library_transformations = data.get("library_transformation_names", [])
+    library_transformations_names = [function.get("name") for function in library_transformations]
 
-    return librery_transformations_names
+    return library_transformations_names
 
 
 def get_library_transformation_name(json_file_path: str, node: dict, index: int) -> str | None:
@@ -90,7 +90,8 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
                     return "rowFilterMissing"
 
             # 100% mapped KNIME nodes
-            elif node_name == "Column Filter" or node_name == "String to Number" or node_name == "Numeric Outliers" or node_name == "Numeric Binner" or node_name == "String Replacer":
+            elif (node_name == "Column Filter" or node_name == "String to Number" or node_name == "Numeric Outliers" or
+                  node_name == "Numeric Binner" or node_name == "String Replacer"):
                 return function[node_name].get("library_transformation_name")
 
             # Just mapped sum and substract operations from Math Formula KNIME node when the operation has 2 operands
@@ -103,7 +104,8 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
                     print_and_log(f"Unknown imputation type: {node.get('parameters', {}).get('imputationType')}")
 
             # Just mapped LIKE operation from Rule Engine KNIME node
-            elif node_name == "Rule Engine" and all(func in ["<=", ">=", "<", ">"] for func in node.get("parameters", {}).get("function_types")):
+            elif node_name == "Rule Engine" and all(
+                    func in ["<=", ">=", "<", ">"] for func in node.get("parameters", {}).get("function_types")):
                 return "binner"
             elif node_name == "Rule Engine" and "LIKE" in node.get("parameters", {}).get("function_types"):
                 return "mapping"

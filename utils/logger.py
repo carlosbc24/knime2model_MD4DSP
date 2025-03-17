@@ -30,7 +30,7 @@ def set_logger(logger_name: str = "test"):
         logging.getLogger("matplotlib.colorbar").disabled = True
         logging.getLogger("matplotlib.pyplot").disabled = True
     except Exception as e:
-        print(f"Error al configurar el registro: {e}")
+        print(f"Error when configuring the logger: {e}")
 
 
 def print_and_log(message, level=logging.INFO):

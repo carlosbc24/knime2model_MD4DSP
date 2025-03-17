@@ -1,8 +1,7 @@
 
-import re
 
-
-def get_transformation_dp_values(node: dict, node_id: int, node_name: str, include_contracts: bool, library_transformation_name: str) -> dict:
+def get_transformation_dp_values(node: dict, node_id: int, node_name: str, include_contracts: bool,
+                                 library_transformation_name: str) -> dict:
     """
     Get the values for the data processing node from the node parameters.
 
@@ -48,28 +47,36 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
 
     elif library_transformation_name == "rowFilterRange":
-        row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "", "upper_bound": node["parameters"]["upper_bound"] if "upper_bound" in node["parameters"] else "",
-                    "has_lower_bound": node["parameters"]["has_lower_bound"] if "has_lower_bound" in node["parameters"] else "",
-                    "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound" in node["parameters"] else "",
-                    "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
+        row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "",
+                    "upper_bound": node["parameters"]["upper_bound"] if "upper_bound" in node["parameters"] else "",
+                    "has_lower_bound": node["parameters"]["has_lower_bound"] if "has_lower_bound"
+                                                                                in node["parameters"] else "",
+                    "has_upper_bound": node["parameters"]["has_upper_bound"] if "has_upper_bound"
+                                                                                in node["parameters"] else "",
+                    "filter_type_inclusion":
+                        node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion"
+                                                                       in node["parameters"] else ""}
 
     elif library_transformation_name == "rowFilterPrimitive":
         row_dict = {
             "pattern": node["parameters"]["pattern"] if "pattern" in node["parameters"] else "",
-            "filter_type_inclusion": node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in
-                                                                                            node["parameters"] else ""}
+            "filter_type_inclusion":
+                node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
 
     elif library_transformation_name in ["imputeByDerivedValue", "imputeByFixValue", "imputeByNumericOp"]:
-        imputation_dict = {"imputationType": node["parameters"]["imputationType"], "fixStringValues": node["parameters"]["fixStringValues"]}
+        imputation_dict = {
+            "imputationType": node["parameters"]["imputationType"],
+            "fixStringValues": node["parameters"]["fixStringValues"]}
 
     elif library_transformation_name in ["mathOperationFieldFixValue", "mathOperationFieldField"]:
         math_op_dict = {"mathOpTransformation": node["parameters"]["mathOpTransformation"],
                         "operator": node["parameters"]["operator"], "fix_value": node["parameters"]["fix_value"],
                         "first_operand": node["parameters"]["first_operand"],
-                        "second_operand": node["parameters"]["second_operand"], "out_column": node["parameters"]["out_column"]}
+                        "second_operand": node["parameters"]["second_operand"],
+                        "out_column": node["parameters"]["out_column"]}
 
     dataprocessing_values = {
         "transformation": {"name": library_transformation_name, "KNIME_name": node_name},

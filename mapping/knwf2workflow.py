@@ -3,8 +3,8 @@ import yaml
 from mapping.knwf2json import extract_data_knime2json
 from mapping.json2workflow import json_to_xmi_workflow_with_templates
 from utils.logger import set_logger
-from utils.report import write_resumed_workflow_report, write_detailed_workflow_report, update_global_mapped_nodes_info, \
-    write_nodes_mapping_report
+from utils.report import (write_resumed_workflow_report, write_detailed_workflow_report,
+                          update_global_mapped_nodes_info, write_nodes_mapping_report)
 
 
 def process_workflow(file_name: str, input_knwf_folder: str, output_json_folder: str, output_xmi_folder: str,
@@ -41,7 +41,6 @@ def process_workflow(file_name: str, input_knwf_folder: str, output_json_folder:
               f"mapped successfully")
     print("\n--------------------------------------------------\n")
     return workflow_name, mapped_nodes, nodes_count, mapped_nodes_info
-
 
 
 def main():
@@ -93,8 +92,8 @@ def main():
                 global_mapped_nodes_info = update_global_mapped_nodes_info(global_mapped_nodes_info, mapped_nodes_info)
                 if export_mapped_nodes_report:
                     write_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
-                    write_detailed_workflow_report(detailed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count,
-                                                   mapped_nodes_info)
+                    write_detailed_workflow_report(detailed_wf_report_filepath, workflow_name,
+                                                   mapped_nodes, nodes_count, mapped_nodes_info)
         write_nodes_mapping_report(global_mapped_nodes_info, export_mapped_nodes_report)
 
     print("\n--------------------------------------------------\n")

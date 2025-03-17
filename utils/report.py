@@ -41,7 +41,8 @@ def write_nodes_mapping_report(global_mapped_nodes_info: dict, export_mapped_nod
                 individual_nodes_report_file.write(report_line)
 
 
-def write_detailed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int, mapped_nodes_info: dict):
+def write_detailed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int,
+                                   mapped_nodes_info: dict):
     """
     Write the mapping information to the report file.
 
@@ -57,13 +58,15 @@ def write_detailed_workflow_report(report_filepath: str, workflow_name: str, map
     mapping_pct = str(round((mapped_nodes / nodes_count), 4) * 100) + "%"
     workflow_report_line = \
         (f"{workflow_name},{mapping_pct}, ({mapped_nodes}/{nodes_count}) nodes mapped successfully to its "
-        f"model transformation\n")
+         f"model transformation\n")
 
     # Write the workflow report line and the nodes mapping information
     with open(report_filepath, "a") as report_file:
         report_file.write(workflow_report_line)
         for key, value in mapped_nodes_info.items():
-            node_type_report_line = f"\t{key.ljust(50)}{value['mapped_count']}/{value['mapped_count'] + value['not_mapped_count']} nodes mapped successfully\n"
+            node_type_report_line = (f"\t{key.ljust(50)}"
+                                     f"{value['mapped_count']}/{value['mapped_count'] + value['not_mapped_count']} "
+                                     f"nodes mapped successfully\n")
             report_file.write(node_type_report_line)
         report_file.write("\n--------------------------------------------------\n")
 

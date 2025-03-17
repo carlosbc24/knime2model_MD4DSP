@@ -51,7 +51,8 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
     # Define the regular expressions for different types of functions
     patterns = {
         "replace": r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
-        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
+        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\']('
+                          r'.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
         # Add other patterns here as needed
     }
 
@@ -338,14 +339,14 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                 upper_bound_value = upper_bound.attrib[
                     "value"] if upper_bound is not None else None
                 if lower_bound_value is not None and lower_bound_value != "":
-                    if type(lower_bound_value) == str and lower_bound_value.startswith("org.knime.core.data.def"):
+                    if isinstance(lower_bound_value, str) and lower_bound_value.startswith("org.knime.core.data.def"):
                         cell_type = lower_bound_value.split('.')[-1]
                         lower_bound_config = row_filter.find(
                             f"knime:config[@key='lowerBound']/knime:config[@key='org.knime.core.data.def.{cell_type}']/knime:entry[@key='{cell_type}']", namespace)
                         if lower_bound_config is not None:
                             lower_bound_value = lower_bound_config.attrib["value"]
                             if lower_bound_value is not None and lower_bound_value != "":
-                                if type(lower_bound_value) == str:
+                                if isinstance(lower_bound_value, str):
                                     lower_bound_value_numeric = float(lower_bound_value)
                                     node_info["parameters"]["lower_bound"] = lower_bound_value_numeric
                             else:
@@ -358,14 +359,14 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                     node_info["parameters"]["lower_bound"] = 0
 
                 if upper_bound_value is not None and upper_bound_value != "":
-                    if type(upper_bound_value) == str and upper_bound_value.startswith("org.knime.core.data.def"):
+                    if isinstance(upper_bound_value, str) and upper_bound_value.startswith("org.knime.core.data.def"):
                         cell_type = upper_bound_value.split('.')[-1]
                         upper_bound_config = row_filter.find(
                             f"knime:config[@key='upperBound']/knime:config[@key='org.knime.core.data.def.{cell_type}']/knime:entry[@key='{cell_type}']", namespace)
                         if upper_bound_config is not None:
                             upper_bound_value = upper_bound_config.attrib["value"]
                             if upper_bound_value is not None and upper_bound_value != "":
-                                if type(upper_bound_value) == str:
+                                if isinstance(upper_bound_value, str):
                                     upper_bound_value_numeric = float(upper_bound_value)
                                     node_info["parameters"]["upper_bound"] = upper_bound_value_numeric
                             else:
@@ -676,10 +677,10 @@ def extract_binner_node_settings(node_info: dict, model: elementTree.Element, na
                 right_open = bin.find("knime:entry[@key='right_open']", namespace).attrib["value"] == "true"
                 left_value = bin.find("knime:entry[@key='left_value']", namespace).attrib["value"]
                 right_value = bin.find("knime:entry[@key='right_value']", namespace).attrib["value"]
-                closureType = "openOpen" if left_open and right_open else "openClosed" if left_open and not right_open else "closedOpen" if not left_open and right_open else "closedClosed"
+                closure_type = "openOpen" if left_open and right_open else "openClosed" if left_open and not right_open else "closedOpen" if not left_open and right_open else "closedClosed"
                 bin_info.append({
                     "binName": bin_name,
-                    "closureType": closureType,
+                    "closureType": closure_type,
                     "leftMargin": left_value,
                     "rightMargin": right_value
                 })
