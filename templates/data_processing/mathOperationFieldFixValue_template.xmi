@@ -82,12 +82,12 @@
           xsi:type="Workflow:OpFixValue"
           name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_param_op_fix_value">
         <opFixValueDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
         <value
             name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_param_primitive"
             value="{{ dataprocessing.math_op.first_operand.value }}">
           <primitiveDef
-              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand/@value"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand/@value"/>
         </value>
       </firstOperand>
       {% endif %}
@@ -99,7 +99,7 @@
           name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_param_op_field"
           datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
       </secondOperand>
       {% elif dataprocessing.math_op.second_operand.type == 'fixed_value' %}
       <secondOperand
