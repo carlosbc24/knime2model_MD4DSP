@@ -6,3 +6,4 @@ numpy~=1.26.3
 tqdm
 pyyaml
 jinja2
+matplotlib

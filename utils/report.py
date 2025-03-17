@@ -1,4 +1,47 @@
 import os
+import matplotlib.pyplot as plt
+
+
+def generate_nodes_mapping_chart(global_mapped_nodes_info: dict):
+    """
+    Generate a horizontal bar chart showing the number of mapped and not mapped nodes per node type.
+
+    This function dynamically adjusts the figure width to ensure all bars fit properly.
+
+    Args:
+        global_mapped_nodes_info (dict): Dictionary with node types as keys and mapping counts as values.
+    """
+    # Extract node types and counts
+    node_types = list(global_mapped_nodes_info.keys())
+    mapped_counts = [global_mapped_nodes_info[node]["mapped_count"] for node in node_types]
+    not_mapped_counts = [global_mapped_nodes_info[node]["not_mapped_count"] for node in node_types]
+
+    # Compute total nodes per type to determine the maximum value
+    total_counts = [mapped + not_mapped for mapped, not_mapped in zip(mapped_counts, not_mapped_counts)]
+    max_total_nodes = max(total_counts)  # Maximum total number of nodes for scaling
+
+    # Adjust figure width dynamically based on the max total nodes with extra margin
+    fig_width = max(12, max_total_nodes / 40)  # Increased minimum width and scaling factor
+    fig, ax = plt.subplots(figsize=(fig_width, 8))  # Increased height slightly for clarity
+
+    # Create stacked horizontal bar chart
+    ax.barh(node_types, mapped_counts, color="blue", label="Mapped Nodes")
+    ax.barh(node_types, not_mapped_counts, left=mapped_counts, color="orange", label="Not Mapped Nodes")
+
+    # Labels and title
+    ax.set_xlabel("Number of Nodes")
+    ax.set_ylabel("Node Type")
+    ax.set_title("Nodes Mapping Report")
+    ax.legend()
+
+    # Save the chart in the reports folder
+    report_dir = "reports"
+    if not os.path.exists(report_dir):
+        os.makedirs(report_dir)
+
+    chart_path = os.path.join(report_dir, "nodes_mapping_chart.png")
+    plt.savefig(chart_path, bbox_inches="tight")
+    plt.close()
 
 
 def write_resumed_workflow_report(report_filepath: str, workflow_name: str, mapped_nodes: int, nodes_count: int):
