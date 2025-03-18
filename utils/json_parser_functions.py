@@ -18,7 +18,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     input_file_path = ""
     # Detect if the node includes the substrings "Reader" or "Connector"
     if any(substring in node_name for substring in ["Reader", "Table", "Connector", "Writer"]):
-        input_file_path = node.get("parameters", {}).get("file_path", "")
+        input_file_path = node.get("parameters", {}).get("file_path", "").replace("&", "&amp;")
 
     # Get input and output columns
     in_columns = get_input_columns(node)
