@@ -22,12 +22,12 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
 
     # Get input and output columns
     in_columns = get_input_columns(node)
-    in_column_names = [included_column["column_name"] for included_column in in_columns]
+    in_column_names = [in_column["column_name"] for in_column in in_columns]
     in_column_names_str = ", ".join(in_column_names)
 
     # Output columns
     out_columns = get_output_columns(node)
-    out_column_names = [excluded_column["column_name"] for excluded_column in out_columns]
+    out_column_names = [out_column["column_name"] for out_column in out_columns]
     out_column_names_str = ", ".join(out_column_names)
 
     # Initialize the dictionaries

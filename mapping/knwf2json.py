@@ -192,8 +192,8 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             column_filter = model.find(".//knime:config[@key='column-filter']", namespace)
             if column_filter is not None:
                 included_names, excluded_names = extract_columns_data(column_filter, namespace)
-                node_info["parameters"]["in_columns"] = included_names + excluded_names
-                node_info["parameters"]["out_columns"] = included_names
+                node_info["parameters"]["in_columns"] = included_names
+                node_info["parameters"]["out_columns"] = []
 
             print_and_log_dict(node_info)
             nodes_info.append(node_info)
