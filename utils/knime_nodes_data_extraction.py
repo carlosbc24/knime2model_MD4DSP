@@ -314,8 +314,13 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
             # Extract the filter type (EQUAL, CONTAINS, etc.)
             filter_type_entry = row_filter.find("knime:entry[@key='RowFilter_TypeID']", namespace)
 
-            # Filter type value
-            node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
+            if filter_type_entry is not None:
+                # Filter type value
+                node_info["parameters"]["filter_type"] = filter_type_entry.attrib["value"]
+            else:
+                # Default value or error logging if filter type entry not found
+                node_info["parameters"]["filter_type"] = "UNKNOWN"
+                print_and_log(f"Filter type entry not found in row filter for node {node_info['node_name']}")
 
             # If the filter type is RangeVal_RowFilter, extract the columns to filter, lower and upper bounds, and
             if filter_type_entry is not None and node_info["parameters"]["filter_type"] == "RangeVal_RowFilter":
@@ -386,28 +391,28 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                 node_info["parameters"]["pattern"] = pattern_entry.attrib[
                     "value"] if pattern_entry is not None else None
 
-        # Extract the include or exclude parameter
-        include_entry = row_filter.find("knime:entry[@key='include']", namespace)
-        exclude_entry = row_filter.find("knime:entry[@key='exclude']", namespace)
-        if (include_entry is not None and include_entry.attrib["value"] == "true") or (exclude_entry is not None and
-                                                                                       exclude_entry.attrib["value"]
-                                                                                       == "false"):
-            node_info["parameters"]["filter_type_inclusion"] = "INCLUDE"
-        elif (exclude_entry is not None and exclude_entry.attrib["value"] == "true") or (include_entry is not None and
-                                                                                         include_entry.attrib["value"]
-                                                                                         == "false"):
-            node_info["parameters"]["filter_type_inclusion"] = "EXCLUDE"
+            # Extract the include or exclude parameter
+            include_entry = row_filter.find("knime:entry[@key='include']", namespace)
+            exclude_entry = row_filter.find("knime:entry[@key='exclude']", namespace)
+            if (include_entry is not None and include_entry.attrib["value"] == "true") or (exclude_entry is not None and
+                                                                                           exclude_entry.attrib["value"]
+                                                                                           == "false"):
+                node_info["parameters"]["filter_type_inclusion"] = "INCLUDE"
+            elif (exclude_entry is not None and exclude_entry.attrib["value"] == "true") or (include_entry is not None and
+                                                                                             include_entry.attrib["value"]
+                                                                                             == "false"):
+                node_info["parameters"]["filter_type_inclusion"] = "EXCLUDE"
 
-        # Extract the columns to filter
-        columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
-        node_info["parameters"]["in_columns"] = [
-            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-            for col in columns
-        ]
-        node_info["parameters"]["out_columns"] = [
-            {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
-            for col in columns
-        ]
+            # Extract the columns to filter
+            columns = row_filter.findall("knime:entry[@key='ColumnName']", namespace)
+            node_info["parameters"]["in_columns"] = [
+                {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                for col in columns
+            ]
+            node_info["parameters"]["out_columns"] = [
+                {"column_name": col.attrib["value"], "column_type": col.attrib["type"]}
+                for col in columns
+            ]
 
     elif "Duplicate Row Filter" in node_info["node_name"]:
         remove_duplicates_entry = model.find(".//knime:entry[@key='remove_duplicates']", namespace)
