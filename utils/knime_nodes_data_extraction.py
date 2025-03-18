@@ -308,7 +308,7 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
         dict: Dictionary with the node information.
 
     """
-    if "Row Filter (deprecated)" in node_info["node_name"]:
+    if "Row Filter (deprecated)" in node_info["node_name"] or "Row Filter" in node_info["node_name"]:
         row_filter = model.find(".//knime:config[@key='rowFilter']", namespace)
         if row_filter is not None:
             # Extract the filter type (EQUAL, CONTAINS, etc.)
