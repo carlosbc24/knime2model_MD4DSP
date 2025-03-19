@@ -848,7 +848,6 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
             if rule is None:
                 expression = expression_entry.attrib["value"]
 
-            print("EXPRESSION: ", expression)
             # Extract operands and operator from the expression
             match = re.search(r'(\$[^$]+\$|[^$]+)\s*([\+\-\*/])\s*(\$[^$]+\$|[^$]+)', expression)
             if match:
