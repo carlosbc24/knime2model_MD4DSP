@@ -50,23 +50,26 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
 
     # Define the regular expressions for different types of functions
     patterns = {
-        "replace": r'(replace|replaceChars)\(\$(.*?)\$\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
-        "nested_replace": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)',
-        # Add other patterns here as needed
+        "substring": r'(replace|replaceChars|substr)\(\$(.*?)\$\s*,\s*["\']?(.*?)["\']?\s*,\s*["\']?(.*?)["\']?\s*\)',
+        "nested_substring": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)'
     }
 
     if "rules" in node["parameters"]:
 
         expression = node["parameters"]["rules"]
 
-        if any(func in expression for func in ["replace(", "replaceChars("]):
-            match = re.search(patterns["replace"], expression)
+        if any(func in expression for func in ["replace(", "replaceChars(", "substr("]):
+            match = re.search(patterns["substring"], expression)
             if match:
                 map_operation = "SUBSTRING"
+                str_manipulation_function = match.group(1)
                 replace_column_name = match.group(2)
                 mapping_parameters[match.group(3)] = match.group(4)
-                if (expression.count("replace(") == 1 or expression.count("replaceChars(") == 1) and expression.count(
-                        "$") == 2:
+                print_and_log("String manipulation function: " + str_manipulation_function)
+                print_and_log("Replace column name: " + replace_column_name)
+                print_and_log("Mapping parameters: " + str(mapping_parameters))
+                if ((expression.count("replace(") == 1 or expression.count("replaceChars(") == 1 or expression.count(
+                        "substr(") == 1) and expression.count("$") == 2):
                     unique_replacement_one_column = True
         else:
             parameter_list = [rule for rule in expression if rule.startswith('$')]
@@ -81,7 +84,7 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         expression = node["parameters"]["rules_multiColumn"]
 
         if any(func in expression for func in ["replace(", "replaceChars("]):
-            match = re.search(patterns["nested_replace"], expression)
+            match = re.search(patterns["nested_substring"], expression)
             if match:
                 map_operation = "SUBSTRING"
                 replace_column_name = match.group(1)
@@ -651,6 +654,50 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
     return node_info
 
 
+def extract_column_expressions_node_settings(node_info: dict, model: elementTree.Element, namespace: dict,
+                                             nodes_info: list) -> list:
+    # Iterate over each expression element in the expressions config
+    expressions = model.findall(".//knime:config[@key='expressions']/knime:config", namespace)
+    for expr_config in expressions:
+        expression_entry = expr_config.find("knime:entry[@key='expression']", namespace)
+        output_entry = expr_config.find("knime:entry[@key='outputName']", namespace)
+        if expression_entry is None or output_entry is None:
+            continue
+
+        # Create a copy of node_info for each expression
+        new_node = copy.deepcopy(node_info)
+        new_node["parameters"] = {}
+        out_name = output_entry.attrib["value"]
+        # Replace column("...") with $...$
+        original_expr = expression_entry.attrib["value"]
+        new_node["parameters"]["replace_column_name"] = out_name
+
+        new_node["parameters"]["rules"] = re.sub(
+            r'column\(["\'](.*?)["\']\)',
+            lambda m: f'${m.group(1)}$',
+            original_expr
+        )
+
+        # If the expression contains any string function
+        if re.search(r'replace\(|replaceChars\(|substr\(', new_node["parameters"]["rules"]):
+            new_node["node_name"] = "String Manipulation"
+            new_node["parameters"]["mapping"] = get_column_mapping_and_parameters(new_node)
+            nodes_info.append(new_node)
+
+        # If the expression contains any math formula
+        elif re.search(r'(?:\$\w+\$|\d+(?:\.\d+)?)\s*([\+\-\*/])\s*(?:\$\w+\$|\d+(?:\.\d+)?)', new_node["parameters"]["rules"]):
+            new_node["node_name"] = "Math Formula"
+            nodes_info = extract_math_formula_node_settings(new_node, model, namespace, nodes_info,
+                                                            new_node["parameters"]["rules"])
+
+        # Set in_columns and out_columns based on outputName
+        out_columns = [{"column_name": out_name, "column_type": "xstring"}]
+        new_node["parameters"]["in_columns"] = out_columns
+        new_node["parameters"]["out_columns"] = out_columns
+
+    return nodes_info
+
+
 def extract_binner_node_settings(node_info: dict, model: elementTree.Element, namespace: dict,
                                  nodes_info: list) -> list:
     """
@@ -773,7 +820,7 @@ def extract_binner_node_settings(node_info: dict, model: elementTree.Element, na
 
 
 def extract_math_formula_node_settings(node_info: dict, model: elementTree.Element, namespace: dict,
-                                       nodes_info: list) -> list:
+                                       nodes_info: list, rule: str = None) -> list:
     """
     Extracts the node settings from the settings file of a KNIME Math Formula node.
 
@@ -782,6 +829,7 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
         model (elementTree.Element): The data model XML element.
         namespace (dict): The namespace for the XML file.
         nodes_info (list): List of dictionaries with the node settings.
+        rule (str): The rule to extract the settings from.
 
     Returns:
         list: List of dictionaries with the node settings.
@@ -792,8 +840,15 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
         replaced_column_entry = model.find(".//knime:entry[@key='replaced_column']", namespace)
         append_column_entry = model.find(".//knime:entry[@key='append_column']", namespace)
 
+        # Use the rule passed as argument if it is not None
+        if rule is not None:
+            expression = rule
+
         if expression_entry is not None:
-            expression = expression_entry.attrib["value"]
+            if rule is None:
+                expression = expression_entry.attrib["value"]
+
+            print("EXPRESSION: ", expression)
             # Extract operands and operator from the expression
             match = re.search(r'(\$[^$]+\$|[^$]+)\s*([\+\-\*/])\s*(\$[^$]+\$|[^$]+)', expression)
             if match:
@@ -853,6 +908,8 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
         elif append_column_entry is not None and append_column_entry.attrib["value"].lower() not in ["false",
                                                                                                      "true"]:
             out_column = append_column_entry.attrib["value"]
+        elif "replace_column_name" in node_info["parameters"]:
+            out_column = node_info["parameters"]["replace_column_name"]
 
         if out_column is not None:
             node_info["parameters"]["out_column"] = out_column

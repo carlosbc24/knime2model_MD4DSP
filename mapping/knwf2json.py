@@ -4,7 +4,7 @@ import zipfile
 import xml.etree.ElementTree as elementTree
 from utils.knime_nodes_data_extraction import extract_input_output_node_settings, extract_imputation_node_settings, \
     extract_row_filter_node_settings, extract_mapping_node_settings, extract_binner_node_settings, \
-    extract_math_formula_node_settings, extract_columns_data
+    extract_math_formula_node_settings, extract_columns_data, extract_column_expressions_node_settings
 from utils.logger import print_and_log, print_and_log_dict
 
 
@@ -266,13 +266,8 @@ def extract_node_settings(settings_path: str) -> list[dict]:
             nodes_info.append(node_info)
 
         elif "Column Expressions" in node_info["node_name"]:
-            # Extract the included and excluded columns
-            included_names, excluded_names = extract_columns_data(model, namespace)
-            node_info["parameters"]["in_columns"] = included_names + excluded_names
-            node_info["parameters"]["out_columns"] = included_names
-
-            print_and_log_dict(node_info)
-            nodes_info.append(node_info)
+            # Extract the settings for the column expressions
+            nodes_info = extract_column_expressions_node_settings(node_info, model, namespace, nodes_info)
 
         elif "Missing Value Column Filter" in node_info["node_name"]:
             # Extract the missing value threshold
