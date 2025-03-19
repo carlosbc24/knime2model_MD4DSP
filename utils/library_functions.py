@@ -94,8 +94,10 @@ def get_library_transformation_name(json_file_path: str, node: dict, index: int)
                   node_name == "Numeric Binner" or node_name == "String Replacer"):
                 return function[node_name].get("library_transformation_name")
 
-            # Just mapped sum and substract operations from Math Formula KNIME node when the operation has 2 operands
-            elif node_name == "Math Formula" and node.get("parameters", {}).get("operator") in ["SUM", "SUBSTRACT"]:
+            # Just mapped sum, substract, multiply and divide operations from Math Formula KNIME node when the
+            # operation has 2 operands
+            elif node_name == "Math Formula" and node.get("parameters", {}).get("operator") in ["SUM", "SUBSTRACT",
+                                                                                                "MULTIPLY", "DIVIDE"]:
                 if node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldFixValue":
                     return "mathOperationFieldFixValue"
                 elif node.get("parameters", {}).get("mathOpTransformation") == "mathOperationFieldField":
