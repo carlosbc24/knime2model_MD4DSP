@@ -34,8 +34,16 @@
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         {% for m_parameter in dataprocessing.mapping.mapping_parameters %}
+        {% if dataprocessing.mapping.map_operation == "SUBSTRING" %}
+        {% set subStr_val = "true" %}
+        {% elif dataprocessing.mapping.map_operation == "VALUE_MAPPING" %}
+        {% set subStr_val = "false" %}
+        {% else %}
+        {% set subStr_val = "false" %}
+        {% endif %}
         <value
             xsi:type="Contract:FixValue"
+            subStr="{{ subStr_val }}"
             value="{{ m_parameter.key }}">
           <valueFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
