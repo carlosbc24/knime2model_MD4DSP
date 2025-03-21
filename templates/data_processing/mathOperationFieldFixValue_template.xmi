@@ -211,6 +211,8 @@
           <valueResult
               xsi:type="Contract:MathOperation"
               mathOp="SUBSTRACT">
+
+            {% if dataprocessing.math_op.first_operand.type == 'column' %}
             <firstOperand
                 xsi:type="Contract:OpField"
                 name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_INV_THEN_OP_FIELD">
@@ -218,21 +220,47 @@
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
               <field
                   dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"/>
-              <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
             </firstOperand>
-            <secondOperand
+            {% elif dataprocessing.math_op.first_operand.type == 'fixed_value' %}
+            <firstOperand
                 xsi:type="Contract:OpFixValue"
-                name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_INV_THEN_FIX_VALUE">
+                name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_INV_THEN_OP_FIX_VALUE">
+              <opFixValueDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
               <value
                   value="{{ dataprocessing.math_op.fix_value }}"
                   dataType="Double">
                 <valueFieldDef
                     href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
               </value>
+            </firstOperand>
+            {% endif %}
+
+
+            {% if dataprocessing.math_op.second_operand.type == 'column' %}
+            <secondOperand
+                xsi:type="Contract:OpField"
+                name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_INV_THEN_OP_FIELD">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
+              <field
+                  dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"/>
+            </secondOperand>
+            {% elif dataprocessing.math_op.second_operand.type == 'fixed_value' %}
+            <secondOperand
+                xsi:type="Contract:OpFixValue"
+                name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_INV_THEN_OP_FIX_VALUE">
               <opFixValueDef
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
+              <value
+                  value="{{ dataprocessing.math_op.fix_value }}"
+                  dataType="Double">
+                <valueFieldDef
+                    href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
+              </value>
             </secondOperand>
+            {% endif %}
+
           </valueResult>
         </then>
       </contract>
