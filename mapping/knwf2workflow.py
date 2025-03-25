@@ -92,21 +92,22 @@ def main():
                                               mapped_nodes_info)
     # Process all workflows in the folder
     else:
-        for file in os.listdir(input_knwf_folder):
-            if file.endswith(".knwf"):
-                workflow_name, mapped_nodes, nodes_count, mapped_nodes_info = process_workflow(
-                    file, input_knwf_folder, output_json_folder, output_xmi_folder, include_contracts
-                )
-                # Store the mapping information for each workflow
-                workflows_summary.append({
-                    "workflow_name": workflow_name,
-                    "mapped_nodes_info": mapped_nodes_info
-                })
-                global_mapped_nodes_info = update_global_mapped_nodes_info(global_mapped_nodes_info, mapped_nodes_info)
-                if export_mapped_nodes_report:
-                    generate_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
-                    generate_detailed_workflow_report(detailed_wf_report_filepath, workflow_name,
-                                                      mapped_nodes, nodes_count, mapped_nodes_info)
+        for root, dirs, files in os.walk(input_knwf_folder):
+            for file in files:
+                if file.endswith(".knwf"):
+                    workflow_name, mapped_nodes, nodes_count, mapped_nodes_info = process_workflow(
+                        file, root, output_json_folder, output_xmi_folder, include_contracts
+                    )
+                    # Store the mapping information for each workflow
+                    workflows_summary.append({
+                        "workflow_name": workflow_name,
+                        "mapped_nodes_info": mapped_nodes_info
+                    })
+                    global_mapped_nodes_info = update_global_mapped_nodes_info(global_mapped_nodes_info, mapped_nodes_info)
+                    if export_mapped_nodes_report:
+                        generate_resumed_workflow_report(resumed_wf_report_filepath, workflow_name, mapped_nodes, nodes_count)
+                        generate_detailed_workflow_report(detailed_wf_report_filepath, workflow_name,
+                                                          mapped_nodes, nodes_count, mapped_nodes_info)
     generate_nodes_mapping_report(global_mapped_nodes_info, export_mapped_nodes_report)
     generate_nodes_mapping_chart(global_mapped_nodes_info)
     generate_workflow_nodes_mapping_table_report(workflows_summary)

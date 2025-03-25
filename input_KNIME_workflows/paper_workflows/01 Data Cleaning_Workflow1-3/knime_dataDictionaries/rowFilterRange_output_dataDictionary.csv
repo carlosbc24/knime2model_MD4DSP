@@ -1,0 +1,5 @@
+"Country","Region","Year","Infant_deaths","Under_five_deaths","Adult_mortality","Alcohol_consumption","Hepatitis_B","Measles","BMI","Polio","Diphtheria","Incidents_HIV","GDP_per_capita","Population_mln","Thinness_ten_nineteen_years","Thinness_five_nine_years","Schooling","Economy_status_Developed","Economy_status_Developing","Life_expectancy"
+"Sierra Leone","Africa",2010,107.2,160.6,425.103,3.48,86,60,22.6,84,86,1.11,536,6.42,8.3,8.2,3.1,0,1,49.4
+"Lesotho","Africa",2010,70.9,96.4,548.4965,2.75,93,81,24.7,92,93,12.44,996,2,7.2,7,5.6,0,1,45.1
+"Eswatini","Africa",2010,54.7,85.5,507.805,6.49,89,99,26.4,89,89,16.96,3304,1.06,5.4,5.6,5.7,0,1,46.6
+"Central African Republic","Africa",2010,99,145,474.065,1.96,45,64,22.4,46,45,1.9,532,4.39,9,8.9,3.6,0,1,47.3

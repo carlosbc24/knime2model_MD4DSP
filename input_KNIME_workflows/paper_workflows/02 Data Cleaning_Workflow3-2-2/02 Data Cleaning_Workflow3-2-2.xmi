@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow:Workflow
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Workflow="https://www.example.org/workflow"
+    xsi:schemaLocation="https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    name="02 Data Cleaning_Workflow3-2-2">
+  <dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      in="//@dataprocessing.0/@inputPort.0"
+      out="//@dataprocessing.0/@outputPort.0"
+      name="String Manipulation(Name with City)">
+    <inputPort
+        fileName="output/CSV_Reader_output_dataDictionary.csv"
+        name="String Manipulation from KNIME(Name with City)_input_dataDictionary"
+        out="//@dataprocessing.0/@outputPort.0">
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="String Manipulation(Name with City)_input_dataField"
+          displayName="Name with City">
+        <interval
+            rightMargin="1.0"
+            clousure="closedClosed"/>
+      </datafield>
+    </inputPort>
+    <outputPort
+        fileName="output/String_Manipulation_output_dataDictionary.csv"
+        name="String Manipulation(Name with City)_output_dataDictionary"
+        in="//@dataprocessing.0/@inputPort.0">
+      <datafield
+          xsi:type="Workflow:Continuous"
+          name="String Manipulation(Name with City)_output_dataField"
+          displayName="Name with City">
+        <interval
+            rightMargin="1.0"
+            clousure="closedClosed"/>
+      </datafield>
+    </outputPort>
+  </dataprocessing>
+</Workflow:Workflow>

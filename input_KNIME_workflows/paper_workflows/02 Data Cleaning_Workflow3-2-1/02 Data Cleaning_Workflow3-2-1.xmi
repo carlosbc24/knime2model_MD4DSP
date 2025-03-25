@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow:Workflow
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Contract="https://www.example.org/contract"
+    xmlns:Library="http://www.example.org/Library"
+    xmlns:Workflow="https://www.example.org/workflow"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    name="02 Data Cleaning_Workflow3-2-1">
+  <dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      in="//@dataprocessing.0/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.0/@outputPort.0/@datafield.0"
+      name="mapping(Tz database time zone)">
+    <inputPort
+        fileName="mapping_input_dataDictionary.csv"
+        name="mapping(Tz database time zone)_input_dataDictionary"
+        out="//@dataprocessing.0/@outputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="mapping(Tz database time zone)_input_dataField"
+          displayName="Tz database time zone"
+          out="//@dataprocessing.0/@outputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="mapping_output_dataDictionary.csv"
+        name="mapping(Tz database time zone)_output_dataDictionary"
+        in="//@dataprocessing.0/@inputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="mapping(Tz database time zone)_output_dataField"
+          displayName="Tz database time zone"
+          in="//@dataprocessing.0/@inputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.0/@outputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.4"/>
+    <parameter
+        xsi:type="Workflow:Map"
+        name="mapping(Tz database time zone)_param_/"
+        inValue="/"
+        outvalue="-"
+        mapOperation="SUBSTRING">
+      <mapDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
+    </parameter>
+    <contract
+        name="mapping(Tz database time zone)_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="mapping(Tz database time zone)_PRE_valueRange">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mapping(Tz database time zone)_PRE_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            value="/"
+            subStr="true">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="mapping(Tz database time zone)_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="mapping(Tz database time zone)_POST_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="mapping(Tz database time zone)_POST_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            value="/">
+          <valueFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="mapping(Tz database time zone)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="mapping(Tz database time zone)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mapping(Tz database time zone)_INV_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="mapping(Tz database time zone)_INV_output_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="mapping(Tz database time zone)_INV_IF_/">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:FixValue"
+              value="/">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="mapping(Tz database time zone)_INV_THEN_/">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:FixValue"
+              value="-">
+            <valueFieldDef
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+  </dataprocessing>
+</Workflow:Workflow>

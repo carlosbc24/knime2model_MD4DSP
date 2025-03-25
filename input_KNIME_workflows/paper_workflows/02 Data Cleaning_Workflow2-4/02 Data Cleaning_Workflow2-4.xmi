@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow:Workflow
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Contract="https://www.example.org/contract"
+    xmlns:Library="http://www.example.org/Library"
+    xmlns:Workflow="https://www.example.org/workflow"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    name="02 Data Cleaning_Workflow2-4">
+  <dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      in="//@dataprocessing.0/@inputPort.0"
+      out="//@dataprocessing.0/@outputPort.0"
+      name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)">
+    <inputPort
+        fileName="columnFilter_input_dataDictionary.csv"
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_input_dataDictionary"
+        out="//@dataprocessing.0/@outputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Airline)_input_dataField"
+          displayName="Airline">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Airline ID)_input_dataField"
+          displayName="Airline ID">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Source airport)_input_dataField"
+          displayName="Source airport">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Source airport ID)_input_dataField"
+          displayName="Source airport ID">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Destination airport)_input_dataField"
+          displayName="Destination airport">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Destination airport ID)_input_dataField"
+          displayName="Destination airport ID">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Codeshare)_input_dataField"
+          displayName="Codeshare">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Stops)_input_dataField"
+          displayName="Stops">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="columnFilter(Equipment)_input_dataField"
+          displayName="Equipment">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="columnFilter_output_dataDictionary.csv"
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_output_dataDictionary"
+        in="//@dataprocessing.0/@inputPort.0">
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.3"/>
+    <parameter
+        xsi:type="Workflow:FieldRange"
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_param_field"
+        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8">
+      <fieldDef
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
+    </parameter>
+    <contract
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:FieldRange"
+          name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_PRE_fieldRange">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <fieldRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
+      </contract>
+    </contract>
+    <contract
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:FieldRange"
+          type="POSTCONDITION"
+          name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_POST_fieldRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <fieldRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
+        <field
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
+      </contract>
+    </contract>
+  </dataprocessing>
+</Workflow:Workflow>
