@@ -55,52 +55,74 @@
     </parameter>
   {% if dataprocessing.include_contracts %}
   {% for out_column in dataprocessing.out_columns %}
-    <contract
-        name="stringToNumber({{ out_column.name }})_INVARIANT">
-      <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
-      <contract
-          xsi:type="Contract:Condition"
-          type="INVARIANT"
-          name="INV_condition_{{ out_column.name }}">
-        <in
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
-            name="INV_input_datafield_{{ out_column.name }}">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@in.0"/>
+  {% set in_index = loop.index0 %}
+  {% set contract_index_first = dataprocessing.out_columns|length * loop.index0 %}
+  {% set contract_index_second = dataprocessing.out_columns|length * loop.index0 + 1 %}
+  <contract name="stringToNumber({{ out_column.name }})_specialValue_INVARIANT">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
+      <contract xsi:type="Contract:Condition"
+                type="INVARIANT"
+                name="INV_specialValue_condition_{{ out_column.name }}">
+        <in xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
+            name="INV_specialValue_input_datafield_{{ out_column.name }}">
+          <dataFieldDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
-        <out
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"
-            name="INV_output_datafield_{{ out_column.name }}">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
+        <out xsi:type="Contract:DataField"
+             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
+             name="INV_specialValue_output_datafield_{{ out_column.name }}">
+          <dataFieldDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
         </out>
-        <conditionDef
-            href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
-        <if
-            belongOp="NOTBELONG"
-            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ loop.index0 }}/@contract/@then.0"
-            name="INV_if_{{ out_column.name }}">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+        <conditionDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
+        <if belongOp="NOTBELONG"
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_first }}/@contract/@then.0"
+            name="INV_specialValue_if_{{ out_column.name }}">
+          <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition xsi:type="Contract:SpecialValue">
+            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
-        <then
-            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ loop.index0 }}/@contract/@if.0"
-            name="INV_if_{{ out_column.name }}"
-            belongOp="NOTBELONG">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
+        <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_first }}/@contract/@if.0"
+              name="INV_specialValue_then_{{ out_column.name }}"
+              belongOp="NOTBELONG">
+          <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <valueResult xsi:type="Contract:SpecialValue">
+            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+    <contract name="stringToNumber({{ out_column.name }})_castType_INVARIANT">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
+      <contract xsi:type="Contract:Condition"
+                type="INVARIANT"
+                name="INV_castType_condition_{{ out_column.name }}">
+        <in xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
+            name="INV_castType_input_datafield_{{ out_column.name }}">
+          <dataFieldDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <out xsi:type="Contract:DataField"
+             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
+             name="INV_castType_output_datafield_{{ out_column.name }}">
+          <dataFieldDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
+        <if belongOp="NOTBELONG"
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@then.0"
+            name="INV_castType_if_{{ out_column.name }}">
+          <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition xsi:type="Contract:CastType">
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@if.0"
+              name="INV_castType_then_{{ out_column.name }}"
+              belongOp="NOTBELONG">
+          <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <valueResult xsi:type="Contract:CastType"
+                       type="Integer">
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
