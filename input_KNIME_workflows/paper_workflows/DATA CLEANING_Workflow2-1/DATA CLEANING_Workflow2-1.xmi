@@ -8,18 +8,16 @@
     xmlns:Workflow="https://www.example.org/workflow"
     xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="DATA CLEANING_Workflow2-1">
-    <dataprocessing
+  <dataprocessing
       xsi:type="Workflow:DataProcessing"
-      outgoing=""
-      incoming=""
-      in="//@dataprocessing.0/@inputPort.0/@datafield.0 "
-      out="//@dataprocessing.0/@outputPort.0/@datafield.0 "
+      outgoing="//@link.0"
+      in="//@dataprocessing.0/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.0/@outputPort.0/@datafield.0"
       name="rowFilterMissing(marital-status)">
     <inputPort
-        fileName="CSV_Reader_output_dataDictionary.csv"
+        fileName="rowFilterMissing_input_dataDictionary.csv"
         name="rowFilterMissing(marital-status)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
-      
       <datafield
           xsi:type="Workflow:Continuous"
           name="rowFilterMissing(marital-status)_input_dataField"
@@ -30,15 +28,13 @@
             rightMargin="1.0"
             clousure="closedClosed"/>
       </datafield>
-        
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="Row_Filter_(deprecated)0_output_dataDictionary.csv"
+        fileName="rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterMissing(marital-status)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
-      
       <datafield
           xsi:type="Workflow:Continuous"
           name="rowFilterMissing(marital-status)_output_dataField"
@@ -49,7 +45,6 @@
             rightMargin="1.0"
             clousure="closedClosed"/>
       </datafield>
-        
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0"/>
     </outputPort>
@@ -68,8 +63,6 @@
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@matchingvaluedef.0"/>
       </matchingvalue>
     </parameter>
-    
-    
     <contract
         name="rowFilterMissing(marital-status)_PRECONDITION">
       <contractDefinition
@@ -87,7 +80,7 @@
         </in>
         <value
             xsi:type="Contract:SpecialValue">
-            <quantity
+          <quantity
               xsi:type="Contract:Percent"
               operator="less"
               percent="60.0">
@@ -126,42 +119,20 @@
             href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
-    
-    
-  </dataprocessing>
-<dataprocessing xsi:type="Workflow:DataProcessing"
-                outgoing=""
-                incoming=""
-                in="//@dataprocessing.1/@inputPort.0"
-                out="//@dataprocessing.1/@outputPort.0"
-                name="CSV Reader()">
-    <inputPort fileName="/Users/santos/Downloads/adult.csv"
-               name="CSV Reader from KNIME()_input_dataDictionary"
-               out="//@dataprocessing.1/@outputPort.0">
-        
-    </inputPort>
-    <outputPort fileName="CSV_Reader1_output_dataDictionary.csv"
-                name="CSV Reader()_output_dataDictionary"
-                in="//@dataprocessing.1/@inputPort.0">
-        
-    </outputPort>
   </dataprocessing>
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
-      outgoing=""
-      incoming=""
-      in="//@dataprocessing.2/@inputPort.0/@datafield.0 "
-      out="//@dataprocessing.2/@outputPort.0/@datafield.0 "
+      incoming="//@link.0"
+      in="//@dataprocessing.1/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.1/@outputPort.0/@datafield.0"
       name="rowFilterPrimitive(marital-status)">
     <inputPort
-        fileName="Row_Filter_(deprecated)_output_dataDictionary.csv"
+        fileName="rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterPrimitive(marital-status)_input_dataDictionary"
-        out="//@dataprocessing.2/@outputPort.0">
-      
+        out="//@dataprocessing.1/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
           name="rowFilterPrimitive(marital-status)_input_dataField"
-          dataType="String"
           displayName="marital-status">
         <invalidValues
             value="Divorced"/>
@@ -172,19 +143,16 @@
             rightMargin="202.0"
             clousure="closedClosed"/>
       </datafield>
-        
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="Row_Filter_(deprecated)2_output_dataDictionary.csv"
+        fileName="rowFilterPrimitive_output_dataDictionary.csv"
         name="rowFilterPrimitive(marital-status)_output_dataDictionary"
-        in="//@dataprocessing.2/@inputPort.0">
-      
+        in="//@dataprocessing.1/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
           name="rowFilterPrimitive(marital-status)_output_dataField"
-          dataType="String"
           displayName="marital-status">
         <invalidValues
             value="Divorced"/>
@@ -195,7 +163,6 @@
             rightMargin="202.0"
             clousure="closedClosed"/>
       </datafield>
-        
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.2/@outputPort.0"/>
     </outputPort>
@@ -204,8 +171,8 @@
         href="library_validation.xmi#//@dataprocessingdefinition.2"/>
     <parameter
         xsi:type="Workflow:FilterValue"
-        filterType="INCLUDE"
-        name="rowFilterPrimitive(marital-status)_param_rowFilterPrimitive">
+        name="rowFilterPrimitive(marital-status)_param_rowFilterPrimitive"
+        filterType="INCLUDE">
       <filterValueDef
           href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0"/>
       <primitive
@@ -215,8 +182,6 @@
             href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0/@primitivedef.0"/>
       </primitive>
     </parameter>
-    
-    
     <contract
         name="rowFilterPrimitive(marital-status)_PRECONDITION">
       <contractDefinition
@@ -227,7 +192,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
             name="rowFilterPrimitive(marital-status)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@in.0"/>
@@ -253,7 +218,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
             name="POST_input_datafield_row_filter">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@in.0"/>
@@ -268,17 +233,8 @@
             href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
-    
-    
   </dataprocessing>
-
-    <link source="//@dataprocessing.0"
-      target="//@dataprocessing.2"
+  <link source="//@dataprocessing.0"
+      target="//@dataprocessing.1"
       name="Row Filter (deprecated)-Row Filter (deprecated)"/>
-
-<link source="//@dataprocessing.1"
-      target="//@dataprocessing.0"
-      name="CSV Reader-Row Filter (deprecated)"/>
-
-
 </Workflow:Workflow>

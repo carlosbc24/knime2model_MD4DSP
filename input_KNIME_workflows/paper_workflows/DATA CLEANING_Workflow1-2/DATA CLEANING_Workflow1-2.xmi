@@ -8,18 +8,16 @@
     xmlns:Workflow="https://www.example.org/workflow"
     xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="DATA CLEANING_Workflow1-2">
-    <dataprocessing
+  <dataprocessing
       xsi:type="Workflow:DataProcessing"
-      outgoing=""
-      incoming=""
-      in="//@dataprocessing.0/@inputPort.0/@datafield.0 "
-      out="//@dataprocessing.0/@inputPort.0/@datafield.0 "
+      outgoing="//@link.0"
+      in="//@dataprocessing.0/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.0/@inputPort.0/@datafield.0"
       name="binner(native-country)">
     <inputPort
-        fileName="CSV_Reader_output_dataDictionary.csv"
+        fileName="binner_input_dataDictionary.csv"
         name="binner(native-country)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
-      
       <datafield
           xsi:type="Workflow:Continuous"
           name="binner(native-country)_input_dataField"
@@ -31,15 +29,13 @@
         <interval
             rightMargin="8.0"/>
       </datafield>
-      
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="Rule_Engine0_output_dataDictionary.csv"
+        fileName="binner_output_dataDictionary.csv"
         name="binner(native-country)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
-      
       <datafield
           xsi:type="Workflow:Categorical"
           name="binner(prediction)_output_dataField"
@@ -48,14 +44,12 @@
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@outputPort.0/@datafielddefinition.0"/>
       </datafield>
-      
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
-    
     <parameter
         xsi:type="Workflow:DerivedField"
         name="binner(native-country)_param_derivedField"
@@ -63,8 +57,6 @@
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
     </parameter>
-    
-    
     <parameter
         xsi:type="Workflow:DiscretizeBin"
         name="binner(native-country)_param_bin_Unknown"
@@ -72,11 +64,9 @@
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          clousure="openOpen"
-          leftMargin="-1000000"
-          rightMargin="1000000"/>
+          leftMargin="-1000000.0"
+          rightMargin="1000000.0"/>
     </parameter>
-    
     <parameter
         xsi:type="Workflow:DiscretizeBin"
         name="binner(native-country)_param_bin_Unknown"
@@ -84,15 +74,10 @@
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          clousure="closedOpen"
-          leftMargin="40"
-          rightMargin="1000000"/>
+          leftMargin="40.0"
+          rightMargin="1000000.0"
+          clousure="closedOpen"/>
     </parameter>
-    
-
-
-  
-  
     <contract
         name="binner(native-country)_PRECONDITION">
       <contractDefinition
@@ -136,8 +121,7 @@
         </in>
         <value
             xsi:type="Contract:Interval"
-            rightMargin="1000.0"
-            closureType="openOpen">
+            rightMargin="1000.0">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -169,7 +153,6 @@
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
-        
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
             name="binner(native-country)_INV_IF_PART-TIME">
@@ -177,9 +160,22 @@
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
               xsi:type="Contract:Interval"
-              leftMargin="-1000000"
-              rightMargin="1000000"
-              closureType="openOpen">
+              leftMargin="-1000000.0"
+              rightMargin="1000000.0">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.1"
+            name="binner(native-country)_INV_IF_FULL-TIME">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:Interval"
+              leftMargin="40.0"
+              rightMargin="1000000.0"
+              closureType="closedOpen">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
@@ -196,21 +192,6 @@
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
-        
-        <if
-            then="//@dataprocessing.0/@contract.2/@contract/@then.1"
-            name="binner(native-country)_INV_IF_FULL-TIME">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
-              xsi:type="Contract:Interval"
-              leftMargin="40"
-              rightMargin="1000000"
-              closureType="closedOpen">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
-        </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.1"
             name="binner(native-country)_INV_THEN_FULL-TIME">
@@ -223,50 +204,58 @@
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
-        
       </contract>
     </contract>
-  
-  
   </dataprocessing>
-<dataprocessing xsi:type="Workflow:DataProcessing"
-                outgoing=""
-                incoming=""
-                in="//@dataprocessing.1/@inputPort.0"
-                out="//@dataprocessing.1/@outputPort.0"
-                name="CSV Reader()">
-    <inputPort fileName="/Users/santos/Downloads/adult.csv"
-               name="CSV Reader from KNIME()_input_dataDictionary"
-               out="//@dataprocessing.1/@outputPort.0">
-        
+  <dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      outgoing="//@link.1"
+      incoming="//@link.0"
+      in="//@dataprocessing.1/@inputPort.0/@datafield.0"
+      out="//@dataprocessing.1/@outputPort.0/@datafield.0"
+      name="mapping(native-country)">
+    <inputPort
+        fileName="binner_output_dataDictionary.csv"
+        name="mapping(native-country)_input_dataDictionary"
+        out="//@dataprocessing.1/@outputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="mapping(native-country)_input_dataField"
+          displayName="native-country"
+          out="//@dataprocessing.1/@outputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
     </inputPort>
-    <outputPort fileName="CSV_Reader1_output_dataDictionary.csv"
-                name="CSV Reader()_output_dataDictionary"
-                in="//@dataprocessing.1/@inputPort.0">
-        
+    <outputPort
+        fileName="columnExpressions_output_dataDictionary.csv"
+        name="mapping(native-country)_output_dataDictionary"
+        in="//@dataprocessing.1/@inputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="mapping(native-country)_output_dataField"
+          displayName="native-country"
+          in="//@dataprocessing.1/@inputPort.0/@datafield.0">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.0/@outputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.4/@outputPort.0"/>
     </outputPort>
-  </dataprocessing>
-<dataprocessing xsi:type="Workflow:DataProcessing"
-                outgoing=""
-                incoming=""
-                in="//@dataprocessing.2/@inputPort.0/@datafield.0"
-                out="//@dataprocessing.2/@outputPort.0/@datafield.0"
-                name="mapping(native-country)">
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.4"/>
-    
     <parameter
         xsi:type="Workflow:Map"
         name="mapping(native-country)_param_-"
-        mapOperation="SUBSTRING"
         inValue="-"
-        outvalue=" ">
+        outvalue=" "
+        mapOperation="SUBSTRING">
       <mapDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
-    
-    
     <contract
         name="mapping(native-country)_PRECONDITION">
       <contractDefinition
@@ -276,23 +265,18 @@
           name="mapping(native-country)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
             name="mapping(native-country)_PRE_input_datafield">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
-        
-        
-        
-        
         <value
             xsi:type="Contract:FixValue"
-            subStr="true"
-            value="-">
+            value="-"
+            subStr="true">
           <valueFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
-        
         <valueRangeDef
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition"/>
       </contract>
@@ -308,19 +292,17 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
             name="mapping(native-country)_POST_input_datafield">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
-        
         <value
             xsi:type="Contract:FixValue"
             value="-">
           <valueFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
-        
         <valueRangeDef
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition"/>
       </contract>
@@ -335,23 +317,22 @@
           name="mapping(native-country)_INV_condition">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
             name="mapping(native-country)_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
             name="mapping(native-country)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition"/>
-        
         <if
-            then="//@dataprocessing.2/@contract.2/@contract/@then.0"
+            then="//@dataprocessing.1/@contract.2/@contract/@then.0"
             name="mapping(native-country)_INV_IF_-">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
@@ -363,70 +344,36 @@
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.2/@contract.2/@contract/@if.0"
+            if="//@dataprocessing.1/@contract.2/@contract/@if.0"
             name="mapping(native-country)_INV_THEN_-">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:FixValue"
-              value=" "
-              dataType="String">
+              value=" ">
             <valueFieldDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
-        
       </contract>
     </contract>
-    
-    <inputPort fileName="Rule_Engine_output_dataDictionary.csv"
-               name="mapping(native-country)_input_dataDictionary"
-               out="//@dataprocessing.2/@outputPort.0">
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="mapping(native-country)_input_dataField"
-          displayName="native-country"
-          out="//@dataprocessing.2/@outputPort.0/@datafield.0">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0/@datafielddefinition.0"/>
-      </datafield>
-      <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
-    </inputPort>
-    <outputPort
-        fileName="String_Manipulation2_output_dataDictionary.csv"
-        name="mapping(native-country)_output_dataDictionary"
-        in="//@dataprocessing.2/@inputPort.0">
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="mapping(native-country)_output_dataField"
-          displayName="native-country"
-          in="//@dataprocessing.2/@inputPort.0/@datafield.0">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.0/@outputPort.0/@datafielddefinition.0"/>
-      </datafield>
-      <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.4/@outputPort.0"/>
-    </outputPort>
   </dataprocessing>
-<dataprocessing
+  <dataprocessing
       xsi:type="Workflow:DataProcessing"
-      incoming=""
-      outgoing=""
-      in="//@dataprocessing.3/@inputPort.0"
-      out="//@dataprocessing.3/@outputPort.0"
+      incoming="//@link.1"
+      in="//@dataprocessing.2/@inputPort.0"
+      out="//@dataprocessing.2/@outputPort.0"
       name="mathOperationFieldFixValue(year-of-birth)">
     <inputPort
-        fileName="String_Manipulation_output_dataDictionary.csv"
+        fileName="columnExpressions_output_dataDictionary.csv"
         name="mathOperationFieldFixValue(year-of-birth)_input_dataDictionary"
-        out="//@dataprocessing.3/@outputPort.0">
-      
+        out="//@dataprocessing.2/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
           name="mathOperationFieldField(age)_input1_dataField"
           dataType="Integer"
           displayName="age"
-          out="//@dataprocessing.3/@outputPort.0/@datafield.0">
+          out="//@dataprocessing.2/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
@@ -434,20 +381,19 @@
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
-      
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="Math_Formula3_output_dataDictionary.csv"
+        fileName="columnExpressions_output_dataDictionary.csv"
         name="mathOperationFieldFixValue(year-of-birth)_output_dataDictionary"
-        in="//@dataprocessing.3/@inputPort.0">
+        in="//@dataprocessing.2/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
           name="mathOperationFieldField(year-of-birth)_output_dataField"
           dataType="Integer"
           displayName="year-of-birth"
-          in="//@dataprocessing.3/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.2/@inputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
@@ -465,8 +411,6 @@
         xsi:type="Workflow:MathOp"
         name="mathOperationFieldFixValue(year-of-birth)_param_mathop"
         operator="SUBSTRACT">
-
-      
       <firstOperand
           xsi:type="Workflow:OpFixValue"
           name="mathOperationFieldFixValue(year-of-birth)_param_op_fix_value">
@@ -479,19 +423,13 @@
               href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand/@value"/>
         </value>
       </firstOperand>
-      
-
-
-      
       <secondOperand
           xsi:type="Workflow:OpField"
           name="mathOperationFieldFixValue(year-of-birth)_param_op_field"
-          datafield="//@dataprocessing.3/@inputPort.0/@datafield.0">
+          datafield="//@dataprocessing.2/@inputPort.0/@datafield.0">
         <opFieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
       </secondOperand>
-      
-
       <mathOpDef
           href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
@@ -504,7 +442,7 @@
           name="mathOperationFieldFixValue(year-of-birth)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.3/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
             name="mathOperationFieldFixValue(year-of-birth)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
@@ -529,7 +467,7 @@
           belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.3/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
             name="mathOperationFieldFixValue(year-of-birth)_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
@@ -553,14 +491,14 @@
           name="mathOperationFieldFixValue(year-of-birth)_INV_condition">
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.3/@inputPort.0/@datafield.0"
+            dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
             name="mathOperationFieldFixValue(year-of-birth)_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.3/@outputPort.0/@datafield.0"
+            dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
             name="mathOperationFieldFixValue(year-of-birth)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
@@ -568,7 +506,7 @@
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
-            then="//@dataprocessing.3/@contract.2/@contract/@then.0"
+            then="//@dataprocessing.2/@contract.2/@contract/@then.0"
             name="mathOperationFieldFixValue(year-of-birth)_INV_IF">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
@@ -580,58 +518,42 @@
           </valueCondition>
         </if>
         <then
-            if="//@dataprocessing.3/@contract.2/@contract/@if.0"
+            if="//@dataprocessing.2/@contract.2/@contract/@if.0"
             name="mathOperationFieldFixValue(year-of-birth)_INV_THEN">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:MathOperation"
               mathOp="SUBSTRACT">
-
-            
             <firstOperand
                 xsi:type="Contract:OpFixValue"
                 name="mathOperationFieldFixValue(year-of-birth)_INV_THEN_OP_FIX_VALUE">
-              <opFixValueDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
               <value
                   value="1994"
                   dataType="Double">
                 <valueFieldDef
                     href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
               </value>
+              <opFixValueDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
             </firstOperand>
-            
-
-
-            
             <secondOperand
                 xsi:type="Contract:OpField"
                 name="mathOperationFieldFixValue(year-of-birth)_INV_THEN_OP_FIELD">
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
               <field
-                  dataField="//@dataprocessing.3/@inputPort.0/@datafield.0"/>
+                  dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"/>
             </secondOperand>
-            
-
           </valueResult>
         </then>
       </contract>
     </contract>
   </dataprocessing>
-
-    <link source="//@dataprocessing.0"
-      target="//@dataprocessing.2"
+  <link source="//@dataprocessing.0"
+      target="//@dataprocessing.1"
       name="Rule Engine-String Manipulation"/>
-
-<link source="//@dataprocessing.1"
-      target="//@dataprocessing.0"
-      name="CSV Reader-Rule Engine"/>
-
-<link source="//@dataprocessing.2"
-      target="//@dataprocessing.3"
+  <link source="//@dataprocessing.1"
+      target="//@dataprocessing.2"
       name="String Manipulation-Math Formula"/>
-
-
 </Workflow:Workflow>
