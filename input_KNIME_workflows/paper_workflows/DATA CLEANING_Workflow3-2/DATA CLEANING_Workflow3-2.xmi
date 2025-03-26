@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow:Workflow
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Contract="https://www.example.org/contract"
+    xmlns:Library="http://www.example.org/Library"
+    xmlns:Workflow="https://www.example.org/workflow"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    name="DATA CLEANING_Workflow3-2">
+    <dataprocessing xsi:type="Workflow:DataProcessing"
+                outgoing=""
+                incoming=""
+                in="//@dataprocessing.0/@inputPort.0"
+                out="//@dataprocessing.0/@outputPort.0"
+                name="Table Reader()">
+    <inputPort fileName="/Users/santos/Downloads/adult_education.table"
+               name="Table Reader from KNIME()_input_dataDictionary"
+               out="//@dataprocessing.0/@outputPort.0">
+        
+    </inputPort>
+    <outputPort fileName="Table_Reader0_output_dataDictionary.csv"
+                name="Table Reader()_output_dataDictionary"
+                in="//@dataprocessing.0/@inputPort.0">
+        
+    </outputPort>
+  </dataprocessing>
+<dataprocessing xsi:type="Workflow:DataProcessing"
+                outgoing=""
+                incoming=""
+                in="//@dataprocessing.1/@inputPort.0"
+                out="//@dataprocessing.1/@outputPort.0"
+                name="columnFilter(ID, education, education-num)">
+    <inputPort fileName="Table_Reader_output_dataDictionary.csv"
+               name="columnFilter(ID, education, education-num)_input_dataDictionary"
+               out="//@dataprocessing.1/@outputPort.0">
+        
+        
+        <datafield xsi:type="Workflow:Categorical"
+                 name="columnFilter(ID)_input_dataField"
+                 displayName="ID"
+                 dataType="String">
+          <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+        
+        
+        
+        <datafield xsi:type="Workflow:Categorical"
+                 name="columnFilter(education)_input_dataField"
+                 displayName="education"
+                 dataType="String">
+          <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+        
+        
+        
+        <datafield xsi:type="Workflow:Categorical"
+                 name="columnFilter(education-num)_input_dataField"
+                 displayName="education-num"
+                 dataType="String">
+          <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
+      </datafield>
+        
+        
+      <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
+    </inputPort>
+    <outputPort fileName="Column_Filter1_output_dataDictionary.csv"
+                name="columnFilter(ID, education, education-num)_output_dataDictionary"
+                in="//@dataprocessing.1/@inputPort.0">
+      <dataDictionaryDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition xsi:type="Library:Transformation"
+                              href="library_validation.xmi#//@dataprocessingdefinition.3"/>
+    <parameter xsi:type="Workflow:FieldRange"
+               name="columnFilter(ID, education, education-num)_param_field"
+               dataField="//@dataprocessing.1/@inputPort.0/@datafield.0 //@dataprocessing.1/@inputPort.0/@datafield.1 //@dataprocessing.1/@inputPort.0/@datafield.2 ">
+      <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
+    </parameter>
+    
+    <contract name="columnFilter(ID, education, education-num)_PRECONDITION">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
+      <contract xsi:type="Contract:FieldRange"
+                name="columnFilter(ID, education, education-num)_PRE_fieldRange">
+        <in xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.1/@inputPort.0">
+          <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.1"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.2"/>
+        
+      </contract>
+    </contract>
+    <contract name="columnFilter(ID, education, education-num)_POSTCONDITION">
+      <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
+      <contract xsi:type="Contract:FieldRange"
+                type="POSTCONDITION"
+                name="columnFilter(ID, education, education-num)_POST_fieldRange"
+                belongOp="NOTBELONG">
+        <in xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.1/@outputPort.0">
+          <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <fieldRangeDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.1"/>
+        
+        <field dataField="//@dataprocessing.1/@inputPort.0/@datafield.2"/>
+        
+      </contract>
+    </contract>
+    
+  </dataprocessing>
+
+    <link source="//@dataprocessing.0"
+      target="//@dataprocessing.1"
+      name="Table Reader-Column Filter"/>
+
+
+</Workflow:Workflow>
