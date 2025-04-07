@@ -230,7 +230,7 @@
               <value
                   value="{{ dataprocessing.math_op.fix_value }}"
                   dataType="Double">
-                <valueFieldDef
+                <fixValueDef
                     href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
               </value>
             </firstOperand>
@@ -255,7 +255,7 @@
               <value
                   value="{{ dataprocessing.math_op.fix_value }}"
                   dataType="Double">
-                <valueFieldDef
+                <fixValueDef
                     href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
               </value>
             </secondOperand>

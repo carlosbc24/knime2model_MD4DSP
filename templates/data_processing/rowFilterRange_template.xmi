@@ -114,7 +114,7 @@
             xsi:type="Contract:FixValue"
             value="-216"
             dataType="{{ in_column.type }}">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef

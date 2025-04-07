@@ -87,7 +87,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="{{ dataprocessing.row_filter.pattern }}">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -113,7 +113,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="{{ dataprocessing.row_filter.pattern }}">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef

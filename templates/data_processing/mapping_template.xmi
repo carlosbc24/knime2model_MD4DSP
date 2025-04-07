@@ -45,7 +45,7 @@
             xsi:type="Contract:FixValue"
             subStr="{{ subStr_val }}"
             value="{{ m_parameter.key }}">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         {% endfor %}
@@ -73,7 +73,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="{{ m_parameter.key }}">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         {% endfor %}
@@ -114,7 +114,7 @@
           <valueCondition
               xsi:type="Contract:FixValue"
               value="{{ m_parameter.key }}">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
@@ -127,7 +127,7 @@
               xsi:type="Contract:FixValue"
               value="{{ m_parameter.value }}"
               dataType="String">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
