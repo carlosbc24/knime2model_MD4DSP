@@ -76,7 +76,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           name="rowFilterPrimitive({{ in_column.name }})_PRE_valueRange"
-          belongOp="NOTBELONG">
+          belongOp="BELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
@@ -102,7 +102,7 @@
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
           name="rowFilterPrimitive({{ in_column.name }})_POST_valueRange"
-          belongOp="NOTBELONG">
+          belongOp="BELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"

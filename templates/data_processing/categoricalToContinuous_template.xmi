@@ -108,7 +108,7 @@
           <dataFieldDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@out.0"/>
         </out>
         <conditionDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition"/>
-        <if belongOp="NOTBELONG"
+        <if belongOp="BELONG"
             then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@then.0"
             name="INV_castType_if_{{ out_column.name }}">
           <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
@@ -118,7 +118,7 @@
         </if>
         <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@if.0"
               name="INV_castType_then_{{ out_column.name }}"
-              belongOp="NOTBELONG">
+              belongOp="BELONG">
           <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
           <valueResult xsi:type="Contract:CastType"
                        type="Integer">

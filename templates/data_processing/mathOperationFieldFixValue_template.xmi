@@ -150,7 +150,7 @@
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
           name="mathOperationFieldFixValue({{ dataprocessing.math_op.out_column }})_POST_valueRange"
-          belongOp="NOTBELONG">
+          belongOp="BELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
