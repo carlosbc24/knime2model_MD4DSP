@@ -878,19 +878,16 @@ def extract_math_formula_node_settings(node_info: dict, model: elementTree.Eleme
                 elif operator == "/":
                     node_info["parameters"]["operator"] = "DIVIDE"
 
-                node_info["parameters"]["first_operand"] = {
+                node_info["parameters"]["operands"] = []
+
+                node_info["parameters"]["operands"].append({
                     "type": first_operand_type,
                     "value": first_operand.strip('$') if first_operand_type == "column" else first_operand
-                }
-                node_info["parameters"]["second_operand"] = {
+                })
+                node_info["parameters"]["operands"].append({
                     "type": second_operand_type,
                     "value": second_operand.strip('$') if second_operand_type == "column" else second_operand
-                }
-                if first_operand_type == "column" and second_operand_type == "column":
-                    node_info["parameters"]["mathOpTransformation"] = "mathOperationFieldField"
-                elif (first_operand_type == "column" and second_operand_type == "fixed_value") or (
-                        first_operand_type == "fixed_value" and second_operand_type == "column"):
-                    node_info["parameters"]["mathOpTransformation"] = "mathOperationFieldFixValue"
+                })
 
                 out_columns = []
                 if first_operand_type == "column":

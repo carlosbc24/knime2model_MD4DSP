@@ -34,8 +34,7 @@ def process_nodes(nodes: list, include_contracts: bool, node_flow_mapping: dict)
         node_name = node.get("node_name", f"Node_{index}")
 
         # Get library transformation name
-        library_transformation_name = get_library_transformation_name('library_hashing/library_function_hashing.json',
-                                                                      node, index)
+        library_transformation_name = get_library_transformation_name(node=node, index=index)
 
         print(f"Node: {node_name} -> Library transformation: {library_transformation_name}")
 

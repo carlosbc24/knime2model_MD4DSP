@@ -19,31 +19,25 @@
 	  "name": "imputeByNumericOp"
 	},
 	{
-	  "name": "imputeOutliersByClosest"
-	},
-	{
 	  "name": "categoricalToContinuous"
 	},
+    {
+	  "name": "imputeOutliersByClosest"
+    },
 	{
 	  "name": "binner"
 	},
 	{
 	  "name": "rowFilterRange"
 	},
-		{
-	  "name": "mathOperationFieldFixValue"
-	},
 	{
-	  "name": "mathOperationFieldField"
-	},
-	{
-	  "name": "mathOperationFieldFixValue"
-	},
-	{
-	  "name": "mathOperationFieldField"
+	  "name": "mathOperation"
 	},
 	{
 	  "name": "rowFilterMissing"
+	},
+	{
+	  "name": "join"
 	}
   ]
 }

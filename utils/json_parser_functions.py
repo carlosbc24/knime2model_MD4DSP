@@ -71,11 +71,9 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
             "imputationType": node["parameters"]["imputationType"],
             "fixStringValues": node["parameters"]["fixStringValues"]}
 
-    elif library_transformation_name in ["mathOperationFieldFixValue", "mathOperationFieldField"]:
-        math_op_dict = {"mathOpTransformation": node["parameters"]["mathOpTransformation"],
-                        "operator": node["parameters"]["operator"], "fix_value": node["parameters"]["fix_value"],
-                        "first_operand": node["parameters"]["first_operand"],
-                        "second_operand": node["parameters"]["second_operand"],
+    elif library_transformation_name == "mathOperation":
+        math_op_dict = {"operator": node["parameters"]["operator"], "fix_value": node["parameters"]["fix_value"],
+                        "operands": node["parameters"]["operands"],
                         "out_column": node["parameters"]["out_column"]}
 
     dataprocessing_values = {
