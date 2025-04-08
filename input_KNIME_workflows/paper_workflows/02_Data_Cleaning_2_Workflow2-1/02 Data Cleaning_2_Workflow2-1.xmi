@@ -4,9 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="02 Data Cleaning_2_Workflow2-1">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -14,7 +15,7 @@
       out="//@dataprocessing.0/@outputPort.0"
       name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)">
     <inputPort
-        fileName="columnFilter_input_dataDictionary.csv"
+        fileName="output/columnFilter_input_dataDictionary.csv"
         name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -105,7 +106,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="columnFilter_output_dataDictionary.csv"
+        fileName="output/columnFilter_output_dataDictionary.csv"
         name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <dataDictionaryDefinition
@@ -169,8 +170,7 @@
       <contract
           xsi:type="Contract:FieldRange"
           type="POSTCONDITION"
-          name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange"
-          belongOp="NOTBELONG">
+          name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@outputPort.0">
@@ -206,4 +206,23 @@
       </contract>
     </contract>
   </dataprocessing>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow2-1/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
