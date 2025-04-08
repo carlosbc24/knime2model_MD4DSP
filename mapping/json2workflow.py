@@ -231,19 +231,29 @@ def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filenam
                                                                                                     include_contracts,
                                                                                                     node_flow_mapping)
 
+        # ------------------------------
+
+        # Read the workflow template file
+        with open(f"templates/workflow_template.xmi", "r") as file:
+            workflow_jinja_template = JinjaTemplate(file.read())
+
         # Define the replacement values to the workflow template
         workflow_values = {
             "workflow_name": workflow_filename,
             "data_processing_list": data_processing_filled_content,
-            "link_list": links_filled_content
+            "link_list": links_filled_content,
+            "nodes_count": nodes
         }
 
-        # Fill the template
-        filled_content = workflow_template_content.safe_substitute(workflow_values)
+        # Fill the template with jinja2
+        workflow_filled_content = workflow_jinja_template.render(
+            workflow=workflow_values)
+
+        # ------------------------------
 
         output_xmi_filepath = os.path.join(xmi_output_folder, workflow_filename + ".xmi")
         os.makedirs(os.path.dirname(output_xmi_filepath), exist_ok=True)
         with open(output_xmi_filepath, "w", encoding="utf-8") as file:
-            file.write(filled_content)
+            file.write(workflow_filled_content)
 
     return mapped_nodes, nodes_cont, mapped_nodes_info

@@ -8,9 +8,9 @@
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
     xsi:schemaLocation="https://www.example.org/environment ../metamodel/Environment.ecore https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
-    name="${workflow_name}">
-    ${data_processing_list}
-    ${link_list}
+    name="{{ workflow.workflow_name }}">
+    {{ workflow.data_processing_list }}
+    {{ workflow.link_list }}
     <environment
       xsi:type="Environment:Local"
       name="wf_validation_python"
@@ -22,8 +22,13 @@
         xsi:type="Environment:LocalFolder"
         storageName="d1"
         folderPath="/home/carlos/Escritorio/datasets">
-      <file
-          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+        {% for node in workflow.nodes_count %}
+        {% set node_index = loop.index0 %}
+        <file
+            dataDictionary="//@dataprocessing.{{ node_index }}/@inputPort.0"/>
+        <file
+            dataDictionary="//@dataprocessing.{{ node_index }}/@outputPort.0"/>
+        {% endfor %}
     </storage>
     <developmentTool
         version="3.11"/>
