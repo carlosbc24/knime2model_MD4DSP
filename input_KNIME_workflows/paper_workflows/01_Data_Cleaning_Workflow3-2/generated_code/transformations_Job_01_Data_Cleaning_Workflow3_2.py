@@ -59,7 +59,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Region__input_dataDictionary_transformed=rowFilterPrimitive_Region__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Region']
 
-	filter_fix_value_list_rowFilterPrimitive_param_filter=["Asia"]
+	filter_fix_value_list_rowFilterPrimitive_param_filter=["Africa"]
 
 	rowFilterPrimitive_Region__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Region__input_dataDictionary_transformed,
 																											columns=columns_rowFilterPrimitive_param_filter,

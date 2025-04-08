@@ -4,9 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="01 Data Cleaning_Workflow3-2">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -15,7 +16,7 @@
       out="//@dataprocessing.0/@inputPort.0/@datafield.0"
       name="binner(Life_expectancy)">
     <inputPort
-        fileName="binner_input_dataDictionary.csv"
+        fileName="output/binner_input_dataDictionary.csv"
         name="binner(Life_expectancy)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -33,7 +34,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="binner_output_dataDictionary.csv"
+        fileName="output/binner_output_dataDictionary.csv"
         name="binner(Life_expectancy)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
@@ -121,8 +122,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(Life_expectancy)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="binner(Life_expectancy)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -213,7 +213,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="Average">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -225,7 +225,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="Low">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -237,7 +237,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="High">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -252,7 +252,7 @@
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
       name="rowFilterPrimitive(Region)">
     <inputPort
-        fileName="binner_output_dataDictionary.csv"
+        fileName="output/binner_output_dataDictionary.csv"
         name="rowFilterPrimitive(Region)_input_dataDictionary"
         out="//@dataprocessing.1/@outputPort.0">
       <datafield
@@ -272,7 +272,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="rowFilterPrimitive_output_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_output_dataDictionary.csv"
         name="rowFilterPrimitive(Region)_output_dataDictionary"
         in="//@dataprocessing.1/@inputPort.0">
       <datafield
@@ -313,8 +313,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilterPrimitive(Region)_PRE_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterPrimitive(Region)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
@@ -325,7 +324,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="Africa">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -339,8 +338,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilterPrimitive(Region)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterPrimitive(Region)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -351,7 +349,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="Africa">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -366,7 +364,7 @@
       out="//@dataprocessing.2/@outputPort.0"
       name="columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))">
     <inputPort
-        fileName="rowFilterPrimitive_output_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_output_dataDictionary.csv"
         name="columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield
@@ -401,7 +399,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="columnFilter_output_dataDictionary.csv"
+        fileName="output/columnFilter_output_dataDictionary.csv"
         name="columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_output_dataDictionary"
         in="//@dataprocessing.2/@inputPort.0">
       <dataDictionaryDefinition
@@ -449,8 +447,7 @@
       <contract
           xsi:type="Contract:FieldRange"
           type="POSTCONDITION"
-          name="columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_POST_fieldRange"
-          belongOp="NOTBELONG">
+          name="columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_POST_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.2/@outputPort.0">
@@ -476,4 +473,31 @@
   <link source="//@dataprocessing.1"
       target="//@dataprocessing.2"
       name="Row Filter-Column Filter"/>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow3-2/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
