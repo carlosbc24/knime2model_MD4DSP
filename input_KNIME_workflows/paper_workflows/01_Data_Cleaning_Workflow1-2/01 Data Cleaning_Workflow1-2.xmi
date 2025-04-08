@@ -4,9 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="01 Data Cleaning_Workflow1-2">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -15,7 +16,7 @@
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
       name="rowFilterMissing(Life_expectancy)">
     <inputPort
-        fileName="rowFilterMissing1_input_dataDictionary.csv"
+        fileName="output/rowFilterMissing_input_dataDictionary.csv"
         name="rowFilterMissing(Life_expectancy)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -23,16 +24,16 @@
           name="rowFilterMissing(Life_expectancy)_input_dataField"
           displayName="Life_expectancy">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
         <interval
             rightMargin="1.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="rowFilterMissing1_output_dataDictionary.csv"
+        fileName="output/rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterMissing(Life_expectancy)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
@@ -40,43 +41,42 @@
           name="rowFilterMissing(Life_expectancy)_output_dataField"
           displayName="Life_expectancy">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0/@datafielddefinition.0"/>
         <interval
             rightMargin="1.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
-        href="library_validation.xmi#//@dataprocessingdefinition.11"/>
+        href="library_validation.xmi#//@dataprocessingdefinition.10"/>
     <parameter
         xsi:type="Workflow:FilterValue"
         name="rowFilterMissing(Life_expectancy)_param_rowFilter">
       <filterValueDef
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
       <matchingvalue
           xsi:type="Workflow:SpecialValues"
           name="rowFilterMissing(Life_expectancy)_param_missing_values">
         <specialValuesDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@matchingvaluedef.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@matchingvaluedef.0"/>
       </matchingvalue>
     </parameter>
     <contract
         name="rowFilterMissing(Life_expectancy)_PRECONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilterMissing(Life_expectancy)_PRE_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterMissing(Life_expectancy)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
             name="rowFilterMissing(Life_expectancy)_PRE_input_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
@@ -88,35 +88,34 @@
                 href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
           </quantity>
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition"/>
       </contract>
     </contract>
     <contract
         name="rowFilterMissing(Life_expectancy)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilterMissing(Life_expectancy)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterMissing(Life_expectancy)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
             name="rowFilterMissing(Life_expectancy)_POST_input_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
   </dataprocessing>
@@ -128,7 +127,7 @@
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
       name="rowFilterRange(Life_expectancy)">
     <inputPort
-        fileName="rowFilterMissing1_output_dataDictionary.csv"
+        fileName="output/rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterRange(Life_expectancy)_input_dataDictionary"
         out="//@dataprocessing.1/@outputPort.0">
       <datafield
@@ -146,7 +145,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="rowFilterMissing2_output_dataDictionary.csv"
+        fileName="output/rowFilterRange_output_dataDictionary.csv"
         name="rowFilterRange(Life_expectancy)_output_dataDictionary"
         in="//@dataprocessing.1/@inputPort.0">
       <datafield
@@ -186,8 +185,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilter(Life_expectancy)_PRE_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilter(Life_expectancy)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
@@ -213,8 +211,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilter(Life_expectancy)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilter(Life_expectancy)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -225,7 +222,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="-216">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -240,7 +237,7 @@
       out="//@dataprocessing.2/@outputPort.0/@datafield.0"
       name="rowFilterPrimitive(Year)">
     <inputPort
-        fileName="rowFilterMissing2_output_dataDictionary.csv"
+        fileName="output/rowFilterRange_output_dataDictionary.csv"
         name="rowFilterPrimitive(Year)_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield
@@ -260,7 +257,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="rowFilterMissing3_output_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_output_dataDictionary.csv"
         name="rowFilterPrimitive(Year)_output_dataDictionary"
         in="//@dataprocessing.2/@inputPort.0">
       <datafield
@@ -301,8 +298,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilterPrimitive(Year)_PRE_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterPrimitive(Year)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
@@ -313,7 +309,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="2014">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -327,8 +323,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilterPrimitive(Year)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="rowFilterPrimitive(Year)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
@@ -339,7 +334,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="2014">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -353,4 +348,31 @@
   <link source="//@dataprocessing.1"
       target="//@dataprocessing.2"
       name="Row Filter-Row Filter"/>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-2/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
