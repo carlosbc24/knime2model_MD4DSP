@@ -1,0 +1,248 @@
+<dataprocessing
+      xsi:type="Workflow:DataProcessing"
+      incoming=""
+      outgoing=""
+      in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
+      out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
+      name="join({{ dataprocessing.join.out_column }})">
+    <inputPort
+        fileName="{{ dataprocessing.input_filepath }}"
+        name="join({{ dataprocessing.join.out_column }})_input_dataDictionary"
+        out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+      {% for operand in dataprocessing.join.operands %}
+      {% set next_operand_index = loop.index0 + 1 %}
+      {% if operand.type == 'column' %}
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="join({{ operand.value }})_input{{ next_operand_index }}_dataField"
+          displayName="{{ operand.value }}">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      {% endif %}
+      {% endfor %}
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0"/>
+    </inputPort>
+    <outputPort
+        fileName="{{ dataprocessing.output_filepath }}"
+        name="join({{ dataprocessing.join.out_column }})_output_dataDictionary"
+        in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="join({{ dataprocessing.join.out_column }})_output_dataField"
+          displayName="{{ dataprocessing.join.out_column }}">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0"/>
+    </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.11"/>
+    <parameter
+        xsi:type="Workflow:Join"
+        name="join({{ dataprocessing.join.out_column }})_param_join">
+
+      {% for operand in dataprocessing.join.operands %}
+      {% set field_counter = 0 %}
+      {% set operand_index = loop.index0 %}
+      {% set next_operand_index = loop.index0 + 1 %}
+      {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
+      {% if operand.type == 'column' %}
+      <operand
+          xsi:type="Workflow:Field"
+          name="join({{ dataprocessing.join.out_column }})_param_op{{ next_operand_index }}_field"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+          {% if operand_index == last_operand_index %}
+          next_operand="">
+          {% else %}
+          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+          {% endif %}
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
+      {% set field_counter = field_counter + 1 %}
+      </operand>
+      {% elif operand.type == 'fix_value' %}
+      <operand
+          xsi:type="Workflow:FixValue"
+          name="join({{ dataprocessing.join.out_column }})_param_op{{ next_operand_index }}_fix_value"
+          {% if operand_index == last_operand_index %}
+            next_operand="">
+            {% else %}
+            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+            {% endif %}
+        <fixValueDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0"/>
+        <value
+            name="join({{ dataprocessing.join.out_column }})_param_op2_fix_value_primitive"
+            value="{{ operand.value }}"
+            dataType="String">
+          <primitiveDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0/@value"/>
+        </value>
+      </operand>
+      {% endif %}
+      {% endfor %}
+      <joinDef
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0"/>
+    </parameter>
+    <contract
+        name="join({{ dataprocessing.join.out_column }})_specialValue_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="INV_specialValue_condition">
+
+          {% for operand in dataprocessing.join.operands %}
+          {% set field_counter = 0 %}
+          {% set operand_index = loop.index0 %}
+          {% set next_operand_index = loop.index0 + 1 %}
+          {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
+          {% if operand.type == 'column' %}
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+            name="INV_specialValue_input{{ next_operand_index }}_datafield_{{ operand.value }}">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+          {% set field_counter = field_counter + 1 %}
+          {% endif %}
+          {% endfor %}
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="INV_specialValue_output_datafield_{{ dataprocessing.join.out_column }}">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+        <if
+            belongOp="NOTBELONG"
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@then.0"
+            name="INV_specialValue_if">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@if.0"
+            name="INV_specialValue_then"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+    <contract
+        name="join({{ dataprocessing.join.out_column }})_join_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="INV_join_condition_{{ dataprocessing.join.out_column }}">
+
+          {% for operand in dataprocessing.join.operands %}
+          {% set field_counter = 0 %}
+          {% set next_operand_index = loop.index0 + 1 %}
+          {% if operand.type == 'column' %}
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+            name="INV_join_input{{ next_operand_index }}_datafield_{{ operand.value }}">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+
+          {% set field_counter = field_counter + 1 %}
+          {% endif %}
+          {% endfor %}
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
+            name="INV_join_output_datafield_{{ dataprocessing.join.out_column }}">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0"
+            name="INV_join_if">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <valueCondition
+              xsi:type="Contract:Interval"
+              leftMargin="440.0"
+              rightMargin="1600.0"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+          </valueCondition>
+        </if>
+        <then
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@if.0"
+            name="INV_join_then">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <valueResult
+              xsi:type="Contract:Join">
+
+            {% for operand in dataprocessing.join.operands %}
+            {% set field_counter = 0 %}
+            {% set operand_index = loop.index0 %}
+            {% set next_operand_index = loop.index0 + 1 %}
+            {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
+            {% if operand.type == 'column' %}
+            <operand
+                xsi:type="Contract:OpField"
+                name="join({{ dataprocessing.join.out_column }})_op{{ next_operand_index }}_field"
+                datafield="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@in.{{ field_counter }}"
+                {% if operand_index == last_operand_index %}
+                next_operand="">
+                {% else %}
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@valueResult/@operand.{{ next_operand_index }}">
+                {% endif %}
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+
+            {% set field_counter = field_counter + 1 %}
+            </operand>
+            {% elif operand.type == 'fix_value' %}
+            <operand
+                xsi:type="Contract:FixValue"
+                name="join({{ dataprocessing.join.out_column }})_op{{ next_operand_index }}_fix_value"
+                {% if operand_index == last_operand_index %}
+                next_operand="">
+                {% else %}
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@valueResult/@operand.{{ next_operand_index }}">
+                {% endif %}
+                value="{{ operand.value }}"
+                dataType="String">
+              <fixValueDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.0"/>
+            </operand>
+            {% endif %}
+            {% endfor %}
+            <joinDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult"/>
+          </valueResult>
+        </then>
+      </contract>
+    </contract>
+  </dataprocessing>

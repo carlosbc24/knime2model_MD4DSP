@@ -559,6 +559,40 @@ def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operat
     return node_info
 
 
+def get_join_parameters(rules: str) -> list:
+    """
+    Get the join operands from the rules string.
+    Join operands are defined in the rules string as "join($Name$, " - ", $City$)
+
+    Join description:
+    Joins two or more strings into a single string. Examples:
+    join("a", "b", "c")
+    join(null, "", "a")
+
+    Args:
+        rules: (str) The rules string.
+
+    Returns:
+        dict: A list containing the join operands.
+    """
+    # Extract the join operands
+    match = re.search(r'join\((.*?)\)', rules)
+    if match:
+        join_operands = match.group(1)
+        # Split the operands by comma
+        operands_list = [param.strip() for param in join_operands.split(",")]
+        # Preprocess the operands to parse them as fix value or column name if $ is present
+        operands_list = [
+            {"type": "column", "value": param[1:-1]} if param.startswith("$") else
+            {"type": "fix_value", "value": param.strip('"')} for param in operands_list
+        ]
+
+        return operands_list
+    else:
+        # If no join operands are found, return an empty list
+        return {}
+
+
 def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, namespace: dict) -> dict:
     """
     Extracts the mapping settings from the data model XML element.
@@ -638,10 +672,22 @@ def extract_mapping_node_settings(node_info: dict, model: elementTree.Element, n
             out_columns = [
                 {"column_name": replaced_column_entry.attrib["value"], "column_type": "xstring"}
             ]
-        node_info["parameters"]["in_columns"] = out_columns
         node_info["parameters"]["out_columns"] = out_columns
 
-        node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
+        if "join" in node_info["parameters"]["rules"]:
+            node_info["parameters"]["join"] = get_join_parameters(node_info["parameters"]["rules"])
+
+            node_info["parameters"]["in_columns"] = []
+            for join_param in node_info["parameters"]["join"]:
+                if join_param["type"] == "column":
+                    node_info["parameters"]["in_columns"].append(
+                        {"column_name": join_param["value"], "column_type": "xstring"}
+                    )
+
+        else:
+            node_info["parameters"]["mapping"] = get_column_mapping_and_parameters(node_info)
+
+            node_info["parameters"]["in_columns"] = out_columns
 
     elif node_info["node_name"] == "String Manipulation (Multi Column)":  # String Manipulation (Multi Column)
         # Extract the expression and replaced column values

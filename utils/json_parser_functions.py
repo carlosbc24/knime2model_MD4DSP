@@ -36,6 +36,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     row_dict = {}
     imputation_dict = {}
     math_op_dict = {}
+    join_dict = {}
 
     if library_transformation_name == "columnFilter":
         # Filter columns that are not in the output
@@ -76,6 +77,10 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
                         "operands": node["parameters"]["operands"],
                         "out_column": node["parameters"]["out_column"]}
 
+    elif library_transformation_name == "join":
+        join_dict = {"operands": node["parameters"]["join"],
+                     "out_column": node["parameters"]["replace_column_name"]}
+
     dataprocessing_values = {
         "transformation": {"name": library_transformation_name, "KNIME_name": node_name},
         "input_filepath": input_file_path,
@@ -96,6 +101,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         "binner": binner_dict,
         "imputation": imputation_dict,
         "math_op": math_op_dict,
+        "join": join_dict,
         "include_contracts": include_contracts,
         "index": node_id
     }

@@ -10,27 +10,12 @@
         name="mathOperation({{ dataprocessing.math_op.out_column }})_input_dataDictionary"
         out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
       {% for operand in dataprocessing.math_op.operands %}
-      {% set operand_index = loop.index0 %}
       {% set next_operand_index = loop.index0 + 1 %}
       {% if operand.type == 'column' %}
       <datafield
           xsi:type="Workflow:Continuous"
           name="mathOperation({{ operand.value }})_input{{ next_operand_index }}_dataField"
-          dataType="Integer"
-          displayName="{{ operand.value }}"
-          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
-        <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
-        <interval
-            leftMargin="440.0"
-            rightMargin="1600.0"
-            clousure="closedClosed"/>
-      </datafield>
-      {% elif operand.type == 'column' %}
-      <datafield
-          xsi:type="Workflow:Continuous"
-          name="mathOperation({{ operand.value }})_input1_dataField"
-          dataType="Integer"
+          dataType="Double"
           displayName="{{ operand.value }}"
           out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
         <continuousDef
@@ -52,7 +37,7 @@
       <datafield
           xsi:type="Workflow:Continuous"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_output_dataField"
-          dataType="Integer"
+          dataType="Double"
           displayName="{{ dataprocessing.math_op.out_column }}"
           in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0">
         <continuousDef
@@ -74,6 +59,7 @@
         operator="{{ dataprocessing.math_op.operator }}">
 
       {% for operand in dataprocessing.math_op.operands %}
+      {% set field_counter = 0 %}
       {% set operand_index = loop.index0 %}
       {% set next_operand_index = loop.index0 + 1 %}
       {% set last_operand_index = dataprocessing.math_op.operands|length - 1 %}
@@ -81,14 +67,16 @@
       <operand
           xsi:type="Workflow:Field"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_param_op{{ next_operand_index }}_field"
-          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ operand_index }}"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
           {% if operand_index == last_operand_index %}
           next_operand="">
           {% else %}
-          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.{{ operand_index }}/@operand.{{ next_operand_index }}">
+          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
           {% endif %}
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+
+      {% set field_counter = field_counter + 1 %}
       </operand>
       {% elif operand.type == 'fixed_value' %}
       <operand
@@ -97,7 +85,7 @@
           {% if operand_index == last_operand_index %}
             next_operand="">
             {% else %}
-            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.{{ operand_index }}/@operand.{{ next_operand_index }}">
+            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
             {% endif %}
         <fixValueDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.0"/>
@@ -123,17 +111,19 @@
           xsi:type="Contract:ValueRange"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_PRE_valueRange">
           {% for operand in dataprocessing.math_op.operands %}
+          {% set field_counter = 0 %}
           {% set operand_index = loop.index0 %}
           {% set next_operand_index = loop.index0 + 1 %}
           {% set last_operand_index = dataprocessing.math_op.operands|length - 1 %}
           {% if operand.type == 'column' %}
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ operand_index }}"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
             name="mathOperation({{ dataprocessing.math_op.out_column }})_PRE_input{{ next_operand_index }}_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
+          {% set field_counter = field_counter + 1 %}
           {% endif %}
           {% endfor %}
         <value
@@ -179,17 +169,17 @@
           type="INVARIANT"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_INV_condition">
           {% for operand in dataprocessing.math_op.operands %}
-          {% set operand_index = loop.index0 %}
+          {% set field_counter = 0 %}
           {% set next_operand_index = loop.index0 + 1 %}
-          {% set last_operand_index = dataprocessing.math_op.operands|length - 1 %}
           {% if operand.type == 'column' %}
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ operand_index }}"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
             name="mathOperation({{ dataprocessing.math_op.out_column }})_INV_input{{ next_operand_index }}_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
+          {% set field_counter = field_counter + 1 %}
           {% endif %}
           {% endfor %}
         <out
@@ -223,6 +213,7 @@
               mathOp="SUBSTRACT">
 
             {% for operand in dataprocessing.math_op.operands %}
+            {% set field_counter = 0 %}
             {% set operand_index = loop.index0 %}
             {% set next_operand_index = loop.index0 + 1 %}
             {% set last_operand_index = dataprocessing.math_op.operands|length - 1 %}
@@ -230,7 +221,7 @@
             <operand
                 xsi:type="Contract:OpField"
                 name="mathOperation({{ dataprocessing.math_op.out_column }})_INV_THEN_OP{{ next_operand_index }}_FIELD"
-                datafield="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@in.{{ operand_index }}"
+                datafield="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@in.{{ field_counter }}"
                 {% if operand_index == last_operand_index %}
                 next_operand="">
                 {% else %}
@@ -239,6 +230,7 @@
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
             </operand>
+            {% set field_counter = field_counter + 1 %}
             {% elif operand.type == 'fixed_value' %}
             <operand
                 xsi:type="Contract:FixValue"

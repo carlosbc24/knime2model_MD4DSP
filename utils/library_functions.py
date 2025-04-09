@@ -109,9 +109,12 @@ def get_library_transformation_name(node: dict, index: int) -> str | None:
     # Just mapped String Manipulation KNIME node when the operation is
     # "replace or replaceChars" and there is just one column
     elif ((node_name == "String Manipulation" or node_name == "String Manipulation (Multi Column)" or
-           node_name == "String Replacer") and node.get("parameters", {}).get("mapping").get(
-        "unique_replacement_one_column") is True):
+           node_name == "String Replacer") and node.get("parameters", {}).get("mapping") and
+          node.get("parameters", {}).get("mapping").get("unique_replacement_one_column") is True):
         return "mapping"
+
+    elif node_name == "String Manipulation" and node.get("parameters", {}).get("join"):
+        return "join"
 
     else:
         print_and_log(f"Not mapped unknown KNIME node: {node_name}")
