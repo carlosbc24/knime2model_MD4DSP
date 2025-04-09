@@ -45,8 +45,8 @@
         xsi:type="Workflow:Join"
         name="join({{ dataprocessing.join.out_column }})_param_join">
 
+      {% set ns = namespace(field_counter=0) %}
       {% for operand in dataprocessing.join.operands %}
-      {% set field_counter = 0 %}
       {% set operand_index = loop.index0 %}
       {% set next_operand_index = loop.index0 + 1 %}
       {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
@@ -54,7 +54,7 @@
       <operand
           xsi:type="Workflow:Field"
           name="join({{ dataprocessing.join.out_column }})_param_op{{ next_operand_index }}_field"
-          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+          datafield="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ ns.field_counter }}"
           {% if operand_index == last_operand_index %}
           next_operand="">
           {% else %}
@@ -62,7 +62,7 @@
           {% endif %}
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
-      {% set field_counter = field_counter + 1 %}
+      {% set ns.field_counter = ns.field_counter + 1 %}
       </operand>
       {% elif operand.type == 'fix_value' %}
       <operand
@@ -97,20 +97,20 @@
           type="INVARIANT"
           name="INV_specialValue_condition">
 
+          {% set ns = namespace(field_counter=0) %}
           {% for operand in dataprocessing.join.operands %}
-          {% set field_counter = 0 %}
           {% set operand_index = loop.index0 %}
           {% set next_operand_index = loop.index0 + 1 %}
           {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
           {% if operand.type == 'column' %}
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ ns.field_counter }}"
             name="INV_specialValue_input{{ next_operand_index }}_datafield_{{ operand.value }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
-          {% set field_counter = field_counter + 1 %}
+          {% set  ns.field_counter = ns.field_counter + 1 %}
           {% endif %}
           {% endfor %}
         <out
@@ -157,19 +157,19 @@
           type="INVARIANT"
           name="INV_join_condition_{{ dataprocessing.join.out_column }}">
 
+          {% set ns = namespace(field_counter=0) %}
           {% for operand in dataprocessing.join.operands %}
-          {% set field_counter = 0 %}
           {% set next_operand_index = loop.index0 + 1 %}
           {% if operand.type == 'column' %}
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ field_counter }}"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ ns.field_counter }}"
             name="INV_join_input{{ next_operand_index }}_datafield_{{ operand.value }}">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
 
-          {% set field_counter = field_counter + 1 %}
+          {% set ns.field_counter = ns.field_counter + 1 %}
           {% endif %}
           {% endfor %}
         <out
@@ -203,8 +203,8 @@
           <valueResult
               xsi:type="Contract:Join">
 
+            {% set ns = namespace(field_counter=0) %}
             {% for operand in dataprocessing.join.operands %}
-            {% set field_counter = 0 %}
             {% set operand_index = loop.index0 %}
             {% set next_operand_index = loop.index0 + 1 %}
             {% set last_operand_index = dataprocessing.join.operands|length - 1 %}
@@ -212,7 +212,7 @@
             <operand
                 xsi:type="Contract:OpField"
                 name="join({{ dataprocessing.join.out_column }})_op{{ next_operand_index }}_field"
-                datafield="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@in.{{ field_counter }}"
+                datafield="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@in.{{ ns.field_counter }}"
                 {% if operand_index == last_operand_index %}
                 next_operand="">
                 {% else %}
@@ -221,7 +221,7 @@
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
 
-            {% set field_counter = field_counter + 1 %}
+            {% set ns.field_counter = ns.field_counter + 1 %}
             </operand>
             {% elif operand.type == 'fix_value' %}
             <operand
