@@ -50,8 +50,8 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
 
     # Define the regular expressions for different types of functions
     patterns = {
-        "substring": r'(replace|replaceChars|substr)\(\$(.*?)\$\s*,\s*["\']?(.*?)["\']?\s*,\s*["\']?(.*?)["\']?\s*\)',
-        "nested_substring": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)'
+        "replacement": r'(replace|replaceChars|substr)\(\$(.*?)\$\s*,\s*["\']?(.*?)["\']?\s*,\s*["\']?(.*?)["\']?\s*\)',
+        "nested_replacement": r'replace\(\s*replace\(\s*string\(\s*\$\$(.*?)\$\$\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)\s*,\s*["\'](.*?)["\']\s*,\s*["\'](.*?)["\']\s*\)'
     }
 
     if "rules" in node["parameters"]:
@@ -59,10 +59,13 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         expression = node["parameters"]["rules"]
 
         if any(func in expression for func in ["replace(", "replaceChars(", "substr("]):
-            match = re.search(patterns["substring"], expression)
+            match = re.search(patterns["replacement"], expression)
             if match:
-                map_operation = "SUBSTRING"
                 str_manipulation_function = match.group(1)
+                if str_manipulation_function == "replace":
+                    map_operation = "VALUE_MAPPING"
+                else:
+                    map_operation = "SUBSTRING"
                 replace_column_name = match.group(2)
                 mapping_parameters[match.group(3)] = match.group(4)
                 print_and_log("String manipulation function: " + str_manipulation_function)
@@ -84,7 +87,7 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
         expression = node["parameters"]["rules_multiColumn"]
 
         if any(func in expression for func in ["replace(", "replaceChars("]):
-            match = re.search(patterns["nested_substring"], expression)
+            match = re.search(patterns["nested_replacement"], expression)
             if match:
                 map_operation = "SUBSTRING"
                 replace_column_name = match.group(1)
