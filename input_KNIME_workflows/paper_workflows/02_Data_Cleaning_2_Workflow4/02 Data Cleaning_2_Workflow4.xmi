@@ -4,28 +4,29 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="02 Data Cleaning_2_Workflow4">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="mathOperationFieldField(Change)">
+      name="mathOperation(Change)">
     <inputPort
-        fileName="mathOperation1_input_dataDictionary.csv"
-        name="mathOperationFieldField(Change)_input_dataDictionary"
+        fileName="output/mathOperation1_input_dataDictionary.csv"
+        name="mathOperation(Change)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Latitude)_input1_dataField"
-          dataType="Integer"
+          name="mathOperation(Latitude)_input1_dataField"
+          dataType="Double"
           displayName="Latitude"
           out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
@@ -33,180 +34,188 @@
       </datafield>
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Longitude)_input2_dataField"
-          dataType="Integer"
+          name="mathOperation(Longitude)_input2_dataField"
+          dataType="Double"
           displayName="Longitude">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mathOperation1_output_dataDictionary.csv"
-        name="mathOperationFieldField(Change)_output_dataDictionary"
+        fileName="output/mathOperation1_output_dataDictionary.csv"
+        name="mathOperation(Change)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Change)_output_dataField"
-          dataType="Integer"
+          name="mathOperation(Change)_output_dataField"
+          dataType="Double"
           displayName="Change"
           in="//@dataprocessing.0/@inputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
-        href="library_validation.xmi#//@dataprocessingdefinition.10"/>
+        href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
         xsi:type="Workflow:MathOp"
-        name="mathOperationFieldField(Change)_param_mathop"
+        name="mathOperation(Change)_param_mathop"
         operator="SUBSTRACT">
-      <firstOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Change)_param_op_field_1"
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Change)_param_op1_field"
+          next_operand="//@dataprocessing.0/@parameter.0/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-      </firstOperand>
-      <secondOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Change)_param_op_field_2"
-          datafield="//@dataprocessing.0/@inputPort.0/@datafield.1">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-      </secondOperand>
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Change)_param_op2_field"
+          previous_operand="//@dataprocessing.0/@parameter.0/@operand.0"
+          datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
       <mathOpDef
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="mathOperationFieldField(Change)_PRECONDITION">
+        name="mathOperation(Change)_PRECONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="mathOperationFieldField(Change)_PRE_valueRange">
+          name="mathOperation(Change)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Change)_PRE_input_dataField">
+            name="mathOperation(Change)_PRE_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mathOperation(Change)_PRE_input2_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Change)_POSTCONDITION">
+        name="mathOperation(Change)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperationFieldField(Change)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mathOperation(Change)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Change)_POST_input_dataField">
+            name="mathOperation(Change)_POST_input_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Change)_INVARIANT">
+        name="mathOperation(Change)_INVARIANT">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="mathOperationFieldField(Change)_INV_condition">
+          name="mathOperation(Change)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Change)_INV_input1_dataField">
+            name="mathOperation(Change)_INV_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
-            name="mathOperationFieldField(Change)_INV_input2_dataField">
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mathOperation(Change)_INV_input2_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Change)_INV_output_dataField">
+            name="mathOperation(Change)_INV_output_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.1"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
-            name="mathOperationFieldField(Change)_INV_IF">
+            name="mathOperation(Change)_INV_IF">
           <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
               xsi:type="Contract:Interval"
-              leftMargin="440.0"
-              rightMargin="1600.0"
-              closureType="closedClosed">
+              rightMargin="10.0">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
-            name="mathOperationFieldField(Change)_INV_THEN">
+            name="mathOperation(Change)_INV_THEN">
           <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:MathOperation"
               mathOp="SUBSTRACT">
-            <firstOperand
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Change)_INV_THEN_OP1_FIELD">
+                name="mathOperation(Change)_INV_THEN_OP1_FIELD"
+                next_operand="//@dataprocessing.0/@contract.2/@contract/@then.0/@valueResult/@operand.1"
+                datafield="//@dataprocessing.0/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-              <field
-                  dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
-            </firstOperand>
-            <secondOperand
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Change)_INV_THEN_OP2_FIELD">
+                name="mathOperation(Change)_INV_THEN_OP2_FIELD"
+                previous_operand="//@dataprocessing.0/@contract.2/@contract/@then.0/@valueResult/@operand.0"
+                datafield="//@dataprocessing.0/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-              <field
-                  dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-            </secondOperand>
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <mathOpDef
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
@@ -218,19 +227,19 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0"
       out="//@dataprocessing.1/@outputPort.0"
-      name="mathOperationFieldField(Percentage)">
+      name="mathOperation(Percentage)">
     <inputPort
-        fileName="mathOperation1_output_dataDictionary.csv"
-        name="mathOperationFieldField(Percentage)_input_dataDictionary"
+        fileName="output/mathOperation1_output_dataDictionary.csv"
+        name="mathOperation(Percentage)_input_dataDictionary"
         out="//@dataprocessing.1/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Change)_input1_dataField"
-          dataType="Integer"
+          name="mathOperation(Change)_input1_dataField"
+          dataType="Double"
           displayName="Change"
           out="//@dataprocessing.1/@outputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
@@ -238,180 +247,188 @@
       </datafield>
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Latitude)_input2_dataField"
-          dataType="Integer"
+          name="mathOperation(Latitude)_input2_dataField"
+          dataType="Double"
           displayName="Latitude">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mathOperation2_output_dataDictionary.csv"
-        name="mathOperationFieldField(Percentage)_output_dataDictionary"
+        fileName="output/mathOperation2_output_dataDictionary.csv"
+        name="mathOperation(Percentage)_output_dataDictionary"
         in="//@dataprocessing.1/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Percentage)_output_dataField"
-          dataType="Integer"
+          name="mathOperation(Percentage)_output_dataField"
+          dataType="Double"
           displayName="Percentage"
           in="//@dataprocessing.1/@inputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
-        href="library_validation.xmi#//@dataprocessingdefinition.10"/>
+        href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
         xsi:type="Workflow:MathOp"
-        name="mathOperationFieldField(Percentage)_param_mathop"
+        name="mathOperation(Percentage)_param_mathop"
         operator="DIVIDE">
-      <firstOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Percentage)_param_op_field_1"
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Percentage)_param_op1_field"
+          next_operand="//@dataprocessing.1/@parameter.0/@operand.1"
           datafield="//@dataprocessing.1/@inputPort.0/@datafield.0">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-      </firstOperand>
-      <secondOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Percentage)_param_op_field_2"
-          datafield="//@dataprocessing.1/@inputPort.0/@datafield.1">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-      </secondOperand>
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Percentage)_param_op2_field"
+          previous_operand="//@dataprocessing.1/@parameter.0/@operand.0"
+          datafield="//@dataprocessing.1/@inputPort.0/@datafield.0">
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
       <mathOpDef
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="mathOperationFieldField(Percentage)_PRECONDITION">
+        name="mathOperation(Percentage)_PRECONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="mathOperationFieldField(Percentage)_PRE_valueRange">
+          name="mathOperation(Percentage)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Percentage)_PRE_input_dataField">
+            name="mathOperation(Percentage)_PRE_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
+            name="mathOperation(Percentage)_PRE_input2_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Percentage)_POSTCONDITION">
+        name="mathOperation(Percentage)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperationFieldField(Percentage)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mathOperation(Percentage)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Percentage)_POST_input_dataField">
+            name="mathOperation(Percentage)_POST_input_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Percentage)_INVARIANT">
+        name="mathOperation(Percentage)_INVARIANT">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="mathOperationFieldField(Percentage)_INV_condition">
+          name="mathOperation(Percentage)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Percentage)_INV_input1_dataField">
+            name="mathOperation(Percentage)_INV_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.1/@inputPort.0/@datafield.1"
-            name="mathOperationFieldField(Percentage)_INV_input2_dataField">
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
+            name="mathOperation(Percentage)_INV_input2_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Percentage)_INV_output_dataField">
+            name="mathOperation(Percentage)_INV_output_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.1"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.1/@contract.2/@contract/@then.0"
-            name="mathOperationFieldField(Percentage)_INV_IF">
+            name="mathOperation(Percentage)_INV_IF">
           <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
               xsi:type="Contract:Interval"
-              leftMargin="440.0"
-              rightMargin="1600.0"
-              closureType="closedClosed">
+              rightMargin="10.0">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
         <then
             if="//@dataprocessing.1/@contract.2/@contract/@if.0"
-            name="mathOperationFieldField(Percentage)_INV_THEN">
+            name="mathOperation(Percentage)_INV_THEN">
           <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:MathOperation"
-              mathOp="DIVIDE">
-            <firstOperand
+              mathOp="SUBSTRACT">
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Percentage)_INV_THEN_OP1_FIELD">
+                name="mathOperation(Percentage)_INV_THEN_OP1_FIELD"
+                next_operand="//@dataprocessing.1/@contract.2/@contract/@then.0/@valueResult/@operand.1"
+                datafield="//@dataprocessing.1/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-              <field
-                  dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"/>
-            </firstOperand>
-            <secondOperand
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Percentage)_INV_THEN_OP2_FIELD">
+                name="mathOperation(Percentage)_INV_THEN_OP2_FIELD"
+                previous_operand="//@dataprocessing.1/@contract.2/@contract/@then.0/@valueResult/@operand.0"
+                datafield="//@dataprocessing.1/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-              <field
-                  dataField="//@dataprocessing.1/@inputPort.0/@datafield.1"/>
-            </secondOperand>
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <mathOpDef
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
@@ -424,7 +441,7 @@
       out="//@dataprocessing.2/@inputPort.0/@datafield.0"
       name="binner(Percentage)">
     <inputPort
-        fileName="mathOperation2_output_dataDictionary.csv"
+        fileName="output/mathOperation2_output_dataDictionary.csv"
         name="binner(Percentage)_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield
@@ -442,7 +459,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="binner_output_dataDictionary.csv"
+        fileName="output/binner_output_dataDictionary.csv"
         name="binner(Percentage)_output_dataDictionary"
         in="//@dataprocessing.2/@inputPort.0">
       <datafield
@@ -526,8 +543,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(Percentage)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="binner(Percentage)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
@@ -614,7 +630,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="No Change">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -626,7 +642,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="Decrease">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -638,7 +654,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="Increase">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -651,4 +667,31 @@
   <link source="//@dataprocessing.1"
       target="//@dataprocessing.2"
       name="Math Formula-Rule Engine"/>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow4/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
