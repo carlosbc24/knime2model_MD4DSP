@@ -127,7 +127,7 @@
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
       name="rowFilterRange(Life_expectancy)">
     <inputPort
-        fileName="output/rowFilterMissing_output_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_output_dataDictionary.csv"
         name="rowFilterRange(Life_expectancy)_input_dataDictionary"
         out="//@dataprocessing.1/@outputPort.0">
       <datafield
@@ -237,7 +237,7 @@
       out="//@dataprocessing.2/@outputPort.0/@datafield.0"
       name="rowFilterPrimitive(Year)">
     <inputPort
-        fileName="output/rowFilterRange_output_dataDictionary.csv"
+        fileName="output/rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterPrimitive(Year)_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield

@@ -1,0 +1,42 @@
+import pandas as pd
+import numpy as np
+import functions.contract_invariants as contract_invariants
+import functions.contract_pre_post as contract_pre_post
+import functions.data_transformations as data_transformations
+from helpers.enumerations import Belong, Operator, Operation, SpecialType, DataType, DerivedType, Closure, FilterType, MapOperation, MathOperator
+from helpers.logger import set_logger
+import pyarrow
+from functions.PMML import PMMLModel
+
+def generateWorkflow():
+	#-----------------New DataProcessing-----------------
+	rowFilterPrimitive_Airline__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_input_dataDictionary.parquet')
+
+	if contract_pre_post.check_fix_value_range(value='3U', data_dictionary=rowFilterPrimitive_Airline__input_dataDictionary_df, belong_op=Belong(0), field='Airline',
+									quant_abs=None, quant_rel=None, quant_op=None):
+		print('PRECONDITION rowFilterPrimitive(Airline)_PRE_valueRange VALIDATED')
+	else:
+		print('PRECONDITION rowFilterPrimitive(Airline)_PRE_valueRange NOT VALIDATED')
+	
+	rowFilterPrimitive_Airline__input_dataDictionary_transformed=rowFilterPrimitive_Airline__input_dataDictionary_df.copy()
+	columns_rowFilterPrimitive_param_filter=['Airline']
+	
+	filter_fix_value_list_rowFilterPrimitive_param_filter=['3U']
+	
+	rowFilterPrimitive_Airline__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Airline__input_dataDictionary_transformed,
+																											columns=columns_rowFilterPrimitive_param_filter,
+																		                                    filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_param_filter,
+																											filter_type=FilterType(1))
+	rowFilterPrimitive_Airline__output_dataDictionary_df=rowFilterPrimitive_Airline__input_dataDictionary_transformed
+	rowFilterPrimitive_Airline__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
+	rowFilterPrimitive_Airline__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
+	
+	if contract_pre_post.check_fix_value_range(value='3U', data_dictionary=rowFilterPrimitive_Airline__output_dataDictionary_df, belong_op=Belong(0), field='Airline',
+									quant_abs=None, quant_rel=None, quant_op=None):
+		print('POSTCONDITION rowFilterPrimitive(Airline)_POST_valueRange VALIDATED')
+	else:
+		print('POSTCONDITION rowFilterPrimitive(Airline)_POST_valueRange NOT VALIDATED')
+	
+
+set_logger("dataProcessing")
+generateWorkflow()

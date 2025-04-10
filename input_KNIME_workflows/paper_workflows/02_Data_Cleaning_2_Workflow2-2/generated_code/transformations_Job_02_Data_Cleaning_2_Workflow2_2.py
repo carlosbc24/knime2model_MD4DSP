@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+import functions.data_transformations as data_transformations
+from helpers.enumerations import Belong, Operator, Operation, SpecialType, DataType, DerivedType, Closure, FilterType, MapOperation, MathOperator
+from helpers.logger import set_logger
+import pyarrow
+from functions.PMML import PMMLModel
+
+def generateWorkflow():
+	#-----------------New DataProcessing-----------------
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_input_dataDictionary.parquet')
+
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_df.copy()
+	field_list_columnFilter_param_field=['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
+	
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed,
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+	
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	
+
+set_logger("transformations")
+generateWorkflow()
