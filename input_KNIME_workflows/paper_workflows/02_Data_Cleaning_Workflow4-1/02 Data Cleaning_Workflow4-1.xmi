@@ -4,27 +4,28 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="02 Data Cleaning_Workflow4-1">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="mathOperationFieldField(Difference in Latitude/Altitude)">
+      name="mathOperation(Difference in Latitude/Altitude)">
     <inputPort
-        fileName="mathOperation_input_dataDictionary.csv"
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_input_dataDictionary"
+        fileName="output/mathOperation_input_dataDictionary.csv"
+        name="mathOperation(Difference in Latitude/Altitude)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Latitude)_input1_dataField"
-          dataType="Integer"
+          name="mathOperation(Latitude)_input1_dataField"
+          dataType="Double"
           displayName="Latitude"
           out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
@@ -32,183 +33,210 @@
       </datafield>
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Altitude)_input2_dataField"
-          dataType="Integer"
+          name="mathOperation(Altitude)_input2_dataField"
+          dataType="Double"
           displayName="Altitude">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mathOperation_output_dataDictionary.csv"
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_output_dataDictionary"
+        fileName="output/mathOperation_output_dataDictionary.csv"
+        name="mathOperation(Difference in Latitude/Altitude)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_output_dataField"
-          dataType="Integer"
+          name="mathOperation(Difference in Latitude/Altitude)_output_dataField"
+          dataType="Double"
           displayName="Difference in Latitude/Altitude"
           in="//@dataprocessing.0/@inputPort.0/@datafield.0">
         <continuousDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0/@datafielddefinition.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="440.0"
             rightMargin="1600.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@outputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0"/>
     </outputPort>
     <dataProcessingDefinition
         xsi:type="Library:Transformation"
-        href="library_validation.xmi#//@dataprocessingdefinition.10"/>
+        href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
         xsi:type="Workflow:MathOp"
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_param_mathop"
+        name="mathOperation(Difference in Latitude/Altitude)_param_mathop"
         operator="SUBSTRACT">
-      <firstOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_param_op_field_1"
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Difference in Latitude/Altitude)_param_op1_field"
+          next_operand="//@dataprocessing.0/@parameter.0/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-      </firstOperand>
-      <secondOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_param_op_field_2"
-          datafield="//@dataprocessing.0/@inputPort.0/@datafield.1">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-      </secondOperand>
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Difference in Latitude/Altitude)_param_op2_field"
+          previous_operand="//@dataprocessing.0/@parameter.0/@operand.0"
+          datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
       <mathOpDef
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_PRECONDITION">
+        name="mathOperation(Difference in Latitude/Altitude)_PRECONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_PRE_valueRange">
+          name="mathOperation(Difference in Latitude/Altitude)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_PRE_input_dataField">
+            name="mathOperation(Difference in Latitude/Altitude)_PRE_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mathOperation(Difference in Latitude/Altitude)_PRE_input2_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_POSTCONDITION">
+        name="mathOperation(Difference in Latitude/Altitude)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mathOperation(Difference in Latitude/Altitude)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_POST_input_dataField">
+            name="mathOperation(Difference in Latitude/Altitude)_POST_input_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:SpecialValue">
           <specialValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldField(Difference in Latitude/Altitude)_INVARIANT">
+        name="mathOperation(Difference in Latitude/Altitude)_INVARIANT">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_condition">
+          name="mathOperation(Difference in Latitude/Altitude)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_input1_dataField">
+            name="mathOperation(Difference in Latitude/Altitude)_INV_input1_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <in
             xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_input2_dataField">
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="mathOperation(Difference in Latitude/Altitude)_INV_input2_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_output_dataField">
+            name="mathOperation(Difference in Latitude/Altitude)_INV_output_dataField">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.1"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_IF">
+            name="mathOperation(Difference in Latitude/Altitude)_INV_IF">
           <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
               xsi:type="Contract:Interval"
-              leftMargin="440.0"
-              rightMargin="1600.0"
-              closureType="closedClosed">
+              rightMargin="10.0">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
-            name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_THEN">
+            name="mathOperation(Difference in Latitude/Altitude)_INV_THEN">
           <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:MathOperation"
               mathOp="SUBSTRACT">
-            <firstOperand
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_THEN_OP1_FIELD">
+                name="mathOperation(Difference in Latitude/Altitude)_INV_THEN_OP1_FIELD"
+                next_operand="//@dataprocessing.0/@contract.2/@contract/@then.0/@valueResult/@operand.1"
+                datafield="//@dataprocessing.0/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@firstOperand"/>
-              <field
-                  dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
-            </firstOperand>
-            <secondOperand
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldField(Difference in Latitude/Altitude)_INV_THEN_OP2_FIELD">
+                name="mathOperation(Difference in Latitude/Altitude)_INV_THEN_OP2_FIELD"
+                previous_operand="//@dataprocessing.0/@contract.2/@contract/@then.0/@valueResult/@operand.0"
+                datafield="//@dataprocessing.0/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0/@secondOperand"/>
-              <field
-                  dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-            </secondOperand>
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <mathOpDef
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
     </contract>
   </dataprocessing>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow4-1/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>

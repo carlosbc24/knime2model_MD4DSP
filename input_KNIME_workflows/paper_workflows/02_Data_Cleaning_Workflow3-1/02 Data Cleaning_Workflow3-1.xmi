@@ -4,9 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="02 Data Cleaning_Workflow3-1">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -14,7 +15,7 @@
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
       name="mapping(Country)">
     <inputPort
-        fileName="mapping_input_dataDictionary.csv"
+        fileName="output/mapping_input_dataDictionary.csv"
         name="mapping(Country)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -29,7 +30,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mapping_output_dataDictionary.csv"
+        fileName="output/mapping_output_dataDictionary.csv"
         name="mapping(Country)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
@@ -50,8 +51,7 @@
         xsi:type="Workflow:Map"
         name="mapping(Country)_param_United States"
         inValue="United States"
-        outvalue="USA"
-        mapOperation="SUBSTRING">
+        outvalue="USA">
       <mapDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
@@ -71,9 +71,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="United States"
-            subStr="true">
-          <valueFieldDef
+            value="United States">
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -87,8 +86,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(Country)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mapping(Country)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -99,7 +97,7 @@
         <value
             xsi:type="Contract:FixValue"
             value="United States">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -138,7 +136,7 @@
           <valueCondition
               xsi:type="Contract:FixValue"
               value="United States">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
@@ -150,11 +148,30 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="USA">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
     </contract>
   </dataprocessing>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-1/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>

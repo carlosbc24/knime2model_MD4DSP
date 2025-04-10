@@ -4,9 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
     xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="DATA CLEANING_Workflow1-1">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -16,7 +17,7 @@
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
       name="mapping(native-country)">
     <inputPort
-        fileName="binner_output_dataDictionary.csv"
+        fileName="output/binner_output_dataDictionary.csv"
         name="mapping(native-country)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -31,7 +32,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mapping_output_dataDictionary.csv"
+        fileName="output/mapping_output_dataDictionary.csv"
         name="mapping(native-country)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
@@ -75,7 +76,7 @@
             xsi:type="Contract:FixValue"
             value="-"
             subStr="true">
-          <valueFieldDef
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -89,8 +90,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(native-country)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mapping(native-country)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -100,8 +100,9 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="-">
-          <valueFieldDef
+            value="-"
+            subStr="true">
+          <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
@@ -140,7 +141,7 @@
           <valueCondition
               xsi:type="Contract:FixValue"
               value="-">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
           </valueCondition>
         </if>
@@ -151,8 +152,9 @@
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:FixValue"
-              value=" ">
-            <valueFieldDef
+              value=" "
+              subStr="true">
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -164,15 +166,15 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0"
       out="//@dataprocessing.1/@outputPort.0"
-      name="mathOperationFieldFixValue(Age-of-birth)">
+      name="mathOperation(Age-of-birth)">
     <inputPort
-        fileName="mapping_output_dataDictionary.csv"
-        name="mathOperationFieldFixValue(Age-of-birth)_input_dataDictionary"
+        fileName="output/mapping_output_dataDictionary.csv"
+        name="mathOperation(Age-of-birth)_input_dataDictionary"
         out="//@dataprocessing.1/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(age)_input1_dataField"
-          dataType="Integer"
+          name="mathOperation(age)_input2_dataField"
+          dataType="Double"
           displayName="age"
           out="//@dataprocessing.1/@outputPort.0/@datafield.0">
         <continuousDef
@@ -186,13 +188,13 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="mathOperation_output_dataDictionary.csv"
-        name="mathOperationFieldFixValue(Age-of-birth)_output_dataDictionary"
+        fileName="output/mathOperation_output_dataDictionary.csv"
+        name="mathOperation(Age-of-birth)_output_dataDictionary"
         in="//@dataprocessing.1/@inputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="mathOperationFieldField(Age-of-birth)_output_dataField"
-          dataType="Integer"
+          name="mathOperation(Age-of-birth)_output_dataField"
+          dataType="Double"
           displayName="Age-of-birth"
           in="//@dataprocessing.1/@inputPort.0/@datafield.0">
         <continuousDef
@@ -210,41 +212,44 @@
         href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
         xsi:type="Workflow:MathOp"
-        name="mathOperationFieldFixValue(Age-of-birth)_param_mathop"
+        name="mathOperation(Age-of-birth)_param_mathop"
         operator="SUBSTRACT">
-      <firstOperand
-          xsi:type="Workflow:OpFixValue"
-          name="mathOperationFieldFixValue(Age-of-birth)_param_op_fix_value">
-        <opFixValueDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
+      <operand
+          xsi:type="Workflow:FixValue"
+          name="mathOperation(Age-of-birth)_param_op1_fix_value"
+          next_operand="//@dataprocessing.1/@parameter.0/@operand.1">
+        <fixValueDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.0"/>
         <value
-            name="mathOperationFieldFixValue(Age-of-birth)_param_primitive"
-            value="1994">
+            name="mathOperation(Age-of-birth)_param_primitive"
+            value="1994"
+            dataType="Double">
           <primitiveDef
-              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand/@value"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.0/@value"/>
         </value>
-      </firstOperand>
-      <secondOperand
-          xsi:type="Workflow:OpField"
-          name="mathOperationFieldFixValue(Age-of-birth)_param_op_field"
+      </operand>
+      <operand
+          xsi:type="Workflow:Field"
+          name="mathOperation(Age-of-birth)_param_op2_field"
+          previous_operand="//@dataprocessing.1/@parameter.0/@operand.0"
           datafield="//@dataprocessing.1/@inputPort.0/@datafield.0">
-        <opFieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
-      </secondOperand>
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
       <mathOpDef
           href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="mathOperationFieldFixValue(Age-of-birth)_PRECONDITION">
+        name="mathOperation(Age-of-birth)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="mathOperationFieldFixValue(Age-of-birth)_PRE_valueRange">
+          name="mathOperation(Age-of-birth)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_PRE_input_dataField">
+            name="mathOperation(Age-of-birth)_PRE_input2_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -258,18 +263,17 @@
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldFixValue(Age-of-birth)_POSTCONDITION">
+        name="mathOperation(Age-of-birth)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperationFieldFixValue(Age-of-birth)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="mathOperation(Age-of-birth)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_POST_input_dataField">
+            name="mathOperation(Age-of-birth)_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
@@ -283,24 +287,24 @@
       </contract>
     </contract>
     <contract
-        name="mathOperationFieldFixValue(Age-of-birth)_INVARIANT">
+        name="mathOperation(Age-of-birth)_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="mathOperationFieldFixValue(Age-of-birth)_INV_condition">
+          name="mathOperation(Age-of-birth)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_INV_input_dataField">
+            name="mathOperation(Age-of-birth)_INV_input2_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_INV_output_dataField">
+            name="mathOperation(Age-of-birth)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
@@ -308,7 +312,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.1/@contract.2/@contract/@then.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_INV_IF">
+            name="mathOperation(Age-of-birth)_INV_IF">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <valueCondition
@@ -320,32 +324,29 @@
         </if>
         <then
             if="//@dataprocessing.1/@contract.2/@contract/@if.0"
-            name="mathOperationFieldFixValue(Age-of-birth)_INV_THEN">
+            name="mathOperation(Age-of-birth)_INV_THEN">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <valueResult
               xsi:type="Contract:MathOperation"
               mathOp="SUBSTRACT">
-            <firstOperand
-                xsi:type="Contract:OpFixValue"
-                name="mathOperationFieldFixValue(Age-of-birth)_INV_THEN_OP_FIX_VALUE">
-              <value
-                  value="1994"
-                  dataType="Double">
-                <valueFieldDef
-                    href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@secondOperand/@value"/>
-              </value>
-              <opFixValueDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@secondOperand"/>
-            </firstOperand>
-            <secondOperand
+            <operand
+                xsi:type="Contract:FixValue"
+                name="mathOperation(Age-of-birth)_INV_THEN_OP1_FIX_VALUE"
+                next_operand="//@dataprocessing.1/@contract.2/@contract/@then.0/@valueResult/@operand.1">
+              <fixValueDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.0"/>
+            </operand>
+            <operand
                 xsi:type="Contract:OpField"
-                name="mathOperationFieldFixValue(Age-of-birth)_INV_THEN_OP_FIELD">
+                name="mathOperation(Age-of-birth)_INV_THEN_OP2_FIELD"
+                previous_operand="//@dataprocessing.1/@contract.2/@contract/@then.0/@valueResult/@operand.0"
+                datafield="//@dataprocessing.1/@contract.2/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@firstOperand"/>
-              <field
-                  dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"/>
-            </secondOperand>
+                  href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+            </operand>
+            <mathOpDef
+                href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
       </contract>
@@ -358,7 +359,7 @@
       out="//@dataprocessing.2/@inputPort.0/@datafield.0"
       name="binner(native-country)">
     <inputPort
-        fileName="binner_input_dataDictionary.csv"
+        fileName="output/binner_input_dataDictionary.csv"
         name="binner(native-country)_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield
@@ -376,7 +377,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="binner_output_dataDictionary.csv"
+        fileName="output/binner_output_dataDictionary.csv"
         name="binner(native-country)_output_dataDictionary"
         in="//@dataprocessing.2/@inputPort.0">
       <datafield
@@ -453,8 +454,7 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(native-country)_POST_valueRange"
-          belongOp="NOTBELONG">
+          name="binner(native-country)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
@@ -531,7 +531,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="PART-TIME">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -543,7 +543,7 @@
           <valueResult
               xsi:type="Contract:FixValue"
               value="FULL-TIME">
-            <valueFieldDef
+            <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
           </valueResult>
         </then>
@@ -556,4 +556,31 @@
   <link source="//@dataprocessing.2"
       target="//@dataprocessing.0"
       name="Rule Engine-String Manipulation"/>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow1-1/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.1/@outputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.2/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
