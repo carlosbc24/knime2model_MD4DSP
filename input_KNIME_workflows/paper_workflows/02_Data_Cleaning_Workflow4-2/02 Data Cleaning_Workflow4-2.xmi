@@ -157,51 +157,51 @@
             name="binner(Source)_INV_IF_N">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="-1000000.0"
               rightMargin="130.0">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.1"
             name="binner(Source)_INV_IF_Y">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="130.0"
               rightMargin="1000000.0"
               closureType="closedOpen">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
             name="binner(Source)_INV_THEN_N">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:FixValue"
               value="N">
             <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.1"
             name="binner(Source)_INV_THEN_Y">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:FixValue"
               value="Y">
             <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>

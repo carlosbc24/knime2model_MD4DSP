@@ -78,17 +78,17 @@
             then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_first }}/@contract/@then.0"
             name="INV_specialValue_if_{{ out_column.name }}">
           <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition xsi:type="Contract:SpecialValue">
-            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+          <dataCondition xsi:type="Contract:SpecialValue">
+            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_first }}/@contract/@if.0"
               name="INV_specialValue_then_{{ out_column.name }}"
               belongOp="NOTBELONG">
           <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult xsi:type="Contract:SpecialValue">
-            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+          <dataResult xsi:type="Contract:SpecialValue">
+            <specialValueDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>
@@ -112,18 +112,18 @@
             then="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@then.0"
             name="INV_castType_if_{{ out_column.name }}">
           <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition xsi:type="Contract:CastType">
-            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+          <dataCondition xsi:type="Contract:CastType">
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@if.0"
               name="INV_castType_then_{{ out_column.name }}"
               belongOp="BELONG">
           <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult xsi:type="Contract:CastType"
+          <dataResult xsi:type="Contract:CastType"
                        type="Integer">
-            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>

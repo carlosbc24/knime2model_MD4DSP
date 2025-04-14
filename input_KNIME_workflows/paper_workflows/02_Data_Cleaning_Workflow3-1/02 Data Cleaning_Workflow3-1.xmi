@@ -133,24 +133,24 @@
             name="mapping(Country)_INV_IF_United States">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:FixValue"
               value="United States">
             <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
             name="mapping(Country)_INV_THEN_United States">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:FixValue"
               value="USA">
             <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>

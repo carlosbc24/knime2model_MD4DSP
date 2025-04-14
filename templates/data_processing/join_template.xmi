@@ -128,11 +128,11 @@
             name="INV_specialValue_if">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:SpecialValue">
             <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.0/@contract/@if.0"
@@ -140,11 +140,11 @@
             belongOp="NOTBELONG">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:SpecialValue">
             <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>
@@ -186,21 +186,21 @@
             name="INV_join_if">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="440.0"
               rightMargin="1600.0"
               closureType="closedClosed">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@if.0"
             name="INV_join_then">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:Join">
 
             {% set ns = namespace(field_counter=0) %}
@@ -216,10 +216,10 @@
                 {% if operand_index == last_operand_index %}
                 next_operand="">
                 {% else %}
-                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@valueResult/@operand.{{ next_operand_index }}">
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}">
                 {% endif %}
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.1"/>
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
 
             {% set ns.field_counter = ns.field_counter + 1 %}
             </operand>
@@ -230,18 +230,18 @@
                 {% if operand_index == last_operand_index %}
                 next_operand="">
                 {% else %}
-                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@valueResult/@operand.{{ next_operand_index }}">
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}">
                 {% endif %}
                 value="{{ operand.value }}"
                 dataType="String">
               <fixValueDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult/@operanddef.0"/>
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
             </operand>
             {% endif %}
             {% endfor %}
             <joinDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>

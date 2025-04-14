@@ -149,23 +149,23 @@
             name="imputeMissingByMean({{ in_column.name }})_INV_IF">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <valueCondition
+          <dataCondition
               xsi:type="Contract:SpecialValue">
             <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@valueCondition.0"/>
-          </valueCondition>
+                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@if.0"
             name="imputeMissingByMean({{ in_column.name }})_INV_THEN">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <valueResult
+          <dataResult
               xsi:type="Contract:NumOp"
               operation="Mean">
             <numOpDef
-                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@thendefinition.0/@valueResult"/>
-          </valueResult>
+                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
         </then>
       </contract>
     </contract>
