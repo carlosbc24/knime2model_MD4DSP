@@ -74,12 +74,12 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilter({{ in_column.name }})_PRE_valueRange"
+          name="rowFilterRange({{ in_column.name }})_PRE_valueRange"
           belongOp="BELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"
-            name="rowFilter({{ in_column.name }})_PRE_input_dataField">
+            name="rowFilterRange({{ in_column.name }})_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -95,13 +95,13 @@
       </contract>
     </contract>
     <contract
-        name="rowFilter({{ in_column.name }})_POSTCONDITION">
+        name="rowFilterRange({{ in_column.name }})_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilter({{ in_column.name }})_POST_valueRange"
+          name="rowFilterRange({{ in_column.name }})_POST_valueRange"
           belongOp="BELONG">
         <in
             xsi:type="Contract:DataField"
