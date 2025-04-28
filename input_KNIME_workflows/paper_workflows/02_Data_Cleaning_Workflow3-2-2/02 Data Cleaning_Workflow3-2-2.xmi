@@ -3,39 +3,240 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Contract="https://www.example.org/contract"
+    xmlns:Environment="https://www.example.org/environment"
+    xmlns:Library="http://www.example.org/Library"
     xmlns:Workflow="https://www.example.org/workflow"
-    xsi:schemaLocation="https://www.example.org/workflow ../metamodel/Workflow.ecore"
+    xsi:schemaLocation="https://www.example.org/contract ../metamodel/Contract.ecore https://www.example.org/environment ../metamodel/Environment.ecore http://www.example.org/Library ../metamodel/Library.ecore https://www.example.org/workflow ../metamodel/Workflow.ecore"
     name="02 Data Cleaning_Workflow3-2-2">
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="String Manipulation(Name with City)">
+      name="join(Name with City)">
     <inputPort
-        fileName="output/CSV_Reader_output_dataDictionary.csv"
-        name="String Manipulation from KNIME(Name with City)_input_dataDictionary"
+        fileName="output/join_input_dataDictionary.csv"
+        name="join(Name with City)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
-          xsi:type="Workflow:Continuous"
-          name="String Manipulation(Name with City)_input_dataField"
-          displayName="Name with City">
-        <interval
-            rightMargin="1.0"
-            clousure="closedClosed"/>
+          xsi:type="Workflow:Categorical"
+          name="join(Name)_input1_dataField"
+          displayName="Name">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
+      <datafield
+          xsi:type="Workflow:Categorical"
+          name="join(City)_input3_dataField"
+          displayName="City">
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
+      </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="output/String_Manipulation_output_dataDictionary.csv"
-        name="String Manipulation(Name with City)_output_dataDictionary"
+        fileName="output/join_output_dataDictionary.csv"
+        name="join(Name with City)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
-          xsi:type="Workflow:Continuous"
-          name="String Manipulation(Name with City)_output_dataField"
+          xsi:type="Workflow:Categorical"
+          name="join(Name with City)_output_dataField"
           displayName="Name with City">
-        <interval
-            rightMargin="1.0"
-            clousure="closedClosed"/>
+        <categoricalDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0/@datafielddefinition.0"/>
       </datafield>
+      <dataDictionaryDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0"/>
     </outputPort>
+    <dataProcessingDefinition
+        xsi:type="Library:Transformation"
+        href="library_validation.xmi#//@dataprocessingdefinition.11"/>
+    <parameter
+        xsi:type="Workflow:Join"
+        name="join(Name with City)_param_join">
+      <operand
+          xsi:type="Workflow:Field"
+          name="join(Name with City)_param_op1_field"
+          datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
+      <operand
+          xsi:type="Workflow:FixValue"
+          name="join(Name with City)_param_op2_fix_value">
+        <fixValueDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0"/>
+        <value
+            name="join(Name with City)_param_op2_fix_value_primitive"
+            value=" - ">
+          <primitiveDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0/@value"/>
+        </value>
+      </operand>
+      <operand
+          xsi:type="Workflow:Field"
+          name="join(Name with City)_param_op3_field"
+          datafield="//@dataprocessing.0/@inputPort.0/@datafield.1">
+        <fieldDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
+      </operand>
+      <joinDef
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0"/>
+    </parameter>
+    <contract
+        name="join(Name with City)_specialValue_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="INV_specialValue_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="INV_specialValue_input1_datafield_Name">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
+            name="INV_specialValue_input3_datafield_City">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="INV_specialValue_output_datafield_Name with City">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+        <if
+            belongOp="NOTBELONG"
+            then="//@dataprocessing.0/@contract.0/@contract/@then.0"
+            name="INV_specialValue_if">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.0/@contract/@if.0"
+            name="INV_specialValue_then"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
+    <contract
+        name="join(Name with City)_join_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="INV_join_condition_Name with City">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="INV_join_input1_datafield_Name">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
+            name="INV_join_input3_datafield_City">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="INV_join_output_datafield_Name with City">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.1/@contract/@then.0"
+            name="INV_join_if">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              leftMargin="440.0"
+              rightMargin="1600.0"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.1/@contract/@if.0"
+            name="INV_join_then">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Join">
+            <operand
+                xsi:type="Contract:OpField"
+                name="join(Name with City)_op1_field"
+                datafield="//@dataprocessing.0/@contract.1/@contract/@in.0">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
+            </operand>
+            <operand
+                xsi:type="Contract:FixValue"
+                name="join(Name with City)_op2_fix_value">
+              <fixValueDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
+            </operand>
+            <operand
+                xsi:type="Contract:OpField"
+                name="join(Name with City)_op3_field"
+                datafield="//@dataprocessing.0/@contract.1/@contract/@in.1">
+              <opFieldDef
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
+            </operand>
+            <joinDef
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
+  <environment
+      xsi:type="Environment:Local"
+      name="wf_validation_python"
+      path="./wf_validation_python"
+      containerName="docker_python"
+      imageName="ubuntu-22.04"
+      imageTag="latest">
+    <storage
+        xsi:type="Environment:LocalFolder"
+        storageName="d1"
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
+      <file
+          dataDictionary="//@dataprocessing.0/@inputPort.0"/>
+      <file
+          dataDictionary="//@dataprocessing.0/@outputPort.0"/>
+    </storage>
+    <developmentTool
+        version="3.11"/>
+  </environment>
 </Workflow:Workflow>
