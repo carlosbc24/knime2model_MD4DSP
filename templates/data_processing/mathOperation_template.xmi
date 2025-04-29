@@ -54,6 +54,13 @@
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.9"/>
     <parameter
+        xsi:type="Workflow:DerivedField"
+        name="mathOperation({{ dataprocessing.math_op.out_column }})_param_derivedField"
+        der_dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
+      <derivedFieldDef
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
+    </parameter>
+    <parameter
         xsi:type="Workflow:MathOp"
         name="mathOperation({{ dataprocessing.math_op.out_column }})_param_mathop"
         operator="{{ dataprocessing.math_op.operator }}">
@@ -71,10 +78,10 @@
           {% if operand_index == last_operand_index %}
           next_operand="">
           {% else %}
-          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.1/@operand.{{ next_operand_index }}">
           {% endif %}
         <fieldDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.1"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.1/@operandDef.1"/>
 
       {% set ns.field_counter = ns.field_counter + 1 %}
       </operand>
@@ -85,23 +92,23 @@
           {% if operand_index == last_operand_index %}
             next_operand="">
             {% else %}
-            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.1/@operand.{{ next_operand_index }}">
             {% endif %}
         <fixValueDef
-            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.0"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.1/@operandDef.0"/>
         <value
             name="mathOperation({{ dataprocessing.math_op.out_column }})_param_primitive"
             value="{{ operand.value }}"
             dataType="Double">
           <primitiveDef
-              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0/@operandDef.0/@value"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.1/@operandDef.0/@value"/>
         </value>
       </operand>
       {% endif %}
       {% endfor %}
 
       <mathOpDef
-          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@parameterdefinition.1"/>
     </parameter>
     <contract
         name="mathOperation({{ dataprocessing.math_op.out_column }})_PRECONDITION">
