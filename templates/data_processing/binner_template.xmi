@@ -57,7 +57,7 @@
     {% for bin in dataprocessing.binner.bins %}
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner({{ dataprocessing.in_column_names }})_param_bin_Unknown"
+        name="binner({{ dataprocessing.in_column_names }})_param_bin_{{ bin.binName }}"
         binValue="{{ bin.binName }}">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
