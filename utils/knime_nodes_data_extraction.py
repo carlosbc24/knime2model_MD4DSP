@@ -3,6 +3,7 @@ import re
 import xml.etree.ElementTree as elementTree
 from utils.logger import print_and_log, print_and_log_dict
 
+INFINITE_VALUE = 1000000000
 
 def extract_columns_data(model: elementTree.Element, namespace: dict) -> (list, list):
     """
@@ -522,26 +523,24 @@ def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operat
                             break
 
             else:
-                second_operand = 1000000
+                second_operand = INFINITE_VALUE
 
             if numeric_operator == "<":
                 closure_type = "openOpen"
-                first_operand = -1000000
+                first_operand = -float(second_operand)
             elif numeric_operator == "<=":
                 closure_type = "openClosed"
-                first_operand = -1000000
+                first_operand = -float(second_operand)
             elif numeric_operator == ">":
                 closure_type = "openOpen"
                 first_operand = second_operand
-                second_operand = 1000000
             elif numeric_operator == ">=":
                 closure_type = "closedOpen"
                 first_operand = second_operand
-                second_operand = 1000000
             elif numeric_operator == "=>":
                 closure_type = "openOpen"
-                second_operand = 1000000
-                first_operand = -1000000
+                first_operand = None
+                second_operand = None
             else:
                 closure_type = ""
 
@@ -558,6 +557,70 @@ def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operat
             # Insert
             if node_info["parameters"]["bins"]:
                 node_info["parameters"]["bins"].insert(0, node_info["parameters"]["bins"].pop())
+
+    if any(bin["leftMargin"] is None and bin["rightMargin"] is None for bin in node_info["parameters"]["bins"]):
+        # Retrieve binName from the None margins bin
+        bin_name = next(
+            (bin["binName"] for bin in node_info["parameters"]["bins"]
+             if bin["leftMargin"] is None and bin["rightMargin"] is None), None)
+        # Remove the bin with None margins
+        node_info["parameters"]["bins"] = [
+            bin for bin in node_info["parameters"]["bins"]
+            if not (bin["leftMargin"] is None and bin["rightMargin"] is None)
+        ]
+        # Añadir tantos bins como haga falta para cubrir los valores restantes que no cubren los intervalos del resto de bins
+        # Se trata del bin que binariza el resto de los valores no contemplados por los bins 'normales'
+        # Complete the bin with None margins
+        # Convert the margins to numeric values
+        bins_numeric = []
+        for bin in node_info["parameters"]["bins"]:
+            try:
+                left_margin = float(bin["leftMargin"])
+            except (TypeError, ValueError):
+                left_margin = -float(INFINITE_VALUE)
+            try:
+                right_margin = float(bin["rightMargin"])
+            except (TypeError, ValueError):
+                right_margin = float(INFINITE_VALUE)
+            bins_numeric.append({
+                "binName": bin["binName"],
+                "closureType": bin["closureType"],
+                "leftMargin": left_margin,
+                "rightMargin": right_margin,
+            })
+        # Order the bins by left margin
+        bins_sorted = sorted(bins_numeric, key=lambda x: x["leftMargin"])
+        additional_bins = []
+        # Bin for values less than the first bin if the first bin's left margin is not negative infinity
+        if bins_sorted[0]["leftMargin"] > -float(INFINITE_VALUE):
+            additional_bins.append({
+                "binName": bin_name,
+                "closureType": "openOpen",
+                "leftMargin": -float(INFINITE_VALUE),
+                "rightMargin": bins_sorted[0]["leftMargin"]
+            })
+        # Bins for gaps between bins
+        for i in range(len(bins_sorted) - 1):
+            current = bins_sorted[i]
+            next_bin = bins_sorted[i + 1]
+            if current["rightMargin"] < next_bin["leftMargin"]:
+                additional_bins.append({
+                    "binName": bin_name,
+                    "closureType": "openOpen",
+                    "leftMargin": current["rightMargin"],
+                    "rightMargin": next_bin["leftMargin"]
+                })
+        # Bin for values greater than the last bin if the last bin's right margin is not infinity
+        if bins_sorted[-1]["rightMargin"] < INFINITE_VALUE:
+            additional_bins.append({
+                "binName": bin_name,
+                "closureType": "openOpen",
+                "leftMargin": bins_sorted[-1]["rightMargin"],
+                "rightMargin": INFINITE_VALUE
+            })
+        # Add the additional bins to the node_info
+        node_info["parameters"]["bins"].extend(additional_bins)
+
 
     return node_info
 
