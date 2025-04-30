@@ -60,35 +60,55 @@
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Life_expectancy)_param_bin_Unknown"
-        binValue="Average">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="-1000000.0"
-          rightMargin="1000000.0"/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(Life_expectancy)_param_bin_Unknown"
+        name="binner(Life_expectancy)_param_bin_Low"
         binValue="Low">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          leftMargin="-1000000.0"
+          leftMargin="-40.0"
           rightMargin="40.0"
           clousure="openClosed"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Life_expectancy)_param_bin_Unknown"
+        name="binner(Life_expectancy)_param_bin_High"
         binValue="High">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
           leftMargin="70.0"
-          rightMargin="1000000.0"
+          rightMargin="70.0"
           clousure="closedOpen"/>
+    </parameter>
+    <parameter
+        xsi:type="Workflow:DiscretizeBin"
+        name="binner(Life_expectancy)_param_bin_Average"
+        binValue="Average">
+      <discretizeBinDef
+          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
+      <interval
+          leftMargin="-1.0E9"
+          rightMargin="-40.0"/>
+    </parameter>
+    <parameter
+        xsi:type="Workflow:DiscretizeBin"
+        name="binner(Life_expectancy)_param_bin_Average"
+        binValue="Average">
+      <discretizeBinDef
+          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
+      <interval
+          leftMargin="40.0"
+          rightMargin="70.0"/>
+    </parameter>
+    <parameter
+        xsi:type="Workflow:DiscretizeBin"
+        name="binner(Life_expectancy)_param_bin_Average"
+        binValue="Average">
+      <discretizeBinDef
+          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
+      <interval
+          leftMargin="70.0"
+          rightMargin="1.0E9"/>
     </parameter>
     <contract
         name="binner(Life_expectancy)_PRECONDITION">
@@ -166,25 +186,12 @@
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
-            name="binner(Life_expectancy)_INV_IF_Average">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <dataCondition
-              xsi:type="Contract:Interval"
-              leftMargin="-1000000.0"
-              rightMargin="1000000.0">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
-          </dataCondition>
-        </if>
-        <if
-            then="//@dataprocessing.0/@contract.2/@contract/@then.1"
             name="binner(Life_expectancy)_INV_IF_Low">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
-              leftMargin="-1000000.0"
+              leftMargin="-40.0"
               rightMargin="40.0"
               closureType="openClosed">
             <intervalDef
@@ -192,33 +199,60 @@
           </dataCondition>
         </if>
         <if
-            then="//@dataprocessing.0/@contract.2/@contract/@then.2"
+            then="//@dataprocessing.0/@contract.2/@contract/@then.1"
             name="binner(Life_expectancy)_INV_IF_High">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="70.0"
-              rightMargin="1000000.0"
+              rightMargin="70.0"
               closureType="closedOpen">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.2"
+            name="binner(Life_expectancy)_INV_IF_Average">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              leftMargin="-1.0E9"
+              rightMargin="-40.0">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.3"
+            name="binner(Life_expectancy)_INV_IF_Average">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              leftMargin="40.0"
+              rightMargin="70.0">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.4"
+            name="binner(Life_expectancy)_INV_IF_Average">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              leftMargin="70.0"
+              rightMargin="1.0E9">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
-            name="binner(Life_expectancy)_INV_THEN_Average">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <dataResult
-              xsi:type="Contract:FixValue"
-              value="Average">
-            <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
-          </dataResult>
-        </then>
-        <then
-            if="//@dataprocessing.0/@contract.2/@contract/@if.1"
             name="binner(Life_expectancy)_INV_THEN_Low">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
@@ -230,13 +264,49 @@
           </dataResult>
         </then>
         <then
-            if="//@dataprocessing.0/@contract.2/@contract/@if.2"
+            if="//@dataprocessing.0/@contract.2/@contract/@if.1"
             name="binner(Life_expectancy)_INV_THEN_High">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:FixValue"
               value="High">
+            <fixValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.2"
+            name="binner(Life_expectancy)_INV_THEN_Average">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:FixValue"
+              value="Average">
+            <fixValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.3"
+            name="binner(Life_expectancy)_INV_THEN_Average">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:FixValue"
+              value="Average">
+            <fixValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.4"
+            name="binner(Life_expectancy)_INV_THEN_Average">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:FixValue"
+              value="Average">
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>

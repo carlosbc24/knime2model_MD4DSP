@@ -29,7 +29,18 @@ def generateWorkflow():
 	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
-																  left_margin=-1000000.0, right_margin=1000000.0,
+																  left_margin=40.0, right_margin=40.0,
+																  closure_type=Closure(2),
+																  fix_value_output='FULL-TIME',
+							                                      data_type_output = DataType(0),
+																  field_in = 'native-country',
+																  field_out = 'prediction')
+	
+	binner_native_country__output_dataDictionary_df=binner_native_country__input_dataDictionary_transformed
+	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
+																  left_margin=-1.0E9, right_margin=40.0,
 																  closure_type=Closure(0),
 																  fix_value_output='PART-TIME',
 							                                      data_type_output = DataType(0),
@@ -40,9 +51,9 @@ def generateWorkflow():
 	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
-																  left_margin=40.0, right_margin=1000000.0,
-																  closure_type=Closure(2),
-																  fix_value_output='FULL-TIME',
+																  left_margin=40.0, right_margin=1.0E9,
+																  closure_type=Closure(0),
+																  fix_value_output='PART-TIME',
 							                                      data_type_output = DataType(0),
 																  field_in = 'native-country',
 																  field_out = 'prediction')
@@ -59,7 +70,20 @@ def generateWorkflow():
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_native_country__input_dataDictionary_df,
 											data_dictionary_out=binner_native_country__output_dataDictionary_df,
-											left_margin=-1000000.0, right_margin=1000000.0,
+											left_margin=40.0, right_margin=40.0,
+											closure_type=Closure(2),
+											fix_value_output='FULL-TIME',
+											belong_op_in=Belong(0), belong_op_out=Belong(0),
+											data_type_output=DataType(0),
+											field_in='native-country', field_out='prediction'):
+		print('INVARIANT binner(native-country)_INV_condition VALIDATED')
+	else:
+		print('INVARIANT binner(native-country)_INV_condition NOT VALIDATED')
+	
+	
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_native_country__input_dataDictionary_df,
+											data_dictionary_out=binner_native_country__output_dataDictionary_df,
+											left_margin=-1.0E9, right_margin=40.0,
 											closure_type=Closure(0),
 											fix_value_output='PART-TIME',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
@@ -69,17 +93,20 @@ def generateWorkflow():
 	else:
 		print('INVARIANT binner(native-country)_INV_condition NOT VALIDATED')
 	
+	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_native_country__input_dataDictionary_df,
 											data_dictionary_out=binner_native_country__output_dataDictionary_df,
-											left_margin=40.0, right_margin=1000000.0,
-											closure_type=Closure(2),
-											fix_value_output='FULL-TIME',
+											left_margin=40.0, right_margin=1.0E9,
+											closure_type=Closure(0),
+											fix_value_output='PART-TIME',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
 											field_in='native-country', field_out='prediction'):
 		print('INVARIANT binner(native-country)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT binner(native-country)_INV_condition NOT VALIDATED')
+	
+	
 	
 	
 	
@@ -115,27 +142,28 @@ def generateWorkflow():
 		print('POSTCONDITION mapping(native-country)_POST_valueRange NOT VALIDATED')
 	
 	
-	input_values_list_def_INV_condition=['-']
-	output_values_list_def_INV_condition=[' ']
+	input_values_list_mapping_INV_condition=['-']
+	output_values_list_mapping_INV_condition=[' ']
 	
-	data_type_input_list_def_INV_condition=[DataType(0)]
-	data_type_output_list_def_INV_condition=[DataType(0)]
+	data_type_input_list_mapping_INV_condition=[DataType(0)]
+	data_type_output_list_mapping_INV_condition=[DataType(0)]
 	
-	is_substring_list_def_INV_condition=[False]
+	is_substring_list_mapping_INV_condition=[False]
 	
 	if contract_invariants.check_inv_fix_value_fix_value(data_dictionary_in=mapping_native_country__input_dataDictionary_df,
 											data_dictionary_out=mapping_native_country__output_dataDictionary_df,
-											input_values_list=input_values_list_def_INV_condition, 
-											output_values_list=output_values_list_def_INV_condition,
-											is_substring_list=is_substring_list_def_INV_condition,
+											input_values_list=input_values_list_mapping_INV_condition, 
+											output_values_list=output_values_list_mapping_INV_condition,
+											is_substring_list=is_substring_list_mapping_INV_condition,
 											belong_op_in=Belong(0),
 											belong_op_out=Belong(0),
-											data_type_input_list=data_type_input_list_def_INV_condition,
-											data_type_output_list=data_type_output_list_def_INV_condition,
+											data_type_input_list=data_type_input_list_mapping_INV_condition,
+											data_type_output_list=data_type_output_list_mapping_INV_condition,
 											field_in='native-country', field_out='native-country'):
 		print('INVARIANT mapping(native-country)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT mapping(native-country)_INV_condition NOT VALIDATED')
+	
 	
 	
 	
@@ -151,6 +179,13 @@ def generateWorkflow():
 		print('PRECONDITION mathOperation(year-of-birth)_PRE_valueRange NOT VALIDATED')
 	
 	mathOperation_year_of_birth__input_dataDictionary_transformed=mathOperation_year_of_birth__input_dataDictionary_df.copy()
+	mathOperation_year_of_birth__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_transformed,
+																  data_type_output = DataType(5),
+																  field_in = 'age', field_out = 'year-of-birth')
+	
+	mathOperation_year_of_birth__output_dataDictionary_df=mathOperation_year_of_birth__input_dataDictionary_transformed
+	mathOperation_year_of_birth__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
+	mathOperation_year_of_birth__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 	mathOperation_year_of_birth__input_dataDictionary_transformed=data_transformations.transform_math_operation(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_transformed,
 																math_op=MathOperator(1), field_out='year-of-birth',
 																firstOperand='1994', isFieldFirst=False,secondOperand='age', isFieldSecond=True)
@@ -175,6 +210,8 @@ def generateWorkflow():
 		print('INVARIANT mathOperation(year-of-birth)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT mathOperation(year-of-birth)_INV_condition NOT VALIDATED')
+	
+	
 	
 	
 	

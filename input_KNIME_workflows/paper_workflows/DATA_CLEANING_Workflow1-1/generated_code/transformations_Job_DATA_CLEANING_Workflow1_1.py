@@ -20,7 +20,18 @@ def generateWorkflow():
 	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
-																  left_margin=-1000000.0, right_margin=1000000.0,
+																  left_margin=40.0, right_margin=40.0,
+																  closure_type=Closure(2),
+																  fix_value_output='FULL-TIME',
+							                                      data_type_output = DataType(0),
+																  field_in = 'native-country',
+																  field_out = 'prediction')
+	
+	binner_native_country__output_dataDictionary_df=binner_native_country__input_dataDictionary_transformed
+	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
+																  left_margin=-1.0E9, right_margin=40.0,
 																  closure_type=Closure(0),
 																  fix_value_output='PART-TIME',
 							                                      data_type_output = DataType(0),
@@ -31,9 +42,9 @@ def generateWorkflow():
 	binner_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_native_country__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_native_country__input_dataDictionary_transformed,
-																  left_margin=40.0, right_margin=1000000.0,
-																  closure_type=Closure(2),
-																  fix_value_output='FULL-TIME',
+																  left_margin=40.0, right_margin=1.0E9,
+																  closure_type=Closure(0),
+																  fix_value_output='PART-TIME',
 							                                      data_type_output = DataType(0),
 																  field_in = 'native-country',
 																  field_out = 'prediction')
@@ -65,6 +76,13 @@ def generateWorkflow():
 	mathOperation_Age_of_birth__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping_output_dataDictionary.parquet')
 
 	mathOperation_Age_of_birth__input_dataDictionary_transformed=mathOperation_Age_of_birth__input_dataDictionary_df.copy()
+	mathOperation_Age_of_birth__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Age_of_birth__input_dataDictionary_transformed,
+																  data_type_output = DataType(5),
+																  field_in = 'age', field_out = 'Age-of-birth')
+	
+	mathOperation_Age_of_birth__output_dataDictionary_df=mathOperation_Age_of_birth__input_dataDictionary_transformed
+	mathOperation_Age_of_birth__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mathOperation_output_dataDictionary.parquet')
+	mathOperation_Age_of_birth__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation_output_dataDictionary.parquet')
 	mathOperation_Age_of_birth__input_dataDictionary_transformed=data_transformations.transform_math_operation(data_dictionary=mathOperation_Age_of_birth__input_dataDictionary_transformed,
 																math_op=MathOperator(1), field_out='Age-of-birth',
 																firstOperand='1994', isFieldFirst=False,secondOperand='age', isFieldSecond=True)

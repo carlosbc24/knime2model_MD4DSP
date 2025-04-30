@@ -29,18 +29,7 @@ def generateWorkflow():
 	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
-																  left_margin=-1000000.0, right_margin=1000000.0,
-																  closure_type=Closure(0),
-																  fix_value_output='Average',
-							                                      data_type_output = DataType(0),
-																  field_in = 'Life_expectancy',
-																  field_out = 'Life-Expectancy (High/Low/Avg)')
-	
-	binner_Life_expectancy__output_dataDictionary_df=binner_Life_expectancy__input_dataDictionary_transformed
-	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
-																  left_margin=-1000000.0, right_margin=40.0,
+																  left_margin=-40.0, right_margin=40.0,
 																  closure_type=Closure(1),
 																  fix_value_output='Low',
 							                                      data_type_output = DataType(0),
@@ -51,9 +40,42 @@ def generateWorkflow():
 	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
-																  left_margin=70.0, right_margin=1000000.0,
+																  left_margin=70.0, right_margin=70.0,
 																  closure_type=Closure(2),
 																  fix_value_output='High',
+							                                      data_type_output = DataType(0),
+																  field_in = 'Life_expectancy',
+																  field_out = 'Life-Expectancy (High/Low/Avg)')
+	
+	binner_Life_expectancy__output_dataDictionary_df=binner_Life_expectancy__input_dataDictionary_transformed
+	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
+																  left_margin=-1.0E9, right_margin=-40.0,
+																  closure_type=Closure(0),
+																  fix_value_output='Average',
+							                                      data_type_output = DataType(0),
+																  field_in = 'Life_expectancy',
+																  field_out = 'Life-Expectancy (High/Low/Avg)')
+	
+	binner_Life_expectancy__output_dataDictionary_df=binner_Life_expectancy__input_dataDictionary_transformed
+	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
+																  left_margin=40.0, right_margin=70.0,
+																  closure_type=Closure(0),
+																  fix_value_output='Average',
+							                                      data_type_output = DataType(0),
+																  field_in = 'Life_expectancy',
+																  field_out = 'Life-Expectancy (High/Low/Avg)')
+	
+	binner_Life_expectancy__output_dataDictionary_df=binner_Life_expectancy__input_dataDictionary_transformed
+	binner_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Life_expectancy__input_dataDictionary_transformed,
+																  left_margin=70.0, right_margin=1.0E9,
+																  closure_type=Closure(0),
+																  fix_value_output='Average',
 							                                      data_type_output = DataType(0),
 																  field_in = 'Life_expectancy',
 																  field_out = 'Life-Expectancy (High/Low/Avg)')
@@ -70,19 +92,7 @@ def generateWorkflow():
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=-1000000.0, right_margin=1000000.0,
-											closure_type=Closure(0),
-											fix_value_output='Average',
-											belong_op_in=Belong(0), belong_op_out=Belong(0),
-											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
-	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
-											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=-1000000.0, right_margin=40.0,
+											left_margin=-40.0, right_margin=40.0,
 											closure_type=Closure(1),
 											fix_value_output='Low',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
@@ -92,9 +102,10 @@ def generateWorkflow():
 	else:
 		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
 	
+	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=70.0, right_margin=1000000.0,
+											left_margin=70.0, right_margin=70.0,
 											closure_type=Closure(2),
 											fix_value_output='High',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
@@ -103,6 +114,47 @@ def generateWorkflow():
 		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
+	
+	
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
+											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
+											left_margin=-1.0E9, right_margin=-40.0,
+											closure_type=Closure(0),
+											fix_value_output='Average',
+											belong_op_in=Belong(0), belong_op_out=Belong(0),
+											data_type_output=DataType(0),
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
+		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+	else:
+		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
+	
+	
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
+											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
+											left_margin=40.0, right_margin=70.0,
+											closure_type=Closure(0),
+											fix_value_output='Average',
+											belong_op_in=Belong(0), belong_op_out=Belong(0),
+											data_type_output=DataType(0),
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
+		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+	else:
+		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
+	
+	
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
+											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
+											left_margin=70.0, right_margin=1.0E9,
+											closure_type=Closure(0),
+											fix_value_output='Average',
+											belong_op_in=Belong(0), belong_op_out=Belong(0),
+											data_type_output=DataType(0),
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
+		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+	else:
+		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
+	
+	
 	
 	
 	

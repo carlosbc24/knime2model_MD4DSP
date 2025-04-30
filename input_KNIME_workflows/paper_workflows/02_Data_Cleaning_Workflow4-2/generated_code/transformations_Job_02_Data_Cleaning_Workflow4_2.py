@@ -19,7 +19,7 @@ def generateWorkflow():
 	binner_Source__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Source__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Source__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Source__input_dataDictionary_transformed,
-																  left_margin=-1000000.0, right_margin=130.0,
+																  left_margin=-130.0, right_margin=130.0,
 																  closure_type=Closure(0),
 																  fix_value_output='N',
 							                                      data_type_output = DataType(0),
@@ -30,7 +30,7 @@ def generateWorkflow():
 	binner_Source__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Source__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	binner_Source__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Source__input_dataDictionary_transformed,
-																  left_margin=130.0, right_margin=1000000.0,
+																  left_margin=130.0, right_margin=130.0,
 																  closure_type=Closure(2),
 																  fix_value_output='Y',
 							                                      data_type_output = DataType(0),

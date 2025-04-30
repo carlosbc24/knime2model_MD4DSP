@@ -20,7 +20,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION mathOperation(Difference in Latitude/Altitude)_PRE_valueRange NOT VALIDATED')
 	missing_values_mathOperation_PRE_valueRange=[]
-	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_df, field='Latitude', 
+	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_df, field='Altitude', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None):
 		print('PRECONDITION mathOperation(Difference in Latitude/Altitude)_PRE_valueRange VALIDATED')
@@ -28,9 +28,16 @@ def generateWorkflow():
 		print('PRECONDITION mathOperation(Difference in Latitude/Altitude)_PRE_valueRange NOT VALIDATED')
 	
 	mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_df.copy()
+	mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed,
+																  data_type_output = DataType(5),
+																  field_in = 'Latitude', field_out = 'Difference in Latitude/Altitude')
+	
+	mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed
+	mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mathOperation_output_dataDictionary.parquet')
+	mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation_output_dataDictionary.parquet')
 	mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed=data_transformations.transform_math_operation(data_dictionary=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed,
 																math_op=MathOperator(1), field_out='Difference in Latitude/Altitude',
-																firstOperand='Latitude', isFieldFirst=True,secondOperand='Latitude', isFieldSecond=True)
+																firstOperand='Latitude', isFieldFirst=True,secondOperand='Altitude', isFieldSecond=True)
 	
 	mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_transformed
 	mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mathOperation_output_dataDictionary.parquet')
@@ -47,11 +54,14 @@ def generateWorkflow():
 	if contract_invariants.check_inv_math_operation(data_dictionary_in=mathOperation_Difference_in_Latitude_Altitude__input_dataDictionary_df,
 											data_dictionary_out=mathOperation_Difference_in_Latitude_Altitude__output_dataDictionary_df,
 											math_op=MathOperator(1),
-											firstOperand='Latitude', isFieldFirst=True, secondOperand='Latitude', isFieldSecond=True, 
+											firstOperand='Latitude', isFieldFirst=True, secondOperand='Altitude', isFieldSecond=True, 
 											belong_op_out=Belong(0), field_in='Difference in Latitude/Altitude', field_out='Difference in Latitude/Altitude'):
 		print('INVARIANT mathOperation(Difference in Latitude/Altitude)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT mathOperation(Difference in Latitude/Altitude)_INV_condition NOT VALIDATED')
+	
+	
+	
 	
 	
 	

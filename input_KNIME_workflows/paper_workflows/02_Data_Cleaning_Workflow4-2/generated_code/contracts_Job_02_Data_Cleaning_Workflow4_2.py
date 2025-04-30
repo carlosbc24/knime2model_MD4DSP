@@ -30,7 +30,7 @@ def generateWorkflow():
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Source__input_dataDictionary_df,
 											data_dictionary_out=binner_Source__output_dataDictionary_df,
-											left_margin=-1000000.0, right_margin=130.0,
+											left_margin=-130.0, right_margin=130.0,
 											closure_type=Closure(0),
 											fix_value_output='N',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
@@ -40,9 +40,10 @@ def generateWorkflow():
 	else:
 		print('INVARIANT binner(Source)_INV_condition NOT VALIDATED')
 	
+	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Source__input_dataDictionary_df,
 											data_dictionary_out=binner_Source__output_dataDictionary_df,
-											left_margin=130.0, right_margin=1000000.0,
+											left_margin=130.0, right_margin=130.0,
 											closure_type=Closure(2),
 											fix_value_output='Y',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
@@ -51,6 +52,8 @@ def generateWorkflow():
 		print('INVARIANT binner(Source)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT binner(Source)_INV_condition NOT VALIDATED')
+	
+	
 	
 	
 	

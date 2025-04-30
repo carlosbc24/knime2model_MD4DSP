@@ -59,23 +59,23 @@
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Source)_param_bin_Unknown"
+        name="binner(Source)_param_bin_N"
         binValue="N">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          leftMargin="-1000000.0"
+          leftMargin="-130.0"
           rightMargin="130.0"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Source)_param_bin_Unknown"
+        name="binner(Source)_param_bin_Y"
         binValue="Y">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
           leftMargin="130.0"
-          rightMargin="1000000.0"
+          rightMargin="130.0"
           clousure="closedOpen"/>
     </parameter>
     <contract
@@ -159,7 +159,7 @@
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
-              leftMargin="-1000000.0"
+              leftMargin="-130.0"
               rightMargin="130.0">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
@@ -173,7 +173,7 @@
           <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="130.0"
-              rightMargin="1000000.0"
+              rightMargin="130.0"
               closureType="closedOpen">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
