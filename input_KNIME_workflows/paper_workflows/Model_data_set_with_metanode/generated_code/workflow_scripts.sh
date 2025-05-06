@@ -1,6 +1,6 @@
-CONTRACTS_SCRIPT="workflows.contracts_Job_Model_data_set_with_metanode"
-TRANSFORMATIONS_SCRIPT="workflows.transformations_Job_Model_data_set_with_metanode"
-WORKFLOW_SCRIPT="workflows.dataProcessing_Job_Model_data_set_with_metanode"
+CONTRACTS_SCRIPT="workflows.contracts_Job_Model_data_set_with_metanode_KNIME_"
+TRANSFORMATIONS_SCRIPT="workflows.transformations_Job_Model_data_set_with_metanode_KNIME_"
+WORKFLOW_SCRIPT="workflows.dataProcessing_Job_Model_data_set_with_metanode_KNIME_"
 
 python3 -m workflows.fileFormatting
 
