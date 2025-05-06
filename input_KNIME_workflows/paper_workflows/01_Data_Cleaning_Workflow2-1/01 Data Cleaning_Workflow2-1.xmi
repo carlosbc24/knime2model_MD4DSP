@@ -13,141 +13,22 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)">
+      name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)">
     <inputPort
         fileName="output/columnFilter_input_dataDictionary.csv"
-        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_input_dataDictionary"
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Categorical"
-          name="columnFilter(Country)_input_dataField"
-          displayName="Country">
+          name="columnFilter(Thinness_ten_nineteen_years)_input_dataField"
+          displayName="Thinness_ten_nineteen_years">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
       </datafield>
       <datafield
           xsi:type="Workflow:Categorical"
-          name="columnFilter(Region)_input_dataField"
-          displayName="Region">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Year)_input_dataField"
-          displayName="Year">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Infant_deaths)_input_dataField"
-          displayName="Infant_deaths">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Under_five_deaths)_input_dataField"
-          displayName="Under_five_deaths">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Adult_mortality)_input_dataField"
-          displayName="Adult_mortality">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Alcohol_consumption)_input_dataField"
-          displayName="Alcohol_consumption">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Hepatitis_B)_input_dataField"
-          displayName="Hepatitis_B">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Measles)_input_dataField"
-          displayName="Measles">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(BMI)_input_dataField"
-          displayName="BMI">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Polio)_input_dataField"
-          displayName="Polio">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Diphtheria)_input_dataField"
-          displayName="Diphtheria">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Incidents_HIV)_input_dataField"
-          displayName="Incidents_HIV">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(GDP_per_capita)_input_dataField"
-          displayName="GDP_per_capita">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Population_mln)_input_dataField"
-          displayName="Population_mln">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Schooling)_input_dataField"
-          displayName="Schooling">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Economy_status_Developed)_input_dataField"
-          displayName="Economy_status_Developed">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Economy_status_Developing)_input_dataField"
-          displayName="Economy_status_Developing">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Life_expectancy)_input_dataField"
-          displayName="Life_expectancy">
+          name="columnFilter(Thinness_five_nine_years)_input_dataField"
+          displayName="Thinness_five_nine_years">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
       </datafield>
@@ -156,7 +37,7 @@
     </inputPort>
     <outputPort
         fileName="output/columnFilter_output_dataDictionary.csv"
-        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_output_dataDictionary"
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
@@ -166,18 +47,18 @@
         href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter
         xsi:type="Workflow:FieldRange"
-        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_param_field"
-        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8 //@dataprocessing.0/@inputPort.0/@datafield.9 //@dataprocessing.0/@inputPort.0/@datafield.10 //@dataprocessing.0/@inputPort.0/@datafield.11 //@dataprocessing.0/@inputPort.0/@datafield.12 //@dataprocessing.0/@inputPort.0/@datafield.13 //@dataprocessing.0/@inputPort.0/@datafield.14 //@dataprocessing.0/@inputPort.0/@datafield.15 //@dataprocessing.0/@inputPort.0/@datafield.16 //@dataprocessing.0/@inputPort.0/@datafield.17 //@dataprocessing.0/@inputPort.0/@datafield.18">
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_param_field"
+        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1">
       <fieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_PRECONDITION">
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:FieldRange"
-          name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_PRE_fieldRange">
+          name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_PRE_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@inputPort.0">
@@ -190,50 +71,16 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
         <field
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.9"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.10"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.11"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.12"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.13"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.14"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.15"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.16"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.17"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.18"/>
       </contract>
     </contract>
     <contract
-        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_POSTCONDITION">
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:FieldRange"
           type="POSTCONDITION"
-          name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_POST_fieldRange">
+          name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POST_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@outputPort.0">
@@ -246,40 +93,53 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
         <field
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.9"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.10"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.11"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.12"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.13"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.14"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.15"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.16"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.17"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.18"/>
+      </contract>
+    </contract>
+    <contract
+        name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INV_condition">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataResult>
+        </then>
       </contract>
     </contract>
   </dataprocessing>
