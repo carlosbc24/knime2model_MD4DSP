@@ -42,7 +42,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         # Filter columns that are not in the output
         filtered_columns = [
             {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-            for column in in_columns if column["column_name"] not in out_column_names]
+            for column in out_columns if column["column_name"] not in in_column_names]
         filtered_column_names = [column["name"] for column in filtered_columns]
         filtered_column_names_str = ", ".join(filtered_column_names)
         column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}

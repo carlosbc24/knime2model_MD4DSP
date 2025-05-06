@@ -46,6 +46,7 @@
     <contract name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRECONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract xsi:type="Contract:FieldRange"
+                type="PRECONDITION"
                 name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRE_fieldRange">
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
@@ -62,7 +63,7 @@
       <contract xsi:type="Contract:FieldRange"
                 type="POSTCONDITION"
                 name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POST_fieldRange"
-                belongOp="BELONG">
+                belongOp="NOTBELONG">
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
@@ -71,6 +72,52 @@
         {% for in_column in dataprocessing.column_filter.filtered_columns %}
         <field dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"/>
         {% endfor %}
+      </contract>
+    </contract>
+    <contract
+        name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_condition">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0"
+            name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          {% for filtered_column in dataprocessing.column_filter.filtered_columns %}
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }}"/>
+          {% endfor %}
+        </if>
+        <then
+            if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.0"
+            name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataResult>
+        </then>
       </contract>
     </contract>
     {% endif %}
