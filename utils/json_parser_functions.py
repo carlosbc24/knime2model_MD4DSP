@@ -64,6 +64,12 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
             "filter_type_inclusion":
                 node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 
+    elif library_transformation_name == "rowFilterMissing":
+        row_dict = {
+            "pattern": node["parameters"]["pattern"] if "pattern" in node["parameters"] else "",
+            "filter_type_inclusion":
+                node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
+
     elif library_transformation_name == "binner":
         binner_dict = {"bins": node["parameters"]["bins"]}
 

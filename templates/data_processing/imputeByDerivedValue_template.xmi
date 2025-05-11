@@ -92,7 +92,7 @@
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
           name="POST_value_range_impute_{{ in_column.name }}_columns"
-          belongOp="BELONG">
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }}"

@@ -105,7 +105,11 @@
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
           name="rowFilterRange({{ in_column.name }})_POST_valueRange"
+          {% if dataprocessing.row_filter.filter_type_inclusion == 'EXCLUDE' %}
+          belongOp="NOTBELONG">
+          {% else %}
           belongOp="BELONG">
+          {% endif %}
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
@@ -161,7 +165,12 @@
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index }}/@contract/@if.0"
-            name="rowFilterRange({{ in_column.name }})_INV_THEN">
+            name="rowFilterRange({{ in_column.name }})_INV_THEN"
+            {% if dataprocessing.row_filter.filter_type_inclusion == 'EXCLUDE' %}
+            belongOp="NOTBELONG">
+            {% else %}
+            belongOp="BELONG">
+            {% endif %}
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult

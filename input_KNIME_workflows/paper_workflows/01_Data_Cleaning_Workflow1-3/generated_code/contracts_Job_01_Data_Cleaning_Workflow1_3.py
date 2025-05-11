@@ -24,7 +24,7 @@ def generateWorkflow():
 		print('PRECONDITION rowFilterMissing(Life_expectancy)_PRE_valueRange NOT VALIDATED')
 	
 	missing_values_rowFilterMissing_POST_valueRange=[]
-	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=rowFilterMissing_Life_expectancy__output_dataDictionary_df, field='Life_expectancy', 
+	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=rowFilterMissing_Life_expectancy__output_dataDictionary_df, field='Life_expectancy', 
 									missing_values=missing_values_rowFilterMissing_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION rowFilterMissing(Life_expectancy)_POST_valueRange VALIDATED')
