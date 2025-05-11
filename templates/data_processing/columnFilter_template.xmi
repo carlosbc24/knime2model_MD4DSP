@@ -3,7 +3,8 @@
                 incoming=""
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
                 out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})">
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})"
+                origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <inputPort fileName="{{ dataprocessing.input_filepath }}"
                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_input_dataDictionary"
                out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">

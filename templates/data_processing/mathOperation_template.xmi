@@ -4,7 +4,8 @@
       outgoing=""
       in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
       out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-      name="mathOperation({{ dataprocessing.math_op.out_column }})">
+      name="mathOperation({{ dataprocessing.math_op.out_column }})"
+      origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"
         name="mathOperation({{ dataprocessing.math_op.out_column }})_input_dataDictionary"

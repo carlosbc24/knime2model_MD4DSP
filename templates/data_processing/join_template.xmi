@@ -4,7 +4,8 @@
       outgoing=""
       in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
       out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
-      name="join({{ dataprocessing.join.out_column }})">
+      name="join({{ dataprocessing.join.out_column }})"
+      origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"
         name="join({{ dataprocessing.join.out_column }})_input_dataDictionary"
