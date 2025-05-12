@@ -457,7 +457,7 @@ def generateWorkflow():
 	binner_avg_income__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_avg_income__input_dataDictionary_transformed,
 																  left_margin=9.0, right_margin=42830.0,
 																  closure_type=Closure(1),
-																  fix_value_output='Low',
+																  fix_value_output='low',
 							                                      data_type_output = DataType(0),
 																  field_in = 'avg_income',
 																  field_out = 'avg_income_binned')
