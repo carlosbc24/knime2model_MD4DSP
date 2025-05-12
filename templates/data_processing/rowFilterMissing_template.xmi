@@ -14,6 +14,7 @@
       <datafield
           xsi:type="Workflow:Continuous"
           name="rowFilterMissing({{ in_column.name }})_input_dataField"
+          dataType="{{ in_column.type }}"
           displayName="{{ in_column.name }}">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.10/@inputPort.0/@datafielddefinition.0"/>
@@ -85,7 +86,7 @@
               operator="less"
               percent="60.0">
             <percentDef
-                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
           </quantity>
           <specialValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>

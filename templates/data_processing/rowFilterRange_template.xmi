@@ -19,13 +19,13 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
         <interval
-            leftMargin="-1000.0"
-            rightMargin="1000.0"
+            leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
+            rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
             clousure="closedClosed"/>
       </datafield>
         {% endfor %}
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0"/>
     </inputPort>
     <outputPort
         fileName="{{ dataprocessing.output_filepath }}"
@@ -40,7 +40,8 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
         <interval
-            rightMargin="1000.0"
+            leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
+            rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
             clousure="closedClosed"/>
       </datafield>
         {% endfor %}
@@ -88,7 +89,8 @@
         </in>
         <value
             xsi:type="Contract:Interval"
-            rightMargin="1000.0"
+            rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
+            leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
             closureType="closedOpen">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -100,7 +102,7 @@
     <contract
         name="rowFilterRange({{ in_column.name }})_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
@@ -118,14 +120,15 @@
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
-            xsi:type="Contract:FixValue"
-            value="-216"
-            dataType="{{ in_column.type }}">
-          <fixValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+            xsi:type="Contract:Interval"
+            rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
+            leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
+            closureType="closedClosed">
+          <intervalDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
     <contract
@@ -158,7 +161,10 @@
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
-              xsi:type="Contract:Interval">
+              xsi:type="Contract:Interval"
+              rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
+              leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
+              closureType="closedClosed">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
@@ -174,7 +180,10 @@
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
-              xsi:type="Contract:Interval">
+              xsi:type="Contract:Interval"
+              rightMargin="{{ dataprocessing.row_filter.upper_bound }}"
+              leftMargin="{{ dataprocessing.row_filter.lower_bound }}"
+              closureType="closedClosed">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
