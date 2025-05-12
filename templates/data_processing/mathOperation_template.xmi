@@ -244,9 +244,9 @@
                 xsi:type="Contract:FixValue"
                 name="mathOperation({{ dataprocessing.math_op.out_column }})_INV_THEN_OP{{ next_operand_index }}_FIX_VALUE"
                 {% if operand_index == last_operand_index %}
-                next_operand="">
+                next_operand=""
                 {% else %}
-                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}">
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}"
                 {% endif %}
                 value="{{ operand.value }}"
                 dataType="Double">
