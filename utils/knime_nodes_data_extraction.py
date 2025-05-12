@@ -389,8 +389,10 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                 else:
                     node_info["parameters"]["upper_bound"] = 0
                 # Flags to indicate if the upeer and lower bounds are not None
-                node_info["parameters"]["has_lower_bound"] = lower_bound_value is not None and lower_bound_value != ""
-                node_info["parameters"]["has_upper_bound"] = upper_bound_value is not None and upper_bound_value != ""
+                node_info["parameters"]["has_lower_bound"] = (not lower_bound_value is not None and lower_bound_value
+                                                              != "")
+                node_info["parameters"]["has_upper_bound"] = (not upper_bound_value is not None and upper_bound_value
+                                                              != "")
 
             elif filter_type_entry is not None and node_info["parameters"]["filter_type"] == "StringComp_RowFilter":
                 # Extract the pattern
