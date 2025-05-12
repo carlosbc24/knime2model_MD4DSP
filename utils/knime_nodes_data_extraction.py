@@ -511,6 +511,7 @@ def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operat
                 # Extract the number, which is located just after the numeric operator
                 parts = rule.split()
                 operator_part = parts[1]
+                column_part = parts[0]
                 if bool(re.match(r'([<>=]{1,2})(\d+)', operator_part)):
                     match = re.search(r'([<>=]{1,2})(\d+)', operator_part)
                     if match:
@@ -524,21 +525,36 @@ def extract_binner_node_settings_from_rule_engine(node_info: dict, binner_operat
                                 second_operand = second_operand[1:-1]
                             break
 
+                # Extraer columna entre $
+                column_part = column_part.split("$")
+                if len(column_part) > 1:
+                    column_part = column_part[1]
+                    # Update the node_info with the column name
+                    node_info["parameters"]["in_columns"] = [
+                        {"column_name": column_part, "column_type": "xstring"}
+                    ]
+
             else:
                 second_operand = INFINITE_VALUE
 
             if numeric_operator == "<":
                 closure_type = "openOpen"
-                first_operand = -float(second_operand)
+                first_operand = -float(INFINITE_VALUE)
+
             elif numeric_operator == "<=":
                 closure_type = "openClosed"
-                first_operand = -float(second_operand)
+                first_operand = -float(INFINITE_VALUE)
+
             elif numeric_operator == ">":
                 closure_type = "openOpen"
                 first_operand = second_operand
+                second_operand = float(INFINITE_VALUE)
+
             elif numeric_operator == ">=":
                 closure_type = "closedOpen"
                 first_operand = second_operand
+                second_operand = float(INFINITE_VALUE)
+
             elif numeric_operator == "=>":
                 closure_type = "openOpen"
                 first_operand = None
