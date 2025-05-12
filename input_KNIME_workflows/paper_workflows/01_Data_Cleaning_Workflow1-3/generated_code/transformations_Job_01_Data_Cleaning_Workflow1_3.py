@@ -28,7 +28,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=rowFilterPrimitive_Year__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Year']
 	
-	filter_fix_value_list_rowFilterPrimitive_param_filter=['2010']
+	filter_fix_value_list_rowFilterPrimitive_param_filter=[2010]
 	
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_transformed,
 																											columns=columns_rowFilterPrimitive_param_filter,
@@ -44,8 +44,8 @@ def generateWorkflow():
 	rowFilterRange_Life_expectancy__input_dataDictionary_transformed=rowFilterRange_Life_expectancy__input_dataDictionary_df.copy()
 	columns_rowFilterRange_param_filter=['Life_expectancy']
 	
-	filter_range_left_values_list_rowFilterRange_param_filter=[0.0]
-	filter_range_right_values_list_rowFilterRange_param_filter=[np.inf]
+	filter_range_left_values_list_rowFilterRange_param_filter=[-np.inf]
+	filter_range_right_values_list_rowFilterRange_param_filter=[50.0]
 	closure_type_list_rowFilterRange_param_filter=[Closure(3)]
 	
 	rowFilterRange_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_filter_rows_range(data_dictionary=rowFilterRange_Life_expectancy__input_dataDictionary_transformed,

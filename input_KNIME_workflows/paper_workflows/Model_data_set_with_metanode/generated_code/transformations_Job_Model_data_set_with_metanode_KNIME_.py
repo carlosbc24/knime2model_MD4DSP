@@ -174,11 +174,11 @@ def generateWorkflow():
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed=stringToNumber_TERRITORY_Instate__input_dataDictionary_df.copy()
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed=data_transformations.transform_cast_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed,
 																	data_type_output= DataType(2),
-																	field='TERRITORY')
+																	field='TERRITORY', origin_function="String To Number")
 	
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed=data_transformations.transform_cast_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed,
 																	data_type_output= DataType(2),
-																	field='Instate')
+																	field='Instate', origin_function="String To Number")
 	
 	stringToNumber_TERRITORY_Instate__output_dataDictionary_df=stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed
 	stringToNumber_TERRITORY_Instate__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/stringToNumber_output_dataDictionary.parquet')

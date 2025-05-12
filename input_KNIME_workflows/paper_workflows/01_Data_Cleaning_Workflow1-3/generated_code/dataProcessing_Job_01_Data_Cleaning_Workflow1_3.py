@@ -57,7 +57,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterPrimitive_Year__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='2010', data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('PRECONDITION rowFilterPrimitive(Year)_PRE_valueRange VALIDATED')
 	else:
@@ -66,7 +66,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=rowFilterPrimitive_Year__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Year']
 	
-	filter_fix_value_list_rowFilterPrimitive_param_filter=['2010']
+	filter_fix_value_list_rowFilterPrimitive_param_filter=[2010]
 	
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_transformed,
 																											columns=columns_rowFilterPrimitive_param_filter,
@@ -76,7 +76,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	rowFilterPrimitive_Year__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value='2010', data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION rowFilterPrimitive(Year)_POST_valueRange VALIDATED')
 	else:
@@ -85,13 +85,13 @@ def generateWorkflow():
 	
 	
 	columns_list_rowFilterPrimitive_Year__INV_condition=['Year']
-	filter_fix_value_list_rowFilterPrimitive_Year__INV_condition=['2010']
+	filter_fix_value_list_rowFilterPrimitive_Year__INV_condition=[2010]
 	
 	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Year__input_dataDictionary_df,
 											data_dictionary_out=rowFilterPrimitive_Year__output_dataDictionary_df,
 											columns=columns_list_rowFilterPrimitive_Year__INV_condition,
 											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_Year__INV_condition,
-											filter_type=FilterType.EXCLUDE):
+											filter_type=FilterType.INCLUDE):
 		print('INVARIANT rowFilterPrimitive(Year)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT rowFilterPrimitive(Year)_INV_condition NOT VALIDATED')
@@ -100,7 +100,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterRange_Life_expectancy__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=rowFilterRange_Life_expectancy__input_dataDictionary_df,
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=50.0, data_dictionary=rowFilterRange_Life_expectancy__input_dataDictionary_df,
 	                                	closure_type=Closure(2), belong_op=Belong(0), field='Life_expectancy', origin_function="Row Filter"):
 		print('PRECONDITION rowFilterRange(Life_expectancy)_PRE_valueRange VALIDATED')
 	else:
@@ -109,8 +109,8 @@ def generateWorkflow():
 	rowFilterRange_Life_expectancy__input_dataDictionary_transformed=rowFilterRange_Life_expectancy__input_dataDictionary_df.copy()
 	columns_rowFilterRange_param_filter=['Life_expectancy']
 	
-	filter_range_left_values_list_rowFilterRange_param_filter=[0.0]
-	filter_range_right_values_list_rowFilterRange_param_filter=[np.inf]
+	filter_range_left_values_list_rowFilterRange_param_filter=[-np.inf]
+	filter_range_right_values_list_rowFilterRange_param_filter=[50.0]
 	closure_type_list_rowFilterRange_param_filter=[Closure(3)]
 	
 	rowFilterRange_Life_expectancy__input_dataDictionary_transformed=data_transformations.transform_filter_rows_range(data_dictionary=rowFilterRange_Life_expectancy__input_dataDictionary_transformed,
@@ -123,8 +123,8 @@ def generateWorkflow():
 	rowFilterRange_Life_expectancy__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterRange_output_dataDictionary.parquet')
 	rowFilterRange_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterRange_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value='-216', data_dictionary=rowFilterRange_Life_expectancy__output_dataDictionary_df, belong_op=Belong(0), field='Life_expectancy',
-									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=50.0, data_dictionary=rowFilterRange_Life_expectancy__output_dataDictionary_df,
+	                                	closure_type=Closure(3), belong_op=Belong(0), field='Life_expectancy', origin_function="Row Filter"):
 		print('POSTCONDITION rowFilterRange(Life_expectancy)_POST_valueRange VALIDATED')
 	else:
 		print('POSTCONDITION rowFilterRange(Life_expectancy)_POST_valueRange NOT VALIDATED')
@@ -133,14 +133,15 @@ def generateWorkflow():
 	
 	columns_list_rowFilterRange_Life_expectancy__INV_condition=['Life_expectancy']
 	left_margin_list_rowFilterRange_Life_expectancy__INV_condition=[0.0]
-	right_margin_list_rowFilterRange_Life_expectancy__INV_condition=[0.0]
-	closure_type_list_rowFilterRange_Life_expectancy__INV_condition=[Closure.openOpen]
+	right_margin_list_rowFilterRange_Life_expectancy__INV_condition=[50.0]
+	closure_type_list_rowFilterRange_Life_expectancy__INV_condition=[Closure.closedClosed]
 	
 	if contract_invariants.check_inv_filter_rows_range(data_dictionary_in=rowFilterRange_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=rowFilterRange_Life_expectancy__output_dataDictionary_df,
 											columns=columns_list_rowFilterRange_Life_expectancy__INV_condition,
 											left_margin_list=left_margin_list_rowFilterRange_Life_expectancy__INV_condition, right_margin_list=right_margin_list_rowFilterRange_Life_expectancy__INV_condition,
-											closure_type_list=closure_type_list_rowFilterRange_Life_expectancy__INV_condition, filter_type=FilterType.EXCLUDE):
+											closure_type_list=closure_type_list_rowFilterRange_Life_expectancy__INV_condition,
+											filter_type=FilterType.INCLUDE):
 		print('INVARIANT rowFilterRange(Life_expectancy)_INV_condition VALIDATED')
 	else:
 		print('INVARIANT rowFilterRange(Life_expectancy)_INV_condition NOT VALIDATED')
