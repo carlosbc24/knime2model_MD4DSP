@@ -574,6 +574,18 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/ruleEngine_instate_output_dataDictionary.parquet')
 
+	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
+	                                	  field='TERRITORY', field_type=DataType(0), origin_function="String To Number"):
+		print('PRECONDITION stringToNumber(TERRITORY)_PRE_valueRange_String VALIDATED')
+	else:
+		print('PRECONDITION stringToNumber(TERRITORY)_PRE_valueRange_String NOT VALIDATED')
+	
+	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
+	                                	  field='Instate', field_type=DataType(0), origin_function="String To Number"):
+		print('PRECONDITION stringToNumber(Instate)_PRE_valueRange_String VALIDATED')
+	else:
+		print('PRECONDITION stringToNumber(Instate)_PRE_valueRange_String NOT VALIDATED')
+	
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed=stringToNumber_TERRITORY_Instate__input_dataDictionary_df.copy()
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed=data_transformations.transform_cast_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_transformed,
 																	data_type_output= DataType(2),
@@ -587,6 +599,18 @@ def generateWorkflow():
 	stringToNumber_TERRITORY_Instate__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/stringToNumber_output_dataDictionary.parquet')
 	stringToNumber_TERRITORY_Instate__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/stringToNumber_output_dataDictionary.parquet')
 	
+	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
+	                                	  field='TERRITORY', field_type=DataType(2), origin_function="String To Number"):
+		print('POSTCONDITION stringToNumber(TERRITORY)_POST_valueRange_Integer VALIDATED')
+	else:
+		print('POSTCONDITION stringToNumber(TERRITORY)_POST_valueRange_Integer NOT VALIDATED')
+	
+	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
+	                                	  field='Instate', field_type=DataType(2), origin_function="String To Number"):
+		print('POSTCONDITION stringToNumber(Instate)_POST_valueRange_Integer VALIDATED')
+	else:
+		print('POSTCONDITION stringToNumber(Instate)_POST_valueRange_Integer NOT VALIDATED')
+	
 	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
 											data_dictionary_out=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
 											belong_op_in=Belong(1), belong_op_out=Belong(1),
@@ -594,16 +618,6 @@ def generateWorkflow():
 		print('INVARIANT INV_specialValue_condition_TERRITORY_belongOpIn_NotBelong_belongOpOut_NotBelong VALIDATED')
 	else:
 		print('INVARIANT INV_specialValue_condition_TERRITORY_belongOpIn_NotBelong_belongOpOut_NotBelong NOT VALIDATED')
-	
-	
-	
-	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
-											data_dictionary_out=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
-											belong_op_in=Belong(1), belong_op_out=Belong(1),
-											field_in='Instate', field_out='Instate', origin_function="String To Number"):
-		print('INVARIANT INV_specialValue_condition_Instate_belongOpIn_NotBelong_belongOpOut_NotBelong VALIDATED')
-	else:
-		print('INVARIANT INV_specialValue_condition_Instate_belongOpIn_NotBelong_belongOpOut_NotBelong NOT VALIDATED')
 	
 	
 	
@@ -616,6 +630,16 @@ def generateWorkflow():
 		print('INVARIANT INV_castType_condition_TERRITORY_String_to_Integer VALIDATED')
 	else:
 		print('INVARIANT INV_castType_condition_TERRITORY_String_to_Integer NOT VALIDATED')
+	
+	
+	
+	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
+											data_dictionary_out=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
+											belong_op_in=Belong(1), belong_op_out=Belong(1),
+											field_in='Instate', field_out='Instate', origin_function="String To Number"):
+		print('INVARIANT INV_specialValue_condition_Instate_belongOpIn_NotBelong_belongOpOut_NotBelong VALIDATED')
+	else:
+		print('INVARIANT INV_specialValue_condition_Instate_belongOpIn_NotBelong_belongOpOut_NotBelong NOT VALIDATED')
 	
 	
 	
