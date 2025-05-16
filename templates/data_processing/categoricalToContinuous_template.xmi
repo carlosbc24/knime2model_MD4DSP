@@ -57,8 +57,56 @@
   {% if dataprocessing.include_contracts %}
   {% for out_column in dataprocessing.out_columns %}
   {% set in_index = loop.index0 %}
-  {% set contract_index_first = dataprocessing.out_columns|length * loop.index0 %}
-  {% set contract_index_second = dataprocessing.out_columns|length * loop.index0 + 1 %}
+  {% set contract_index_first = 4 * loop.index0 + 2 %}
+  {% set contract_index_second = 4 * loop.index0 + 3 %}
+  <contract
+        name="stringToNumber({{ out_column.name }})_castType_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="stringToNumber({{ out_column.name }})_PRE_valueRange">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
+            name="stringToNumber({{ out_column.name }})_PRE_input_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:CastType">
+          <castTypeDef
+              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="stringToNumber({{ out_column.name }})_castType_POSTCONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          type="POSTCONDITION"
+          name="stringToNumber({{ out_column.name }})_POST_valueRange">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ in_index }}"
+            name="stringToNumber({{ out_column.name }})_POST_output_dataField">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:CastType"
+            type="Integer">
+          <castTypeDef
+              href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.2/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.2/@contractDefinition"/>
+      </contract>
+    </contract>
   <contract name="stringToNumber({{ out_column.name }})_specialValue_INVARIANT">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
       <contract xsi:type="Contract:Condition"
@@ -114,7 +162,7 @@
             name="INV_castType_if_{{ out_column.name }}">
           <ifDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
           <dataCondition xsi:type="Contract:CastType">
-            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.3/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
         </if>
         <then if="//@dataprocessing.{{ dataprocessing.index }}/@contract.{{ contract_index_second }}/@contract/@if.0"
@@ -123,7 +171,7 @@
           <thenDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
           <dataResult xsi:type="Contract:CastType"
                        type="Integer">
-            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult"/>
+            <castTypeDef href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.3/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
         </then>
       </contract>
