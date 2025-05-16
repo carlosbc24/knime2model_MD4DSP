@@ -40,7 +40,8 @@
                               href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter xsi:type="Workflow:FieldRange"
                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_param_field"
-               dataField="{% for filtered_column in dataprocessing.column_filter.filtered_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}">
+               dataField="{% for filtered_column in dataprocessing.column_filter.filtered_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
+               operator="{{ dataprocessing.column_filter.belong_op }}">
       <fieldDef href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     {% if dataprocessing.include_contracts %}
@@ -48,7 +49,8 @@
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract xsi:type="Contract:FieldRange"
                 type="PRECONDITION"
-                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRE_fieldRange">
+                name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRE_fieldRange"
+                belongOp="BELONG">
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0/@contractDefinition/@in.0"/>
@@ -64,7 +66,11 @@
       <contract xsi:type="Contract:FieldRange"
                 type="POSTCONDITION"
                 name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POST_fieldRange"
+                {% if dataprocessing.column_filter.belong_op == 'BELONG' %}
                 belongOp="NOTBELONG">
+                {% else %}
+                belongOp="BELONG">
+                {% endif %}
         <in xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0">
           <dataDictionaryDef href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1/@contractDefinition/@in.0"/>
@@ -110,7 +116,8 @@
         </if>
         <then
             if="//@dataprocessing.{{ dataprocessing.index }}/@contract.2/@contract/@if.0"
-            name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_THEN">
+            name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_THEN"
+            belongOp="{{ dataprocessing.column_filter.belong_op }}">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult

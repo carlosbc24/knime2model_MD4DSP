@@ -39,13 +39,21 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     join_dict = {}
 
     if library_transformation_name == "columnFilter":
+        # Check if the node is a column filter
+        belong_op = "NOTBELONG" if len(out_columns) == 0 else "BELONG"
         # Filter columns that are not in the output
-        filtered_columns = [
-            {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
-            for column in out_columns if column["column_name"] not in in_column_names]
+        if len(out_columns) == 0:  # If no output columns, all columns are included
+            filtered_columns = [
+                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+                for column in in_columns if column["column_name"] not in out_column_names]
+        else:  # Filter columns that are in the output
+            filtered_columns = [
+                {"name": column["column_name"], "type": "String" if column["column_type"] == "xstring" else "Integer"}
+                for column in out_columns if column["column_name"] not in in_column_names]
         filtered_column_names = [column["name"] for column in filtered_columns]
         filtered_column_names_str = ", ".join(filtered_column_names)
-        column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str}
+        column_filter_dict = {"filtered_columns": filtered_columns, "filtered_column_names": filtered_column_names_str,
+                              "belong_op": belong_op}
 
     elif library_transformation_name == "rowFilterRange":
         row_dict = {"lower_bound": node["parameters"]["lower_bound"] if "lower_bound" in node["parameters"] else "",
