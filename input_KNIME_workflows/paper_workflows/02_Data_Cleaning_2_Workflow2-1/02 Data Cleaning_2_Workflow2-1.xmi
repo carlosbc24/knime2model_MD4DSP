@@ -13,92 +13,23 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)">
+      name="columnFilter(Latitude, Longitude)"
+      origin_function="Column Filter">
     <inputPort
         fileName="output/columnFilter_input_dataDictionary.csv"
-        name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_input_dataDictionary"
+        name="columnFilter(Latitude, Longitude)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Categorical"
-          name="columnFilter(Airport ID)_input_dataField"
-          displayName="Airport ID">
+          name="columnFilter(Latitude)_input_dataField"
+          displayName="Latitude">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
       </datafield>
       <datafield
           xsi:type="Workflow:Categorical"
-          name="columnFilter(Name)_input_dataField"
-          displayName="Name">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(City)_input_dataField"
-          displayName="City">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Country)_input_dataField"
-          displayName="Country">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(IATA)_input_dataField"
-          displayName="IATA">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(ICAO)_input_dataField"
-          displayName="ICAO">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Altitude)_input_dataField"
-          displayName="Altitude">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Timezone)_input_dataField"
-          displayName="Timezone">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(DST)_input_dataField"
-          displayName="DST">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Tz database time zone)_input_dataField"
-          displayName="Tz database time zone">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Type)_input_dataField"
-          displayName="Type">
-        <categoricalDef
-            href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
-      </datafield>
-      <datafield
-          xsi:type="Workflow:Categorical"
-          name="columnFilter(Source)_input_dataField"
-          displayName="Source">
+          name="columnFilter(Longitude)_input_dataField"
+          displayName="Longitude">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.3/@inputPort.0/@datafielddefinition.1"/>
       </datafield>
@@ -107,7 +38,7 @@
     </inputPort>
     <outputPort
         fileName="output/columnFilter_output_dataDictionary.csv"
-        name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_output_dataDictionary"
+        name="columnFilter(Latitude, Longitude)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <dataDictionaryDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@outputPort.0"/>
@@ -117,18 +48,18 @@
         href="library_validation.xmi#//@dataprocessingdefinition.3"/>
     <parameter
         xsi:type="Workflow:FieldRange"
-        name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_param_field"
-        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8 //@dataprocessing.0/@inputPort.0/@datafield.9 //@dataprocessing.0/@inputPort.0/@datafield.10 //@dataprocessing.0/@inputPort.0/@datafield.11">
+        name="columnFilter(Latitude, Longitude)_param_field"
+        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1">
       <fieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_PRECONDITION">
+        name="columnFilter(Latitude, Longitude)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:FieldRange"
-          name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_PRE_fieldRange">
+          name="columnFilter(Latitude, Longitude)_PRE_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@inputPort.0">
@@ -141,36 +72,17 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
         <field
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.9"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.10"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.11"/>
       </contract>
     </contract>
     <contract
-        name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POSTCONDITION">
+        name="columnFilter(Latitude, Longitude)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:FieldRange"
           type="POSTCONDITION"
-          name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange">
+          name="columnFilter(Latitude, Longitude)_POST_fieldRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@outputPort.0">
@@ -183,26 +95,53 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
         <field
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.9"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.10"/>
-        <field
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.11"/>
+      </contract>
+    </contract>
+    <contract
+        name="columnFilter(Latitude, Longitude)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="columnFilter(Latitude, Longitude)_INV_condition">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="columnFilter(Latitude, Longitude)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="columnFilter(Latitude, Longitude)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataResult>
+        </then>
       </contract>
     </contract>
   </dataprocessing>
@@ -216,7 +155,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow2-1/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

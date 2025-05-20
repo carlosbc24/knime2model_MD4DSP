@@ -13,9 +13,10 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="rowFilterPrimitive(Name)">
+      name="rowFilterPrimitive(Name)"
+      origin_function="Row Filter">
     <inputPort
-        fileName="output/rowFiltePrimitive_input_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_input_dataDictionary.csv"
         name="rowFilterPrimitive(Name)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
@@ -35,7 +36,7 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
     </inputPort>
     <outputPort
-        fileName="output/rowFiltePrimitive_output_dataDictionary.csv"
+        fileName="output/rowFilterPrimitive_output_dataDictionary.csv"
         name="rowFilterPrimitive(Name)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
@@ -119,6 +120,56 @@
             href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    <contract
+        name="rowFilterPrimitive(Name)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterPrimitive(Name)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="rowFilterPrimitive(Name)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="rowFilterPrimitive(Name)_output_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="rowFilterPrimitive(Name)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="rowFilterPrimitive(Name)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:FixValue"
+              name="rowFilterPrimitive(Name)_param_fix_value"
+              value="a*">
+            <fixValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <environment
       xsi:type="Environment:Local"
@@ -130,7 +181,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow1-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

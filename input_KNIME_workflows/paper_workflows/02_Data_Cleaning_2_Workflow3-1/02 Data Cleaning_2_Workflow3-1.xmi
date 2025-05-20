@@ -14,7 +14,8 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="mapping(Tz database time zone)">
+      name="mapping(Tz database time zone)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/mapping1_input_dataDictionary.csv"
         name="mapping(Tz database time zone)_input_dataDictionary"
@@ -52,8 +53,7 @@
         xsi:type="Workflow:Map"
         name="mapping(Tz database time zone)_param_/"
         inValue="/"
-        outvalue="-"
-        mapOperation="SUBSTRING">
+        outvalue="-">
       <mapDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
@@ -73,8 +73,7 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="/"
-            subStr="true">
+            value="/">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -89,7 +88,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(Tz database time zone)_POST_valueRange">
+          name="mapping(Tz database time zone)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -163,7 +163,8 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
-      name="mapping(Source)">
+      name="mapping(Source)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/mapping1_output_dataDictionary.csv"
         name="mapping(Source)_input_dataDictionary"
@@ -238,7 +239,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(Source)_POST_valueRange">
+          name="mapping(Source)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -248,7 +250,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="3">
+            value="3"
+            subStr="true">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -299,7 +302,8 @@
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:FixValue"
-              value="10">
+              value="10"
+              subStr="true">
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
@@ -320,7 +324,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow3-1/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

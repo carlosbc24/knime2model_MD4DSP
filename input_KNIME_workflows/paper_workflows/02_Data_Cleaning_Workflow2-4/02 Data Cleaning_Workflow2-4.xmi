@@ -13,7 +13,8 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)">
+      name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)"
+      origin_function="Column Filter">
     <inputPort
         fileName="output/columnFilter_input_dataDictionary.csv"
         name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_input_dataDictionary"
@@ -97,7 +98,8 @@
     <parameter
         xsi:type="Workflow:FieldRange"
         name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_param_field"
-        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8">
+        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8"
+        operator="NOTBELONG">
       <fieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
@@ -172,6 +174,75 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
       </contract>
     </contract>
+    <contract
+        name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_INV_condition">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="columnFilter(Airline, Airline ID, Source airport, Source airport ID, Destination airport, Destination airport ID, Codeshare, Stops, Equipment)_INV_THEN"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <environment
       xsi:type="Environment:Local"
@@ -183,7 +254,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow2-4/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

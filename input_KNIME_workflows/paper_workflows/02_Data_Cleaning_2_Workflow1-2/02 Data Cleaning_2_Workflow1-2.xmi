@@ -13,7 +13,8 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="rowFilterRange(Latitude)">
+      name="rowFilterRange(Latitude)"
+      origin_function="Row Filter">
     <inputPort
         fileName="output/rowFilterRange_input_dataDictionary.csv"
         name="rowFilterRange(Latitude)_input_dataDictionary"
@@ -25,12 +26,10 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
         <interval
-            leftMargin="-1000.0"
-            rightMargin="1000.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0"/>
     </inputPort>
     <outputPort
         fileName="output/rowFilterRange_output_dataDictionary.csv"
@@ -43,7 +42,6 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
         <interval
-            rightMargin="1000.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
@@ -60,7 +58,8 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.0"/>
       <matchingvalue
           xsi:type="Workflow:Range"
-          name="rowFilterRange(Latitude)_param_range">
+          name="rowFilterRange(Latitude)_param_range"
+          minInfinity="true">
         <rangeDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.1"/>
       </matchingvalue>
@@ -71,17 +70,16 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilter(Latitude)_PRE_valueRange">
+          name="rowFilterRange(Latitude)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="rowFilter(Latitude)_PRE_input_dataField">
+            name="rowFilterRange(Latitude)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:Interval"
-            rightMargin="1000.0"
             closureType="closedOpen">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -91,13 +89,13 @@
       </contract>
     </contract>
     <contract
-        name="rowFilter(Latitude)_POSTCONDITION">
+        name="rowFilterRange(Latitude)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilter(Latitude)_POST_valueRange">
+          name="rowFilterRange(Latitude)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -106,13 +104,63 @@
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
-            xsi:type="Contract:FixValue"
-            value="-216">
-          <fixValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+            xsi:type="Contract:Interval"
+            closureType="closedClosed">
+          <intervalDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="rowFilterRange(Latitude)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterRange(Latitude)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="rowFilterRange(Latitude)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="rowFilterRange(Latitude)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="rowFilterRange(Latitude)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="rowFilterRange(Latitude)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
       </contract>
     </contract>
   </dataprocessing>
@@ -126,7 +174,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow1-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

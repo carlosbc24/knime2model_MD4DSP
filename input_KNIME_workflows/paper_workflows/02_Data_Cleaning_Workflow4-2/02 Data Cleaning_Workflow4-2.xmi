@@ -13,16 +13,17 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@inputPort.0/@datafield.0"
-      name="binner(Source)">
+      name="binner(Longitude)"
+      origin_function="Rule Engine">
     <inputPort
         fileName="output/binner_input_dataDictionary.csv"
-        name="binner(Source)_input_dataDictionary"
+        name="binner(Longitude)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="binner(Source)_input_dataField"
+          name="binner(Longitude)_input_dataField"
           dataType="Integer"
-          displayName="Source"
+          displayName="Longitude"
           out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0/@datafielddefinition.0"/>
@@ -34,7 +35,7 @@
     </inputPort>
     <outputPort
         fileName="output/binner_output_dataDictionary.csv"
-        name="binner(Source)_output_dataDictionary"
+        name="binner(Longitude)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
           xsi:type="Workflow:Categorical"
@@ -52,43 +53,43 @@
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
     <parameter
         xsi:type="Workflow:DerivedField"
-        name="binner(Source)_param_derivedField"
+        name="binner(Longitude)_param_derivedField"
         der_dataField="//@dataprocessing.0/@outputPort.0/@datafield.0">
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Source)_param_bin_N"
+        name="binner(Longitude)_param_bin_N"
         binValue="N">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          leftMargin="-130.0"
+          leftMargin="-1.0E9"
           rightMargin="130.0"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Source)_param_bin_Y"
+        name="binner(Longitude)_param_bin_Y"
         binValue="Y">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
           leftMargin="130.0"
-          rightMargin="130.0"
+          rightMargin="1.0E9"
           clousure="closedOpen"/>
     </parameter>
     <contract
-        name="binner(Source)_PRECONDITION">
+        name="binner(Longitude)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="binner(Source)_PRE_valueRange">
+          name="binner(Longitude)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="binner(Source)_PRE_input_dataField">
+            name="binner(Longitude)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -104,17 +105,18 @@
       </contract>
     </contract>
     <contract
-        name="binner(Source)_POSTCONDITION">
+        name="binner(Longitude)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(Source)_POST_valueRange">
+          name="binner(Longitude)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="binner(Source)_POST_input_dataField">
+            name="binner(Longitude)_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -129,24 +131,24 @@
       </contract>
     </contract>
     <contract
-        name="binner(Source)_INVARIANT">
+        name="binner(Longitude)_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="binner(Source)_INV_condition">
+          name="binner(Longitude)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="binner(Source)_INV_input_dataField">
+            name="binner(Longitude)_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="binner(Source)_INV_output_dataField">
+            name="binner(Longitude)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
@@ -154,12 +156,12 @@
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
-            name="binner(Source)_INV_IF_N">
+            name="binner(Longitude)_INV_IF_N">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
-              leftMargin="-130.0"
+              leftMargin="-1.0E9"
               rightMargin="130.0">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
@@ -167,13 +169,13 @@
         </if>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.1"
-            name="binner(Source)_INV_IF_Y">
+            name="binner(Longitude)_INV_IF_Y">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="130.0"
-              rightMargin="130.0"
+              rightMargin="1.0E9"
               closureType="closedOpen">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
@@ -181,7 +183,7 @@
         </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
-            name="binner(Source)_INV_THEN_N">
+            name="binner(Longitude)_INV_THEN_N">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
@@ -193,7 +195,7 @@
         </then>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.1"
-            name="binner(Source)_INV_THEN_Y">
+            name="binner(Longitude)_INV_THEN_Y">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
@@ -216,7 +218,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow4-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

@@ -13,7 +13,8 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="join(Name with City)">
+      name="join(Name with City)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/join_input_dataDictionary.csv"
         name="join(Name with City)_input_dataDictionary"
@@ -58,13 +59,16 @@
       <operand
           xsi:type="Workflow:Field"
           name="join(Name with City)_param_op1_field"
+          next_operand="//@dataprocessing.0/@parameter.0/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
       </operand>
       <operand
           xsi:type="Workflow:FixValue"
-          name="join(Name with City)_param_op2_fix_value">
+          name="join(Name with City)_param_op2_fix_value"
+          next_operand="//@dataprocessing.0/@parameter.0/@operand.2"
+          previous_operand="//@dataprocessing.0/@parameter.0/@operand.0">
         <fixValueDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0"/>
         <value
@@ -77,6 +81,7 @@
       <operand
           xsi:type="Workflow:Field"
           name="join(Name with City)_param_op3_field"
+          previous_operand="//@dataprocessing.0/@parameter.0/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.1">
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
@@ -196,19 +201,23 @@
             <operand
                 xsi:type="Contract:OpField"
                 name="join(Name with City)_op1_field"
+                next_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.1"
                 datafield="//@dataprocessing.0/@contract.1/@contract/@in.0">
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
             </operand>
             <operand
                 xsi:type="Contract:FixValue"
-                name="join(Name with City)_op2_fix_value">
+                name="join(Name with City)_op2_fix_value"
+                next_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.2"
+                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.0">
               <fixValueDef
                   href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
             </operand>
             <operand
                 xsi:type="Contract:OpField"
                 name="join(Name with City)_op3_field"
+                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.1"
                 datafield="//@dataprocessing.0/@contract.1/@contract/@in.1">
               <opFieldDef
                   href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
@@ -230,7 +239,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

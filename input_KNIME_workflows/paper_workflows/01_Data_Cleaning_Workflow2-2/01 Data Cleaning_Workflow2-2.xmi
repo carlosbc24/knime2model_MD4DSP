@@ -13,7 +13,8 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)">
+      name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)"
+      origin_function="Column Filter">
     <inputPort
         fileName="output/columnFilter_input_dataDictionary.csv"
         name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_input_dataDictionary"
@@ -181,7 +182,8 @@
     <parameter
         xsi:type="Workflow:FieldRange"
         name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_param_field"
-        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8 //@dataprocessing.0/@inputPort.0/@datafield.9 //@dataprocessing.0/@inputPort.0/@datafield.10 //@dataprocessing.0/@inputPort.0/@datafield.11 //@dataprocessing.0/@inputPort.0/@datafield.12 //@dataprocessing.0/@inputPort.0/@datafield.13 //@dataprocessing.0/@inputPort.0/@datafield.14 //@dataprocessing.0/@inputPort.0/@datafield.15 //@dataprocessing.0/@inputPort.0/@datafield.16 //@dataprocessing.0/@inputPort.0/@datafield.17 //@dataprocessing.0/@inputPort.0/@datafield.18 //@dataprocessing.0/@inputPort.0/@datafield.19 //@dataprocessing.0/@inputPort.0/@datafield.20">
+        dataField="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1 //@dataprocessing.0/@inputPort.0/@datafield.2 //@dataprocessing.0/@inputPort.0/@datafield.3 //@dataprocessing.0/@inputPort.0/@datafield.4 //@dataprocessing.0/@inputPort.0/@datafield.5 //@dataprocessing.0/@inputPort.0/@datafield.6 //@dataprocessing.0/@inputPort.0/@datafield.7 //@dataprocessing.0/@inputPort.0/@datafield.8 //@dataprocessing.0/@inputPort.0/@datafield.9 //@dataprocessing.0/@inputPort.0/@datafield.10 //@dataprocessing.0/@inputPort.0/@datafield.11 //@dataprocessing.0/@inputPort.0/@datafield.12 //@dataprocessing.0/@inputPort.0/@datafield.13 //@dataprocessing.0/@inputPort.0/@datafield.14 //@dataprocessing.0/@inputPort.0/@datafield.15 //@dataprocessing.0/@inputPort.0/@datafield.16 //@dataprocessing.0/@inputPort.0/@datafield.17 //@dataprocessing.0/@inputPort.0/@datafield.18 //@dataprocessing.0/@inputPort.0/@datafield.19 //@dataprocessing.0/@inputPort.0/@datafield.20"
+        operator="NOTBELONG">
       <fieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.3/@parameterdefinition.0"/>
     </parameter>
@@ -304,6 +306,111 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.20"/>
       </contract>
     </contract>
+    <contract
+        name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_INV_condition">
+        <in
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@inputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataDictionary"
+            dataDictionary="//@dataprocessing.0/@outputPort.0">
+          <dataDictionaryDef
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.2"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.3"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.4"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.5"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.6"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.7"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.8"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.9"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.10"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.11"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.12"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.13"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.14"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.15"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.16"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.17"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.18"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.19"/>
+          <dataCondition
+              xsi:type="Contract:Field"
+              dataField="//@dataprocessing.0/@inputPort.0/@datafield.20"/>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="columnFilter(Country, Region, Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing, Life_expectancy)_INV_THEN"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <environment
       xsi:type="Environment:Local"
@@ -315,7 +422,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow2-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

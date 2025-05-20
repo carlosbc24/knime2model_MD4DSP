@@ -14,7 +14,8 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="mathOperation(Change)">
+      name="mathOperation(Change)"
+      origin_function="Math Formula">
     <inputPort
         fileName="output/mathOperation1_input_dataDictionary.csv"
         name="mathOperation(Change)_input_dataDictionary"
@@ -137,7 +138,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperation(Change)_POST_valueRange">
+          name="mathOperation(Change)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -234,7 +236,8 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0"
       out="//@dataprocessing.1/@outputPort.0"
-      name="mathOperation(Percentage)">
+      name="mathOperation(Percentage)"
+      origin_function="Math Formula">
     <inputPort
         fileName="output/mathOperation1_output_dataDictionary.csv"
         name="mathOperation(Percentage)_input_dataDictionary"
@@ -357,7 +360,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperation(Percentage)_POST_valueRange">
+          name="mathOperation(Percentage)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -453,16 +457,17 @@
       incoming="//@link.1"
       in="//@dataprocessing.2/@inputPort.0/@datafield.0"
       out="//@dataprocessing.2/@inputPort.0/@datafield.0"
-      name="binner(Percentage)">
+      name="binner(Change)"
+      origin_function="Rule Engine">
     <inputPort
         fileName="output/mathOperation2_output_dataDictionary.csv"
-        name="binner(Percentage)_input_dataDictionary"
+        name="binner(Change)_input_dataDictionary"
         out="//@dataprocessing.2/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="binner(Percentage)_input_dataField"
+          name="binner(Change)_input_dataField"
           dataType="Integer"
-          displayName="Percentage"
+          displayName="Change"
           out="//@dataprocessing.2/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0/@datafielddefinition.0"/>
@@ -474,7 +479,7 @@
     </inputPort>
     <outputPort
         fileName="output/binner_output_dataDictionary.csv"
-        name="binner(Percentage)_output_dataDictionary"
+        name="binner(Change)_output_dataDictionary"
         in="//@dataprocessing.2/@inputPort.0">
       <datafield
           xsi:type="Workflow:Categorical"
@@ -492,58 +497,40 @@
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
     <parameter
         xsi:type="Workflow:DerivedField"
-        name="binner(Percentage)_param_derivedField"
+        name="binner(Change)_param_derivedField"
         der_dataField="//@dataprocessing.2/@outputPort.0/@datafield.0">
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Percentage)_param_bin_Decrease"
+        name="binner(Change)_param_bin_Decrease"
         binValue="Decrease">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
-          leftMargin="-0.0"/>
+          leftMargin="-1.0E9"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(Percentage)_param_bin_Increase"
+        name="binner(Change)_param_bin_Increase"
         binValue="Increase">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(Percentage)_param_bin_No Change"
-        binValue="No Change">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="-1.0E9"
-          rightMargin="-0.0"/>
-    </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(Percentage)_param_bin_No Change"
-        binValue="No Change">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
           rightMargin="1.0E9"/>
     </parameter>
     <contract
-        name="binner(Percentage)_PRECONDITION">
+        name="binner(Change)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="binner(Percentage)_PRE_valueRange">
+          name="binner(Change)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
-            name="binner(Percentage)_PRE_input_dataField">
+            name="binner(Change)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -559,17 +546,18 @@
       </contract>
     </contract>
     <contract
-        name="binner(Percentage)_POSTCONDITION">
+        name="binner(Change)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(Percentage)_POST_valueRange">
+          name="binner(Change)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
-            name="binner(Percentage)_POST_input_dataField">
+            name="binner(Change)_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -584,24 +572,24 @@
       </contract>
     </contract>
     <contract
-        name="binner(Percentage)_INVARIANT">
+        name="binner(Change)_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="binner(Percentage)_INV_condition">
+          name="binner(Change)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@inputPort.0/@datafield.0"
-            name="binner(Percentage)_INV_input_dataField">
+            name="binner(Change)_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
-            name="binner(Percentage)_INV_output_dataField">
+            name="binner(Change)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
@@ -609,43 +597,19 @@
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.2/@contract.2/@contract/@then.0"
-            name="binner(Percentage)_INV_IF_Decrease">
+            name="binner(Change)_INV_IF_Decrease">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
-              leftMargin="-0.0">
+              leftMargin="-1.0E9">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
         </if>
         <if
             then="//@dataprocessing.2/@contract.2/@contract/@then.1"
-            name="binner(Percentage)_INV_IF_Increase">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <dataCondition
-              xsi:type="Contract:Interval">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
-          </dataCondition>
-        </if>
-        <if
-            then="//@dataprocessing.2/@contract.2/@contract/@then.2"
-            name="binner(Percentage)_INV_IF_No Change">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <dataCondition
-              xsi:type="Contract:Interval"
-              leftMargin="-1.0E9"
-              rightMargin="-0.0">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
-          </dataCondition>
-        </if>
-        <if
-            then="//@dataprocessing.2/@contract.2/@contract/@then.3"
-            name="binner(Percentage)_INV_IF_No Change">
+            name="binner(Change)_INV_IF_Increase">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
@@ -657,7 +621,7 @@
         </if>
         <then
             if="//@dataprocessing.2/@contract.2/@contract/@if.0"
-            name="binner(Percentage)_INV_THEN_Decrease">
+            name="binner(Change)_INV_THEN_Decrease">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
@@ -669,36 +633,12 @@
         </then>
         <then
             if="//@dataprocessing.2/@contract.2/@contract/@if.1"
-            name="binner(Percentage)_INV_THEN_Increase">
+            name="binner(Change)_INV_THEN_Increase">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:FixValue"
               value="Increase">
-            <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
-          </dataResult>
-        </then>
-        <then
-            if="//@dataprocessing.2/@contract.2/@contract/@if.2"
-            name="binner(Percentage)_INV_THEN_No Change">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <dataResult
-              xsi:type="Contract:FixValue"
-              value="No Change">
-            <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
-          </dataResult>
-        </then>
-        <then
-            if="//@dataprocessing.2/@contract.2/@contract/@if.3"
-            name="binner(Percentage)_INV_THEN_No Change">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <dataResult
-              xsi:type="Contract:FixValue"
-              value="No Change">
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
@@ -722,7 +662,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow4/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

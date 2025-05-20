@@ -14,16 +14,17 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@inputPort.0/@datafield.0"
-      name="binner(native-country)">
+      name="binner(hours-per-week)"
+      origin_function="Rule Engine">
     <inputPort
         fileName="output/binner_input_dataDictionary.csv"
-        name="binner(native-country)_input_dataDictionary"
+        name="binner(hours-per-week)_input_dataDictionary"
         out="//@dataprocessing.0/@outputPort.0">
       <datafield
           xsi:type="Workflow:Continuous"
-          name="binner(native-country)_input_dataField"
+          name="binner(hours-per-week)_input_dataField"
           dataType="Integer"
-          displayName="native-country"
+          displayName="hours-per-week"
           out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.7/@inputPort.0/@datafielddefinition.0"/>
@@ -35,7 +36,7 @@
     </inputPort>
     <outputPort
         fileName="output/binner_output_dataDictionary.csv"
-        name="binner(native-country)_output_dataDictionary"
+        name="binner(hours-per-week)_output_dataDictionary"
         in="//@dataprocessing.0/@inputPort.0">
       <datafield
           xsi:type="Workflow:Categorical"
@@ -53,25 +54,25 @@
         href="library_validation.xmi#//@dataprocessingdefinition.7"/>
     <parameter
         xsi:type="Workflow:DerivedField"
-        name="binner(native-country)_param_derivedField"
+        name="binner(hours-per-week)_param_derivedField"
         der_dataField="//@dataprocessing.0/@outputPort.0/@datafield.0">
       <derivedFieldDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.0"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(native-country)_param_bin_FULL-TIME"
+        name="binner(hours-per-week)_param_bin_FULL-TIME"
         binValue="FULL-TIME">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
       <interval
           leftMargin="40.0"
-          rightMargin="40.0"
+          rightMargin="1.0E9"
           clousure="closedOpen"/>
     </parameter>
     <parameter
         xsi:type="Workflow:DiscretizeBin"
-        name="binner(native-country)_param_bin_PART-TIME"
+        name="binner(hours-per-week)_param_bin_PART-TIME"
         binValue="PART-TIME">
       <discretizeBinDef
           href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
@@ -79,27 +80,17 @@
           leftMargin="-1.0E9"
           rightMargin="40.0"/>
     </parameter>
-    <parameter
-        xsi:type="Workflow:DiscretizeBin"
-        name="binner(native-country)_param_bin_PART-TIME"
-        binValue="PART-TIME">
-      <discretizeBinDef
-          href="library_validation.xmi#//@dataprocessingdefinition.7/@parameterdefinition.1"/>
-      <interval
-          leftMargin="40.0"
-          rightMargin="1.0E9"/>
-    </parameter>
     <contract
-        name="binner(native-country)_PRECONDITION">
+        name="binner(hours-per-week)_PRECONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="binner(native-country)_PRE_valueRange">
+          name="binner(hours-per-week)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="binner(native-country)_PRE_input_dataField">
+            name="binner(hours-per-week)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -115,17 +106,18 @@
       </contract>
     </contract>
     <contract
-        name="binner(native-country)_POSTCONDITION">
+        name="binner(hours-per-week)_POSTCONDITION">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="binner(native-country)_POST_valueRange">
+          name="binner(hours-per-week)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="binner(native-country)_POST_input_dataField">
+            name="binner(hours-per-week)_POST_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
@@ -140,24 +132,24 @@
       </contract>
     </contract>
     <contract
-        name="binner(native-country)_INVARIANT">
+        name="binner(hours-per-week)_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
           type="INVARIANT"
-          name="binner(native-country)_INV_condition">
+          name="binner(hours-per-week)_INV_condition">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="binner(native-country)_INV_input_dataField">
+            name="binner(hours-per-week)_INV_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="binner(native-country)_INV_output_dataField">
+            name="binner(hours-per-week)_INV_output_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@out.0"/>
         </out>
@@ -165,13 +157,13 @@
             href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition"/>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.0"
-            name="binner(native-country)_INV_IF_FULL-TIME">
+            name="binner(hours-per-week)_INV_IF_FULL-TIME">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="40.0"
-              rightMargin="40.0"
+              rightMargin="1.0E9"
               closureType="closedOpen">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
@@ -179,7 +171,7 @@
         </if>
         <if
             then="//@dataprocessing.0/@contract.2/@contract/@then.1"
-            name="binner(native-country)_INV_IF_PART-TIME">
+            name="binner(hours-per-week)_INV_IF_PART-TIME">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
@@ -190,22 +182,9 @@
                 href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
         </if>
-        <if
-            then="//@dataprocessing.0/@contract.2/@contract/@then.2"
-            name="binner(native-country)_INV_IF_PART-TIME">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
-          <dataCondition
-              xsi:type="Contract:Interval"
-              leftMargin="40.0"
-              rightMargin="1.0E9">
-            <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
-          </dataCondition>
-        </if>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.0"
-            name="binner(native-country)_INV_THEN_FULL-TIME">
+            name="binner(hours-per-week)_INV_THEN_FULL-TIME">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
@@ -217,19 +196,7 @@
         </then>
         <then
             if="//@dataprocessing.0/@contract.2/@contract/@if.1"
-            name="binner(native-country)_INV_THEN_PART-TIME">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
-          <dataResult
-              xsi:type="Contract:FixValue"
-              value="PART-TIME">
-            <fixValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
-          </dataResult>
-        </then>
-        <then
-            if="//@dataprocessing.0/@contract.2/@contract/@if.2"
-            name="binner(native-country)_INV_THEN_PART-TIME">
+            name="binner(hours-per-week)_INV_THEN_PART-TIME">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
@@ -248,7 +215,8 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
-      name="mapping(native-country)">
+      name="mapping(native-country)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/binner_output_dataDictionary.csv"
         name="mapping(native-country)_input_dataDictionary"
@@ -321,7 +289,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(native-country)_POST_valueRange">
+          name="mapping(native-country)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -395,7 +364,8 @@
       incoming="//@link.1"
       in="//@dataprocessing.2/@inputPort.0"
       out="//@dataprocessing.2/@outputPort.0"
-      name="mathOperation(year-of-birth)">
+      name="mathOperation(year-of-birth)"
+      origin_function="Math Formula">
     <inputPort
         fileName="output/columnExpressions_output_dataDictionary.csv"
         name="mathOperation(year-of-birth)_input_dataDictionary"
@@ -505,7 +475,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mathOperation(year-of-birth)_POST_valueRange">
+          name="mathOperation(year-of-birth)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.2/@outputPort.0/@datafield.0"
@@ -569,7 +540,9 @@
             <operand
                 xsi:type="Contract:FixValue"
                 name="mathOperation(year-of-birth)_INV_THEN_OP1_FIX_VALUE"
-                next_operand="//@dataprocessing.2/@contract.2/@contract/@then.0/@dataResult/@operand.1">
+                next_operand="//@dataprocessing.2/@contract.2/@contract/@then.0/@dataResult/@operand.1"
+                value="1994"
+                dataType="Double">
               <fixValueDef
                   href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
             </operand>
@@ -604,7 +577,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow1-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

@@ -14,7 +14,8 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="rowFilterMissing(Life_expectancy)">
+      name="rowFilterMissing(Life_expectancy)"
+      origin_function="Row Filter">
     <inputPort
         fileName="output/rowFilterMissing_input_dataDictionary.csv"
         name="rowFilterMissing(Life_expectancy)_input_dataDictionary"
@@ -85,7 +86,7 @@
               operator="less"
               percent="60.0">
             <percentDef
-                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
           </quantity>
           <specialValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -101,7 +102,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilterMissing(Life_expectancy)_POST_valueRange">
+          name="rowFilterMissing(Life_expectancy)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -118,13 +120,63 @@
             href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    <contract
+        name="rowFilterMissing(Life_expectancy)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterMissing(Life_expectancy)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="rowFilterMissing(Life_expectancy)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="rowFilterMissing(Life_expectancy)_output_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="rowFilterMissing(Life_expectancy)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="rowFilterMissing(Life_expectancy)_INV_THEN"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
-      name="rowFilterRange(Life_expectancy)">
+      name="rowFilterRange(Life_expectancy)"
+      origin_function="Row Filter">
     <inputPort
         fileName="output/rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterRange(Life_expectancy)_input_dataDictionary"
@@ -136,12 +188,10 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
         <interval
-            leftMargin="-1000.0"
-            rightMargin="1000.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@inputPort.0"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0"/>
     </inputPort>
     <outputPort
         fileName="output/rowFilterRange_output_dataDictionary.csv"
@@ -154,7 +204,6 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
         <interval
-            rightMargin="1000.0"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
@@ -171,7 +220,8 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.0"/>
       <matchingvalue
           xsi:type="Workflow:Range"
-          name="rowFilterRange(Life_expectancy)_param_range">
+          name="rowFilterRange(Life_expectancy)_param_range"
+          minInfinity="true">
         <rangeDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.1"/>
       </matchingvalue>
@@ -182,17 +232,16 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          name="rowFilter(Life_expectancy)_PRE_valueRange">
+          name="rowFilterRange(Life_expectancy)_PRE_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
-            name="rowFilter(Life_expectancy)_PRE_input_dataField">
+            name="rowFilterRange(Life_expectancy)_PRE_input_dataField">
           <dataFieldDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <value
             xsi:type="Contract:Interval"
-            rightMargin="1000.0"
             closureType="closedOpen">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -202,13 +251,13 @@
       </contract>
     </contract>
     <contract
-        name="rowFilter(Life_expectancy)_POSTCONDITION">
+        name="rowFilterRange(Life_expectancy)_POSTCONDITION">
       <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilter(Life_expectancy)_POST_valueRange">
+          name="rowFilterRange(Life_expectancy)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -217,13 +266,63 @@
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@in.0"/>
         </in>
         <value
-            xsi:type="Contract:FixValue"
-            value="-216">
-          <fixValueDef
-              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
+            xsi:type="Contract:Interval"
+            closureType="closedClosed">
+          <intervalDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
         <valueRangeDef
-            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition"/>
+      </contract>
+    </contract>
+    <contract
+        name="rowFilterRange(Life_expectancy)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterRange(Life_expectancy)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
+            name="rowFilterRange(Life_expectancy)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
+            name="rowFilterRange(Life_expectancy)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.1/@contract.2/@contract/@then.0"
+            name="rowFilterRange(Life_expectancy)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.1/@contract.2/@contract/@if.0"
+            name="rowFilterRange(Life_expectancy)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:Interval"
+              closureType="closedClosed">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
       </contract>
     </contract>
   </dataprocessing>
@@ -240,7 +339,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

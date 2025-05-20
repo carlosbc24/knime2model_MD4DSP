@@ -13,7 +13,8 @@
       xsi:type="Workflow:DataProcessing"
       in="//@dataprocessing.0/@inputPort.0"
       out="//@dataprocessing.0/@outputPort.0"
-      name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)">
+      name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)"
+      origin_function="Column Filter">
     <inputPort
         fileName="output/columnFilter_input_dataDictionary.csv"
         name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_input_dataDictionary"
@@ -80,7 +81,8 @@
       <contract
           xsi:type="Contract:FieldRange"
           type="POSTCONDITION"
-          name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POST_fieldRange">
+          name="columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POST_fieldRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataDictionary"
             dataDictionary="//@dataprocessing.0/@outputPort.0">
@@ -153,7 +155,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow2-1/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

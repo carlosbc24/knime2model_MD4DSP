@@ -14,7 +14,8 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="mapping(Tz database time zone)">
+      name="mapping(Tz database time zone)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/mapping_input_dataDictionary.csv"
         name="mapping(Tz database time zone)_input_dataDictionary"
@@ -87,7 +88,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(Tz database time zone)_POST_valueRange">
+          name="mapping(Tz database time zone)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -161,7 +163,8 @@
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
-      name="mapping(Source)">
+      name="mapping(Source)"
+      origin_function="String Manipulation">
     <inputPort
         fileName="output/mapping_output_dataDictionary.csv"
         name="mapping(Source)_input_dataDictionary"
@@ -236,7 +239,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="mapping(Source)_POST_valueRange">
+          name="mapping(Source)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
@@ -320,7 +324,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow3-2/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

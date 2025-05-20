@@ -14,7 +14,8 @@
       outgoing="//@link.0"
       in="//@dataprocessing.0/@inputPort.0/@datafield.0"
       out="//@dataprocessing.0/@outputPort.0/@datafield.0"
-      name="rowFilterMissing(marital-status)">
+      name="rowFilterMissing(marital-status)"
+      origin_function="Row Filter (deprecated)">
     <inputPort
         fileName="output/rowFilterMissing_input_dataDictionary.csv"
         name="rowFilterMissing(marital-status)_input_dataDictionary"
@@ -85,7 +86,7 @@
               operator="less"
               percent="60.0">
             <percentDef
-                href="library_validation.xmi#//@dataprocessingdefinition.5/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0/@quantitydef"/>
           </quantity>
           <specialValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -101,7 +102,8 @@
       <contract
           xsi:type="Contract:ValueRange"
           type="POSTCONDITION"
-          name="rowFilterMissing(marital-status)_POST_valueRange">
+          name="rowFilterMissing(marital-status)_POST_valueRange"
+          belongOp="NOTBELONG">
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
@@ -118,13 +120,63 @@
             href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    <contract
+        name="rowFilterMissing(marital-status)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterMissing(marital-status)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
+            name="rowFilterMissing(marital-status)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
+            name="rowFilterMissing(marital-status)_output_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.0/@contract.2/@contract/@then.0"
+            name="rowFilterMissing(marital-status)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.0/@contract.2/@contract/@if.0"
+            name="rowFilterMissing(marital-status)_INV_THEN"
+            belongOp="NOTBELONG">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:SpecialValue">
+            <specialValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
       incoming="//@link.0"
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
-      name="rowFilterPrimitive(workclass)">
+      name="rowFilterPrimitive(workclass)"
+      origin_function="Row Filter (deprecated)">
     <inputPort
         fileName="output/rowFilterMissing_output_dataDictionary.csv"
         name="rowFilterPrimitive(workclass)_input_dataDictionary"
@@ -230,6 +282,56 @@
             href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition"/>
       </contract>
     </contract>
+    <contract
+        name="rowFilterPrimitive(workclass)_INVARIANT">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
+      <contract
+          xsi:type="Contract:Condition"
+          type="INVARIANT"
+          name="rowFilterPrimitive(workclass)_INV_condition">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.0"
+            name="rowFilterPrimitive(workclass)_input_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@in.0"/>
+        </in>
+        <out
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@outputPort.0/@datafield.0"
+            name="rowFilterPrimitive(workclass)_output_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@out.0"/>
+        </out>
+        <conditionDef
+            href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition"/>
+        <if
+            then="//@dataprocessing.1/@contract.2/@contract/@then.0"
+            name="rowFilterPrimitive(workclass)_INV_IF">
+          <ifDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
+          <dataCondition
+              xsi:type="Contract:Interval">
+            <intervalDef
+                href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+          </dataCondition>
+        </if>
+        <then
+            if="//@dataprocessing.1/@contract.2/@contract/@if.0"
+            name="rowFilterPrimitive(workclass)_INV_THEN">
+          <thenDefinition
+              href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
+          <dataResult
+              xsi:type="Contract:FixValue"
+              name="rowFilterPrimitive(workclass)_param_fix_value"
+              value="s*">
+            <fixValueDef
+                href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
+          </dataResult>
+        </then>
+      </contract>
+    </contract>
   </dataprocessing>
   <link source="//@dataprocessing.0"
       target="//@dataprocessing.1"
@@ -244,7 +346,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-3/knime_dataDictionaries">
+        folderPath="/home/carlos/Escritorio/datasets">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file
