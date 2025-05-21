@@ -349,6 +349,8 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                     "value"] if lower_bound is not None else None
                 upper_bound_value = upper_bound.attrib[
                     "value"] if upper_bound is not None else None
+                has_lower_bound = False
+                has_upper_bound = False
                 if lower_bound_value is not None and lower_bound_value != "":
                     if isinstance(lower_bound_value, str) and lower_bound_value.startswith("org.knime.core.data.def"):
                         cell_type = lower_bound_value.split('.')[-1]
@@ -356,16 +358,21 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                             f"knime:config[@key='lowerBound']/knime:config[@key='org.knime.core.data.def.{cell_type}']/knime:entry[@key='{cell_type}']", namespace)
                         if lower_bound_config is not None:
                             lower_bound_value = lower_bound_config.attrib["value"]
-                            if lower_bound_value is not None and lower_bound_value != "":
-                                if isinstance(lower_bound_value, str):
+                            if lower_bound_value is not None:
+                                if isinstance(lower_bound_value, str) and lower_bound_value != "":
                                     lower_bound_value_numeric = float(lower_bound_value)
                                     node_info["parameters"]["lower_bound"] = lower_bound_value_numeric
+                                    has_lower_bound = True
+                                else:
+                                    node_info["parameters"]["lower_bound"] = 0
+
                             else:
                                 node_info["parameters"]["lower_bound"] = 0
                         else:
                             node_info["parameters"]["lower_bound"] = 0
                     else:
                         node_info["parameters"]["lower_bound"] = lower_bound_value
+                        has_lower_bound = True
                 else:
                     node_info["parameters"]["lower_bound"] = 0
 
@@ -376,23 +383,25 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                             f"knime:config[@key='upperBound']/knime:config[@key='org.knime.core.data.def.{cell_type}']/knime:entry[@key='{cell_type}']", namespace)
                         if upper_bound_config is not None:
                             upper_bound_value = upper_bound_config.attrib["value"]
-                            if upper_bound_value is not None and upper_bound_value != "":
-                                if isinstance(upper_bound_value, str):
+                            if upper_bound_value is not None:
+                                if isinstance(upper_bound_value, str) and upper_bound_value != "":
                                     upper_bound_value_numeric = float(upper_bound_value)
                                     node_info["parameters"]["upper_bound"] = upper_bound_value_numeric
+                                    has_upper_bound = True
+                                else:
+                                    node_info["parameters"]["upper_bound"] = 0
                             else:
                                 node_info["parameters"]["upper_bound"] = 0
                         else:
                             node_info["parameters"]["upper_bound"] = 0
                     else:
                         node_info["parameters"]["upper_bound"] = upper_bound_value
+                        has_upper_bound = True
                 else:
                     node_info["parameters"]["upper_bound"] = 0
                 # Flags to indicate if the upeer and lower bounds are not None
-                node_info["parameters"]["has_lower_bound"] = (not lower_bound_value is not None and lower_bound_value
-                                                              != "")
-                node_info["parameters"]["has_upper_bound"] = (not upper_bound_value is not None and upper_bound_value
-                                                              != "")
+                node_info["parameters"]["has_lower_bound"] = has_lower_bound
+                node_info["parameters"]["has_upper_bound"] = has_upper_bound
 
             elif filter_type_entry is not None and node_info["parameters"]["filter_type"] == "StringComp_RowFilter":
                 # Extract the pattern

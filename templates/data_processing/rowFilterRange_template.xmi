@@ -60,8 +60,8 @@
       <matchingvalue
           xsi:type="Workflow:Range"
           name="rowFilterRange({{ dataprocessing.in_column_names }})_param_range"
-          minInfinity="{{ dataprocessing.row_filter.has_lower_bound }}"
-          maxInfinity="{{ dataprocessing.row_filter.has_upper_bound }}"
+          minInfinity="{{ not dataprocessing.row_filter.has_lower_bound }}"
+          maxInfinity="{{ not dataprocessing.row_filter.has_upper_bound }}"
           max="{{ dataprocessing.row_filter.upper_bound }}"
           min="{{ dataprocessing.row_filter.lower_bound }}">
         <rangeDef
