@@ -342,7 +342,7 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                     }
                 # Extract lower value and upper value
                 lower_bound = row_filter.find(
-                    "knime:config[@key='lowerBound']/knime:config/knime:entry[@key='IntCell']", namespace)
+                    "knime:config[@key='lowerBound']/knime:entry[@key='datacell']", namespace)
                 upper_bound = row_filter.find("knime:config[@key='upperBound']/knime:entry[@key='datacell']",
                                               namespace)
                 lower_bound_value = lower_bound.attrib[
