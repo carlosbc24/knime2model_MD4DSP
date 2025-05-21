@@ -364,17 +364,17 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                                     node_info["parameters"]["lower_bound"] = lower_bound_value_numeric
                                     has_lower_bound = True
                                 else:
-                                    node_info["parameters"]["lower_bound"] = 0
+                                    node_info["parameters"]["lower_bound"] = -float(INFINITE_VALUE)
 
                             else:
-                                node_info["parameters"]["lower_bound"] = 0
+                                node_info["parameters"]["lower_bound"] = -float(INFINITE_VALUE)
                         else:
-                            node_info["parameters"]["lower_bound"] = 0
+                            node_info["parameters"]["lower_bound"] = -float(INFINITE_VALUE)
                     else:
                         node_info["parameters"]["lower_bound"] = lower_bound_value
                         has_lower_bound = True
                 else:
-                    node_info["parameters"]["lower_bound"] = 0
+                    node_info["parameters"]["lower_bound"] = -float(INFINITE_VALUE)
 
                 if upper_bound_value is not None and upper_bound_value != "":
                     if isinstance(upper_bound_value, str) and upper_bound_value.startswith("org.knime.core.data.def"):
@@ -389,16 +389,16 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
                                     node_info["parameters"]["upper_bound"] = upper_bound_value_numeric
                                     has_upper_bound = True
                                 else:
-                                    node_info["parameters"]["upper_bound"] = 0
+                                    node_info["parameters"]["upper_bound"] = INFINITE_VALUE
                             else:
-                                node_info["parameters"]["upper_bound"] = 0
+                                node_info["parameters"]["upper_bound"] = INFINITE_VALUE
                         else:
-                            node_info["parameters"]["upper_bound"] = 0
+                            node_info["parameters"]["upper_bound"] = INFINITE_VALUE
                     else:
                         node_info["parameters"]["upper_bound"] = upper_bound_value
                         has_upper_bound = True
                 else:
-                    node_info["parameters"]["upper_bound"] = 0
+                    node_info["parameters"]["upper_bound"] = INFINITE_VALUE
                 # Flags to indicate if the upeer and lower bounds are not None
                 node_info["parameters"]["has_lower_bound"] = has_lower_bound
                 node_info["parameters"]["has_upper_bound"] = has_upper_bound
