@@ -27,6 +27,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="1000.0"
+            rightMargin="1.0E9"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
@@ -44,6 +45,7 @@
             href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
         <interval
             leftMargin="1000.0"
+            rightMargin="1.0E9"
             clousure="closedClosed"/>
       </datafield>
       <dataDictionaryDefinition
@@ -61,7 +63,9 @@
       <matchingvalue
           xsi:type="Workflow:Range"
           name="rowFilterRange(Altitude)_param_range"
-          min="1000.0">
+          min="1000.0"
+          max="1.0E9"
+          maxInfinity="true">
         <rangeDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@parameterdefinition.1"/>
       </matchingvalue>
@@ -83,6 +87,7 @@
         <value
             xsi:type="Contract:Interval"
             leftMargin="1000.0"
+            rightMargin="1.0E9"
             closureType="closedOpen">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
@@ -109,6 +114,7 @@
         <value
             xsi:type="Contract:Interval"
             leftMargin="1000.0"
+            rightMargin="1.0E9"
             closureType="closedClosed">
           <intervalDef
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
@@ -149,6 +155,7 @@
           <dataCondition
               xsi:type="Contract:Interval"
               leftMargin="1000.0"
+              rightMargin="1.0E9"
               closureType="closedClosed">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
@@ -162,6 +169,7 @@
           <dataResult
               xsi:type="Contract:Interval"
               leftMargin="1000.0"
+              rightMargin="1.0E9"
               closureType="closedClosed">
             <intervalDef
                 href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
@@ -180,7 +188,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlos/Escritorio/datasets">
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow1-3/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

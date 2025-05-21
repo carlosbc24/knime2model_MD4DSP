@@ -181,7 +181,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlos/Escritorio/datasets">
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow1-2/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

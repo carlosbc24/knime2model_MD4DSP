@@ -189,6 +189,7 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@inputPort.0/@datafielddefinition.0"/>
         <interval
+            leftMargin="-1.0E9"
             rightMargin="50.0"
             clousure="closedClosed"/>
       </datafield>
@@ -206,6 +207,7 @@
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.8/@outputPort.0/@datafielddefinition.0"/>
         <interval
+            leftMargin="-1.0E9"
             rightMargin="50.0"
             clousure="closedClosed"/>
       </datafield>
@@ -224,6 +226,7 @@
       <matchingvalue
           xsi:type="Workflow:Range"
           name="rowFilterRange(Life_expectancy)_param_range"
+          min="-1.0E9"
           max="50.0"
           minInfinity="true">
         <rangeDef
@@ -246,6 +249,7 @@
         </in>
         <value
             xsi:type="Contract:Interval"
+            leftMargin="-1.0E9"
             rightMargin="50.0"
             closureType="closedOpen">
           <intervalDef
@@ -272,6 +276,7 @@
         </in>
         <value
             xsi:type="Contract:Interval"
+            leftMargin="-1.0E9"
             rightMargin="50.0"
             closureType="closedClosed">
           <intervalDef
@@ -312,6 +317,7 @@
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@ifdefinition.0"/>
           <dataCondition
               xsi:type="Contract:Interval"
+              leftMargin="-1.0E9"
               rightMargin="50.0"
               closureType="closedClosed">
             <intervalDef
@@ -325,6 +331,7 @@
               href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:Interval"
+              leftMargin="-1.0E9"
               rightMargin="50.0"
               closureType="closedClosed">
             <intervalDef
@@ -513,7 +520,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlos/Escritorio/datasets">
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-2/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file
