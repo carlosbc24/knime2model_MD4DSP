@@ -10,34 +10,48 @@ from functions.PMML import PMMLModel
 
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_input_dataDictionary.parquet')
+	columnFilter_Name__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_input_dataDictionary.parquet')
 
-	field_list_columnFilter_PRE_field_range=['IATA code', 'ICAO code']
+	field_list_columnFilter_PRE_field_range=['Name']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
-								data_dictionary=columnFilter_IATA_code_ICAO_code__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(IATA code, ICAO code)_PRE_fieldRange VALIDATED')
+								data_dictionary=columnFilter_Name__input_dataDictionary_df,
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(Name) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(IATA code, ICAO code)_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(Name) NOT VALIDATED')
 	
 	
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed=columnFilter_IATA_code_ICAO_code__input_dataDictionary_df.copy()
-	field_list_columnFilter_param_field=['IATA code', 'ICAO code']
+	columnFilter_Name__input_dataDictionary_transformed=columnFilter_Name__input_dataDictionary_df.copy()
+	field_list_columnFilter_param_field=['Name']
 	
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed,
+	columnFilter_Name__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Name__input_dataDictionary_transformed,
 																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
 	
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df=columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	columnFilter_Name__output_dataDictionary_df=columnFilter_Name__input_dataDictionary_transformed
+	columnFilter_Name__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	columnFilter_Name__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
 	
-	field_list_columnFilter_POST_field_range=['IATA code', 'ICAO code']
+	field_list_columnFilter_POST_field_range=['Name']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
-								data_dictionary=columnFilter_IATA_code_ICAO_code__output_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('POSTCONDITION columnFilter(IATA code, ICAO code)_POST_fieldRange VALIDATED')
+								data_dictionary=columnFilter_Name__output_dataDictionary_df,
+								belong_op=Belong(1), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(Name) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(IATA code, ICAO code)_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(Name) NOT VALIDATED')
+	
+	
+	columns_list_columnFilter_Name__INV_condition = ['Name']
+	
+	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_Name__input_dataDictionary_df,
+							data_dictionary_out=columnFilter_Name__output_dataDictionary_df,
+							columns=columns_list_columnFilter_Name__INV_condition,
+							belong_op=Belong(0), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(Name) VALIDATED')
+	else:
+		print('INVARIANT Column Filter(Name) NOT VALIDATED')
+	
+	
+	
 	
 	
 

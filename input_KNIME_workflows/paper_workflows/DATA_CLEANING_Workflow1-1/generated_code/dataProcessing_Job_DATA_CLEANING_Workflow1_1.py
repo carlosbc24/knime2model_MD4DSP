@@ -15,9 +15,9 @@ def generateWorkflow():
 
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_hours_per_week__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='hours-per-week', origin_function="Rule Engine"):
-		print('PRECONDITION binner(hours-per-week)_PRE_valueRange VALIDATED')
+		print('PRECONDITION Rule Engine(hours-per-week) Interval:[0.0, 1000.0] VALIDATED')
 	else:
-		print('PRECONDITION binner(hours-per-week)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Rule Engine(hours-per-week) Interval:[0.0, 1000.0] NOT VALIDATED')
 	
 	binner_hours_per_week__input_dataDictionary_transformed=binner_hours_per_week__input_dataDictionary_df.copy()
 	binner_hours_per_week__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_hours_per_week__input_dataDictionary_transformed,
@@ -52,9 +52,9 @@ def generateWorkflow():
 	
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_hours_per_week__output_dataDictionary_df,
 	                                	closure_type=Closure(0), belong_op=Belong(1), field='prediction', origin_function="Rule Engine"):
-		print('POSTCONDITION binner(hours-per-week)_POST_valueRange VALIDATED')
+		print('POSTCONDITION Rule Engine(prediction) Interval:(0.0, 1000.0) VALIDATED')
 	else:
-		print('POSTCONDITION binner(hours-per-week)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Rule Engine(prediction) Interval:(0.0, 1000.0) NOT VALIDATED')
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_hours_per_week__input_dataDictionary_df,
 											data_dictionary_out=binner_hours_per_week__output_dataDictionary_df,
@@ -64,9 +64,9 @@ def generateWorkflow():
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
 											field_in='hours-per-week', field_out='prediction', origin_function="Rule Engine"):
-		print('INVARIANT binner(hours-per-week)_INV_condition VALIDATED')
+		print('INVARIANT Rule Engine(hours-per-week) Interval:[40.0, 1.0E9) FixValue:FULL-TIME VALIDATED')
 	else:
-		print('INVARIANT binner(hours-per-week)_INV_condition NOT VALIDATED')
+		print('INVARIANT Rule Engine(hours-per-week) Interval:[40.0, 1.0E9) FixValue:FULL-TIME NOT VALIDATED')
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_hours_per_week__input_dataDictionary_df,
 											data_dictionary_out=binner_hours_per_week__output_dataDictionary_df,
@@ -76,9 +76,9 @@ def generateWorkflow():
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
 											field_in='hours-per-week', field_out='prediction', origin_function="Rule Engine"):
-		print('INVARIANT binner(hours-per-week)_INV_condition VALIDATED')
+		print('INVARIANT Rule Engine(hours-per-week) Interval:(-1.0E9, 40.0) FixValue:PART-TIME VALIDATED')
 	else:
-		print('INVARIANT binner(hours-per-week)_INV_condition NOT VALIDATED')
+		print('INVARIANT Rule Engine(hours-per-week) Interval:(-1.0E9, 40.0) FixValue:PART-TIME NOT VALIDATED')
 	
 	
 	
@@ -88,9 +88,9 @@ def generateWorkflow():
 
 	if contract_pre_post.check_fix_value_range(value='-', data_dictionary=mapping_native_country__input_dataDictionary_df, belong_op=Belong(0), field='native-country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
-		print('PRECONDITION mapping(native-country)_PRE_valueRange VALIDATED')
+		print('PRECONDITION String Manipulation(native-country) FixValue:- VALIDATED')
 	else:
-		print('PRECONDITION mapping(native-country)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION String Manipulation(native-country) FixValue:- NOT VALIDATED')
 	
 	input_values_list=['-']
 	output_values_list=[' ']
@@ -110,9 +110,9 @@ def generateWorkflow():
 	
 	if contract_pre_post.check_fix_value_range(value='-', data_dictionary=mapping_native_country__output_dataDictionary_df, belong_op=Belong(1), field='native-country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
-		print('POSTCONDITION mapping(native-country)_POST_valueRange VALIDATED')
+		print('POSTCONDITION String Manipulation(native-country) FixValue:- VALIDATED')
 	else:
-		print('POSTCONDITION mapping(native-country)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION String Manipulation(native-country) FixValue:- NOT VALIDATED')
 	
 	
 	input_values_list_mapping_INV_condition=['-']
@@ -133,9 +133,9 @@ def generateWorkflow():
 											data_type_input_list=data_type_input_list_mapping_INV_condition,
 											data_type_output_list=data_type_output_list_mapping_INV_condition,
 											field_in='native-country', field_out='native-country', origin_function="String Manipulation"):
-		print('INVARIANT mapping(native-country)_INV_condition VALIDATED')
+		print('INVARIANT String Manipulation(native-country) InputMapValues:- OutputMapValues:  VALIDATED')
 	else:
-		print('INVARIANT mapping(native-country)_INV_condition NOT VALIDATED')
+		print('INVARIANT String Manipulation(native-country) InputMapValues:- OutputMapValues:  NOT VALIDATED')
 	
 	
 	
@@ -146,9 +146,9 @@ def generateWorkflow():
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Age_of_birth__input_dataDictionary_df, field='age', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
-		print('PRECONDITION mathOperation(Age-of-birth)_PRE_valueRange VALIDATED')
+		print('PRECONDITION Math Formula(age) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION mathOperation(Age-of-birth)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Math Formula(age) MissingValues:[] NOT VALIDATED')
 	
 	mathOperation_Age_of_birth__input_dataDictionary_transformed=mathOperation_Age_of_birth__input_dataDictionary_df.copy()
 	mathOperation_Age_of_birth__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Age_of_birth__input_dataDictionary_transformed,
@@ -170,18 +170,18 @@ def generateWorkflow():
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=mathOperation_Age_of_birth__output_dataDictionary_df, field='Age-of-birth', 
 									missing_values=missing_values_mathOperation_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
-		print('POSTCONDITION mathOperation(Age-of-birth)_POST_valueRange VALIDATED')
+		print('POSTCONDITION Math Formula(Age-of-birth) MissingValues:[] VALIDATED')
 	else:
-		print('POSTCONDITION mathOperation(Age-of-birth)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Math Formula(Age-of-birth) MissingValues:[] NOT VALIDATED')
 	
 	if contract_invariants.check_inv_math_operation(data_dictionary_in=mathOperation_Age_of_birth__input_dataDictionary_df,
 											data_dictionary_out=mathOperation_Age_of_birth__output_dataDictionary_df,
 											math_op=MathOperator(1),
 											firstOperand=1994, isFieldFirst=False,secondOperand='age', isFieldSecond=True, 
 											belong_op_out=Belong(0), field_in='age', field_out='Age-of-birth', origin_function="Math Formula"):
-		print('INVARIANT mathOperation(Age-of-birth)_INV_condition VALIDATED')
+		print('INVARIANT Math Formula(Age-of-birth) substract(1994, age, ) VALIDATED')
 	else:
-		print('INVARIANT mathOperation(Age-of-birth)_INV_condition NOT VALIDATED')
+		print('INVARIANT Math FormulaAge-of-birth substract(1994, age, ) NOT VALIDATED')
 	
 	
 	

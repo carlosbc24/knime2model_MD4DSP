@@ -12,25 +12,37 @@ from functions.PMML import PMMLModel
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterMissing_marital_status__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_input_dataDictionary.parquet')
-	rowFilterMissing_marital_status__input_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterMissing_input_dataDictionary.parquet')
 	if os.path.exists('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet'):
 		rowFilterMissing_marital_status__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 
 	missing_values_rowFilterMissing_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=rowFilterMissing_marital_status__input_dataDictionary_df, field='marital-status', 
 									missing_values=missing_values_rowFilterMissing_PRE_valueRange,
-									quant_op=Operator(3), quant_rel=60.0/100):
-		print('PRECONDITION rowFilterMissing(marital-status)_PRE_valueRange VALIDATED')
+									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Row Filter (deprecated)"):
+		print('PRECONDITION Row Filter (deprecated)(marital-status) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION rowFilterMissing(marital-status)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter (deprecated)(marital-status) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_rowFilterMissing_POST_valueRange=[]
-	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=rowFilterMissing_marital_status__output_dataDictionary_df, field='marital-status', 
+	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=rowFilterMissing_marital_status__output_dataDictionary_df, field='marital-status', 
 									missing_values=missing_values_rowFilterMissing_POST_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterMissing(marital-status)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
+		print('POSTCONDITION Row Filter (deprecated)(marital-status) MissingValues:[] VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterMissing(marital-status)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter (deprecated)(marital-status) MissingValues:[] NOT VALIDATED')
+	
+	
+	
+	cols_special_type_values_rowFilterMissing_marital_status__INV_condition={'marital-status':{'missing': []}}
+	
+	if contract_invariants.check_inv_filter_rows_special_values(data_dictionary_in=rowFilterMissing_marital_status__input_dataDictionary_df,
+											data_dictionary_out=rowFilterMissing_marital_status__output_dataDictionary_df,
+											cols_special_type_values=cols_special_type_values_rowFilterMissing_marital_status__INV_condition,
+											filter_type=FilterType.EXCLUDE, origin_function="Row Filter (deprecated)"):
+		print('INVARIANT Row Filter (deprecated)(marital-status) FilterType:EXCLUDE SpecialValues: marital-statusMISSING:[] VALIDATED')
+	else:
+		print('INVARIANT Row Filter (deprecated)(marital-status) FilterType:EXCLUDE SpecialValues: marital-statusMISSING:[] NOT VALIDATED')
+	
 	
 	#-----------------New DataProcessing-----------------
 	rowFilterPrimitive_workclass__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
@@ -39,16 +51,31 @@ def generateWorkflow():
 		rowFilterPrimitive_workclass__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='s*', data_dictionary=rowFilterPrimitive_workclass__input_dataDictionary_df, belong_op=Belong(0), field='workclass',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION rowFilterPrimitive(workclass)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
+		print('PRECONDITION Row Filter (deprecated)(workclass) FixValue:s* VALIDATED')
 	else:
-		print('PRECONDITION rowFilterPrimitive(workclass)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter (deprecated)(workclass) FixValue:s* NOT VALIDATED')
 	
 	if contract_pre_post.check_fix_value_range(value='s*', data_dictionary=rowFilterPrimitive_workclass__output_dataDictionary_df, belong_op=Belong(0), field='workclass',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterPrimitive(workclass)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
+		print('POSTCONDITION Row Filter (deprecated)(workclass) FixValue:s* VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterPrimitive(workclass)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter (deprecated)(workclass) FixValue:s* NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterPrimitive_workclass__INV_condition=['workclass']
+	filter_fix_value_list_rowFilterPrimitive_workclass__INV_condition=['s*']
+	
+	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_workclass__input_dataDictionary_df,
+											data_dictionary_out=rowFilterPrimitive_workclass__output_dataDictionary_df,
+											columns=columns_list_rowFilterPrimitive_workclass__INV_condition,
+											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_workclass__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter (deprecated)"):
+		print('INVARIANT Row Filter (deprecated)(workclass) FilterType:INCLUDE FixValueList:[s*] VALIDATED')
+	else:
+		print('INVARIANT Row Filter (deprecated)(workclass) FilterType:INCLUDE FixValueList:[s*] NOT VALIDATED')
+	
 	
 
 

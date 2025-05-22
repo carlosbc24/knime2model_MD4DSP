@@ -15,8 +15,8 @@ mathOperation_Percentage__input_dataDictionary.to_parquet('/wf_validation_python
 mathOperation_Percentage__output_dataDictionary=pd.read_csv('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.csv', sep = ',')
 mathOperation_Percentage__output_dataDictionary.to_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 				
-binner_Percentage__input_dataDictionary=pd.read_csv('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.csv', sep = ',')
-binner_Percentage__input_dataDictionary.to_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
+binner_Change__input_dataDictionary=pd.read_csv('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.csv', sep = ',')
+binner_Change__input_dataDictionary.to_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 				
-binner_Percentage__output_dataDictionary=pd.read_csv('/wf_validation_python/data/output/binner_output_dataDictionary.csv', sep = ',')
-binner_Percentage__output_dataDictionary.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+binner_Change__output_dataDictionary=pd.read_csv('/wf_validation_python/data/output/binner_output_dataDictionary.csv', sep = ',')
+binner_Change__output_dataDictionary.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')

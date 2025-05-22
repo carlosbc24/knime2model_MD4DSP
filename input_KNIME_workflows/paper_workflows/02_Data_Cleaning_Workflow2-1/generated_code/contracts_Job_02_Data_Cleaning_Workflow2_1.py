@@ -19,19 +19,33 @@ def generateWorkflow():
 	field_list_columnFilter_PRE_field_range=['Airline ID', 'Name', 'Alias', 'IATA', 'ICAO', 'Callsign', 'Country', 'Active']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
 								data_dictionary=columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active)_PRE_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active)_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) NOT VALIDATED')
 	
 	
 	field_list_columnFilter_POST_field_range=['Airline ID', 'Name', 'Alias', 'IATA', 'ICAO', 'Callsign', 'Country', 'Active']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
 								data_dictionary=columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__output_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('POSTCONDITION columnFilter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active)_POST_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active)_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) NOT VALIDATED')
+	
+	
+	columns_list_columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__INV_condition = ['Airline ID', 'Name', 'Alias', 'IATA', 'ICAO', 'Callsign', 'Country', 'Active']
+	
+	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__input_dataDictionary_df,
+							data_dictionary_out=columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__output_dataDictionary_df,
+							columns=columns_list_columnFilter_Airline_ID_Name_Alias_IATA_ICAO_Callsign_Country_Active__INV_condition,
+							belong_op=Belong(1), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) VALIDATED')
+	else:
+		print('INVARIANT Column Filter(Airline ID, Name, Alias, IATA, ICAO, Callsign, Country, Active) NOT VALIDATED')
+	
+	
+	
 	
 	
 set_logger("contracts")

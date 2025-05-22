@@ -11,22 +11,40 @@ from functions.PMML import PMMLModel
 
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
-	rowFilterPrimitive_input_DataDictionary=pd.read_parquet('/wf_validation_python/data/output/rowFilterRange_input_dataDictionary.parquet')
+	rowFilterRange_Altitude__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterRange_input_dataDictionary.parquet')
 
 	if os.path.exists('/wf_validation_python/data/output/rowFilterRange_output_dataDictionary.parquet'):
-		rowFilterRange_output_DataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterRange_output_dataDictionary.parquet')
+		rowFilterRange_Altitude__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterRange_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=rowFilterRange_Altitude__input_dataDictionary_df,
-	                                	closure_type=Closure(2), belong_op=Belong(0), field='Altitude'):
-		print('PRECONDITION rowFilter(Altitude)_PRE_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=1000.0, right_margin=1.0E9, data_dictionary=rowFilterRange_Altitude__input_dataDictionary_df,
+	                                	closure_type=Closure(2), belong_op=Belong(0), field='Altitude', origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Altitude) Interval:[1000.0, 1.0E9) VALIDATED')
 	else:
-		print('PRECONDITION rowFilter(Altitude)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Altitude) Interval:[1000.0, 1.0E9) NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='-216', data_dictionary=rowFilterRange_Altitude__output_dataDictionary_df, belong_op=Belong(0), field='Altitude',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilter(Altitude)_POST_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=1000.0, right_margin=1.0E9, data_dictionary=rowFilterRange_Altitude__output_dataDictionary_df,
+	                                	closure_type=Closure(3), belong_op=Belong(0), field='Altitude', origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Altitude) Interval:[1000.0, 1.0E9] VALIDATED')
 	else:
-		print('POSTCONDITION rowFilter(Altitude)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Altitude) Interval:[1000.0, 1.0E9] NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterRange_Altitude__INV_condition=['Altitude']
+	left_margin_list_rowFilterRange_Altitude__INV_condition=[1000.0]
+	right_margin_list_rowFilterRange_Altitude__INV_condition=[1.0E9]
+	closure_type_list_rowFilterRange_Altitude__INV_condition=[Closure.closedClosed]
+	
+	if contract_invariants.check_inv_filter_rows_range(data_dictionary_in=rowFilterRange_Altitude__input_dataDictionary_df,
+											data_dictionary_out=rowFilterRange_Altitude__output_dataDictionary_df,
+											columns=columns_list_rowFilterRange_Altitude__INV_condition,
+											left_margin_list=left_margin_list_rowFilterRange_Altitude__INV_condition, right_margin_list=right_margin_list_rowFilterRange_Altitude__INV_condition,
+											closure_type_list=closure_type_list_rowFilterRange_Altitude__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Altitude) FilterType:INCLUDE LeftMarginList:[1000.0] RightMarginList:[1.0E9] ClosureTypeList:[Closure.closedClosed] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Altitude) FilterType:INCLUDE LeftMarginList:[1000.0] RightMarginList:[1.0E9] ClosureTypeList:[Closure.closedClosed] NOT VALIDATED')
+	
 	
 set_logger("contracts")
 generateWorkflow()

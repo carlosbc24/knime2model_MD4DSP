@@ -15,10 +15,10 @@ def generateWorkflow():
 	missing_values_rowFilterMissing_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=rowFilterMissing_Equipment__input_dataDictionary_df, field='Equipment', 
 									missing_values=missing_values_rowFilterMissing_PRE_valueRange,
-									quant_op=Operator(3), quant_rel=60.0/100):
-		print('PRECONDITION rowFilterMissing(Equipment)_PRE_valueRange VALIDATED')
+									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Equipment) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION rowFilterMissing(Equipment)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Equipment) MissingValues:[] NOT VALIDATED')
 	
 	rowFilterMissing_Equipment__input_dataDictionary_transformed=rowFilterMissing_Equipment__input_dataDictionary_df.copy()
 	columns_rowFilterMissing_param_filter=['Equipment']
@@ -35,10 +35,23 @@ def generateWorkflow():
 	missing_values_rowFilterMissing_POST_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=rowFilterMissing_Equipment__output_dataDictionary_df, field='Equipment', 
 									missing_values=missing_values_rowFilterMissing_POST_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterMissing(Equipment)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Equipment) MissingValues:[] VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterMissing(Equipment)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Equipment) MissingValues:[] NOT VALIDATED')
+	
+	
+	
+	cols_special_type_values_rowFilterMissing_Equipment__INV_condition={'Equipment':{'missing': []}}
+	
+	if contract_invariants.check_inv_filter_rows_special_values(data_dictionary_in=rowFilterMissing_Equipment__input_dataDictionary_df,
+											data_dictionary_out=rowFilterMissing_Equipment__output_dataDictionary_df,
+											cols_special_type_values=cols_special_type_values_rowFilterMissing_Equipment__INV_condition,
+											filter_type=FilterType.EXCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] NOT VALIDATED')
+	
 	
 
 set_logger("dataProcessing")

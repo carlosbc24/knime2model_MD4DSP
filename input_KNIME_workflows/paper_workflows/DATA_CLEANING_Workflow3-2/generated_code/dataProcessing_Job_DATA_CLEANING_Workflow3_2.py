@@ -15,17 +15,17 @@ def generateWorkflow():
 	field_list_columnFilter_PRE_field_range=['ID', 'education', 'education-num']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
 								data_dictionary=columnFilter_ID_education_education_num__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(ID, education, education-num)_PRE_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(ID, education, education-num) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(ID, education, education-num)_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(ID, education, education-num) NOT VALIDATED')
 	
 	
 	columnFilter_ID_education_education_num__input_dataDictionary_transformed=columnFilter_ID_education_education_num__input_dataDictionary_df.copy()
 	field_list_columnFilter_param_field=['ID', 'education', 'education-num']
 	
 	columnFilter_ID_education_education_num__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_ID_education_education_num__input_dataDictionary_transformed,
-																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.NOTBELONG)
 	
 	columnFilter_ID_education_education_num__output_dataDictionary_df=columnFilter_ID_education_education_num__input_dataDictionary_transformed
 	columnFilter_ID_education_education_num__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
@@ -34,10 +34,24 @@ def generateWorkflow():
 	field_list_columnFilter_POST_field_range=['ID', 'education', 'education-num']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
 								data_dictionary=columnFilter_ID_education_education_num__output_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('POSTCONDITION columnFilter(ID, education, education-num)_POST_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(ID, education, education-num) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(ID, education, education-num)_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(ID, education, education-num) NOT VALIDATED')
+	
+	
+	columns_list_columnFilter_ID_education_education_num__INV_condition = ['ID', 'education', 'education-num']
+	
+	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_ID_education_education_num__input_dataDictionary_df,
+							data_dictionary_out=columnFilter_ID_education_education_num__output_dataDictionary_df,
+							columns=columns_list_columnFilter_ID_education_education_num__INV_condition,
+							belong_op=Belong(1), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(ID, education, education-num) VALIDATED')
+	else:
+		print('INVARIANT Column Filter(ID, education, education-num) NOT VALIDATED')
+	
+	
+	
 	
 	
 

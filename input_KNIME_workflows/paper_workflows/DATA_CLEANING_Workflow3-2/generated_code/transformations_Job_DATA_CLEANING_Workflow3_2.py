@@ -14,7 +14,7 @@ def generateWorkflow():
 	field_list_columnFilter_param_field=['ID', 'education', 'education-num']
 	
 	columnFilter_ID_education_education_num__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_ID_education_education_num__input_dataDictionary_transformed,
-																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.NOTBELONG)
 	
 	columnFilter_ID_education_education_num__output_dataDictionary_df=columnFilter_ID_education_education_num__input_dataDictionary_transformed
 	columnFilter_ID_education_education_num__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')

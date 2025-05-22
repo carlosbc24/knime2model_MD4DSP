@@ -12,22 +12,21 @@ def generateWorkflow():
 
 	#-----------------New DataProcessing-----------------
 	mathOperation_Change__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation1_input_dataDictionary.parquet')
-	mathOperation_Change__input_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mathOperation1_input_dataDictionary.parquet')
 
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Change__input_dataDictionary_df, field='Latitude', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION mathOperation(Change)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('PRECONDITION Math Formula(Latitude) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION mathOperation(Change)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Math Formula(Latitude) MissingValues:[] NOT VALIDATED')
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Change__input_dataDictionary_df, field='Longitude', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION mathOperation(Change)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('PRECONDITION Math Formula(Longitude) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION mathOperation(Change)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Math Formula(Longitude) MissingValues:[] NOT VALIDATED')
 	
 	mathOperation_Change__input_dataDictionary_transformed=mathOperation_Change__input_dataDictionary_df.copy()
 	mathOperation_Change__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Change__input_dataDictionary_transformed,
@@ -46,22 +45,21 @@ def generateWorkflow():
 	mathOperation_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation1_output_dataDictionary.parquet')
 	
 	missing_values_mathOperation_POST_valueRange=[]
-	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Change__output_dataDictionary_df, field='Change', 
+	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=mathOperation_Change__output_dataDictionary_df, field='Change', 
 									missing_values=missing_values_mathOperation_POST_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION mathOperation(Change)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('POSTCONDITION Math Formula(Change) MissingValues:[] VALIDATED')
 	else:
-		print('POSTCONDITION mathOperation(Change)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Math Formula(Change) MissingValues:[] NOT VALIDATED')
 	
 	if contract_invariants.check_inv_math_operation(data_dictionary_in=mathOperation_Change__input_dataDictionary_df,
 											data_dictionary_out=mathOperation_Change__output_dataDictionary_df,
 											math_op=MathOperator(1),
 											firstOperand='Latitude', isFieldFirst=True, secondOperand='Longitude', isFieldSecond=True, 
-											belong_op_out=Belong(0), field_in='Change', field_out='Change'):
-		print('INVARIANT mathOperation(Change)_INV_condition VALIDATED')
+											belong_op_out=Belong(0), field_in='Latitude', field_out='Change', origin_function="Math Formula"):
+		print('INVARIANT Math Formula(Change) substract(Latitude, Longitude, ) VALIDATED')
 	else:
-		print('INVARIANT mathOperation(Change)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Math FormulaChange substract(Latitude, Longitude, ) NOT VALIDATED')
 	
 	
 	
@@ -74,17 +72,17 @@ def generateWorkflow():
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Percentage__input_dataDictionary_df, field='Change', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION mathOperation(Percentage)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('PRECONDITION Math Formula(Change) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION mathOperation(Percentage)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Math Formula(Change) MissingValues:[] NOT VALIDATED')
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Percentage__input_dataDictionary_df, field='Latitude', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION mathOperation(Percentage)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('PRECONDITION Math Formula(Latitude) MissingValues:[] VALIDATED')
 	else:
-		print('PRECONDITION mathOperation(Percentage)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Math Formula(Latitude) MissingValues:[] NOT VALIDATED')
 	
 	mathOperation_Percentage__input_dataDictionary_transformed=mathOperation_Percentage__input_dataDictionary_df.copy()
 	mathOperation_Percentage__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Percentage__input_dataDictionary_transformed,
@@ -103,22 +101,21 @@ def generateWorkflow():
 	mathOperation_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 	
 	missing_values_mathOperation_POST_valueRange=[]
-	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_Percentage__output_dataDictionary_df, field='Percentage', 
+	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=mathOperation_Percentage__output_dataDictionary_df, field='Percentage', 
 									missing_values=missing_values_mathOperation_POST_valueRange,
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION mathOperation(Percentage)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('POSTCONDITION Math Formula(Percentage) MissingValues:[] VALIDATED')
 	else:
-		print('POSTCONDITION mathOperation(Percentage)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Math Formula(Percentage) MissingValues:[] NOT VALIDATED')
 	
 	if contract_invariants.check_inv_math_operation(data_dictionary_in=mathOperation_Percentage__input_dataDictionary_df,
 											data_dictionary_out=mathOperation_Percentage__output_dataDictionary_df,
 											math_op=MathOperator(1),
 											firstOperand='Change', isFieldFirst=True, secondOperand='Latitude', isFieldSecond=True, 
-											belong_op_out=Belong(0), field_in='Percentage', field_out='Percentage'):
-		print('INVARIANT mathOperation(Percentage)_INV_condition VALIDATED')
+											belong_op_out=Belong(0), field_in='Change', field_out='Percentage', origin_function="Math Formula"):
+		print('INVARIANT Math Formula(Percentage) substract(Change, Latitude, ) VALIDATED')
 	else:
-		print('INVARIANT mathOperation(Percentage)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Math FormulaPercentage substract(Change, Latitude, ) NOT VALIDATED')
 	
 	
 	
@@ -126,124 +123,74 @@ def generateWorkflow():
 	
 	
 	#-----------------New DataProcessing-----------------
-	binner_Percentage__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Percentage__input_dataDictionary_df,
-	                                	closure_type=Closure(3), belong_op=Belong(0), field='Percentage'):
-		print('PRECONDITION binner(Percentage)_PRE_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Change__input_dataDictionary_df,
+	                                	closure_type=Closure(3), belong_op=Belong(0), field='Change', origin_function="Rule Engine"):
+		print('PRECONDITION Rule Engine(Change) Interval:[0.0, 1000.0] VALIDATED')
 	else:
-		print('PRECONDITION binner(Percentage)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Rule Engine(Change) Interval:[0.0, 1000.0] NOT VALIDATED')
 	
-	binner_Percentage__input_dataDictionary_transformed=binner_Percentage__input_dataDictionary_df.copy()
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
+	binner_Change__input_dataDictionary_transformed=binner_Change__input_dataDictionary_df.copy()
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_Change__input_dataDictionary_transformed,
 																  data_type_output = DataType(0),
-																  field_in = 'Percentage', field_out = 'Increase/Decrease')
+																  field_in = 'Change', field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=-0.0, right_margin=0.0,
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Change__input_dataDictionary_transformed,
+																  left_margin=-1.0E9, right_margin=0.0,
 																  closure_type=Closure(0),
 																  fix_value_output='Decrease',
 							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
+																  field_in = 'Change',
 																  field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=0.0, right_margin=0.0,
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Change__input_dataDictionary_transformed,
+																  left_margin=0.0, right_margin=1.0E9,
 																  closure_type=Closure(0),
 																  fix_value_output='Increase',
 							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
+																  field_in = 'Change',
 																  field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=-1.0E9, right_margin=-0.0,
-																  closure_type=Closure(0),
-																  fix_value_output='No Change',
-							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
-																  field_out = 'Increase/Decrease')
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=0.0, right_margin=1.0E9,
-																  closure_type=Closure(0),
-																  fix_value_output='No Change',
-							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
-																  field_out = 'Increase/Decrease')
-	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Percentage__output_dataDictionary_df,
-	                                	closure_type=Closure(0), belong_op=Belong(0), field='Increase/Decrease'):
-		print('POSTCONDITION binner(Percentage)_POST_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Change__output_dataDictionary_df,
+	                                	closure_type=Closure(0), belong_op=Belong(1), field='Increase/Decrease', origin_function="Rule Engine"):
+		print('POSTCONDITION Rule Engine(Increase/Decrease) Interval:(0.0, 1000.0) VALIDATED')
 	else:
-		print('POSTCONDITION binner(Percentage)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Rule Engine(Increase/Decrease) Interval:(0.0, 1000.0) NOT VALIDATED')
 	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Percentage__input_dataDictionary_df,
-											data_dictionary_out=binner_Percentage__output_dataDictionary_df,
-											left_margin=-0.0, right_margin=0.0,
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Change__input_dataDictionary_df,
+											data_dictionary_out=binner_Change__output_dataDictionary_df,
+											left_margin=-1.0E9, right_margin=0.0,
 											closure_type=Closure(0),
 											fix_value_output='Decrease',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Percentage', field_out='Increase/Decrease'):
-		print('INVARIANT binner(Percentage)_INV_condition VALIDATED')
+											field_in='Change', field_out='Increase/Decrease', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Change) Interval:(-1.0E9, 0.0) FixValue:Decrease VALIDATED')
 	else:
-		print('INVARIANT binner(Percentage)_INV_condition NOT VALIDATED')
+		print('INVARIANT Rule Engine(Change) Interval:(-1.0E9, 0.0) FixValue:Decrease NOT VALIDATED')
 	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Percentage__input_dataDictionary_df,
-											data_dictionary_out=binner_Percentage__output_dataDictionary_df,
-											left_margin=0.0, right_margin=0.0,
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Change__input_dataDictionary_df,
+											data_dictionary_out=binner_Change__output_dataDictionary_df,
+											left_margin=0.0, right_margin=1.0E9,
 											closure_type=Closure(0),
 											fix_value_output='Increase',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Percentage', field_out='Increase/Decrease'):
-		print('INVARIANT binner(Percentage)_INV_condition VALIDATED')
+											field_in='Change', field_out='Increase/Decrease', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Change) Interval:(0.0, 1.0E9) FixValue:Increase VALIDATED')
 	else:
-		print('INVARIANT binner(Percentage)_INV_condition NOT VALIDATED')
-	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Percentage__input_dataDictionary_df,
-											data_dictionary_out=binner_Percentage__output_dataDictionary_df,
-											left_margin=-1.0E9, right_margin=-0.0,
-											closure_type=Closure(0),
-											fix_value_output='No Change',
-											belong_op_in=Belong(0), belong_op_out=Belong(0),
-											data_type_output=DataType(0),
-											field_in='Percentage', field_out='Increase/Decrease'):
-		print('INVARIANT binner(Percentage)_INV_condition VALIDATED')
-	else:
-		print('INVARIANT binner(Percentage)_INV_condition NOT VALIDATED')
-	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Percentage__input_dataDictionary_df,
-											data_dictionary_out=binner_Percentage__output_dataDictionary_df,
-											left_margin=0.0, right_margin=1.0E9,
-											closure_type=Closure(0),
-											fix_value_output='No Change',
-											belong_op_in=Belong(0), belong_op_out=Belong(0),
-											data_type_output=DataType(0),
-											field_in='Percentage', field_out='Increase/Decrease'):
-		print('INVARIANT binner(Percentage)_INV_condition VALIDATED')
-	else:
-		print('INVARIANT binner(Percentage)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Rule Engine(Change) Interval:(0.0, 1.0E9) FixValue:Increase NOT VALIDATED')
 	
 	
 	

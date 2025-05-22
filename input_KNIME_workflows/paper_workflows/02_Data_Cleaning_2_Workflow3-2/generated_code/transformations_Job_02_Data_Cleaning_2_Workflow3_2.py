@@ -10,7 +10,6 @@ def generateWorkflow():
 
 	#-----------------New DataProcessing-----------------
 	mapping_Tz_database_time_zone__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping_input_dataDictionary.parquet')
-	mapping_Tz_database_time_zone__input_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mapping_input_dataDictionary.parquet')
 	input_values_list=['/']
 	output_values_list=['-']
 	data_type_input_list=[DataType(0)]

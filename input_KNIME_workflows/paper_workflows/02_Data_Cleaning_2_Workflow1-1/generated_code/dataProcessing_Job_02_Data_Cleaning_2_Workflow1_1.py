@@ -13,10 +13,10 @@ def generateWorkflow():
 	rowFilterPrimitive_Country__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_input_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='China', data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, belong_op=Belong(0), field='Country',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION rowFilterPrimitive(Country)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Country) FixValue:China VALIDATED')
 	else:
-		print('PRECONDITION rowFilterPrimitive(Country)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Country) FixValue:China NOT VALIDATED')
 	
 	rowFilterPrimitive_Country__input_dataDictionary_transformed=rowFilterPrimitive_Country__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Country']
@@ -32,10 +32,25 @@ def generateWorkflow():
 	rowFilterPrimitive_Country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
 	if contract_pre_post.check_fix_value_range(value='China', data_dictionary=rowFilterPrimitive_Country__output_dataDictionary_df, belong_op=Belong(0), field='Country',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterPrimitive(Country)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Country) FixValue:China VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterPrimitive(Country)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Country) FixValue:China NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterPrimitive_Country__INV_condition=['Country']
+	filter_fix_value_list_rowFilterPrimitive_Country__INV_condition=['China']
+	
+	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Country__input_dataDictionary_df,
+											data_dictionary_out=rowFilterPrimitive_Country__output_dataDictionary_df,
+											columns=columns_list_rowFilterPrimitive_Country__INV_condition,
+											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_Country__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Country) FilterType:INCLUDE FixValueList:[China] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Country) FilterType:INCLUDE FixValueList:[China] NOT VALIDATED')
+	
 	
 
 set_logger("dataProcessing")

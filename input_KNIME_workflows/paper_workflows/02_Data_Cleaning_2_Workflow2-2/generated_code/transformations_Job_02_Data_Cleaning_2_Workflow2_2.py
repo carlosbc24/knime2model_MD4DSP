@@ -14,7 +14,7 @@ def generateWorkflow():
 	field_list_columnFilter_param_field=['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
 	
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed,
-																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.NOTBELONG)
 	
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')

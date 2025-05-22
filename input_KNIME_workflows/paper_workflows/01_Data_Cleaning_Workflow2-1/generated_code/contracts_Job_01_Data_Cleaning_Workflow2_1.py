@@ -19,19 +19,19 @@ def generateWorkflow():
 	field_list_columnFilter_PRE_field_range=['Thinness_ten_nineteen_years', 'Thinness_five_nine_years']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
 								data_dictionary=columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_PRE_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) NOT VALIDATED')
 	
 	
 	field_list_columnFilter_POST_field_range=['Thinness_ten_nineteen_years', 'Thinness_five_nine_years']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
 								data_dictionary=columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__output_dataDictionary_df,
-								belong_op=Belong(1)):
-		print('POSTCONDITION columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POST_fieldRange VALIDATED')
+								belong_op=Belong(1), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) NOT VALIDATED')
 	
 	
 	columns_list_columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__INV_condition = ['Thinness_ten_nineteen_years', 'Thinness_five_nine_years']
@@ -39,10 +39,10 @@ def generateWorkflow():
 	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__input_dataDictionary_df,
 							data_dictionary_out=columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__output_dataDictionary_df,
 							columns=columns_list_columnFilter_Thinness_ten_nineteen_years_Thinness_five_nine_years__INV_condition,
-							belong_op=Belong(0)):
-		print('INVARIANT columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INV_condition VALIDATED')
+							belong_op=Belong(0), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) VALIDATED')
 	else:
-		print('INVARIANT columnFilter(Thinness_ten_nineteen_years, Thinness_five_nine_years)_INV_condition NOT VALIDATED')
+		print('INVARIANT Column Filter(Thinness_ten_nineteen_years, Thinness_five_nine_years) NOT VALIDATED')
 	
 	
 	

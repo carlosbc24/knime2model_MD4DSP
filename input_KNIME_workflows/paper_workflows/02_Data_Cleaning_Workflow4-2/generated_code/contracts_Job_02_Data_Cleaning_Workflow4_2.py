@@ -11,48 +11,46 @@ from functions.PMML import PMMLModel
 
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
-	binner_Source__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_input_dataDictionary.parquet')
+	binner_Longitude__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_input_dataDictionary.parquet')
 
 	if os.path.exists('/wf_validation_python/data/output/binner_output_dataDictionary.parquet'):
-		binner_Source__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+		binner_Longitude__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Source__input_dataDictionary_df,
-	                                	closure_type=Closure(3), belong_op=Belong(0), field='Source'):
-		print('PRECONDITION binner(Source)_PRE_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Longitude__input_dataDictionary_df,
+	                                	closure_type=Closure(3), belong_op=Belong(0), field='Longitude', origin_function="Rule Engine"):
+		print('PRECONDITION Rule Engine(Longitude) Interval:[0.0, 1000.0] VALIDATED')
 	else:
-		print('PRECONDITION binner(Source)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Rule Engine(Longitude) Interval:[0.0, 1000.0] NOT VALIDATED')
 	
-	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Source__output_dataDictionary_df,
-	                                	closure_type=Closure(0), belong_op=Belong(0), field='High Longitudes'):
-		print('POSTCONDITION binner(Source)_POST_valueRange VALIDATED')
+	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Longitude__output_dataDictionary_df,
+	                                	closure_type=Closure(0), belong_op=Belong(1), field='High Longitudes', origin_function="Rule Engine"):
+		print('POSTCONDITION Rule Engine(High Longitudes) Interval:(0.0, 1000.0) VALIDATED')
 	else:
-		print('POSTCONDITION binner(Source)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Rule Engine(High Longitudes) Interval:(0.0, 1000.0) NOT VALIDATED')
 	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Source__input_dataDictionary_df,
-											data_dictionary_out=binner_Source__output_dataDictionary_df,
-											left_margin=-130.0, right_margin=130.0,
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Longitude__input_dataDictionary_df,
+											data_dictionary_out=binner_Longitude__output_dataDictionary_df,
+											left_margin=-1.0E9, right_margin=130.0,
 											closure_type=Closure(0),
 											fix_value_output='N',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Source', field_out='High Longitudes'):
-		print('INVARIANT binner(Source)_INV_condition VALIDATED')
+											field_in='Longitude', field_out='High Longitudes', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Longitude) Interval:(-1.0E9, 130.0) FixValue:N VALIDATED')
 	else:
-		print('INVARIANT binner(Source)_INV_condition NOT VALIDATED')
+		print('INVARIANT Rule Engine(Longitude) Interval:(-1.0E9, 130.0) FixValue:N NOT VALIDATED')
 	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Source__input_dataDictionary_df,
-											data_dictionary_out=binner_Source__output_dataDictionary_df,
-											left_margin=130.0, right_margin=130.0,
+	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Longitude__input_dataDictionary_df,
+											data_dictionary_out=binner_Longitude__output_dataDictionary_df,
+											left_margin=130.0, right_margin=1.0E9,
 											closure_type=Closure(2),
 											fix_value_output='Y',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Source', field_out='High Longitudes'):
-		print('INVARIANT binner(Source)_INV_condition VALIDATED')
+											field_in='Longitude', field_out='High Longitudes', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Longitude) Interval:[130.0, 1.0E9) FixValue:Y VALIDATED')
 	else:
-		print('INVARIANT binner(Source)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Rule Engine(Longitude) Interval:[130.0, 1.0E9) FixValue:Y NOT VALIDATED')
 	
 	
 	

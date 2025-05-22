@@ -14,7 +14,7 @@ def generateWorkflow():
 	field_list_columnFilter_param_field=['Airline', 'Airline ID', 'Source airport', 'Source airport ID', 'Destination airport', 'Destination airport ID', 'Codeshare', 'Stops', 'Equipment']
 	
 	columnFilter_Airline_Airline_ID_Source_airport_Source_airport_ID_Destination_airport_Destination_airport_ID_Codeshare_Stops_Equipment__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Airline_Airline_ID_Source_airport_Source_airport_ID_Destination_airport_Destination_airport_ID_Codeshare_Stops_Equipment__input_dataDictionary_transformed,
-																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.NOTBELONG)
 	
 	columnFilter_Airline_Airline_ID_Source_airport_Source_airport_ID_Destination_airport_Destination_airport_ID_Codeshare_Stops_Equipment__output_dataDictionary_df=columnFilter_Airline_Airline_ID_Source_airport_Source_airport_ID_Destination_airport_Destination_airport_ID_Codeshare_Stops_Equipment__input_dataDictionary_transformed
 	columnFilter_Airline_Airline_ID_Source_airport_Source_airport_ID_Destination_airport_Destination_airport_ID_Codeshare_Stops_Equipment__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')

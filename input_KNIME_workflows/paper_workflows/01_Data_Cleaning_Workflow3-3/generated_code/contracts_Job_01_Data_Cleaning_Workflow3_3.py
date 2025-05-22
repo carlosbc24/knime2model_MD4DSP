@@ -12,60 +12,44 @@ from functions.PMML import PMMLModel
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	binner_Life_expectancy__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_input_dataDictionary.parquet')
-	binner_Life_expectancy__input_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_input_dataDictionary.parquet')
 	if os.path.exists('/wf_validation_python/data/output/binner_output_dataDictionary.parquet'):
 		binner_Life_expectancy__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Life_expectancy__input_dataDictionary_df,
-	                                	closure_type=Closure(3), belong_op=Belong(0), field='Life_expectancy'):
-		print('PRECONDITION binner(Life_expectancy)_PRE_valueRange VALIDATED')
+	                                	closure_type=Closure(3), belong_op=Belong(0), field='Life_expectancy', origin_function="Rule Engine"):
+		print('PRECONDITION Rule Engine(Life_expectancy) Interval:[0.0, 1000.0] VALIDATED')
 	else:
-		print('PRECONDITION binner(Life_expectancy)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Rule Engine(Life_expectancy) Interval:[0.0, 1000.0] NOT VALIDATED')
 	
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_Life_expectancy__output_dataDictionary_df,
-	                                	closure_type=Closure(0), belong_op=Belong(0), field='Life-Expectancy (High/Low/Avg)'):
-		print('POSTCONDITION binner(Life_expectancy)_POST_valueRange VALIDATED')
+	                                	closure_type=Closure(0), belong_op=Belong(1), field='Life-Expectancy (High/Low/Avg)', origin_function="Rule Engine"):
+		print('POSTCONDITION Rule Engine(Life-Expectancy (High/Low/Avg)) Interval:(0.0, 1000.0) VALIDATED')
 	else:
-		print('POSTCONDITION binner(Life_expectancy)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Rule Engine(Life-Expectancy (High/Low/Avg)) Interval:(0.0, 1000.0) NOT VALIDATED')
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=-40.0, right_margin=40.0,
+											left_margin=-1.0E9, right_margin=40.0,
 											closure_type=Closure(1),
 											fix_value_output='Low',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:(-1.0E9, 40.0] FixValue:Low VALIDATED')
 	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:(-1.0E9, 40.0] FixValue:Low NOT VALIDATED')
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=70.0, right_margin=70.0,
+											left_margin=70.0, right_margin=1.0E9,
 											closure_type=Closure(2),
 											fix_value_output='High',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:[70.0, 1.0E9) FixValue:High VALIDATED')
 	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
-											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=-1.0E9, right_margin=-40.0,
-											closure_type=Closure(0),
-											fix_value_output='Average',
-											belong_op_in=Belong(0), belong_op_out=Belong(0),
-											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
-	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:[70.0, 1.0E9) FixValue:High NOT VALIDATED')
 	
 	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
 											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
@@ -74,24 +58,10 @@ def generateWorkflow():
 											fix_value_output='Average',
 											belong_op_in=Belong(0), belong_op_out=Belong(0),
 											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
+											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)', origin_function="Rule Engine"):
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:(40.0, 70.0) FixValue:Average VALIDATED')
 	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
-	
-	if contract_invariants.check_inv_interval_fix_value(data_dictionary_in=binner_Life_expectancy__input_dataDictionary_df,
-											data_dictionary_out=binner_Life_expectancy__output_dataDictionary_df,
-											left_margin=70.0, right_margin=1.0E9,
-											closure_type=Closure(0),
-											fix_value_output='Average',
-											belong_op_in=Belong(0), belong_op_out=Belong(0),
-											data_type_output=DataType(0),
-											field_in='Life_expectancy', field_out='Life-Expectancy (High/Low/Avg)'):
-		print('INVARIANT binner(Life_expectancy)_INV_condition VALIDATED')
-	else:
-		print('INVARIANT binner(Life_expectancy)_INV_condition NOT VALIDATED')
-	
+		print('INVARIANT Rule Engine(Life_expectancy) Interval:(40.0, 70.0) FixValue:Average NOT VALIDATED')
 	
 	
 	
@@ -103,39 +73,68 @@ def generateWorkflow():
 		rowFilterPrimitive_Region__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='North America', data_dictionary=rowFilterPrimitive_Region__input_dataDictionary_df, belong_op=Belong(0), field='Region',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION rowFilterPrimitive(Region)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Region) FixValue:North America VALIDATED')
 	else:
-		print('PRECONDITION rowFilterPrimitive(Region)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Region) FixValue:North America NOT VALIDATED')
 	
 	if contract_pre_post.check_fix_value_range(value='North America', data_dictionary=rowFilterPrimitive_Region__output_dataDictionary_df, belong_op=Belong(0), field='Region',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterPrimitive(Region)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Region) FixValue:North America VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterPrimitive(Region)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Region) FixValue:North America NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterPrimitive_Region__INV_condition=['Region']
+	filter_fix_value_list_rowFilterPrimitive_Region__INV_condition=['North America']
+	
+	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Region__input_dataDictionary_df,
+											data_dictionary_out=rowFilterPrimitive_Region__output_dataDictionary_df,
+											columns=columns_list_rowFilterPrimitive_Region__INV_condition,
+											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_Region__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Region) FilterType:INCLUDE FixValueList:[North America] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Region) FilterType:INCLUDE FixValueList:[North America] NOT VALIDATED')
+	
 	
 	#-----------------New DataProcessing-----------------
-	columnFilter_Country_Region_Life_expectancy_Life_Expectancy_High_Low_Avg__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
+	columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
 	if os.path.exists('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet'):
-		columnFilter_Country_Region_Life_expectancy_Life_Expectancy_High_Low_Avg__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+		columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
 
-	field_list_columnFilter_PRE_field_range=['Country', 'Region', 'Life_expectancy', 'Life-Expectancy (High/Low/Avg)']
+	field_list_columnFilter_PRE_field_range=['Year', 'Infant_deaths', 'Under_five_deaths', 'Adult_mortality', 'Alcohol_consumption', 'Hepatitis_B', 'Measles', 'BMI', 'Polio', 'Diphtheria', 'Incidents_HIV', 'GDP_per_capita', 'Population_mln', 'Thinness_ten_nineteen_years', 'Thinness_five_nine_years', 'Schooling', 'Economy_status_Developed', 'Economy_status_Developing']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
-								data_dictionary=columnFilter_Country_Region_Life_expectancy_Life_Expectancy_High_Low_Avg__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_PRE_fieldRange VALIDATED')
+								data_dictionary=columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__input_dataDictionary_df,
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) NOT VALIDATED')
 	
 	
-	field_list_columnFilter_POST_field_range=['Country', 'Region', 'Life_expectancy', 'Life-Expectancy (High/Low/Avg)']
+	field_list_columnFilter_POST_field_range=['Year', 'Infant_deaths', 'Under_five_deaths', 'Adult_mortality', 'Alcohol_consumption', 'Hepatitis_B', 'Measles', 'BMI', 'Polio', 'Diphtheria', 'Incidents_HIV', 'GDP_per_capita', 'Population_mln', 'Thinness_ten_nineteen_years', 'Thinness_five_nine_years', 'Schooling', 'Economy_status_Developed', 'Economy_status_Developing']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
-								data_dictionary=columnFilter_Country_Region_Life_expectancy_Life_Expectancy_High_Low_Avg__output_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('POSTCONDITION columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_POST_fieldRange VALIDATED')
+								data_dictionary=columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__output_dataDictionary_df,
+								belong_op=Belong(1), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(Country, Region, Life_expectancy, Life-Expectancy (High/Low/Avg))_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) NOT VALIDATED')
+	
+	
+	columns_list_columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__INV_condition = ['Year', 'Infant_deaths', 'Under_five_deaths', 'Adult_mortality', 'Alcohol_consumption', 'Hepatitis_B', 'Measles', 'BMI', 'Polio', 'Diphtheria', 'Incidents_HIV', 'GDP_per_capita', 'Population_mln', 'Thinness_ten_nineteen_years', 'Thinness_five_nine_years', 'Schooling', 'Economy_status_Developed', 'Economy_status_Developing']
+	
+	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__input_dataDictionary_df,
+							data_dictionary_out=columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__output_dataDictionary_df,
+							columns=columns_list_columnFilter_Year_Infant_deaths_Under_five_deaths_Adult_mortality_Alcohol_consumption_Hepatitis_B_Measles_BMI_Polio_Diphtheria_Incidents_HIV_GDP_per_capita_Population_mln_Thinness_ten_nineteen_years_Thinness_five_nine_years_Schooling_Economy_status_Developed_Economy_status_Developing__INV_condition,
+							belong_op=Belong(0), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) VALIDATED')
+	else:
+		print('INVARIANT Column Filter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing) NOT VALIDATED')
+	
+	
+	
 	
 	
 

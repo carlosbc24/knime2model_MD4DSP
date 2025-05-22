@@ -8,17 +8,17 @@ from functions.PMML import PMMLModel
 
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_input_dataDictionary.parquet')
+	columnFilter_Name__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_input_dataDictionary.parquet')
 
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed=columnFilter_IATA_code_ICAO_code__input_dataDictionary_df.copy()
-	field_list_columnFilter_param_field=['IATA code', 'ICAO code']
+	columnFilter_Name__input_dataDictionary_transformed=columnFilter_Name__input_dataDictionary_df.copy()
+	field_list_columnFilter_param_field=['Name']
 	
-	columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed,
+	columnFilter_Name__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Name__input_dataDictionary_transformed,
 																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
 	
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df=columnFilter_IATA_code_ICAO_code__input_dataDictionary_transformed
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
-	columnFilter_IATA_code_ICAO_code__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	columnFilter_Name__output_dataDictionary_df=columnFilter_Name__input_dataDictionary_transformed
+	columnFilter_Name__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
+	columnFilter_Name__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
 	
 
 set_logger("transformations")

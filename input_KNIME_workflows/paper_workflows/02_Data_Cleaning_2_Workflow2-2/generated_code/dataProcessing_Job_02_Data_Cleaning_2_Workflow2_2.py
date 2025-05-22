@@ -15,17 +15,17 @@ def generateWorkflow():
 	field_list_columnFilter_PRE_field_range=['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
 								data_dictionary=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('PRECONDITION columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_PRE_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('PRECONDITION Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) VALIDATED')
 	else:
-		print('PRECONDITION columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_PRE_fieldRange NOT VALIDATED')
+		print('PRECONDITION Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) NOT VALIDATED')
 	
 	
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_df.copy()
 	field_list_columnFilter_param_field=['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
 	
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed,
-																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
+																	columns=field_list_columnFilter_param_field, belong_op=Belong.NOTBELONG)
 	
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_transformed
 	columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnFilter_output_dataDictionary.parquet')
@@ -34,10 +34,24 @@ def generateWorkflow():
 	field_list_columnFilter_POST_field_range=['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
 	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
 								data_dictionary=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df,
-								belong_op=Belong(0)):
-		print('POSTCONDITION columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange VALIDATED')
+								belong_op=Belong(0), origin_function="Column Filter"):
+		print('POSTCONDITION Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) VALIDATED')
 	else:
-		print('POSTCONDITION columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange NOT VALIDATED')
+		print('POSTCONDITION Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) NOT VALIDATED')
+	
+	
+	columns_list_columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__INV_condition = ['Airport ID', 'Name', 'City', 'Country', 'IATA', 'ICAO', 'Latitude', 'Longitude', 'Altitude', 'Timezone', 'DST', 'Tz database time zone', 'Type', 'Source']
+	
+	if contract_invariants.check_inv_filter_columns(data_dictionary_in=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__input_dataDictionary_df,
+							data_dictionary_out=columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__output_dataDictionary_df,
+							columns=columns_list_columnFilter_Airport_ID_Name_City_Country_IATA_ICAO_Latitude_Longitude_Altitude_Timezone_DST_Tz_database_time_zone_Type_Source__INV_condition,
+							belong_op=Belong(1), origin_function="Column Filter"):
+		print('INVARIANT Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) VALIDATED')
+	else:
+		print('INVARIANT Column Filter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source) NOT VALIDATED')
+	
+	
+	
 	
 	
 

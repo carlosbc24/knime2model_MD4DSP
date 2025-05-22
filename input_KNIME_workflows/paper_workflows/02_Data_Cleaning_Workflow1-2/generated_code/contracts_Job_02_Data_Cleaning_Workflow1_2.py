@@ -11,22 +11,37 @@ from functions.PMML import PMMLModel
 
 def generateWorkflow():
 	#-----------------New DataProcessing-----------------
-	rowFilterPrimitive_input_DataDictionary=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_input_dataDictionary.parquet')
+	rowFilterPrimitive_Name__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_input_dataDictionary.parquet')
 
 	if os.path.exists('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet'):
-		rowFilterPrimitive_output_DataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
+		rowFilterPrimitive_Name__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='a*', data_dictionary=rowFilterPrimitive_Name__input_dataDictionary_df, belong_op=Belong(0), field='Name',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION rowFilterPrimitive(Name)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Name) FixValue:a* VALIDATED')
 	else:
-		print('PRECONDITION rowFilterPrimitive(Name)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Name) FixValue:a* NOT VALIDATED')
 	
 	if contract_pre_post.check_fix_value_range(value='a*', data_dictionary=rowFilterPrimitive_Name__output_dataDictionary_df, belong_op=Belong(0), field='Name',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterPrimitive(Name)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Name) FixValue:a* VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterPrimitive(Name)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Name) FixValue:a* NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterPrimitive_Name__INV_condition=['Name']
+	filter_fix_value_list_rowFilterPrimitive_Name__INV_condition=['a*']
+	
+	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Name__input_dataDictionary_df,
+											data_dictionary_out=rowFilterPrimitive_Name__output_dataDictionary_df,
+											columns=columns_list_rowFilterPrimitive_Name__INV_condition,
+											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_Name__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Name) FilterType:INCLUDE FixValueList:[a*] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Name) FilterType:INCLUDE FixValueList:[a*] NOT VALIDATED')
+	
 	
 set_logger("contracts")
 generateWorkflow()

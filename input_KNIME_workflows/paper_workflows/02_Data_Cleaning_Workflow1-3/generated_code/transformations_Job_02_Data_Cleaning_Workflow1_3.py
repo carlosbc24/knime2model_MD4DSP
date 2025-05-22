@@ -13,8 +13,8 @@ def generateWorkflow():
 	rowFilterRange_Altitude__input_dataDictionary_transformed=rowFilterRange_Altitude__input_dataDictionary_df.copy()
 	columns_rowFilterRange_param_filter=['Altitude']
 	
-	filter_range_left_values_list_rowFilterRange_param_filter=[-np.inf]
-	filter_range_right_values_list_rowFilterRange_param_filter=[0.0]
+	filter_range_left_values_list_rowFilterRange_param_filter=[1000.0]
+	filter_range_right_values_list_rowFilterRange_param_filter=[np.inf]
 	closure_type_list_rowFilterRange_param_filter=[Closure(3)]
 	
 	rowFilterRange_Altitude__input_dataDictionary_transformed=data_transformations.transform_filter_rows_range(data_dictionary=rowFilterRange_Altitude__input_dataDictionary_transformed,

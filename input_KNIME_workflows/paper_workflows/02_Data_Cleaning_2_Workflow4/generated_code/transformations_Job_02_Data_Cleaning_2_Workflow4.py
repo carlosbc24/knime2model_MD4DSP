@@ -10,7 +10,6 @@ def generateWorkflow():
 
 	#-----------------New DataProcessing-----------------
 	mathOperation_Change__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation1_input_dataDictionary.parquet')
-	mathOperation_Change__input_dataDictionary_df.to_parquet('/wf_validation_python/data/output/mathOperation1_input_dataDictionary.parquet')
 	mathOperation_Change__input_dataDictionary_transformed=mathOperation_Change__input_dataDictionary_df.copy()
 	mathOperation_Change__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Change__input_dataDictionary_transformed,
 																  data_type_output = DataType(5),
@@ -47,60 +46,38 @@ def generateWorkflow():
 	mathOperation_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 	
 	#-----------------New DataProcessing-----------------
-	binner_Percentage__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mathOperation2_output_dataDictionary.parquet')
 
-	binner_Percentage__input_dataDictionary_transformed=binner_Percentage__input_dataDictionary_df.copy()
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
+	binner_Change__input_dataDictionary_transformed=binner_Change__input_dataDictionary_df.copy()
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_Change__input_dataDictionary_transformed,
 																  data_type_output = DataType(0),
-																  field_in = 'Percentage', field_out = 'Increase/Decrease')
+																  field_in = 'Change', field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=-0.0, right_margin=0.0,
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Change__input_dataDictionary_transformed,
+																  left_margin=-1.0E9, right_margin=0.0,
 																  closure_type=Closure(0),
 																  fix_value_output='Decrease',
 							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
+																  field_in = 'Change',
 																  field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=0.0, right_margin=0.0,
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Change__input_dataDictionary_transformed,
+																  left_margin=0.0, right_margin=1.0E9,
 																  closure_type=Closure(0),
 																  fix_value_output='Increase',
 							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
+																  field_in = 'Change',
 																  field_out = 'Increase/Decrease')
 	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=-1.0E9, right_margin=-0.0,
-																  closure_type=Closure(0),
-																  fix_value_output='No Change',
-							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
-																  field_out = 'Increase/Decrease')
-	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_Percentage__input_dataDictionary_transformed,
-																  left_margin=0.0, right_margin=1.0E9,
-																  closure_type=Closure(0),
-																  fix_value_output='No Change',
-							                                      data_type_output = DataType(0),
-																  field_in = 'Percentage',
-																  field_out = 'Increase/Decrease')
-	
-	binner_Percentage__output_dataDictionary_df=binner_Percentage__input_dataDictionary_transformed
-	binner_Percentage__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
-	binner_Percentage__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=binner_Change__input_dataDictionary_transformed
+	binner_Change__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
+	binner_Change__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 	
 
 

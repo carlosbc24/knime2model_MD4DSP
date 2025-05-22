@@ -13,10 +13,10 @@ def generateWorkflow():
 	rowFilterPrimitive_Airline__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_input_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='3U', data_dictionary=rowFilterPrimitive_Airline__input_dataDictionary_df, belong_op=Belong(0), field='Airline',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('PRECONDITION rowFilterPrimitive(Airline)_PRE_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(Airline) FixValue:3U VALIDATED')
 	else:
-		print('PRECONDITION rowFilterPrimitive(Airline)_PRE_valueRange NOT VALIDATED')
+		print('PRECONDITION Row Filter(Airline) FixValue:3U NOT VALIDATED')
 	
 	rowFilterPrimitive_Airline__input_dataDictionary_transformed=rowFilterPrimitive_Airline__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Airline']
@@ -32,10 +32,25 @@ def generateWorkflow():
 	rowFilterPrimitive_Airline__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
 	if contract_pre_post.check_fix_value_range(value='3U', data_dictionary=rowFilterPrimitive_Airline__output_dataDictionary_df, belong_op=Belong(0), field='Airline',
-									quant_abs=None, quant_rel=None, quant_op=None):
-		print('POSTCONDITION rowFilterPrimitive(Airline)_POST_valueRange VALIDATED')
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
+		print('POSTCONDITION Row Filter(Airline) FixValue:3U VALIDATED')
 	else:
-		print('POSTCONDITION rowFilterPrimitive(Airline)_POST_valueRange NOT VALIDATED')
+		print('POSTCONDITION Row Filter(Airline) FixValue:3U NOT VALIDATED')
+	
+	
+	
+	columns_list_rowFilterPrimitive_Airline__INV_condition=['Airline']
+	filter_fix_value_list_rowFilterPrimitive_Airline__INV_condition=['3U']
+	
+	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Airline__input_dataDictionary_df,
+											data_dictionary_out=rowFilterPrimitive_Airline__output_dataDictionary_df,
+											columns=columns_list_rowFilterPrimitive_Airline__INV_condition,
+											filter_fix_value_list=filter_fix_value_list_rowFilterPrimitive_Airline__INV_condition,
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Airline) FilterType:INCLUDE FixValueList:[3U] VALIDATED')
+	else:
+		print('INVARIANT Row Filter(Airline) FilterType:INCLUDE FixValueList:[3U] NOT VALIDATED')
+	
 	
 
 set_logger("dataProcessing")
