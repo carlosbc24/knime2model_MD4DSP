@@ -148,7 +148,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Missing Value(ACADEMIC_INTEREST_1) MissingValues:[] NOT VALIDATED')
 	
-	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df.copy()
+	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
 	
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=data_transformations.transform_special_value_fix_value(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed,
@@ -236,7 +236,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Missing Value(distance) MissingValues:[] NOT VALIDATED')
 	
-	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=imputeMissingByMean_avg_income_distance__input_dataDictionary_df.copy()
+	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
 	
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed,
@@ -310,7 +310,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Missing Value(satscore) MissingValues:[] NOT VALIDATED')
 	
-	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df.copy()
+	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
 	
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed,
@@ -348,10 +348,10 @@ def generateWorkflow():
 	rowFilterRange_init_span__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=1000.0, data_dictionary=rowFilterRange_init_span__input_dataDictionary_df,
-	                                	closure_type=Closure(2), belong_op=Belong(1), field='init_span', origin_function="Row Filter"):
-		print('PRECONDITION Row Filter(init_span) Interval:[-1000.0, 1000.0) VALIDATED')
+	                                	closure_type=Closure(0), belong_op=Belong(0), field='init_span', origin_function="Row Filter"):
+		print('PRECONDITION Row Filter(init_span) Interval:(-1000.0, 1000.0) VALIDATED')
 	else:
-		print('PRECONDITION Row Filter(init_span) Interval:[-1000.0, 1000.0) NOT VALIDATED')
+		print('PRECONDITION Row Filter(init_span) Interval:(-1000.0, 1000.0) NOT VALIDATED')
 	
 	rowFilterRange_init_span__input_dataDictionary_transformed=rowFilterRange_init_span__input_dataDictionary_df.copy()
 	columns_rowFilterRange_param_filter=['init_span']
@@ -1028,7 +1028,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Numeric Binner(TERRITORY) Interval:[0.0, 1000.0] NOT VALIDATED')
 	
-	binner_TERRITORY__input_dataDictionary_transformed=binner_TERRITORY__input_dataDictionary_df.copy()
+	binner_TERRITORY__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  data_type_output = DataType(0),
 																  field_in = 'TERRITORY', field_out = 'TERRITORY_binned')
@@ -1170,7 +1170,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Numeric Binner(satscore) Interval:[-1000.0, 2000.0] NOT VALIDATED')
 	
-	binner_satscore__input_dataDictionary_transformed=binner_satscore__input_dataDictionary_df.copy()
+	binner_satscore__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_satscore__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_satscore__input_dataDictionary_transformed,
 																  data_type_output = DataType(0),
 																  field_in = 'satscore', field_out = 'satscore_binned')
@@ -1289,7 +1289,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Numeric Binner(avg_income) Interval:[9.0, 100000.0] NOT VALIDATED')
 	
-	binner_avg_income__input_dataDictionary_transformed=binner_avg_income__input_dataDictionary_df.copy()
+	binner_avg_income__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_avg_income__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=binner_avg_income__input_dataDictionary_transformed,
 																  data_type_output = DataType(0),
 																  field_in = 'avg_income', field_out = 'avg_income_binned')
