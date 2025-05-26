@@ -1,0 +1,198 @@
+{
+  "workflows": [
+    {
+      "name": "01_Data_Cleaning_Workflow1-1",
+      "nodes": [
+        {
+          "rowFilterMissing": {
+            "Precondition": "VALIDATED",
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
+          }
+        },
+        {
+          "rowFilterRange": {
+            "Precondition": "VALIDATED",
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
+          }
+        }
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow1-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow1-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow2-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow2-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow3-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow3-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "01_Data_Cleaning_Workflow3-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow1-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow1-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow1-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow2-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow2-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow3-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow3-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_2_Workflow4",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow1-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow1-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow1-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow1-4",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow2-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow2-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow2-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow2-4",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow3-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow3-2-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow3-2-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow4-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "02_Data_Cleaning_Workflow4-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow1-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow1-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow2-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow2-2",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow2-3",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow3-1",
+      "nodes": [
+      ]
+    },
+    {
+      "name": "DATA_CLEANING_Workflow3-2",
+      "nodes": [
+      ]
+    }
+  ]
+}
