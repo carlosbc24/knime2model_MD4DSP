@@ -15,13 +15,17 @@ Functionality:
 - Reactive graph generation upon input change.
 - Bar chart configuration by workflow, contract type, or node type.
 - Chart export with descriptive filenames based on selected options.
+- Side panel with contract validation statistics and percentages.
 """
 
 import gradio as gr
 import json
 import os
+import matplotlib
+matplotlib.use('Agg')  # Avoid tkinter-related backend issues
 import matplotlib.pyplot as plt
-from collections import defaultdict
+from collections import defaultdict, Counter
+import random
 
 # === Configuration ===
 
@@ -49,40 +53,41 @@ def load_data(source: str) -> list:
         return json.load(f)["workflows"]
 
 
+# === Color Mapping ===
+
+def assign_colors(result_types):
+    fixed_colors = {
+        "VALIDATED": "green",
+        "NOT VALIDATED": "red"
+    }
+    others = [res for res in result_types if res not in fixed_colors]
+    random.seed(42)
+    palette = [
+        "#1f77b4", "#ff7f0e", "#d62728",
+        "#9467bd", "#8c564b", "#e377c2", "#7f7f7f",
+        "#bcbd22", "#17becf"
+    ]
+    random.shuffle(palette)
+    color_map = fixed_colors.copy()
+    for res, col in zip(others, palette):
+        color_map[res] = col
+    return color_map
+
+
 # === Chart Generation ===
 
-def generate_bar_chart(source: str, x_axis_type: str) -> str:
-    """
-    Generate a bar chart based on the selected data platform and X-axis type.
-
-    Args:
-        source (str): Platform name.
-        x_axis_type (str): X-axis variable ('Subworkflows', 'Tipo de contrato', 'Tipo de nodo').
-
-    Returns:
-        str: File path of the temporarily saved chart image.
-    """
+def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     workflows = load_data(source)
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    # Identify all unique result types present
+    # Identify all result types
     all_results = set()
     for wf in workflows:
         for node in wf["nodes"]:
             for contracts in node.values():
                 all_results.update(contracts.values())
-
     all_results = sorted(all_results)
-
-    def get_color(res):
-        if res == "VALIDATED":
-            return "green"
-        elif res == "NOT VALIDATED":
-            return "red"
-        else:
-            return "gray"
-
-    color_map = {res: get_color(res) for res in all_results}
+    color_map = assign_colors(all_results)
 
     def count_contracts(nodes):
         counts = {res: 0 for res in all_results}
@@ -93,87 +98,93 @@ def generate_bar_chart(source: str, x_axis_type: str) -> str:
                         counts[result] += 1
         return counts
 
+    result_counts = {res: [] for res in all_results}
+    x_labels = []
+
     if x_axis_type == "Subworkflows":
-        x_labels = []
-        result_counts = {res: [] for res in all_results}
         for wf in workflows:
             x_labels.append(wf["name"])
             counts = count_contracts(wf["nodes"])
             for res in all_results:
                 result_counts[res].append(counts[res])
-        x = range(len(x_labels))
-        bottom = [0] * len(x_labels)
-        for res in all_results:
-            ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
-            bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
-        ax.set_xticks(x)
-        ax.set_xticklabels(x_labels, rotation=90)
 
     elif x_axis_type == "Tipo de contrato":
         contract_types = ["PRECONDITION", "POSTCONDITION", "INVARIANT"]
-        result_counts = {res: [] for res in all_results}
+        x_labels = contract_types
         for ctype in contract_types:
-            counts = {res: 0 for res in all_results}
+            c_counts = {res: 0 for res in all_results}
             for wf in workflows:
                 for node in wf["nodes"]:
                     for contracts in node.values():
                         result = contracts.get(ctype)
-                        if result in counts:
-                            counts[result] += 1
+                        if result in all_results:
+                            c_counts[result] += 1
             for res in all_results:
-                result_counts[res].append(counts[res])
-        x = range(len(contract_types))
-        bottom = [0] * len(contract_types)
-        for res in all_results:
-            ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
-            bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
-        ax.set_xticks(x)
-        ax.set_xticklabels(contract_types)
+                result_counts[res].append(c_counts[res])
 
     elif x_axis_type == "Tipo de nodo":
-        node_counts = defaultdict(lambda: {res: 0 for res in all_results})
+        node_type_counts = defaultdict(lambda: {res: 0 for res in all_results})
         for wf in workflows:
             for node in wf["nodes"]:
                 for node_type, contracts in node.items():
                     for result in contracts.values():
                         if result in all_results:
-                            node_counts[node_type][result] += 1
-        x_labels = list(node_counts.keys())
-        result_counts = {res: [node_counts[k][res] for k in x_labels] for res in all_results}
-        x = range(len(x_labels))
-        bottom = [0] * len(x_labels)
+                            node_type_counts[node_type][result] += 1
+        x_labels = list(node_type_counts.keys())
         for res in all_results:
-            ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
-            bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
-        ax.set_xticks(x)
-        ax.set_xticklabels(x_labels, rotation=90)
+            result_counts[res] = [node_type_counts[nt][res] for nt in x_labels]
 
-    # Add margin to the top of the chart
-    max_height = max(sum(values) for values in zip(*result_counts.values()))
-    ax.set_ylim(top=max_height * 1.10)
+    x = range(len(x_labels))
+    bottom = [0] * len(x_labels)
+    for res in all_results:
+        ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
+        bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(x_labels, rotation=90)
+    ax.set_ylim(top=max(sum(values) for values in zip(*result_counts.values())) * 1.1)
     ax.set_ylabel("Number of instances")
     ax.set_title(f"Results by {x_axis_type}")
     ax.legend(loc="upper right")
     plt.tight_layout()
 
-    # Save chart with configuration-dependent filename
     filename = f"chart_{source}_{x_axis_type.replace(' ', '_')}.png"
     file_path = os.path.join(EXPORT_DIR, filename)
     plt.savefig(file_path)
     plt.close(fig)
 
-    return file_path
+    # Stats generation
+    total_counter = Counter()
+    contract_counter = defaultdict(Counter)
+    for wf in workflows:
+        for node in wf["nodes"]:
+            for contracts in node.values():
+                for ctype, result in contracts.items():
+                    total_counter[result] += 1
+                    contract_counter[ctype][result] += 1
+
+    stats_html = "<h4>Validation Statistics</h4>"
+    stats_html += f"<p><b>Total contracts:</b> {sum(total_counter.values())}</p>"
+    for res in all_results:
+        percent = 100 * total_counter[res] / sum(total_counter.values())
+        stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
+
+    stats_html += "<hr><h5>By Contract Type:</h5>"
+    for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
+        stats_html += f"<p><b>{ctype}</b></p><ul>"
+        total = sum(contract_counter[ctype].values())
+        for res in all_results:
+            count = contract_counter[ctype][res]
+            pct = 100 * count / total if total > 0 else 0
+            stats_html += f"<li style='color:{color_map[res]}'>{res}: {count} ({pct:.1f}%)</li>"
+        stats_html += "</ul>"
+
+    return file_path, stats_html
 
 
-# === Image Export ===
+# === Export Function ===
 
 def export_image():
-    """
-    Export the most recently generated chart under a fixed name (for compatibility).
-
-    Returns:
-        str: Message indicating the export result.
-    """
     latest_image = next(
         (f for f in sorted(os.listdir(EXPORT_DIR), reverse=True) if f.startswith("chart_") and f.endswith(".png")),
         None
@@ -186,42 +197,32 @@ def export_image():
     return "No chart available for export."
 
 
-# === GUI Construction ===
+# === GUI ===
 
 with gr.Blocks(title="Contract Validation Results for 36 Subworkflows") as demo:
     gr.Markdown("## Contract Validation Results for 36 Subworkflows")
 
-    with gr.Group():
-        gr.Markdown("### Generated Data Platform")
-        source = gr.Radio(choices=["KNIME", "Python"], value="KNIME", label="Select the platform")
+    with gr.Row():
+        with gr.Column(scale=2):
+            source = gr.Radio(choices=["KNIME", "Python"], value="KNIME", label="Select the platform")
+            x_axis = gr.Radio(
+                choices=["Tipo de nodo", "Tipo de contrato", "Subworkflows"],
+                value="Subworkflows",
+                label="Select X-axis variable"
+            )
+            chart = gr.Image(type="filepath", label="Generated Chart")
+            export_btn = gr.Button("Export Image")
+            export_msg = gr.Textbox(label="Export Message")
+        with gr.Column(scale=1):
+            stats_panel = gr.HTML(label="Validation Statistics")
 
-    with gr.Group():
-        gr.Markdown("### X-Axis Variable")
-        x_axis = gr.Radio(
-            choices=["Tipo de nodo", "Tipo de contrato", "Subworkflows"],
-            value="Subworkflows",
-            label="Select X-axis variable"
-        )
-
-    with gr.Group():
-        gr.Markdown("### Results Visualization")
-        chart = gr.Image(type="filepath", label="Generated Chart")
-
-    with gr.Group():
-        gr.Markdown("### Export Image")
-        gr.Markdown("Exported charts will be saved in `visualization_scripts/barcharts_images`")
-        export_btn = gr.Button("Export Image")
-        export_msg = gr.Textbox(label="Export Message")
-
-    # Event-driven rendering and export
-    source.change(fn=generate_bar_chart, inputs=[source, x_axis], outputs=chart)
-    x_axis.change(fn=generate_bar_chart, inputs=[source, x_axis], outputs=chart)
+    # Events
+    source.change(fn=generate_bar_chart_and_stats, inputs=[source, x_axis], outputs=[chart, stats_panel])
+    x_axis.change(fn=generate_bar_chart_and_stats, inputs=[source, x_axis], outputs=[chart, stats_panel])
     export_btn.click(fn=export_image, inputs=[], outputs=export_msg)
 
-    # Initial rendering
-    chart.value = generate_bar_chart("KNIME", "Subworkflows")
-
-# === Run Application ===
+    # Initial load
+    chart.value, stats_panel.value = generate_bar_chart_and_stats("KNIME", "Subworkflows")
 
 if __name__ == "__main__":
     demo.launch()
