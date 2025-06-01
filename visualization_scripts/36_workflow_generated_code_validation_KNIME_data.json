@@ -422,8 +422,6 @@
       "nodes": [
         {
           "join": {
-            "PRECONDITION": "NOT GENERATED",
-            "POSTCONDITION": "NOT GENERATED",
             "INVARIANT": "ValueError"
           }
         }
