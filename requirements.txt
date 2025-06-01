@@ -3,9 +3,9 @@
 # platform: linux-64
 pandas~=2.1.4
 numpy~=1.26.3
-gradio==5.21.0
 matplotlib==3.9.1
+gradio
 tqdm
 pyyaml
 jinja2
-matplotlib
+

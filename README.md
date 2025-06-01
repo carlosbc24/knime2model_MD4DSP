@@ -29,7 +29,7 @@ The project is divided into three main scripts:
    
 3. Crate a new conda environment:
    ```bash
-   conda create --name kn2wf_mapping python=3.11 --yes
+   conda create --name kn2wf_mapping python=3.10 --yes
    ```
    
 4. Deactivate any previous environment and activate the new one:
