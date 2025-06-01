@@ -66,7 +66,7 @@
           "rowFilterRange": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "ValueError",
-            "INVARIANT": ""
+            "INVARIANT": "ValueError"
           }
         }
       ]
@@ -285,14 +285,14 @@
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "ZeroDivisionError",
-            "INVARIANT": ""
+            "INVARIANT": "ZeroDivisionError"
           }
         },
         {
           "binner": {
-            "PRECONDITION": "",
-            "POSTCONDITION": "",
-            "INVARIANT": ""
+            "PRECONDITION": "VALIDATED",
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -422,9 +422,9 @@
       "nodes": [
         {
           "join": {
-            "PRECONDITION": "",
-            "POSTCONDITION": "",
-            "INVARIANT": ""
+            "PRECONDITION": "NOT GENERATED",
+            "POSTCONDITION": "NOT GENERATED",
+            "INVARIANT": "ValueError"
           }
         }
       ]
@@ -575,8 +575,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "",
-            "INVARIANT": ""
+            "POSTCONDITION": "KeyError",
+            "INVARIANT": "ValueError"
           }
         }
       ]
@@ -587,8 +587,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "",
-            "INVARIANT": ""
+            "POSTCONDITION": "KeyError",
+            "INVARIANT": "ValueError"
           }
         }
       ]

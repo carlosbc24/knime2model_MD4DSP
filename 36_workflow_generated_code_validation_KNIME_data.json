@@ -422,9 +422,9 @@
       "nodes": [
         {
           "join": {
-            "PRECONDITION": "",
-            "POSTCONDITION": "",
-            "INVARIANT": ""
+            "PRECONDITION": "NOT GENERATED",
+            "POSTCONDITION": "NOT GENERATED",
+            "INVARIANT": "ValueError"
           }
         }
       ]
@@ -576,7 +576,7 @@
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "VALIDATED",
-            "INVARIANT": ""
+            "INVARIANT": "ValueError"
           }
         }
       ]
@@ -588,7 +588,7 @@
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": ""
+            "INVARIANT": "ValueError"
           }
         }
       ]
