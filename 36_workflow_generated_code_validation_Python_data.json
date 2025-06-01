@@ -33,14 +33,14 @@
           "rowFilterRange": {
             "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         },
         {
           "rowFilterPrimitive": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "NOT VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -58,15 +58,15 @@
         {
           "rowFilterPrimitive": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "NOT VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         },
         {
           "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
+            "PRECONDITION": "NOT VALIDATED",
+            "POSTCONDITION": "ValueError",
+            "INVARIANT": ""
           }
         }
       ]
@@ -89,8 +89,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -227,8 +227,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -278,21 +278,21 @@
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         },
         {
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "ZeroDivisionError",
+            "INVARIANT": ""
           }
         },
         {
           "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
+            "PRECONDITION": "",
+            "POSTCONDITION": "",
+            "INVARIANT": ""
           }
         }
       ]
@@ -316,7 +316,7 @@
           "rowFilterRange": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -339,8 +339,8 @@
         {
           "rowFilterMissing": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "NOT VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -351,8 +351,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -375,8 +375,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -387,8 +387,8 @@
         {
           "columnFilter": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -436,7 +436,7 @@
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -564,7 +564,7 @@
           "rowFilterPrimitive": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         }
       ]
@@ -575,7 +575,7 @@
         {
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
+            "POSTCONDITION": "",
             "INVARIANT": ""
           }
         }
@@ -587,7 +587,7 @@
         {
           "columnFilter": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
+            "POSTCONDITION": "",
             "INVARIANT": ""
           }
         }
