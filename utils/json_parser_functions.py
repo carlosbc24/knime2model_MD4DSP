@@ -69,6 +69,7 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
     elif library_transformation_name == "rowFilterPrimitive":
         row_dict = {
             "pattern": node["parameters"]["pattern"] if "pattern" in node["parameters"] else "",
+            "pattern_type": node["parameters"]["pattern_type"] if "pattern_type" in node["parameters"] else "",
             "filter_type_inclusion":
                 node["parameters"]["filter_type_inclusion"] if "filter_type_inclusion" in node["parameters"] else ""}
 

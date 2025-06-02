@@ -406,8 +406,16 @@ def extract_row_filter_node_settings(node_info: dict, model: elementTree.Element
             elif filter_type_entry is not None and node_info["parameters"]["filter_type"] == "StringComp_RowFilter":
                 # Extract the pattern
                 pattern_entry = row_filter.find("knime:entry[@key='Pattern']", namespace)
-                node_info["parameters"]["pattern"] = pattern_entry.attrib[
-                    "value"] if pattern_entry is not None else None
+                pattern_value = pattern_entry.attrib["value"] if pattern_entry is not None else None
+                node_info["parameters"]["pattern"] = pattern_value
+                # Determine pattern type. If the string is an Integer, then avoid double ""
+                # Determinar el tipo de patrón: si es un entero, evitar dobles comillas
+                if pattern_value is not None:
+                    try:
+                        int(pattern_value)
+                        node_info["parameters"]["pattern_type"] = "Integer"
+                    except ValueError:
+                        node_info["parameters"]["pattern_type"] = "String"
 
             # Extract the include or exclude parameter
             include_entry = row_filter.find("knime:entry[@key='include']", namespace)

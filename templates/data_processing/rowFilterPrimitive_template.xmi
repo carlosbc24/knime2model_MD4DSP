@@ -63,7 +63,12 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0"/>
       <primitive
           name="rowFilterPrimitive({{ dataprocessing.in_column_names }})_param_primitive"
-          value="{{ dataprocessing.row_filter.pattern }}">
+          value="{{ dataprocessing.row_filter.pattern }}"
+          {% if dataprocessing.row_filter.pattern_type == "Integer" %}
+          dataType="Integer">
+          {% else %}
+          dataType="String">
+          {% endif %}
         <primitiveDef
             href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0/@primitivedef.0"/>
       </primitive>
@@ -89,7 +94,12 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="{{ dataprocessing.row_filter.pattern }}">
+            value="{{ dataprocessing.row_filter.pattern }}"
+            {% if dataprocessing.row_filter.pattern_type == "Integer" %}
+            dataType="Integer">
+            {% else %}
+            dataType="String">
+            {% endif %}
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -119,7 +129,12 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="{{ dataprocessing.row_filter.pattern }}">
+            value="{{ dataprocessing.row_filter.pattern }}"
+            {% if dataprocessing.row_filter.pattern_type == "Integer" %}
+            dataType="Integer">
+            {% else %}
+            dataType="String">
+            {% endif %}
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -175,7 +190,12 @@
           <dataResult
               xsi:type="Contract:FixValue"
               name="rowFilterPrimitive({{ in_column.name }})_param_fix_value"
-              value="{{ dataprocessing.row_filter.pattern }}">
+              value="{{ dataprocessing.row_filter.pattern }}"
+              {% if dataprocessing.row_filter.pattern_type == "Integer" %}
+              dataType="Integer">
+              {% else %}
+              dataType="String">
+              {% endif %}
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
