@@ -19,14 +19,14 @@ def generateWorkflow():
 	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=join_Name_with_City__input_dataDictionary_df,
 											data_dictionary_out=join_Name_with_City__output_dataDictionary_df,
 											belong_op_in=Belong(1), belong_op_out=Belong(1),
-											field_in='Name', field_out='invalid', origin_function="String Manipulation"):
+											field_in='Name', field_out='Name with City', origin_function="String Manipulation"):
 		print('INVARIANT String Manipulation(Name) BelongOpIn:NotBelong BelongOpOut:NotBelong VALIDATED')
 	else:
 		print('INVARIANT String Manipulation(Name) BelongOpIn:NotBelong BelongOpOut:NotBelong NOT VALIDATED')
 	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=join_Name_with_City__input_dataDictionary_df,
 											data_dictionary_out=join_Name_with_City__output_dataDictionary_df,
 											belong_op_in=Belong(1), belong_op_out=Belong(1),
-											field_in='City', field_out='invalid', origin_function="String Manipulation"):
+											field_in='City', field_out='Name with City', origin_function="String Manipulation"):
 		print('INVARIANT String Manipulation(City) BelongOpIn:NotBelong BelongOpOut:NotBelong VALIDATED')
 	else:
 		print('INVARIANT String Manipulation(City) BelongOpIn:NotBelong BelongOpOut:NotBelong NOT VALIDATED')
@@ -34,7 +34,7 @@ def generateWorkflow():
 	
 	
 	
-	dictionary_join_specialValue_INV_THEN={'Name': True, '': False, 'City': True}
+	dictionary_join_specialValue_INV_THEN={'Name': True, ' - ': False, 'City': True}
 	if contract_invariants.check_inv_join(data_dictionary_in=join_Name_with_City__input_dataDictionary_df,
 								data_dictionary_out=join_Name_with_City__output_dataDictionary_df,
 								dictionary=dictionary_join_specialValue_INV_THEN,
@@ -43,7 +43,7 @@ def generateWorkflow():
 	else:
 		print('INVARIANT String Manipulation(Name) JoinInputs:Name NOT VALIDATED')
 	
-	dictionary_join_specialValue_INV_THEN={'Name': True, '': False, 'City': True}
+	dictionary_join_specialValue_INV_THEN={'Name': True, ' - ': False, 'City': True}
 	if contract_invariants.check_inv_join(data_dictionary_in=join_Name_with_City__input_dataDictionary_df,
 								data_dictionary_out=join_Name_with_City__output_dataDictionary_df,
 								dictionary=dictionary_join_specialValue_INV_THEN,

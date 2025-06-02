@@ -210,7 +210,8 @@
                 xsi:type="Contract:FixValue"
                 name="join(Name with City)_op2_fix_value"
                 next_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.2"
-                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.0">
+                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.0"
+                value=" - ">
               <fixValueDef
                   href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
             </operand>
@@ -239,7 +240,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
+        folderPath="C:\Users\Usuario\PycharmProjects\knime2model_MD4DSP\input_KNIME_workflows\paper_workflows\02_Data_Cleaning_Workflow3-2-2\knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

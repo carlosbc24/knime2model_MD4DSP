@@ -16,7 +16,8 @@
       <datafield
           xsi:type="Workflow:Categorical"
           name="join({{ operand.value }})_input{{ next_operand_index }}_dataField"
-          displayName="{{ operand.value }}">
+          displayName="{{ operand.value }}"
+          out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
@@ -229,9 +230,9 @@
                 xsi:type="Contract:FixValue"
                 name="join({{ dataprocessing.join.out_column }})_op{{ next_operand_index }}_fix_value"
                 {% if operand_index == last_operand_index %}
-                next_operand="">
+                next_operand=""
                 {% else %}
-                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}">
+                next_operand="//@dataprocessing.{{ dataprocessing.index }}/@contract.1/@contract/@then.0/@dataResult/@operand.{{ next_operand_index }}"
                 {% endif %}
                 value="{{ operand.value }}"
                 dataType="String">
