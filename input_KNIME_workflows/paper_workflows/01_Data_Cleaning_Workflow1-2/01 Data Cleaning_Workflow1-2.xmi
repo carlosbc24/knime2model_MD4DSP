@@ -399,7 +399,8 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0"/>
       <primitive
           name="rowFilterPrimitive(Year)_param_primitive"
-          value="2014">
+          value="2014"
+          dataType="Integer">
         <primitiveDef
             href="library_validation.xmi#//@dataprocessingdefinition.2/@parameterdefinition.0/@primitivedef.0"/>
       </primitive>
@@ -420,7 +421,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="2014">
+            value="2014"
+            dataType="Integer">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -445,7 +447,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="2014">
+            value="2014"
+            dataType="Integer">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -496,7 +499,8 @@
           <dataResult
               xsi:type="Contract:FixValue"
               name="rowFilterPrimitive(Year)_param_fix_value"
-              value="2014">
+              value="2014"
+              dataType="Integer">
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>

@@ -57,7 +57,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterPrimitive_Year__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='2010', data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('PRECONDITION Row Filter(Year) FixValue:2010 VALIDATED')
 	else:
@@ -66,7 +66,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=rowFilterPrimitive_Year__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Year']
 	
-	filter_fix_value_list_rowFilterPrimitive_param_filter=['2010']
+	filter_fix_value_list_rowFilterPrimitive_param_filter=[2010]
 	
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_transformed,
 																											columns=columns_rowFilterPrimitive_param_filter,
@@ -76,7 +76,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	rowFilterPrimitive_Year__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value='2010', data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION Row Filter(Year) FixValue:2010 VALIDATED')
 	else:
@@ -85,7 +85,7 @@ def generateWorkflow():
 	
 	
 	columns_list_rowFilterPrimitive_Year__INV_condition=['Year']
-	filter_fix_value_list_rowFilterPrimitive_Year__INV_condition=['2010']
+	filter_fix_value_list_rowFilterPrimitive_Year__INV_condition=[2010]
 	
 	if contract_invariants.check_inv_filter_rows_primitive(data_dictionary_in=rowFilterPrimitive_Year__input_dataDictionary_df,
 											data_dictionary_out=rowFilterPrimitive_Year__output_dataDictionary_df,

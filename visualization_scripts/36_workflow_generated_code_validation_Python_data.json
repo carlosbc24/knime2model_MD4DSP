@@ -39,7 +39,7 @@
         {
           "rowFilterPrimitive": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
+            "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
         }
@@ -58,15 +58,15 @@
         {
           "rowFilterPrimitive": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
+            "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
         },
         {
           "rowFilterRange": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "ValueError",
-            "INVARIANT": "ValueError"
+            "PRECONDITION": "VALIDATED",
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
           }
         }
       ]

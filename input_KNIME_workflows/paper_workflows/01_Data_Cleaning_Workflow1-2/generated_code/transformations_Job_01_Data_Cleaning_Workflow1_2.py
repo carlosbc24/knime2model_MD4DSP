@@ -48,7 +48,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=rowFilterPrimitive_Year__input_dataDictionary_df.copy()
 	columns_rowFilterPrimitive_param_filter=['Year']
 	
-	filter_fix_value_list_rowFilterPrimitive_param_filter=['2014']
+	filter_fix_value_list_rowFilterPrimitive_param_filter=[2014]
 	
 	rowFilterPrimitive_Year__input_dataDictionary_transformed=data_transformations.transform_filter_rows_primitive(data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_transformed,
 																											columns=columns_rowFilterPrimitive_param_filter,

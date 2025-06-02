@@ -29,8 +29,8 @@ docker build --no-cache -t ubuntu_22_04:latest -f Dockerfile .
 
 clear
 
-cp /mnt/c/Users/Usuario/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow1-3/knime_dataDictionaries/rowFilterPrimitive_input_dataDictionary.csv "$(pwd)/data/"output
-cp /mnt/c/Users/Usuario/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow1-3/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow1-3/knime_dataDictionaries/rowFilterPrimitive_input_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow1-3/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
 
 
 
