@@ -566,30 +566,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "DATA_CLEANING_Workflow3-1",
-      "nodes": [
-        {
-          "columnFilter": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "KeyError",
-            "INVARIANT": "ValueError"
-          }
-        }
-      ]
-    },
-    {
-      "name": "DATA_CLEANING_Workflow3-2",
-      "nodes": [
-        {
-          "columnFilter": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "KeyError",
-            "INVARIANT": "ValueError"
-          }
-        }
-      ]
     }
   ]
 }
