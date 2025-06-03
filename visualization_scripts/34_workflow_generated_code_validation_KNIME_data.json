@@ -422,8 +422,8 @@
       "nodes": [
         {
           "join": {
-            "INVARIANT": "VALIDATED",
-            "INVARIANT": "VALIDATED",
+            "INVARIANT": "NOT VALIDATED",
+            "INVARIANT": "NOT VALIDATED",
             "INVARIANT": "NOT VALIDATED",
             "INVARIANT": "NOT VALIDATED"
           }
