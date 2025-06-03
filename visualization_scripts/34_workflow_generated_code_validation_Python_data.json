@@ -284,8 +284,8 @@
         {
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "ZeroDivisionError",
-            "INVARIANT": "ZeroDivisionError"
+            "POSTCONDITION": "NOT VALIDATED",
+            "INVARIANT": "NOT VALIDATED"
           }
         },
         {
