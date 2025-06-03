@@ -44,6 +44,13 @@
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.11"/>
     <parameter
+        xsi:type="Workflow:DerivedField"
+        name="derived_field({{ dataprocessing.join.out_column }})_param_join"
+        der_dataField="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0">
+      <derivedFieldDef
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.1"/>
+    </parameter>
+    <parameter
         xsi:type="Workflow:Join"
         name="join({{ dataprocessing.join.out_column }})_param_join">
 
@@ -60,7 +67,7 @@
           {% if operand_index == last_operand_index %}
           next_operand="">
           {% else %}
-          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+          next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.1/@operand.{{ next_operand_index }}">
           {% endif %}
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
@@ -73,7 +80,7 @@
           {% if operand_index == last_operand_index %}
             next_operand="">
             {% else %}
-            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.0/@operand.{{ next_operand_index }}">
+            next_operand="//@dataprocessing.{{ dataprocessing.index }}/@parameter.1/@operand.{{ next_operand_index }}">
             {% endif %}
         <fixValueDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0"/>
