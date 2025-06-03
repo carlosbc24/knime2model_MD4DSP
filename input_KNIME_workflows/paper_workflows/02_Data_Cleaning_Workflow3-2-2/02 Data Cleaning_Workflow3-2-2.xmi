@@ -100,63 +100,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0"/>
     </parameter>
     <contract
-        name="join(Name with City)_specialValue_INVARIANT">
-      <contractDefinition
-          href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
-      <contract
-          xsi:type="Contract:Condition"
-          type="INVARIANT"
-          name="INV_specialValue_condition">
-        <in
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
-            name="INV_specialValue_input1_datafield_Name">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
-        </in>
-        <in
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
-            name="INV_specialValue_input3_datafield_City">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
-        </in>
-        <out
-            xsi:type="Contract:DataField"
-            dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
-            name="INV_specialValue_output_datafield_Name with City">
-          <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
-        </out>
-        <conditionDef
-            href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
-        <if
-            belongOp="NOTBELONG"
-            then="//@dataprocessing.0/@contract.0/@contract/@then.0"
-            name="INV_specialValue_if">
-          <ifDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
-          <dataCondition
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
-          </dataCondition>
-        </if>
-        <then
-            if="//@dataprocessing.0/@contract.0/@contract/@if.0"
-            name="INV_specialValue_then"
-            belongOp="NOTBELONG">
-          <thenDefinition
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
-          <dataResult
-              xsi:type="Contract:SpecialValue">
-            <specialValueDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult"/>
-          </dataResult>
-        </then>
-      </contract>
-    </contract>
-    <contract
         name="join(Name with City)_join_INVARIANT">
       <contractDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
@@ -169,26 +112,26 @@
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.0"
             name="INV_join_input1_datafield_Name">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <in
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@inputPort.0/@datafield.1"
             name="INV_join_input3_datafield_City">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@in.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@in.0"/>
         </in>
         <out
             xsi:type="Contract:DataField"
             dataField="//@dataprocessing.0/@outputPort.0/@datafield.0"
             name="INV_join_output_datafield_Name with City">
           <dataFieldDef
-              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@out.0"/>
+              href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@out.0"/>
         </out>
         <conditionDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition"/>
         <if
-            then="//@dataprocessing.0/@contract.1/@contract/@then.0"
+            then="//@dataprocessing.0/@contract.0/@contract/@then.0"
             name="INV_join_if">
           <ifDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0"/>
@@ -198,11 +141,11 @@
               rightMargin="1600.0"
               closureType="closedClosed">
             <intervalDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@ifdefinition.0/@dataCondition.0"/>
           </dataCondition>
         </if>
         <then
-            if="//@dataprocessing.0/@contract.1/@contract/@if.0"
+            if="//@dataprocessing.0/@contract.0/@contract/@if.0"
             name="INV_join_then">
           <thenDefinition
               href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0"/>
@@ -211,30 +154,30 @@
             <operand
                 xsi:type="Contract:OpField"
                 name="join(Name with City)_op1_field"
-                next_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.1"
-                datafield="//@dataprocessing.0/@contract.1/@contract/@in.0">
+                next_operand="//@dataprocessing.0/@contract.0/@contract/@then.0/@dataResult/@operand.1"
+                datafield="//@dataprocessing.0/@contract.0/@contract/@in.0">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
             </operand>
             <operand
                 xsi:type="Contract:FixValue"
                 name="join(Name with City)_op2_fix_value"
-                next_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.2"
-                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.0"
+                next_operand="//@dataprocessing.0/@contract.0/@contract/@then.0/@dataResult/@operand.2"
+                previous_operand="//@dataprocessing.0/@contract.0/@contract/@then.0/@dataResult/@operand.0"
                 value=" - ">
               <fixValueDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.0"/>
             </operand>
             <operand
                 xsi:type="Contract:OpField"
                 name="join(Name with City)_op3_field"
-                previous_operand="//@dataprocessing.0/@contract.1/@contract/@then.0/@dataResult/@operand.1"
-                datafield="//@dataprocessing.0/@contract.1/@contract/@in.1">
+                previous_operand="//@dataprocessing.0/@contract.0/@contract/@then.0/@dataResult/@operand.1"
+                datafield="//@dataprocessing.0/@contract.0/@contract/@in.1">
               <opFieldDef
-                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
+                  href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult/@operanddef.1"/>
             </operand>
             <joinDef
-                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.1/@contractDefinition/@thendefinition.0/@dataResult"/>
+                href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>
         </then>
       </contract>
@@ -250,7 +193,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
+        folderPath="/mnt/c/Users/Usuario/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file
