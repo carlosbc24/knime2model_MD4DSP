@@ -11,6 +11,13 @@ def generateWorkflow():
 	join_Name_with_City__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/join_input_dataDictionary.parquet')
 
 	join_Name_with_City__input_dataDictionary_transformed=join_Name_with_City__input_dataDictionary_df.copy()
+	join_Name_with_City__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=join_Name_with_City__input_dataDictionary_transformed,
+																  data_type_output = DataType(0),
+																  field_in = 'Name', field_out = 'Name with City')
+	
+	join_Name_with_City__output_dataDictionary_df=join_Name_with_City__input_dataDictionary_transformed
+	join_Name_with_City__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/join_output_dataDictionary.parquet')
+	join_Name_with_City__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/join_output_dataDictionary.parquet')
 	dictionary_join_param_join={'Name': True, ' - ': False, 'City': True}
 	
 	join_Name_with_City__input_dataDictionary_transformed=data_transformations.transform_join(data_dictionary=join_Name_with_City__input_dataDictionary_transformed,

@@ -22,14 +22,16 @@
       <datafield
           xsi:type="Workflow:Categorical"
           name="join(Name)_input1_dataField"
-          displayName="Name">
+          displayName="Name"
+          out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
       <datafield
           xsi:type="Workflow:Categorical"
           name="join(City)_input3_dataField"
-          displayName="City">
+          displayName="City"
+          out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@inputPort.0/@datafielddefinition.0"/>
       </datafield>
@@ -43,7 +45,8 @@
       <datafield
           xsi:type="Workflow:Categorical"
           name="join(Name with City)_output_dataField"
-          displayName="Name with City">
+          displayName="Name with City"
+          in="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1">
         <categoricalDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@outputPort.0/@datafielddefinition.0"/>
       </datafield>
@@ -54,12 +57,19 @@
         xsi:type="Library:Transformation"
         href="library_validation.xmi#//@dataprocessingdefinition.11"/>
     <parameter
+        xsi:type="Workflow:DerivedField"
+        name="derived_field(Name with City)_param_join"
+        der_dataField="//@dataprocessing.0/@outputPort.0/@datafield.0">
+      <derivedFieldDef
+          href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.1"/>
+    </parameter>
+    <parameter
         xsi:type="Workflow:Join"
         name="join(Name with City)_param_join">
       <operand
           xsi:type="Workflow:Field"
           name="join(Name with City)_param_op1_field"
-          next_operand="//@dataprocessing.0/@parameter.0/@operand.1"
+          next_operand="//@dataprocessing.0/@parameter.1/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.0">
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
@@ -67,8 +77,8 @@
       <operand
           xsi:type="Workflow:FixValue"
           name="join(Name with City)_param_op2_fix_value"
-          next_operand="//@dataprocessing.0/@parameter.0/@operand.2"
-          previous_operand="//@dataprocessing.0/@parameter.0/@operand.0">
+          next_operand="//@dataprocessing.0/@parameter.1/@operand.2"
+          previous_operand="//@dataprocessing.0/@parameter.1/@operand.0">
         <fixValueDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.0"/>
         <value
@@ -81,7 +91,7 @@
       <operand
           xsi:type="Workflow:Field"
           name="join(Name with City)_param_op3_field"
-          previous_operand="//@dataprocessing.0/@parameter.0/@operand.1"
+          previous_operand="//@dataprocessing.0/@parameter.1/@operand.1"
           datafield="//@dataprocessing.0/@inputPort.0/@datafield.1">
         <fieldDef
             href="library_validation.xmi#//@dataprocessingdefinition.11/@parameterdefinition.0/@operandDef.1"/>
@@ -240,7 +250,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="C:\Users\Usuario\PycharmProjects\knime2model_MD4DSP\input_KNIME_workflows\paper_workflows\02_Data_Cleaning_Workflow3-2-2\knime_dataDictionaries">
+        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow3-2-2/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file
