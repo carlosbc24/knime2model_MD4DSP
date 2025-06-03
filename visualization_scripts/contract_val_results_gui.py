@@ -30,8 +30,8 @@ import random
 # === Configuration ===
 
 DATA_PATHS = {
-    "KNIME": "visualization_scripts/36_workflow_generated_code_validation_KNIME_data.json",
-    "Python": "visualization_scripts/36_workflow_generated_code_validation_Python_data.json"
+    "KNIME": "visualization_scripts/34_workflow_generated_code_validation_KNIME_data.json",
+    "Python": "visualization_scripts/34_workflow_generated_code_validation_Python_data.json"
 }
 EXPORT_DIR = "visualization_scripts/barcharts_images"
 os.makedirs(EXPORT_DIR, exist_ok=True)
@@ -108,7 +108,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             for res in all_results:
                 result_counts[res].append(counts[res])
 
-    elif x_axis_type == "Tipo de contrato":
+    elif x_axis_type == "Contract Type":
         contract_types = ["PRECONDITION", "POSTCONDITION", "INVARIANT"]
         x_labels = contract_types
         for ctype in contract_types:
@@ -122,7 +122,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             for res in all_results:
                 result_counts[res].append(c_counts[res])
 
-    elif x_axis_type == "Tipo de nodo":
+    elif x_axis_type == "Node type":
         node_type_counts = defaultdict(lambda: {res: 0 for res in all_results})
         for wf in workflows:
             for node in wf["nodes"]:
@@ -199,14 +199,14 @@ def export_image():
 
 # === GUI ===
 
-with gr.Blocks(title="Contract Validation Results for 36 Subworkflows") as demo:
-    gr.Markdown("## Contract Validation Results for 36 Subworkflows")
+with gr.Blocks(title="Contract Validation Results for 34 Subworkflows") as demo:
+    gr.Markdown("## Contract Validation Results for 34 Subworkflows")
 
     with gr.Row():
         with gr.Column(scale=2):
             source = gr.Radio(choices=["KNIME", "Python"], value="KNIME", label="Select the platform")
             x_axis = gr.Radio(
-                choices=["Tipo de nodo", "Tipo de contrato", "Subworkflows"],
+                choices=["Node type", "Contract Type", "Subworkflows"],
                 value="Subworkflows",
                 label="Select X-axis variable"
             )

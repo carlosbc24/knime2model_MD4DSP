@@ -80,10 +80,15 @@ The project is divided into three main scripts:
    
 8. Run the Python script to parse and export data to a MD4DSP workflow from a KNIME workflow using templates:
     ```bash
-    python3 -m mapping.knwf2workflow
+    python -m mapping.knwf2workflow
     ```
+   
+9. Run the Python script visualization_scripts/contract_val_results_gui.py to deploy a GUI to visualize contract validation results from every subworkflow mapped:
+   ```bash
+   python -m visualization_scripts.contract_val_results_gui
+   ```
 
-9. (Optional) Remove the environment created previously:
+10. (Optional) Remove the environment created previously:
    ```bash
    conda deactivate
    conda remove --name kn2wf_mapping --all --yes
