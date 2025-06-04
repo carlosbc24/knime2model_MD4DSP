@@ -37,7 +37,8 @@
           xsi:type="Workflow:Continuous"
           name="mathOperation(Longitude)_input2_dataField"
           dataType="Double"
-          displayName="Longitude">
+          displayName="Longitude"
+          out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
@@ -57,7 +58,7 @@
           name="mathOperation(Change)_output_dataField"
           dataType="Double"
           displayName="Change"
-          in="//@dataprocessing.0/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
@@ -259,7 +260,8 @@
           xsi:type="Workflow:Continuous"
           name="mathOperation(Latitude)_input2_dataField"
           dataType="Double"
-          displayName="Latitude">
+          displayName="Latitude"
+          out="//@dataprocessing.1/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
@@ -279,7 +281,7 @@
           name="mathOperation(Percentage)_output_dataField"
           dataType="Double"
           displayName="Percentage"
-          in="//@dataprocessing.1/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.1/@inputPort.0/@datafield.0 //@dataprocessing.1/@inputPort.0/@datafield.1">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
@@ -428,7 +430,7 @@
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:MathOperation"
-              mathOp="SUBSTRACT">
+              mathOp="DIVIDE">
             <operand
                 xsi:type="Contract:OpField"
                 name="mathOperation(Percentage)_INV_THEN_OP1_FIELD"

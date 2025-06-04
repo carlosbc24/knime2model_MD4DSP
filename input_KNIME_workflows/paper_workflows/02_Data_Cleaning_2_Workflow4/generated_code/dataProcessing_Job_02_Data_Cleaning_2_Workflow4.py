@@ -110,12 +110,12 @@ def generateWorkflow():
 	
 	if contract_invariants.check_inv_math_operation(data_dictionary_in=mathOperation_Percentage__input_dataDictionary_df,
 											data_dictionary_out=mathOperation_Percentage__output_dataDictionary_df,
-											math_op=MathOperator(1),
+											math_op=MathOperator(3),
 											firstOperand='Change', isFieldFirst=True, secondOperand='Latitude', isFieldSecond=True, 
 											belong_op_out=Belong(0), field_in='Change', field_out='Percentage', origin_function="Math Formula"):
-		print('INVARIANT Math Formula(Percentage) substract(Change, Latitude, ) VALIDATED')
+		print('INVARIANT Math Formula(Percentage) divide(Change, Latitude, ) VALIDATED')
 	else:
-		print('INVARIANT Math FormulaPercentage substract(Change, Latitude, ) NOT VALIDATED')
+		print('INVARIANT Math FormulaPercentage divide(Change, Latitude, ) NOT VALIDATED')
 	
 	
 	

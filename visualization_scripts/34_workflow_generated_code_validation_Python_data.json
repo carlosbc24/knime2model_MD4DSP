@@ -285,7 +285,7 @@
           "mathOperation": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
+            "INVARIANT": "VALIDATED"
           }
         },
         {

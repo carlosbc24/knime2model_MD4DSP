@@ -36,7 +36,8 @@
           xsi:type="Workflow:Continuous"
           name="mathOperation(Altitude)_input2_dataField"
           dataType="Double"
-          displayName="Altitude">
+          displayName="Altitude"
+          out="//@dataprocessing.0/@outputPort.0/@datafield.0">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@inputPort.0/@datafielddefinition.0"/>
         <interval
@@ -56,7 +57,7 @@
           name="mathOperation(Difference in Latitude/Altitude)_output_dataField"
           dataType="Double"
           displayName="Difference in Latitude/Altitude"
-          in="//@dataprocessing.0/@inputPort.0/@datafield.0">
+          in="//@dataprocessing.0/@inputPort.0/@datafield.0 //@dataprocessing.0/@inputPort.0/@datafield.1">
         <continuousDef
             href="library_validation.xmi#//@dataprocessingdefinition.9/@outputPort.0/@datafielddefinition.0"/>
         <interval
