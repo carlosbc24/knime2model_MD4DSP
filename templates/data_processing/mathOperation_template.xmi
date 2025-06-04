@@ -5,6 +5,9 @@
       in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0"
       out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0"
       name="mathOperation({{ dataprocessing.math_op.out_column }})"
+      {% if dataprocessing.original_data_processing_index %}
+      initial_accumulated_processing="//@dataprocessing.{{ dataprocessing.original_data_processing_index }}"
+      {% endif %}
       origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"

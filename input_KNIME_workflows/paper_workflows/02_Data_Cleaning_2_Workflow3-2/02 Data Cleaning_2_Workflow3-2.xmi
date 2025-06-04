@@ -164,7 +164,8 @@
       in="//@dataprocessing.1/@inputPort.0/@datafield.0"
       out="//@dataprocessing.1/@outputPort.0/@datafield.0"
       name="mapping(Source)"
-      origin_function="String Manipulation">
+      origin_function="String Manipulation"
+      initial_accumulated_processing="//@dataprocessing.0">
     <inputPort
         fileName="output/mapping_output_dataDictionary.csv"
         name="mapping(Source)_input_dataDictionary"

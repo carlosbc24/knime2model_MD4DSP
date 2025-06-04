@@ -5,6 +5,9 @@
       in="{% for in_column in dataprocessing.in_columns %}//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
       out="{% for out_column in dataprocessing.out_columns %}//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.{{ loop.index0 }} {% endfor %}"
       name="rowFilterRange({{ dataprocessing.in_column_names }})"
+      {% if dataprocessing.original_data_processing_index %}
+      initial_accumulated_processing="//@dataprocessing.{{ dataprocessing.original_data_processing_index }}"
+      {% endif %}
       origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <inputPort
         fileName="{{ dataprocessing.input_filepath }}"

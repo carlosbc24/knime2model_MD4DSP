@@ -67,7 +67,7 @@ def generateWorkflow():
 	
 	
 	#-----------------New DataProcessing-----------------
-	mapping_Source__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping_output_dataDictionary.parquet')
+	mapping_Source__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping_input_dataDictionary.parquet')
 
 	if contract_pre_post.check_fix_value_range(value='3', data_dictionary=mapping_Source__input_dataDictionary_df, belong_op=Belong(0), field='Source',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):

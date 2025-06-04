@@ -168,28 +168,47 @@ def process_links(data: dict, nodes: list) -> tuple[str, dict]:
 def preprocess_nodes_connections(nodes, connections):
     """
     Convert nodes id and its associated links with its sourceID and destID to numbers between 0 and n-1.
+    Además, si un nodo tiene el atributo 'original_node_id' en parameters, este también se mapea
+    al nuevo rango de IDs.
 
     Args:
         nodes (list): List of nodes from the JSON data.
         connections (list): List of connections from the JSON data.
 
     Returns:
-        tuple: Updated nodes and connections with IDs mapped to a new range.
+        tuple: Updated nodes and connections with IDs (y original_node_id) mapeados a un nuevo rango.
     """
-    id_mapping = {node['id']: index for index, node in enumerate(nodes)}
+    # Creamos un diccionario para mapear cada ID original al nuevo índice 0..n-1
+    id_mapping = {node["id"]: idx for idx, node in enumerate(nodes)}
 
+    # Actualizamos el 'id' de cada nodo, y si existe 'original_node_id', lo mapeamos también
     for node in nodes:
-        node['id'] = id_mapping[node['id']]
+        old_id = node["id"]
+        node["id"] = id_mapping[old_id]
 
-    for connection in connections:
-        # If the connection['sourceID'] or connection['destID'] are not in the id_mapping, remove the connection
-        if connection['sourceID'] not in id_mapping or connection['destID'] not in id_mapping:
-            connections.remove(connection)
+        params = node.get("parameters", {})
+        if "original_node_id" in params:
+            orig_old = params["original_node_id"]
+            if orig_old in id_mapping:
+                params["original_node_id"] = id_mapping[orig_old]
+            else:
+                # Si el original_node_id no está en el mapeo, lo eliminamos
+                params.pop("original_node_id", None)
+
+    # Recorremos las conexiones, filtrando aquellas cuyas IDs ya no existan,
+    # y mapeamos sourceID y destID al nuevo rango
+    updated_connections = []
+    for conn in connections:
+        src_old = conn["sourceID"]
+        dst_old = conn["destID"]
+        if src_old not in id_mapping or dst_old not in id_mapping:
+            # Descartamos conexiones inválidas
+            connections.remove(conn)
             continue
-        connection['sourceID'] = id_mapping[connection['sourceID']]
-        connection['destID'] = id_mapping[connection['destID']]
+        conn['sourceID'] = id_mapping[conn['sourceID']]
+        conn['destID'] = id_mapping[conn['destID']]
 
-    return nodes, connections
+    return nodes, updated_connections
 
 
 def json_to_xmi_workflow_with_templates(json_input_folder: str, workflow_filename: str, xmi_output_folder: str,

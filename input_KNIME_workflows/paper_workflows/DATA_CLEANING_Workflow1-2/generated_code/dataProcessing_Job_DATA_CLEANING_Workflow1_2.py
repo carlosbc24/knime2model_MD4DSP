@@ -140,7 +140,7 @@ def generateWorkflow():
 	
 	
 	#-----------------New DataProcessing-----------------
-	mathOperation_year_of_birth__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
+	mathOperation_year_of_birth__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age', 
@@ -150,7 +150,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Math Formula(age) MissingValues:[] NOT VALIDATED')
 	
-	mathOperation_year_of_birth__input_dataDictionary_transformed=mathOperation_year_of_birth__input_dataDictionary_df.copy()
+	mathOperation_year_of_birth__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 	mathOperation_year_of_birth__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_transformed,
 																  data_type_output = DataType(5),
 																  field_in = 'age', field_out = 'year-of-birth')

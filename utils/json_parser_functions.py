@@ -118,7 +118,9 @@ def get_transformation_dp_values(node: dict, node_id: int, node_name: str, inclu
         "math_op": math_op_dict,
         "join": join_dict,
         "include_contracts": include_contracts,
-        "index": node_id
+        "index": node_id,
+        "original_data_processing_index": node["parameters"]["original_node_id"] if "original_node_id" in node[
+            "parameters"] else None
     }
 
     return dataprocessing_values

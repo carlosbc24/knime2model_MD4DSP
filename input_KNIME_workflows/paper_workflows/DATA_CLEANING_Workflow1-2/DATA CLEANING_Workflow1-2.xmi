@@ -365,7 +365,8 @@
       in="//@dataprocessing.2/@inputPort.0"
       out="//@dataprocessing.2/@outputPort.0"
       name="mathOperation(year-of-birth)"
-      origin_function="Math Formula">
+      origin_function="Math Formula"
+      initial_accumulated_processing="//@dataprocessing.1">
     <inputPort
         fileName="output/columnExpressions_output_dataDictionary.csv"
         name="mathOperation(year-of-birth)_input_dataDictionary"

@@ -72,73 +72,96 @@ def extract_data_knime2json(knwf_filename: str, input_folder: str, output_folder
 
     for node in nodes:
         settings_path = os.path.join(extract_path, knwf_filename_without_extension, node["node_settings_file"])
-        if os.path.exists(settings_path):
-            nodes_info = extract_node_settings(settings_path)
-            if len(nodes_info) == 1:
-                node.update(nodes_info[0])
-            else:
-                original_node_id = node["id"]
-                previous_node_id = original_node_id
-                dest_id_from_original_node = next(
-                    (connection["destID"] for connection in connections if connection["sourceID"] == original_node_id),
-                    None)
-                for i, node_info in enumerate(nodes_info):
-                    new_node = node.copy()
-                    new_node.update(node_info)
-                    if i == 0:
-                        new_node["id"] = original_node_id
-                    else:
-                        max_node_id += 1
-                        new_node["id"] = max_node_id
-                    new_nodes.append(new_node)
-                    if i > 0:
-                        # If it is the last node, add a connection between the current node's id
-                        # and the destID of the next node in the original list of links
-                        if i == len(nodes_info) - 1 and dest_id_from_original_node is not None:
-                            # Remove from connections the connection that has destID equal to
-                            # dest_id_from_original_node if it exists
-                            connections = [connection for connection
-                                           in connections if connection["destID"] != dest_id_from_original_node]
-                            new_connections.append({
-                                "sourceID": new_node["id"],
-                                "destID": dest_id_from_original_node
-                            })
-                        # If it is not the first node or the last node,
-                        # add a connection between the previous node and the new node
-                        new_connections.append({
-                            "sourceID": previous_node_id,
-                            "destID": new_node["id"]
-                        })
-                    previous_node_id = new_node["id"]
+        if not os.path.exists(settings_path):
+            continue
 
+        # La función extract_node_settings devuelve una lista de dicts.
+        # Si la lista tiene longitud 1: el nodo no se descompone. Si >1: se genera un conjunto de nodos "hijo".
+        nodes_info = extract_node_settings(settings_path)
+
+        if len(nodes_info) == 1:
+            # Si sólo hay un nodo resultante, se actualizan sus datos directamente
+            node.update(nodes_info[0])
+
+        else:
+            # Si el nodo original se transforma en múltiples nodos
+            original_node_id = node["id"]
+            previous_node_id = original_node_id
+
+            # Buscamos la conexión saliente original para reencaminarla hacia el último de los nodos que generamos
+            dest_id_from_original_node = next(
+                (c["destID"] for c in connections if c["sourceID"] == original_node_id),
+                None
+            )
+
+            for i, node_info in enumerate(nodes_info):
+                # Partimos de una copia del nodo original para heredar campos como "node_name", "node_type", etc.
+                new_node = node.copy()
+                new_node.update(node_info)
+
+                if i == 0:
+                    # El primer nodo heredará el ID original
+                    new_node["id"] = original_node_id
+
+                    # NO añadimos original_node_id en parameters para el primero:
+                    # new_node["parameters"]["original_node_id"] = None  # Podrías inicializarlo o dejarlo sin campo
+                else:
+                    # Para todos los nodos generados a partir del segundo, se les asigna un nuevo ID
+                    max_node_id += 1
+                    new_node["id"] = max_node_id
+
+                    # Aquí añadimos el atributo original_node_id dentro de parameters
+                    # Esto permitirá saber de qué nodo original proceden estos nodos
+                    new_node.setdefault("parameters", {})
+                    new_node["parameters"]["original_node_id"] = original_node_id
+
+                # Almacenamos el nuevo nodo en la lista
+                new_nodes.append(new_node)
+
+                # --- Conexiones entre nodos generados ---
+                if i > 0:
+                    # Conectamos siempre el nodo anterior con el actual
+                    new_connections.append({
+                        "sourceID": previous_node_id,
+                        "destID": new_node["id"]
+                    })
+
+                    # Si este es el último nodo de los generados,
+                    # reenlazamos la conexión original (si existía) hacia él
+                    if i == len(nodes_info) - 1 and dest_id_from_original_node is not None:
+                        # Primero, eliminamos la conexión original del nodo padre
+                        connections = [
+                            c for c in connections
+                            if not (c["sourceID"] == original_node_id and c["destID"] == dest_id_from_original_node)
+                        ]
+                        # Luego, creamos la nueva conexión desde este último nodo generado
+                        new_connections.append({
+                            "sourceID": new_node["id"],
+                            "destID": dest_id_from_original_node
+                        })
+
+                # Actualizamos el previous_node_id para la siguiente iteración
+                previous_node_id = new_node["id"]
+
+    # Añadimos todos los nuevos nodos y conexiones al flujo global
     nodes.extend(new_nodes)
     connections.extend(new_connections)
 
-    # Filter nodes without node_name
-    nodes = [node for node in nodes if "node_name" in node]
+    # Filtramos nodos que no tengan "node_name" (por si alguno no se reconoció)
+    nodes = [n for n in nodes if "node_name" in n]
 
-    # Remove node_settings_file key
-    for node in nodes:
-        if "node_settings_file" in node:
-            del node["node_settings_file"]
+    # Eliminamos la clave temporal "node_settings_file"
+    for n in nodes:
+        n.pop("node_settings_file", None)
 
-    # Save the extracted data in a JSON file
-    output_json_filepath = f"{output_folder}/{knwf_filename_without_extension}/{output_json_filename}"
+    # Guardamos el resultado en un JSON
+    output_json_folder = f"{output_folder}/{knwf_filename_without_extension}"
+    os.makedirs(output_json_folder, exist_ok=True)
 
-    if not os.path.exists(os.path.dirname(output_json_filepath)):
-        os.makedirs(os.path.dirname(output_json_filepath))
-    # Check if the file already exists. If the file does exist, add the suffix "_1" to the filename. If the file
-    # exists, add a suffix "_n" to the filename, where n is the lowest integer that makes the filename unique.
-    if os.path.exists(output_json_filepath):
-        i = 1
-        while os.path.exists(output_json_filepath):
-            output_json_filepath = (f"{output_folder}/{knwf_filename_without_extension}"
-                                    f"/{output_json_filename.split('.')[0]}_{i}.json")
-            i += 1
+    output_json_filepath = f"{output_json_folder}/{output_json_filename.split('.')[0]}.json"
 
-    # Save the extracted data in a JSON file
     result = {"nodes": nodes, "connections": connections}
-    with open(output_json_filepath + ".json", "w", encoding="utf-8") as json_file:
+    with open(output_json_filepath, "w", encoding="utf-8") as json_file:
         json.dump(result, json_file, indent=4)
 
     print_and_log(f"Data extracted from {knwf_filename_without_extension} workflow and saved in {output_json_filepath}")
@@ -331,5 +354,7 @@ def extract_node_settings(settings_path: str) -> list[dict]:
 
         else:
             print_and_log(f"Node type not recognized: {node_info['node_name']}")
+
+
 
     return nodes_info

@@ -4,6 +4,9 @@
                 in="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.0"
                 out="//@dataprocessing.{{ dataprocessing.index }}/@outputPort.0/@datafield.0"
                 name="mapping({{ dataprocessing.mapping.replace_column_name }})"
+                {% if dataprocessing.original_data_processing_index %}
+                initial_accumulated_processing="//@dataprocessing.{{ dataprocessing.original_data_processing_index }}"
+                {% endif %}
                 origin_function="{{ dataprocessing.transformation.KNIME_name }}">
     <dataProcessingDefinition
         xsi:type="Library:Transformation"

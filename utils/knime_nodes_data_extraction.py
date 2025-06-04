@@ -247,20 +247,6 @@ def extract_imputation_node_settings(node_info: dict, model: elementTree.Element
             print_and_log_dict(node_info)
             nodes_info.append(node_info)
 
-        # If there werent factorials, add a node with default values
-        if not factory_dict:
-            node_info = {
-                "node_name": "Missing Value",
-                "parameters": {
-                    "in_columns": [{"column_name": "column_name", "column_type": "xstring"}],
-                    "out_columns": [{"column_name": "column_name", "column_type": "xstring"}],
-                    "imputationType": "Mean",
-                    "fixStringValues": None
-                }
-            }
-            print_and_log_dict(node_info)
-            nodes_info.append(node_info)
-
     elif "Numeric Outliers" in node_info["node_name"]:
         out_columns = root.findall(
             ".//knime:config[@key='outlier-list']/knime:config[@key='included_names']/knime:entry", namespace)
