@@ -218,7 +218,7 @@
               href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:MathOperation"
-              mathOp="SUBSTRACT">
+              mathOp="{{ dataprocessing.math_op.operator }}">
 
             {% set ns = namespace(field_counter=0) %}
             {% for operand in dataprocessing.math_op.operands %}
