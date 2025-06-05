@@ -54,7 +54,8 @@
         href="library_validation.xmi#//@dataprocessingdefinition.10"/>
     <parameter
         xsi:type="Workflow:FilterValue"
-        name="rowFilterMissing(Equipment)_param_rowFilter">
+        name="rowFilterMissing(Equipment)_param_rowFilter"
+        filterType="INCLUDE">
       <filterValueDef
           href="library_validation.xmi#//@dataprocessingdefinition.10/@parameterdefinition.0"/>
       <matchingvalue
@@ -177,7 +178,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow1-4/knime_dataDictionaries">
+        folderPath="/mnt/c/Users/Usuario/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_Workflow1-4/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file

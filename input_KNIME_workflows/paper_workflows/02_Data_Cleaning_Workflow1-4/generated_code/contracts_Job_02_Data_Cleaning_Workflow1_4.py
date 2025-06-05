@@ -39,10 +39,10 @@ def generateWorkflow():
 	if contract_invariants.check_inv_filter_rows_special_values(data_dictionary_in=rowFilterMissing_Equipment__input_dataDictionary_df,
 											data_dictionary_out=rowFilterMissing_Equipment__output_dataDictionary_df,
 											cols_special_type_values=cols_special_type_values_rowFilterMissing_Equipment__INV_condition,
-											filter_type=FilterType.EXCLUDE, origin_function="Row Filter"):
-		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] VALIDATED')
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Equipment) FilterType:INCLUDE SpecialValues: EquipmentMISSING:[] VALIDATED')
 	else:
-		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] NOT VALIDATED')
+		print('INVARIANT Row Filter(Equipment) FilterType:INCLUDE SpecialValues: EquipmentMISSING:[] NOT VALIDATED')
 	
 	
 set_logger("contracts")

@@ -27,7 +27,7 @@ def generateWorkflow():
 	
 	rowFilterMissing_Equipment__input_dataDictionary_transformed=data_transformations.transform_filter_rows_special_values(data_dictionary=rowFilterMissing_Equipment__input_dataDictionary_transformed,
 																											cols_special_type_values=dicc_rowFilterMissing_param_filter,
-																											filter_type=FilterType(0))
+																											filter_type=FilterType(1))
 	rowFilterMissing_Equipment__output_dataDictionary_df=rowFilterMissing_Equipment__input_dataDictionary_transformed
 	rowFilterMissing_Equipment__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 	rowFilterMissing_Equipment__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
@@ -47,10 +47,10 @@ def generateWorkflow():
 	if contract_invariants.check_inv_filter_rows_special_values(data_dictionary_in=rowFilterMissing_Equipment__input_dataDictionary_df,
 											data_dictionary_out=rowFilterMissing_Equipment__output_dataDictionary_df,
 											cols_special_type_values=cols_special_type_values_rowFilterMissing_Equipment__INV_condition,
-											filter_type=FilterType.EXCLUDE, origin_function="Row Filter"):
-		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] VALIDATED')
+											filter_type=FilterType.INCLUDE, origin_function="Row Filter"):
+		print('INVARIANT Row Filter(Equipment) FilterType:INCLUDE SpecialValues: EquipmentMISSING:[] VALIDATED')
 	else:
-		print('INVARIANT Row Filter(Equipment) FilterType:EXCLUDE SpecialValues: EquipmentMISSING:[] NOT VALIDATED')
+		print('INVARIANT Row Filter(Equipment) FilterType:INCLUDE SpecialValues: EquipmentMISSING:[] NOT VALIDATED')
 	
 	
 

@@ -339,7 +339,7 @@
         {
           "rowFilterMissing": {
             "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
+            "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
         }
