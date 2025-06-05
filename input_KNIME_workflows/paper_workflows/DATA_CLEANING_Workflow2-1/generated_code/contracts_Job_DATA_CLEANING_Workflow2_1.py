@@ -50,13 +50,13 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet'):
 		rowFilterPrimitive_marital_status__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='Divorced', data_dictionary=rowFilterPrimitive_marital_status__input_dataDictionary_df, belong_op=Belong(0), field='marital-status',
+	if contract_pre_post.check_fix_value_range(value='Divorced', is_substring=False, data_dictionary=rowFilterPrimitive_marital_status__input_dataDictionary_df, belong_op=Belong(0), field='marital-status',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
 		print('PRECONDITION Row Filter (deprecated)(marital-status) FixValue:Divorced VALIDATED')
 	else:
 		print('PRECONDITION Row Filter (deprecated)(marital-status) FixValue:Divorced NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='Divorced', data_dictionary=rowFilterPrimitive_marital_status__output_dataDictionary_df, belong_op=Belong(0), field='marital-status',
+	if contract_pre_post.check_fix_value_range(value='Divorced', is_substring=False, data_dictionary=rowFilterPrimitive_marital_status__output_dataDictionary_df, belong_op=Belong(0), field='marital-status',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
 		print('POSTCONDITION Row Filter (deprecated)(marital-status) FixValue:Divorced VALIDATED')
 	else:

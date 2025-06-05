@@ -57,7 +57,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterPrimitive_workclass__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='s*', data_dictionary=rowFilterPrimitive_workclass__input_dataDictionary_df, belong_op=Belong(0), field='workclass',
+	if contract_pre_post.check_fix_value_range(value='s*', is_substring=False, data_dictionary=rowFilterPrimitive_workclass__input_dataDictionary_df, belong_op=Belong(0), field='workclass',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
 		print('PRECONDITION Row Filter (deprecated)(workclass) FixValue:s* VALIDATED')
 	else:
@@ -76,7 +76,7 @@ def generateWorkflow():
 	rowFilterPrimitive_workclass__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	rowFilterPrimitive_workclass__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value='s*', data_dictionary=rowFilterPrimitive_workclass__output_dataDictionary_df, belong_op=Belong(0), field='workclass',
+	if contract_pre_post.check_fix_value_range(value='s*', is_substring=False, data_dictionary=rowFilterPrimitive_workclass__output_dataDictionary_df, belong_op=Belong(0), field='workclass',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter (deprecated)"):
 		print('POSTCONDITION Row Filter (deprecated)(workclass) FixValue:s* VALIDATED')
 	else:

@@ -57,7 +57,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterPrimitive_Year__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterMissing_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, is_substring=False, data_dictionary=rowFilterPrimitive_Year__input_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('PRECONDITION Row Filter(Year) FixValue:2010 VALIDATED')
 	else:
@@ -76,7 +76,7 @@ def generateWorkflow():
 	rowFilterPrimitive_Year__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	rowFilterPrimitive_Year__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value=2010, data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
+	if contract_pre_post.check_fix_value_range(value=2010, is_substring=False, data_dictionary=rowFilterPrimitive_Year__output_dataDictionary_df, belong_op=Belong(0), field='Year',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION Row Filter(Year) FixValue:2010 VALIDATED')
 	else:
