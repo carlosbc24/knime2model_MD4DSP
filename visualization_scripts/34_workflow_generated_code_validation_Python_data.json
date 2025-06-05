@@ -455,6 +455,13 @@
       "name": "DATA_CLEANING_Workflow1-1",
       "nodes": [
         {
+          "binner": {
+            "PRECONDITION": "VALIDATED",
+            "POSTCONDITION": "VALIDATED",
+            "INVARIANT": "VALIDATED"
+          }
+        },
+        {
           "mapping": {
             "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
@@ -463,13 +470,6 @@
         },
         {
           "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
-        },
-        {
-          "binner": {
             "PRECONDITION": "NOT VALIDATED",
             "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
