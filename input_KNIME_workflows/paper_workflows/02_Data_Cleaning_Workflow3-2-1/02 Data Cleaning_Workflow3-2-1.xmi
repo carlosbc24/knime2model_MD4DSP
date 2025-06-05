@@ -52,7 +52,8 @@
         xsi:type="Workflow:Map"
         name="mapping(Tz database time zone)_param_/"
         inValue="/"
-        outvalue="-">
+        outvalue="-"
+        mapOperation="SUBSTRING">
       <mapDefinition
           href="library_validation.xmi#//@dataprocessingdefinition.4/@parameterdefinition.0"/>
     </parameter>
@@ -72,7 +73,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="/">
+            value="/"
+            subStr="true">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.1/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -98,7 +100,8 @@
         </in>
         <value
             xsi:type="Contract:FixValue"
-            value="/">
+            value="/"
+            subStr="true">
           <fixValueDef
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0/@contractDefinition/@valuedefinition.0"/>
         </value>
@@ -149,7 +152,8 @@
               href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0"/>
           <dataResult
               xsi:type="Contract:FixValue"
-              value="-">
+              value="-"
+              subStr="true">
             <fixValueDef
                 href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2/@contractDefinition/@thendefinition.0/@dataResult"/>
           </dataResult>

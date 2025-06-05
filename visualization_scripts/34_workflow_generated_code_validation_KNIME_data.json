@@ -238,7 +238,7 @@
       "nodes": [
         {
           "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
+            "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
@@ -257,7 +257,7 @@
       "nodes": [
         {
           "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
+            "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
@@ -410,7 +410,7 @@
       "nodes": [
         {
           "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
+            "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }
@@ -489,7 +489,7 @@
         },
         {
           "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
+            "PRECONDITION": "VALIDATED",
             "POSTCONDITION": "VALIDATED",
             "INVARIANT": "VALIDATED"
           }

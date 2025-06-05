@@ -63,10 +63,7 @@ def get_column_mapping_and_parameters(node: dict) -> dict:
             match = re.search(patterns["replacement"], expression)
             if match:
                 str_manipulation_function = match.group(1)
-                if str_manipulation_function == "replace":
-                    map_operation = "VALUE_MAPPING"
-                else:
-                    map_operation = "SUBSTRING"
+                map_operation = "SUBSTRING"
                 replace_column_name = match.group(2)
                 mapping_parameters[match.group(3)] = match.group(4)
                 print_and_log("String manipulation function: " + str_manipulation_function)

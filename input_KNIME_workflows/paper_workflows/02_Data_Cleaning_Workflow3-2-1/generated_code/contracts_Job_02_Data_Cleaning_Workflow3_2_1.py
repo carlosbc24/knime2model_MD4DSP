@@ -16,13 +16,13 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/mapping_output_dataDictionary.parquet'):
 		mapping_Tz_database_time_zone__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='/', data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, belong_op=Belong(0), field='Tz database time zone',
+	if contract_pre_post.check_fix_value_range(value='/', is_substring=True, data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, belong_op=Belong(0), field='Tz database time zone',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('PRECONDITION String Manipulation(Tz database time zone) FixValue:/ VALIDATED')
 	else:
 		print('PRECONDITION String Manipulation(Tz database time zone) FixValue:/ NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='/', data_dictionary=mapping_Tz_database_time_zone__output_dataDictionary_df, belong_op=Belong(1), field='Tz database time zone',
+	if contract_pre_post.check_fix_value_range(value='/', is_substring=True, data_dictionary=mapping_Tz_database_time_zone__output_dataDictionary_df, belong_op=Belong(1), field='Tz database time zone',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('POSTCONDITION String Manipulation(Tz database time zone) FixValue:/ VALIDATED')
 	else:

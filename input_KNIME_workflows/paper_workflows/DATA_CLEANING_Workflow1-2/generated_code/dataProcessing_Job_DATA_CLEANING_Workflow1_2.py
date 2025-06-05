@@ -86,7 +86,7 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	mapping_native_country__input_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='-', data_dictionary=mapping_native_country__input_dataDictionary_df, belong_op=Belong(0), field='native-country',
+	if contract_pre_post.check_fix_value_range(value='-', is_substring=True, data_dictionary=mapping_native_country__input_dataDictionary_df, belong_op=Belong(0), field='native-country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('PRECONDITION String Manipulation(native-country) FixValue:- VALIDATED')
 	else:
@@ -96,7 +96,7 @@ def generateWorkflow():
 	output_values_list=[' ']
 	data_type_input_list=[DataType(0)]
 	data_type_output_list=[DataType(0)]
-	map_operation_list=[MapOperation(0)]
+	map_operation_list=[MapOperation(1)]
 	
 	mapping_native_country__output_dataDictionary_df=data_transformations.transform_fix_value_fix_value(data_dictionary=mapping_native_country__input_dataDictionary_df, input_values_list=input_values_list,
 																  output_values_list=output_values_list,
@@ -108,7 +108,7 @@ def generateWorkflow():
 	mapping_native_country__output_dataDictionary_df.to_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 	mapping_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 	
-	if contract_pre_post.check_fix_value_range(value='-', data_dictionary=mapping_native_country__output_dataDictionary_df, belong_op=Belong(1), field='native-country',
+	if contract_pre_post.check_fix_value_range(value='-', is_substring=True, data_dictionary=mapping_native_country__output_dataDictionary_df, belong_op=Belong(1), field='native-country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('POSTCONDITION String Manipulation(native-country) FixValue:- VALIDATED')
 	else:

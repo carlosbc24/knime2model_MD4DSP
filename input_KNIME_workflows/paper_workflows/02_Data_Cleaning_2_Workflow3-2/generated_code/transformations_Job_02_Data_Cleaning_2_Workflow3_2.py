@@ -14,7 +14,7 @@ def generateWorkflow():
 	output_values_list=['-']
 	data_type_input_list=[DataType(0)]
 	data_type_output_list=[DataType(0)]
-	map_operation_list=[MapOperation(0)]
+	map_operation_list=[MapOperation(1)]
 	
 	mapping_Tz_database_time_zone__output_dataDictionary_df=data_transformations.transform_fix_value_fix_value(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, input_values_list=input_values_list,
 																  output_values_list=output_values_list,
