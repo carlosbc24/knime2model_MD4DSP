@@ -108,6 +108,55 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             for res in all_results:
                 result_counts[res].append(counts[res])
 
+    elif x_axis_type == "Subworkflows por tipos de nodos":
+        node_type_set = set()
+        for wf in workflows:
+            for node in wf["nodes"]:
+                node_type_set.update(node.keys())
+        node_types = sorted(node_type_set)
+        color_map = assign_colors(node_types)
+
+        # Inicializar conteos por workflow
+        node_type_counts = {nt: [] for nt in node_types}
+        x_labels = []
+        for wf in workflows:
+            x_labels.append(wf["name"])
+            counts = Counter()
+            for node in wf["nodes"]:
+                for node_type in node.keys():
+                    counts[node_type] += 1
+            for nt in node_types:
+                node_type_counts[nt].append(counts[nt])
+
+        x = range(len(x_labels))
+        bottom = [0] * len(x_labels)
+        for nt in node_types:
+            ax.bar(x, node_type_counts[nt], bottom=bottom, color=color_map[nt], label=nt)
+            bottom = [b + c for b, c in zip(bottom, node_type_counts[nt])]
+
+        ax.set_xticks(x)
+        ax.set_xticklabels(x_labels, rotation=90)
+        ax.set_ylabel("Number of nodes")
+        ax.set_title("Node Type Distribution per Subworkflow")
+        ax.legend(loc="upper right", fontsize="small")
+        plt.tight_layout()
+
+        filename = f"chart_{source}_Subworkflows_by_node_types.png"
+        file_path = os.path.join(EXPORT_DIR, filename)
+        plt.savefig(file_path)
+        plt.close(fig)
+
+        # Estadísticas básicas opcionales (a tu gusto puedes enriquecerlas más)
+        stats_html = "<h4>Node Type Distribution Statistics</h4>"
+        total_nodes = sum(sum(v) for v in node_type_counts.values())
+        stats_html += f"<p><b>Total nodes:</b> {total_nodes}</p>"
+        for nt in node_types:
+            count = sum(node_type_counts[nt])
+            percent = 100 * count / total_nodes if total_nodes else 0
+            stats_html += f"<p style='color:{color_map[nt]}'><b>{nt}</b>: {count} ({percent:.1f}%)</p>"
+
+        return file_path, stats_html
+
     elif x_axis_type == "Contract Type":
         contract_types = ["PRECONDITION", "POSTCONDITION", "INVARIANT"]
         x_labels = contract_types
@@ -206,10 +255,11 @@ with gr.Blocks(title="Contract Validation Results for 34 Subworkflows") as demo:
         with gr.Column(scale=2):
             source = gr.Radio(choices=["KNIME", "Python"], value="KNIME", label="Select the platform")
             x_axis = gr.Radio(
-                choices=["Node type", "Contract Type", "Subworkflows"],
+                choices=["Node type", "Contract Type", "Subworkflows", "Subworkflows por tipos de nodos"],
                 value="Subworkflows",
                 label="Select X-axis variable"
             )
+
             chart = gr.Image(type="filepath", label="Generated Chart")
             export_btn = gr.Button("Export Image")
             export_msg = gr.Textbox(label="Export Message")
