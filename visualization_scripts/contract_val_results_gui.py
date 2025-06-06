@@ -139,6 +139,13 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         ax.set_ylabel("Number of nodes")
         ax.set_title("Node Type Distribution per Subworkflow")
         ax.legend(loc="upper right", fontsize="small")
+        # Escala entera en eje Y
+        ax.yaxis.get_major_locator().set_params(integer=True)
+
+        # Añadir margen en eje Y
+        max_height = max(sum(values) for values in zip(*node_type_counts.values()))
+        ax.set_ylim(top=max_height * 1.1)
+
         plt.tight_layout()
 
         filename = f"chart_{source}_Subworkflows_by_node_types.png"
@@ -192,7 +199,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     ax.set_xticks(x)
     ax.set_xticklabels(x_labels, rotation=90)
     ax.set_ylim(top=max(sum(values) for values in zip(*result_counts.values())) * 1.1)
-    ax.set_ylabel("Number of instances")
+    ax.set_ylabel("Number of contracts")
     ax.set_title(f"Results by {x_axis_type}")
     ax.legend(loc="upper right")
     plt.tight_layout()
