@@ -41,12 +41,12 @@ docker build --no-cache -t ubuntu_22_04:latest -f Dockerfile .
 
 clear
 
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterMissing_input_dataDictionary.csv "$(pwd)/data/"output
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterMissing_output_dataDictionary.csv "$(pwd)/data/"output
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterMissing_output_dataDictionary.csv "$(pwd)/data/"output
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
-cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/01_Data_Cleaning_Workflow1-1/knime_dataDictionaries/rowFilterRange_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterMissing_input_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterMissing_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterMissing_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterPrimitive_output_dataDictionary.csv "$(pwd)/data/"output
+cp /home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/DATA_CLEANING_Workflow2-2/knime_dataDictionaries/rowFilterRange_output_dataDictionary.csv "$(pwd)/data/"output
 
 
 
