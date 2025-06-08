@@ -39,6 +39,18 @@ os.makedirs(EXPORT_DIR, exist_ok=True)
 
 # === Data Loading ===
 
+def flatten_contracts(contract_list: list):
+    """
+    Flatten the contract list
+
+    Args:
+        contract_list: list with the contract results of a specific node
+
+    Returns:
+        the contract list flattened
+    """
+    return {list(d.keys())[0]: list(d.values())[0] for d in contract_list if isinstance(d, dict)}
+
 def load_data(source: str) -> list:
     """
     Load the workflow data corresponding to the selected platform.
@@ -84,7 +96,8 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     for wf in workflows:
         for node in wf["nodes"]:
             for contracts in node.values():
-                all_results.update(contracts.values())
+                contracts_dict = flatten_contracts(contracts)
+                all_results.update(contracts_dict.values())
     all_results = sorted(all_results)
     color_map = assign_colors(all_results)
 
@@ -92,7 +105,8 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         counts = {res: 0 for res in all_results}
         for node in nodes:
             for contracts in node.values():
-                for result in contracts.values():
+                contracts_dict = flatten_contracts(contracts)
+                for result in contracts_dict.values():
                     if result in counts:
                         counts[result] += 1
         return counts
@@ -100,7 +114,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     result_counts = {res: [] for res in all_results}
     x_labels = []
 
-    if x_axis_type == "Subworkflows":
+    if x_axis_type == "subworkflows":
         fig, ax = plt.subplots(figsize=(8, 6))
         for wf in workflows:
             x_labels.append(wf["name"])
@@ -108,7 +122,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             for res in all_results:
                 result_counts[res].append(counts[res])
 
-    elif x_axis_type == "Subworkflows por tipos de nodos":
+    elif x_axis_type == "subworkflows by node types":
         fig, ax = plt.subplots(figsize=(8, 6))
         node_type_set = set()
 
@@ -154,7 +168,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
         ax.set_xlabel("Number of nodes")
 
-        ax.set_title("Node Type Distribution per Subworkflow")
+        ax.set_title("Node types in subworkflows")
 
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
 
@@ -167,7 +181,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         plt.subplots_adjust(right=0.75)
         plt.tight_layout()
 
-        filename = f"chart_{source}_Subworkflows_by_node_types.png"
+        filename = f"chart_{source}_subworkflows_by_node_types.png"
 
         file_path = os.path.join(EXPORT_DIR, filename)
 
@@ -176,7 +190,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         plt.close(fig)
 
         # Estadísticas básicas opcionales (a tu gusto puedes enriquecerlas más)
-        stats_html = "<h4>Node Type Distribution Statistics</h4>"
+        stats_html = "<h4>node types Statistics</h4>"
         total_nodes = sum(sum(v) for v in node_type_counts.values())
         stats_html += f"<p><b>Total nodes:</b> {total_nodes}</p>"
         for nt in node_types:
@@ -186,7 +200,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
         return file_path, stats_html
 
-    elif x_axis_type == "Contract Type":
+    elif x_axis_type == "contract type":
         fig, ax = plt.subplots(figsize=(8, 6))
         contract_types = ["PRECONDITION", "POSTCONDITION", "INVARIANT"]
         x_labels = contract_types
@@ -195,26 +209,28 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             for wf in workflows:
                 for node in wf["nodes"]:
                     for contracts in node.values():
-                        result = contracts.get(ctype)
+                        contracts_dict = flatten_contracts(contracts)
+                        result = contracts_dict.get(ctype)
                         if result in all_results:
                             c_counts[result] += 1
             for res in all_results:
                 result_counts[res].append(c_counts[res])
 
-    elif x_axis_type == "Node type":
+    elif x_axis_type == "node type":
         fig, ax = plt.subplots(figsize=(8, 6))
         node_type_counts = defaultdict(lambda: {res: 0 for res in all_results})
         for wf in workflows:
             for node in wf["nodes"]:
                 for node_type, contracts in node.items():
-                    for result in contracts.values():
+                    contracts_dict = flatten_contracts(contracts)
+                    for result in contracts_dict.values():
                         if result in all_results:
                             node_type_counts[node_type][result] += 1
         x_labels = list(node_type_counts.keys())
         for res in all_results:
             result_counts[res] = [node_type_counts[nt][res] for nt in x_labels]
 
-    if x_axis_type == "Node type" or x_axis_type == "Contract Type":
+    if x_axis_type == "node type" or x_axis_type == "contract type":
         x = range(len(x_labels))
         bottom = [0] * len(x_labels)
         for res in all_results:
@@ -225,7 +241,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         ax.set_xticklabels(x_labels, rotation=90)
         ax.set_ylim(top=max(sum(values) for values in zip(*result_counts.values())) * 1.1)
         ax.set_ylabel("Number of contracts")
-        ax.set_title(f"Results by {x_axis_type}")
+        ax.set_title(f"Contract validation results by {x_axis_type}")
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
         plt.subplots_adjust(right=0.75)
         plt.tight_layout()
@@ -241,7 +257,8 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         for wf in workflows:
             for node in wf["nodes"]:
                 for contracts in node.values():
-                    for ctype, result in contracts.items():
+                    contracts_dict = flatten_contracts(contracts)
+                    for ctype, result in contracts_dict.items():
                         total_counter[result] += 1
                         contract_counter[ctype][result] += 1
 
@@ -251,7 +268,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
             percent = 100 * total_counter[res] / sum(total_counter.values())
             stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
 
-        stats_html += "<hr><h5>By Contract Type:</h5>"
+        stats_html += "<hr><h5>by contract type:</h5>"
         for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
             stats_html += f"<p><b>{ctype}</b></p><ul>"
             total = sum(contract_counter[ctype].values())
@@ -263,7 +280,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
         return file_path, stats_html
 
-    elif x_axis_type == "Subworkflows":
+    elif x_axis_type == "subworkflows":
 
         x = range(len(x_labels))
 
@@ -283,7 +300,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
         ax.set_xlabel("Number of contracts")
 
-        ax.set_title(f"Results by {x_axis_type}")
+        ax.set_title(f"Contract validation results by {x_axis_type}")
 
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
         plt.subplots_adjust(right=0.75)
@@ -309,7 +326,8 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
                 for contracts in node.values():
 
-                    for ctype, result in contracts.items():
+                    contracts_dict = flatten_contracts(contracts)
+                    for ctype, result in contracts_dict.items():
                         total_counter[result] += 1
 
                         contract_counter[ctype][result] += 1
@@ -323,7 +341,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
 
             stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
 
-        stats_html += "<hr><h5>By Contract Type:</h5>"
+        stats_html += "<hr><h5>by contract type:</h5>"
 
         for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
 
@@ -360,15 +378,15 @@ def export_image():
 
 # === GUI ===
 
-with gr.Blocks(title="Contract Validation Results for 34 Subworkflows") as demo:
-    gr.Markdown("## Contract Validation Results for 34 Subworkflows")
+with gr.Blocks(title="Contract Validation Results for 34 subworkflows") as demo:
+    gr.Markdown("## Contract Validation Results for 34 subworkflows")
 
     with gr.Row():
         with gr.Column(scale=2):
             source = gr.Radio(choices=["KNIME", "Python"], value="KNIME", label="Select the platform")
             x_axis = gr.Radio(
-                choices=["Node type", "Contract Type", "Subworkflows", "Subworkflows por tipos de nodos"],
-                value="Subworkflows",
+                choices=["node type", "contract type", "subworkflows", "subworkflows by node types"],
+                value="subworkflows",
                 label="Select X-axis variable"
             )
 
@@ -384,7 +402,7 @@ with gr.Blocks(title="Contract Validation Results for 34 Subworkflows") as demo:
     export_btn.click(fn=export_image, inputs=[], outputs=export_msg)
 
     # Initial load
-    chart.value, stats_panel.value = generate_bar_chart_and_stats("KNIME", "Subworkflows")
+    chart.value, stats_panel.value = generate_bar_chart_and_stats("KNIME", "subworkflows")
 
 if __name__ == "__main__":
     demo.launch()

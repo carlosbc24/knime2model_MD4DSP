@@ -4,18 +4,30 @@
       "name": "01_Data_Cleaning_Workflow1-1",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -23,25 +35,43 @@
       "name": "01_Data_Cleaning_Workflow1-2",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -49,25 +79,43 @@
       "name": "01_Data_Cleaning_Workflow1-3",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -75,11 +123,17 @@
       "name": "01_Data_Cleaning_Workflow2-1",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -87,11 +141,17 @@
       "name": "01_Data_Cleaning_Workflow2-2",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -99,25 +159,49 @@
       "name": "01_Data_Cleaning_Workflow3-1",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -125,25 +209,49 @@
       "name": "01_Data_Cleaning_Workflow3-2",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -151,25 +259,49 @@
       "name": "01_Data_Cleaning_Workflow3-3",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -177,11 +309,17 @@
       "name": "02_Data_Cleaning_2_Workflow1-1",
       "nodes": [
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -189,11 +327,17 @@
       "name": "02_Data_Cleaning_2_Workflow1-2",
       "nodes": [
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -201,11 +345,17 @@
       "name": "02_Data_Cleaning_2_Workflow1-3",
       "nodes": [
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -213,11 +363,17 @@
       "name": "02_Data_Cleaning_2_Workflow2-1",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -225,11 +381,17 @@
       "name": "02_Data_Cleaning_2_Workflow2-2",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -237,18 +399,30 @@
       "name": "02_Data_Cleaning_2_Workflow3-1",
       "nodes": [
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -256,18 +430,30 @@
       "name": "02_Data_Cleaning_2_Workflow3-2",
       "nodes": [
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mapping": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -275,25 +461,55 @@
       "name": "02_Data_Cleaning_2_Workflow4",
       "nodes": [
         {
-          "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "mathOperation": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         },
         {
-          "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "mathOperation": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         },
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -301,11 +517,17 @@
       "name": "02_Data_Cleaning_Workflow1-1",
       "nodes": [
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -313,11 +535,17 @@
       "name": "02_Data_Cleaning_Workflow1-2",
       "nodes": [
         {
-          "rowFilterRange": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -325,11 +553,17 @@
       "name": "02_Data_Cleaning_Workflow1-3",
       "nodes": [
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -337,11 +571,17 @@
       "name": "02_Data_Cleaning_Workflow1-4",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -349,11 +589,17 @@
       "name": "02_Data_Cleaning_Workflow2-1",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -361,11 +607,17 @@
       "name": "02_Data_Cleaning_Workflow2-2",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -373,11 +625,17 @@
       "name": "02_Data_Cleaning_Workflow2-3",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -385,11 +643,17 @@
       "name": "02_Data_Cleaning_Workflow2-4",
       "nodes": [
         {
-          "columnFilter": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "columnFilter": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -397,11 +661,17 @@
       "name": "02_Data_Cleaning_Workflow3-1",
       "nodes": [
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -409,11 +679,17 @@
       "name": "02_Data_Cleaning_Workflow3-2-1",
       "nodes": [
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -421,9 +697,14 @@
       "name": "02_Data_Cleaning_Workflow3-2-2",
       "nodes": [
         {
-          "join": {
-            "INVARIANT": "VALIDATED"
-          }
+          "join": [
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -431,11 +712,20 @@
       "name": "02_Data_Cleaning_Workflow4-1",
       "nodes": [
         {
-          "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "mathOperation": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -443,11 +733,20 @@
       "name": "02_Data_Cleaning_Workflow4-2",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -455,25 +754,46 @@
       "name": "DATA_CLEANING_Workflow1-1",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mathOperation": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -481,25 +801,46 @@
       "name": "DATA_CLEANING_Workflow1-2",
       "nodes": [
         {
-          "binner": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "binner": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mapping": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mapping": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "mathOperation": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "mathOperation": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -507,18 +848,30 @@
       "name": "DATA_CLEANING_Workflow2-1",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -526,25 +879,43 @@
       "name": "DATA_CLEANING_Workflow2-2",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterRange": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterRange": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         }
       ]
     },
@@ -552,18 +923,30 @@
       "name": "DATA_CLEANING_Workflow2-3",
       "nodes": [
         {
-          "rowFilterMissing": {
-            "PRECONDITION": "VALIDATED",
-            "POSTCONDITION": "VALIDATED",
-            "INVARIANT": "VALIDATED"
-          }
+          "rowFilterMissing": [
+            {
+              "PRECONDITION": "VALIDATED"
+            },
+            {
+              "POSTCONDITION": "VALIDATED"
+            },
+            {
+              "INVARIANT": "VALIDATED"
+            }
+          ]
         },
         {
-          "rowFilterPrimitive": {
-            "PRECONDITION": "NOT VALIDATED",
-            "POSTCONDITION": "NOT VALIDATED",
-            "INVARIANT": "NOT VALIDATED"
-          }
+          "rowFilterPrimitive": [
+            {
+              "PRECONDITION": "NOT VALIDATED"
+            },
+            {
+              "POSTCONDITION": "NOT VALIDATED"
+            },
+            {
+              "INVARIANT": "NOT VALIDATED"
+            }
+          ]
         }
       ]
     }
