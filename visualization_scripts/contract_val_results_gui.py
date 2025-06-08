@@ -78,7 +78,6 @@ def assign_colors(result_types):
 
 def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     workflows = load_data(source)
-    fig, ax = plt.subplots(figsize=(12, 6))
 
     # Identify all result types
     all_results = set()
@@ -102,6 +101,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
     x_labels = []
 
     if x_axis_type == "Subworkflows":
+        fig, ax = plt.subplots(figsize=(8, 6))
         for wf in workflows:
             x_labels.append(wf["name"])
             counts = count_contracts(wf["nodes"])
@@ -109,48 +109,70 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
                 result_counts[res].append(counts[res])
 
     elif x_axis_type == "Subworkflows por tipos de nodos":
+        fig, ax = plt.subplots(figsize=(8, 6))
         node_type_set = set()
+
         for wf in workflows:
+
             for node in wf["nodes"]:
                 node_type_set.update(node.keys())
+
         node_types = sorted(node_type_set)
+
         color_map = assign_colors(node_types)
 
-        # Inicializar conteos por workflow
         node_type_counts = {nt: [] for nt in node_types}
+
         x_labels = []
+
         for wf in workflows:
+
             x_labels.append(wf["name"])
+
             counts = Counter()
+
             for node in wf["nodes"]:
+
                 for node_type in node.keys():
                     counts[node_type] += 1
+
             for nt in node_types:
                 node_type_counts[nt].append(counts[nt])
 
         x = range(len(x_labels))
-        bottom = [0] * len(x_labels)
+
+        left = [0] * len(x_labels)
+
         for nt in node_types:
-            ax.bar(x, node_type_counts[nt], bottom=bottom, color=color_map[nt], label=nt)
-            bottom = [b + c for b, c in zip(bottom, node_type_counts[nt])]
+            ax.barh(x, node_type_counts[nt], left=left, color=color_map[nt], label=nt)
 
-        ax.set_xticks(x)
-        ax.set_xticklabels(x_labels, rotation=90)
-        ax.set_ylabel("Number of nodes")
+            left = [l + c for l, c in zip(left, node_type_counts[nt])]
+
+        ax.set_yticks(x)
+
+        ax.set_yticklabels(x_labels)
+
+        ax.set_xlabel("Number of nodes")
+
         ax.set_title("Node Type Distribution per Subworkflow")
-        ax.legend(loc="upper right", fontsize="small")
-        # Escala entera en eje Y
-        ax.yaxis.get_major_locator().set_params(integer=True)
 
-        # Añadir margen en eje Y
-        max_height = max(sum(values) for values in zip(*node_type_counts.values()))
-        ax.set_ylim(top=max_height * 1.1)
+        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
 
+        ax.xaxis.get_major_locator().set_params(integer=True)
+
+        max_width = max(sum(values) for values in zip(*node_type_counts.values()))
+
+        ax.set_xlim(right=max_width * 1.1)
+
+        plt.subplots_adjust(right=0.75)
         plt.tight_layout()
 
         filename = f"chart_{source}_Subworkflows_by_node_types.png"
+
         file_path = os.path.join(EXPORT_DIR, filename)
+
         plt.savefig(file_path)
+
         plt.close(fig)
 
         # Estadísticas básicas opcionales (a tu gusto puedes enriquecerlas más)
@@ -165,6 +187,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         return file_path, stats_html
 
     elif x_axis_type == "Contract Type":
+        fig, ax = plt.subplots(figsize=(8, 6))
         contract_types = ["PRECONDITION", "POSTCONDITION", "INVARIANT"]
         x_labels = contract_types
         for ctype in contract_types:
@@ -179,6 +202,7 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
                 result_counts[res].append(c_counts[res])
 
     elif x_axis_type == "Node type":
+        fig, ax = plt.subplots(figsize=(8, 6))
         node_type_counts = defaultdict(lambda: {res: 0 for res in all_results})
         for wf in workflows:
             for node in wf["nodes"]:
@@ -190,52 +214,133 @@ def generate_bar_chart_and_stats(source: str, x_axis_type: str):
         for res in all_results:
             result_counts[res] = [node_type_counts[nt][res] for nt in x_labels]
 
-    x = range(len(x_labels))
-    bottom = [0] * len(x_labels)
-    for res in all_results:
-        ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
-        bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
-
-    ax.set_xticks(x)
-    ax.set_xticklabels(x_labels, rotation=90)
-    ax.set_ylim(top=max(sum(values) for values in zip(*result_counts.values())) * 1.1)
-    ax.set_ylabel("Number of contracts")
-    ax.set_title(f"Results by {x_axis_type}")
-    ax.legend(loc="upper right")
-    plt.tight_layout()
-
-    filename = f"chart_{source}_{x_axis_type.replace(' ', '_')}.png"
-    file_path = os.path.join(EXPORT_DIR, filename)
-    plt.savefig(file_path)
-    plt.close(fig)
-
-    # Stats generation
-    total_counter = Counter()
-    contract_counter = defaultdict(Counter)
-    for wf in workflows:
-        for node in wf["nodes"]:
-            for contracts in node.values():
-                for ctype, result in contracts.items():
-                    total_counter[result] += 1
-                    contract_counter[ctype][result] += 1
-
-    stats_html = "<h4>Validation Statistics</h4>"
-    stats_html += f"<p><b>Total contracts:</b> {sum(total_counter.values())}</p>"
-    for res in all_results:
-        percent = 100 * total_counter[res] / sum(total_counter.values())
-        stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
-
-    stats_html += "<hr><h5>By Contract Type:</h5>"
-    for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
-        stats_html += f"<p><b>{ctype}</b></p><ul>"
-        total = sum(contract_counter[ctype].values())
+    if x_axis_type == "Node type" or x_axis_type == "Contract Type":
+        x = range(len(x_labels))
+        bottom = [0] * len(x_labels)
         for res in all_results:
-            count = contract_counter[ctype][res]
-            pct = 100 * count / total if total > 0 else 0
-            stats_html += f"<li style='color:{color_map[res]}'>{res}: {count} ({pct:.1f}%)</li>"
-        stats_html += "</ul>"
+            ax.bar(x, result_counts[res], bottom=bottom, color=color_map[res], label=res)
+            bottom = [b + rc for b, rc in zip(bottom, result_counts[res])]
 
-    return file_path, stats_html
+        ax.set_xticks(x)
+        ax.set_xticklabels(x_labels, rotation=90)
+        ax.set_ylim(top=max(sum(values) for values in zip(*result_counts.values())) * 1.1)
+        ax.set_ylabel("Number of contracts")
+        ax.set_title(f"Results by {x_axis_type}")
+        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
+        plt.subplots_adjust(right=0.75)
+        plt.tight_layout()
+
+        filename = f"chart_{source}_{x_axis_type.replace(' ', '_')}.png"
+        file_path = os.path.join(EXPORT_DIR, filename)
+        plt.savefig(file_path)
+        plt.close(fig)
+
+        # Stats generation
+        total_counter = Counter()
+        contract_counter = defaultdict(Counter)
+        for wf in workflows:
+            for node in wf["nodes"]:
+                for contracts in node.values():
+                    for ctype, result in contracts.items():
+                        total_counter[result] += 1
+                        contract_counter[ctype][result] += 1
+
+        stats_html = "<h4>Validation Statistics</h4>"
+        stats_html += f"<p><b>Total contracts:</b> {sum(total_counter.values())}</p>"
+        for res in all_results:
+            percent = 100 * total_counter[res] / sum(total_counter.values())
+            stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
+
+        stats_html += "<hr><h5>By Contract Type:</h5>"
+        for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
+            stats_html += f"<p><b>{ctype}</b></p><ul>"
+            total = sum(contract_counter[ctype].values())
+            for res in all_results:
+                count = contract_counter[ctype][res]
+                pct = 100 * count / total if total > 0 else 0
+                stats_html += f"<li style='color:{color_map[res]}'>{res}: {count} ({pct:.1f}%)</li>"
+            stats_html += "</ul>"
+
+        return file_path, stats_html
+
+    elif x_axis_type == "Subworkflows":
+
+        x = range(len(x_labels))
+
+        left = [0] * len(x_labels)
+
+        for res in all_results:
+            ax.barh(x, result_counts[res], left=left, color=color_map[res], label=res)
+
+            left = [l + rc for l, rc in zip(left, result_counts[res])]
+
+        ax.set_yticks(x)
+
+        ax.set_yticklabels(x_labels)
+
+        max_total = max(sum(values) for values in zip(*result_counts.values()))
+        ax.set_xlim(right=(int(max_total) + 2))  # añade una marca extra entera
+
+        ax.set_xlabel("Number of contracts")
+
+        ax.set_title(f"Results by {x_axis_type}")
+
+        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), fontsize="small")
+        plt.subplots_adjust(right=0.75)
+        plt.tight_layout()
+
+        filename = f"chart_{source}_{x_axis_type.replace(' ', '_')}.png"
+
+        file_path = os.path.join(EXPORT_DIR, filename)
+
+        plt.savefig(file_path)
+
+        plt.close(fig)
+
+        # Stats generation (unchanged)
+
+        total_counter = Counter()
+
+        contract_counter = defaultdict(Counter)
+
+        for wf in workflows:
+
+            for node in wf["nodes"]:
+
+                for contracts in node.values():
+
+                    for ctype, result in contracts.items():
+                        total_counter[result] += 1
+
+                        contract_counter[ctype][result] += 1
+
+        stats_html = "<h4>Validation Statistics</h4>"
+
+        stats_html += f"<p><b>Total contracts:</b> {sum(total_counter.values())}</p>"
+
+        for res in all_results:
+            percent = 100 * total_counter[res] / sum(total_counter.values())
+
+            stats_html += f"<p style='color:{color_map[res]}'><b>{res}</b>: {total_counter[res]} ({percent:.1f}%)</p>"
+
+        stats_html += "<hr><h5>By Contract Type:</h5>"
+
+        for ctype in ["PRECONDITION", "POSTCONDITION", "INVARIANT"]:
+
+            stats_html += f"<p><b>{ctype}</b></p><ul>"
+
+            total = sum(contract_counter[ctype].values())
+
+            for res in all_results:
+                count = contract_counter[ctype][res]
+
+                pct = 100 * count / total if total > 0 else 0
+
+                stats_html += f"<li style='color:{color_map[res]}'>{res}: {count} ({pct:.1f}%)</li>"
+
+            stats_html += "</ul>"
+
+        return file_path, stats_html
 
 
 # === Export Function ===
