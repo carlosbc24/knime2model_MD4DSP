@@ -264,4 +264,33 @@
         </then>
       </contract>
     </contract>
+    {% if dataprocessing.math_op.operator == 'DIVIDE' %}
+    <contract
+        name="mathOperation({{ dataprocessing.math_op.out_column }})_zero_division_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="mathOperation({{ dataprocessing.math_op.out_column }})_zeroDivision_PRE_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.1"
+            name="mathOperation({{ dataprocessing.math_op.out_column }})_zeroDivision_PRE_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            name="mathOperation({{ dataprocessing.math_op.out_column }})_zeroDivision_PRE_fixValue"
+            value="0"
+            dataType="Integer">
+          <fixValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition"/>
+      </contract>
+    </contract>
+    {% endif %}
   </dataprocessing>

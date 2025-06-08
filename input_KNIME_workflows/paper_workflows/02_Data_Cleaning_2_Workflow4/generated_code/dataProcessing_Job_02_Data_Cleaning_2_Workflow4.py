@@ -84,6 +84,12 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Math Formula(Latitude) MissingValues:[] NOT VALIDATED')
 	
+	if contract_pre_post.check_fix_value_range(value=0, is_substring=False, data_dictionary=mathOperation_Percentage__input_dataDictionary_df, belong_op=Belong(1), field='Latitude',
+									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Math Formula"):
+		print('PRECONDITION Math Formula(Latitude) FixValue:0 VALIDATED')
+	else:
+		print('PRECONDITION Math Formula(Latitude) FixValue:0 NOT VALIDATED')
+	
 	mathOperation_Percentage__input_dataDictionary_transformed=mathOperation_Percentage__input_dataDictionary_df.copy()
 	mathOperation_Percentage__input_dataDictionary_transformed=data_transformations.transform_derived_field(data_dictionary=mathOperation_Percentage__input_dataDictionary_transformed,
 																  data_type_output = DataType(5),

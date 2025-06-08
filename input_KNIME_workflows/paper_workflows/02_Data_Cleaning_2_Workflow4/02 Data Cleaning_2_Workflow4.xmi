@@ -453,6 +453,33 @@
         </then>
       </contract>
     </contract>
+    <contract
+        name="mathOperation(Percentage)_zero_division_PRECONDITION">
+      <contractDefinition
+          href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3"/>
+      <contract
+          xsi:type="Contract:ValueRange"
+          name="mathOperation(Percentage)_zeroDivision_PRE_valueRange"
+          belongOp="NOTBELONG">
+        <in
+            xsi:type="Contract:DataField"
+            dataField="//@dataprocessing.1/@inputPort.0/@datafield.1"
+            name="mathOperation(Percentage)_zeroDivision_PRE_datafield">
+          <dataFieldDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition/@in.0"/>
+        </in>
+        <value
+            xsi:type="Contract:FixValue"
+            name="mathOperation(Percentage)_zeroDivision_PRE_fixValue"
+            value="0"
+            dataType="Integer">
+          <fixValueDef
+              href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition/@valuedefinition.0"/>
+        </value>
+        <valueRangeDef
+            href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.3/@contractDefinition"/>
+      </contract>
+    </contract>
   </dataprocessing>
   <dataprocessing
       xsi:type="Workflow:DataProcessing"
@@ -664,7 +691,7 @@
     <storage
         xsi:type="Environment:LocalFolder"
         storageName="d1"
-        folderPath="/home/carlosbc24/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow4/knime_dataDictionaries">
+        folderPath="/mnt/c/Users/Usuario/PycharmProjects/knime2model_MD4DSP/input_KNIME_workflows/paper_workflows/02_Data_Cleaning_2_Workflow4/knime_dataDictionaries">
       <file
           dataDictionary="//@dataprocessing.0/@inputPort.0"/>
       <file
