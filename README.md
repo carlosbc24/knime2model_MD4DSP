@@ -90,11 +90,26 @@ The project is divided into three main scripts:
     ```bash
     python -m mapping.knwf2workflow
     ```
-   These mapped models, stored in `parsed_xmi_workflows/` directory,can be imported directly in [MM-M4DS project](https://github.com/i3uex/MM-M4DS) next to the proyect library `library_validation.xmi`.
+   These mapped models, stored in `parsed_xmi_workflows/` directory,can be imported directly in  next to the proyect library `library_validation.xmi`.
 2. (Optional) Run the Python script visualization_scripts/contract_val_results_gui.py to deploy a GUI to visualize contract validation results from every subworkflow mapped:
    ```bash
    python -m visualization_scripts.contract_val_results_gui
    ```
+   
+## Generated Code Execution via [MM-M4DS](https://github.com/i3uex/MM-M4DS)
+
+1. Go to the `input_KNIME_workflows/paper_workflows` directory and open the folder of the deterministic workflow you want to execute. Enter its `generated_code` subdirectory.
+2. Edit the `deploy_docker_app.sh` file and update the absolute path to the `knime_dataDictionaries` directory to ensure the script can access the required data.
+3. From the `generated_code` directory, grant execution permissions to the script:
+    ```bash
+    chmod +x ./deploy_docker_app.sh
+    ```
+4. Finally, deploy the application by running:
+    ```bash
+    sudo ./deploy_docker_app.sh
+    ```
+
+> **Note:** Make sure Docker is installed and you have administrator privileges to run the script successfully.
    
 ## KNIME nodes mapping relation state with MD4DSP library transformation (library_validation.xmi)
 In green, you can distinguish the nodes that have been completely mapped to the Workflow with a DataProcessing with the respective parameters and transformation dependencies.
