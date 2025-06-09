@@ -173,7 +173,6 @@ MD4DSP-m2python/
 ├── reports/
 │  └── ...
 │
-│
 ├── templates/
 │  ├── data_processing/
 │  │ ├── binner_template.xmi
