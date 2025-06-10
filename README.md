@@ -90,7 +90,7 @@ The project is divided into three main scripts:
     ```bash
     python -m mapping.knwf2workflow
     ```
-   These mapped models, stored in `parsed_xmi_workflows/` directory,can be imported directly in  next to the proyect library `library_validation.xmi`.
+   These mapped models, stored in `parsed_xmi_workflows/` directory,can be imported directly in [MM-M4DS](https://github.com/i3uex/MM-M4DS) next to the proyect library `library_validation.xmi`.
 2. (Optional) Run the Python script visualization_scripts/contract_val_results_gui.py to deploy a GUI to visualize contract validation results from every subworkflow mapped:
    ```bash
    python -m visualization_scripts.contract_val_results_gui
