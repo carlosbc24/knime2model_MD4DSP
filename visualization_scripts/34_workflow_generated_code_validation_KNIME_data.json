@@ -579,7 +579,7 @@
               "POSTCONDITION": "VALIDATED"
             },
             {
-              "INVARIANT": "NOT VALIDATED"
+              "INVARIANT": "VALIDATED"
             }
           ]
         }
