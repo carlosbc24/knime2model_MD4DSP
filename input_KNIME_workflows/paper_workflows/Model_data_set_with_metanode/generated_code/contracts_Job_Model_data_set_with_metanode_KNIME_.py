@@ -289,7 +289,7 @@ def generateWorkflow():
 	else:
 		print('PRECONDITION Row Filter(init_span) Interval:(-1000.0, 1000.0) NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value=-216, data_dictionary=rowFilterRange_init_span__output_dataDictionary_df, belong_op=Belong(1), field='init_span',
+	if contract_pre_post.check_fix_value_range(value=-216, is_substring=False, data_dictionary=rowFilterRange_init_span__output_dataDictionary_df, belong_op=Belong(1), field='init_span',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION Row Filter(init_span) FixValue:-216 VALIDATED')
 	else:
@@ -357,23 +357,23 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_contracts/data/ruleEngine_territory_output_dataDictionary.parquet'):
 		mapping_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/ruleEngine_territory_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='A', data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
+	if contract_pre_post.check_fix_value_range(value='A', is_substring=False, data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(TERRITORY) FixValue:A VALIDATED')
 	else:
 		print('PRECONDITION Rule Engine(TERRITORY) FixValue:A NOT VALIDATED')
-	if contract_pre_post.check_fix_value_range(value='N', data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
+	if contract_pre_post.check_fix_value_range(value='N', is_substring=False, data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(TERRITORY) FixValue:N VALIDATED')
 	else:
 		print('PRECONDITION Rule Engine(TERRITORY) FixValue:N NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='A', data_dictionary=mapping_TERRITORY__output_dataDictionary_df, belong_op=Belong(1), field='TERRITORY',
+	if contract_pre_post.check_fix_value_range(value='A', is_substring=False, data_dictionary=mapping_TERRITORY__output_dataDictionary_df, belong_op=Belong(1), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('POSTCONDITION Rule Engine(TERRITORY) FixValue:A VALIDATED')
 	else:
 		print('POSTCONDITION Rule Engine(TERRITORY) FixValue:A NOT VALIDATED')
-	if contract_pre_post.check_fix_value_range(value='N', data_dictionary=mapping_TERRITORY__output_dataDictionary_df, belong_op=Belong(1), field='TERRITORY',
+	if contract_pre_post.check_fix_value_range(value='N', is_substring=False, data_dictionary=mapping_TERRITORY__output_dataDictionary_df, belong_op=Belong(1), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('POSTCONDITION Rule Engine(TERRITORY) FixValue:N VALIDATED')
 	else:
@@ -410,23 +410,23 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_contracts/data/ruleEngine_instate_output_dataDictionary.parquet'):
 		mapping_Instate__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/ruleEngine_instate_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='Y', data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
+	if contract_pre_post.check_fix_value_range(value='Y', is_substring=False, data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(Instate) FixValue:Y VALIDATED')
 	else:
 		print('PRECONDITION Rule Engine(Instate) FixValue:Y NOT VALIDATED')
-	if contract_pre_post.check_fix_value_range(value='N', data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
+	if contract_pre_post.check_fix_value_range(value='N', is_substring=False, data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(Instate) FixValue:N VALIDATED')
 	else:
 		print('PRECONDITION Rule Engine(Instate) FixValue:N NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='Y', data_dictionary=mapping_Instate__output_dataDictionary_df, belong_op=Belong(1), field='Instate',
+	if contract_pre_post.check_fix_value_range(value='Y', is_substring=False, data_dictionary=mapping_Instate__output_dataDictionary_df, belong_op=Belong(1), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('POSTCONDITION Rule Engine(Instate) FixValue:Y VALIDATED')
 	else:
 		print('POSTCONDITION Rule Engine(Instate) FixValue:Y NOT VALIDATED')
-	if contract_pre_post.check_fix_value_range(value='N', data_dictionary=mapping_Instate__output_dataDictionary_df, belong_op=Belong(1), field='Instate',
+	if contract_pre_post.check_fix_value_range(value='N', is_substring=False, data_dictionary=mapping_Instate__output_dataDictionary_df, belong_op=Belong(1), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('POSTCONDITION Rule Engine(Instate) FixValue:N VALIDATED')
 	else:
@@ -490,7 +490,7 @@ def generateWorkflow():
 	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
 											data_dictionary_out=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
 											belong_op_in=Belong(1), belong_op_out=Belong(1),
-											field_in='TERRITORY', field_out='TERRITORY', origin_function="String To Number"):
+											field_in = 'TERRITORY', field_out='TERRITORY', origin_function="String To Number"):
 		print('INVARIANT String To Number(TERRITORY) BelongOpIn:NotBelong BelongOpOut:NotBelong VALIDATED')
 	else:
 		print('INVARIANT String To Number(TERRITORY) BelongOpIn:NotBelong BelongOpOut:NotBelong NOT VALIDATED')
@@ -512,7 +512,7 @@ def generateWorkflow():
 	if contract_invariants.check_inv_missing_value_missing_value(data_dictionary_in=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
 											data_dictionary_out=stringToNumber_TERRITORY_Instate__output_dataDictionary_df,
 											belong_op_in=Belong(1), belong_op_out=Belong(1),
-											field_in='Instate', field_out='Instate', origin_function="String To Number"):
+											field_in = 'Instate', field_out='Instate', origin_function="String To Number"):
 		print('INVARIANT String To Number(Instate) BelongOpIn:NotBelong BelongOpOut:NotBelong VALIDATED')
 	else:
 		print('INVARIANT String To Number(Instate) BelongOpIn:NotBelong BelongOpOut:NotBelong NOT VALIDATED')
