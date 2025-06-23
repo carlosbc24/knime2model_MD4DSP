@@ -91,7 +91,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="stringToNumber({{ out_column.name }})_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -113,7 +112,6 @@
   <contract name="stringToNumber({{ out_column.name }})_specialValue_INVARIANT">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
       <contract xsi:type="Contract:Condition"
-                type="INVARIANT"
                 name="INV_specialValue_condition_{{ out_column.name }}">
         <in xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"
@@ -147,7 +145,6 @@
     <contract name="stringToNumber({{ out_column.name }})_castType_INVARIANT">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.6/@contractdefinition.0"/>
       <contract xsi:type="Contract:Condition"
-                type="INVARIANT"
                 name="INV_castType_condition_{{ out_column.name }}">
         <in xsi:type="Contract:DataField"
             dataField="//@dataprocessing.{{ dataprocessing.index }}/@inputPort.0/@datafield.{{ in_index }}"

@@ -102,7 +102,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.1/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="imputeMissingByFixValue({{ in_column.name }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -128,7 +127,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.1/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="imputeMissingByFixValue({{ in_column.name }})_INV_condition">
         <in
             xsi:type="Contract:DataField"

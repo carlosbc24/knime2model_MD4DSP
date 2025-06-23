@@ -106,7 +106,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="INV_join_condition_{{ dataprocessing.join.out_column }}">
 
           {% set ns = namespace(field_counter=0) %}

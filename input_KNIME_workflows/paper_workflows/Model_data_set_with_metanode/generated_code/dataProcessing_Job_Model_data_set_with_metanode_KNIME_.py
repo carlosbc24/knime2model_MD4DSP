@@ -15,7 +15,6 @@ def generateWorkflow():
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
 	missing_values_imputeByDerivedValue_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='sex')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex', 
 									missing_values=missing_values_imputeByDerivedValue_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -24,7 +23,6 @@ def generateWorkflow():
 		print('PRECONDITION Missing Value(sex) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByDerivedValue_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='IRSCHOOL')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL', 
 									missing_values=missing_values_imputeByDerivedValue_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -33,7 +31,6 @@ def generateWorkflow():
 		print('PRECONDITION Missing Value(IRSCHOOL) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByDerivedValue_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ETHNICITY')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY', 
 									missing_values=missing_values_imputeByDerivedValue_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -43,21 +40,18 @@ def generateWorkflow():
 	
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df.copy()
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='sex')
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed=data_transformations.transform_special_value_derived_value(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), derived_type_output=DerivedType(0),
 																  missing_values=missing_values_list,		
 																  axis_param=0, field_in = 'sex', field_out = 'sex')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='IRSCHOOL')
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed=data_transformations.transform_special_value_derived_value(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), derived_type_output=DerivedType(0),
 																  missing_values=missing_values_list,		
 																  axis_param=0, field_in = 'IRSCHOOL', field_out = 'IRSCHOOL')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ETHNICITY')
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed=data_transformations.transform_special_value_derived_value(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), derived_type_output=DerivedType(0),
 																  missing_values=missing_values_list,		
@@ -68,7 +62,6 @@ def generateWorkflow():
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	
 	missing_values_imputeByDerivedValue_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='sex')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, field='sex', 
 									missing_values=missing_values_imputeByDerivedValue_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -77,7 +70,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(sex) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByDerivedValue_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='IRSCHOOL')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, field='IRSCHOOL', 
 									missing_values=missing_values_imputeByDerivedValue_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -86,7 +78,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(IRSCHOOL) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByDerivedValue_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ETHNICITY')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df, field='ETHNICITY', 
 									missing_values=missing_values_imputeByDerivedValue_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -95,7 +86,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(ETHNICITY) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByDerivedValue_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='sex')
 	if contract_invariants.check_inv_special_value_derived_value(data_dictionary_in=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df,
 								data_dictionary_out=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df,
 								belong_op_in=Belong(0),
@@ -110,7 +100,6 @@ def generateWorkflow():
 	
 	
 	missing_values_imputeByDerivedValue_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='IRSCHOOL')
 	if contract_invariants.check_inv_special_value_derived_value(data_dictionary_in=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df,
 								data_dictionary_out=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df,
 								belong_op_in=Belong(0),
@@ -125,7 +114,6 @@ def generateWorkflow():
 	
 	
 	missing_values_imputeByDerivedValue_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByDerivedValue_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ETHNICITY')
 	if contract_invariants.check_inv_special_value_derived_value(data_dictionary_in=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df,
 								data_dictionary_out=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__output_dataDictionary_df,
 								belong_op_in=Belong(0),
@@ -143,7 +131,6 @@ def generateWorkflow():
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
 	missing_values_imputeByFixValue_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_2')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2', 
 									missing_values=missing_values_imputeByFixValue_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -152,7 +139,6 @@ def generateWorkflow():
 		print('PRECONDITION Missing Value(ACADEMIC_INTEREST_2) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByFixValue_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_1')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1', 
 									missing_values=missing_values_imputeByFixValue_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -162,7 +148,6 @@ def generateWorkflow():
 	
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_2')
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=data_transformations.transform_special_value_fix_value(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), fix_value_output='Unknown',
 																  missing_values=missing_values_list,		
@@ -170,7 +155,6 @@ def generateWorkflow():
 																  axis_param=0, field_in = 'ACADEMIC_INTEREST_2', field_out = 'ACADEMIC_INTEREST_2')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_1')
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed=data_transformations.transform_special_value_fix_value(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), fix_value_output='Unknown',
 																  missing_values=missing_values_list,		
@@ -182,7 +166,6 @@ def generateWorkflow():
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	
 	missing_values_imputeByFixValue_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_2')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df, field='ACADEMIC_INTEREST_2', 
 									missing_values=missing_values_imputeByFixValue_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -191,7 +174,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(ACADEMIC_INTEREST_2) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByFixValue_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_1')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df, field='ACADEMIC_INTEREST_1', 
 									missing_values=missing_values_imputeByFixValue_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -200,7 +182,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(ACADEMIC_INTEREST_1) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByFixValue_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_2')
 	if contract_invariants.check_inv_special_value_fix_value(data_dictionary_in=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df,
 								data_dictionary_out=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df,
 								special_type_input=SpecialType(0),
@@ -217,7 +198,6 @@ def generateWorkflow():
 	
 	
 	missing_values_imputeByFixValue_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByFixValue_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='ACADEMIC_INTEREST_1')
 	if contract_invariants.check_inv_special_value_fix_value(data_dictionary_in=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df,
 								data_dictionary_out=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__output_dataDictionary_df,
 								special_type_input=SpecialType(0),
@@ -237,7 +217,6 @@ def generateWorkflow():
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='avg_income')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -246,7 +225,6 @@ def generateWorkflow():
 		print('PRECONDITION Missing Value(avg_income) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='distance')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -256,7 +234,6 @@ def generateWorkflow():
 	
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='avg_income')
 	data_smells.check_precision_consistency(imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed, 0, 'avg_income')
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), num_op_output=Operation(1),
@@ -264,7 +241,6 @@ def generateWorkflow():
 																  axis_param=0, field_in = 'avg_income', field_out = 'avg_income')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='distance')
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), num_op_output=Operation(1),
 																  missing_values=missing_values_list,		
@@ -275,7 +251,6 @@ def generateWorkflow():
 	imputeMissingByMean_avg_income_distance__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	
 	missing_values_imputeByNumericOp_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='avg_income')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByMean_avg_income_distance__output_dataDictionary_df, field='avg_income', 
 									missing_values=missing_values_imputeByNumericOp_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -284,7 +259,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(avg_income) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByNumericOp_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='distance')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByMean_avg_income_distance__output_dataDictionary_df, field='distance', 
 									missing_values=missing_values_imputeByNumericOp_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -293,7 +267,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(distance) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByNumericOp_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='avg_income')
 	if contract_invariants.check_inv_special_value_num_op(data_dictionary_in=imputeMissingByMean_avg_income_distance__input_dataDictionary_df,
 											data_dictionary_out=imputeMissingByMean_avg_income_distance__output_dataDictionary_df,
 											belong_op_in=Belong(0),
@@ -308,7 +281,6 @@ def generateWorkflow():
 	
 	
 	missing_values_imputeByNumericOp_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='distance')
 	if contract_invariants.check_inv_special_value_num_op(data_dictionary_in=imputeMissingByMean_avg_income_distance__input_dataDictionary_df,
 											data_dictionary_out=imputeMissingByMean_avg_income_distance__output_dataDictionary_df,
 											belong_op_in=Belong(0),
@@ -326,7 +298,6 @@ def generateWorkflow():
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_PRE_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='satscore')
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
 									quant_op=Operator(3), quant_rel=60.0/100, origin_function="Missing Value"):
@@ -336,7 +307,6 @@ def generateWorkflow():
 	
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='satscore')
 	data_smells.check_precision_consistency(imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed, 0, 'satscore')
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), num_op_output=Operation(0),
@@ -348,7 +318,6 @@ def generateWorkflow():
 	imputeMissingByLinearInterpolation_satscore__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	
 	missing_values_imputeByNumericOp_POST_valueRange=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__output_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_POST_valueRange, common_missing_invalid_list=['', '?', '.','null','none','na'], field='satscore')
 	if contract_pre_post.check_missing_range(belong_op=Belong(1), data_dictionary=imputeMissingByLinearInterpolation_satscore__output_dataDictionary_df, field='satscore', 
 									missing_values=missing_values_imputeByNumericOp_POST_valueRange,
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Missing Value"):
@@ -357,7 +326,6 @@ def generateWorkflow():
 		print('POSTCONDITION Missing Value(satscore) MissingValues:[] NOT VALIDATED')
 	
 	missing_values_imputeByNumericOp_INV_condition=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, missing_invalid_list=missing_values_imputeByNumericOp_INV_condition, common_missing_invalid_list=['', '?', '.','null','none','na'], field='satscore')
 	if contract_invariants.check_inv_special_value_num_op(data_dictionary_in=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df,
 											data_dictionary_out=imputeMissingByLinearInterpolation_satscore__output_dataDictionary_df,
 											belong_op_in=Belong(0),
@@ -423,20 +391,6 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/rowFilter_output_dataDictionary.parquet')
 
-	field_list_columnFilter_PRE_field_range=['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'stuemail', 'interest', 'CONTACT_CODE1']
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 0, 'TRAVEL_INIT_CNTCTS')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 0, 'REFERRAL_CNTCTS')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 0, 'telecq')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 0, 'stuemail')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 0, 'interest')
-	if contract_pre_post.check_field_range(fields=field_list_columnFilter_PRE_field_range,
-								data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
-								belong_op=Belong(0), origin_function="Column Filter"):
-		print('PRECONDITION Column Filter(TRAVEL_INIT_CNTCTS, REFERRAL_CNTCTS, telecq, stuemail, interest, CONTACT_CODE1) VALIDATED')
-	else:
-		print('PRECONDITION Column Filter(TRAVEL_INIT_CNTCTS, REFERRAL_CNTCTS, telecq, stuemail, interest, CONTACT_CODE1) NOT VALIDATED')
-	
-	
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df.copy()
 	field_list_columnFilter_param_field=['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'interest', 'stuemail', 'CONTACT_CODE1']
 	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'TRAVEL_INIT_CNTCTS')
@@ -450,15 +404,6 @@ def generateWorkflow():
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__output_dataDictionary_df=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/columnFilter_output_dataDictionary.parquet')
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/columnFilter_output_dataDictionary.parquet')
-	
-	field_list_columnFilter_POST_field_range=['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'stuemail', 'interest', 'CONTACT_CODE1']
-	if contract_pre_post.check_field_range(fields=field_list_columnFilter_POST_field_range,
-								data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__output_dataDictionary_df,
-								belong_op=Belong(1), origin_function="Column Filter"):
-		print('POSTCONDITION Column Filter(TRAVEL_INIT_CNTCTS, REFERRAL_CNTCTS, telecq, stuemail, interest, CONTACT_CODE1) VALIDATED')
-	else:
-		print('POSTCONDITION Column Filter(TRAVEL_INIT_CNTCTS, REFERRAL_CNTCTS, telecq, stuemail, interest, CONTACT_CODE1) NOT VALIDATED')
-	
 	
 	columns_list_columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__INV_condition = ['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'stuemail', 'interest', 'CONTACT_CODE1']
 	
@@ -711,21 +656,18 @@ def generateWorkflow():
 	
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df.copy()
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='avg_income')
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(2), num_op_output=Operation(3),
 																  missing_values=missing_values_list,		
 																  axis_param=0, field_in = 'avg_income', field_out = 'avg_income')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='distance')
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(2), num_op_output=Operation(3),
 																  missing_values=missing_values_list,		
 																  axis_param=0, field_in = 'distance', field_out = 'distance')
 	
 	missing_values_list=[]
-	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed, missing_invalid_list=missing_values_list, common_missing_invalid_list=['', '?', '.','null','none','na'], field='Instate')
 	data_smells.check_precision_consistency(imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed, 0, 'Instate')
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(2), num_op_output=Operation(3),

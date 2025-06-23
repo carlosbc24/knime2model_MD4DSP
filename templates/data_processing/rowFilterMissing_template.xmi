@@ -105,7 +105,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterMissing({{ in_column.name }})_POST_valueRange"
           {% if dataprocessing.row_filter.filter_type_inclusion == 'EXCLUDE' %}
           belongOp="NOTBELONG">
@@ -134,7 +133,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterMissing({{ in_column.name }})_INV_condition">
         <in
             xsi:type="Contract:DataField"

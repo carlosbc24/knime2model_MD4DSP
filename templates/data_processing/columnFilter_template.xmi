@@ -51,7 +51,6 @@
     <contract name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRECONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.0"/>
       <contract xsi:type="Contract:FieldRange"
-                type="PRECONDITION"
                 name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_PRE_fieldRange"
                 belongOp="BELONG">
         <in xsi:type="Contract:DataDictionary"
@@ -67,7 +66,6 @@
     <contract name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POSTCONDITION">
       <contractDefinition href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract xsi:type="Contract:FieldRange"
-                type="POSTCONDITION"
                 name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_POST_fieldRange"
                 {% if dataprocessing.column_filter.belong_op == 'BELONG' %}
                 belongOp="NOTBELONG">
@@ -90,7 +88,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="columnFilter({{ dataprocessing.column_filter.filtered_column_names }})_INV_condition">
         <in
             xsi:type="Contract:DataDictionary"

@@ -93,7 +93,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.0/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="POST_value_range_impute_{{ in_column.name }}_columns"
           belongOp="NOTBELONG">
         <in
@@ -119,7 +118,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.0/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="INV_condition_impute_{{ in_column.name }}_columns">
         <in
             xsi:type="Contract:DataField"

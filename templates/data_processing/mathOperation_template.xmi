@@ -152,7 +152,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -177,7 +176,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mathOperation({{ dataprocessing.math_op.out_column }})_INV_condition">
           {% set ns = namespace(field_counter=0) %}
           {% for operand in dataprocessing.math_op.operands %}
