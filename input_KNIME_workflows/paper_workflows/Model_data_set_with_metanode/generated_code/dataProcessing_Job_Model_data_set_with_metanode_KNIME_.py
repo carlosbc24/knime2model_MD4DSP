@@ -14,6 +14,34 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='sex')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='IRSCHOOL')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='ETHNICITY')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY')
+	
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY', expected_type=DataType.STRING)
+	
 	missing_values_imputeByDerivedValue_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex', 
 									missing_values=missing_values_imputeByDerivedValue_PRE_valueRange,
@@ -130,6 +158,27 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='ACADEMIC_INTEREST_2')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='ACADEMIC_INTEREST_1')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1')
+	
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1', expected_type=DataType.STRING)
+	
 	missing_values_imputeByFixValue_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2', 
 									missing_values=missing_values_imputeByFixValue_PRE_valueRange,
@@ -216,6 +265,29 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df,
+											expected_decimals=0, field='avg_income')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='avg_income')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='distance')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance')
+	
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income', expected_type=DataType.DOUBLE)
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance', expected_type=DataType.DOUBLE)
+	
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
@@ -234,7 +306,6 @@ def generateWorkflow():
 	
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
-	data_smells.check_precision_consistency(imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed, 0, 'avg_income')
 	imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), num_op_output=Operation(1),
 																  missing_values=missing_values_list,		
@@ -297,6 +368,22 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_input_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df,
+											expected_decimals=0, field='satscore')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='satscore')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_types_as_string(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore', expected_type=DataType.INTEGER)
+	
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
@@ -307,7 +394,6 @@ def generateWorkflow():
 	
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 	missing_values_list=[]
-	data_smells.check_precision_consistency(imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed, 0, 'satscore')
 	imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(0), num_op_output=Operation(0),
 																  missing_values=missing_values_list,		
@@ -342,6 +428,20 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	rowFilterRange_init_span__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/missing_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='init_span')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
+	
+	data_smells.check_types_as_string(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span', expected_type=DataType.INTEGER)
+	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=1000.0, data_dictionary=rowFilterRange_init_span__input_dataDictionary_df,
 	                                	closure_type=Closure(0), belong_op=Belong(0), field='init_span', origin_function="Row Filter"):
 		print('PRECONDITION Row Filter(init_span) Interval:(-1000.0, 1000.0) VALIDATED')
@@ -391,13 +491,67 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/rowFilter_output_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
+											expected_decimals=0, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_precision_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
+											expected_decimals=0, field='REFERRAL_CNTCTS')
+	data_smells.check_precision_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
+											expected_decimals=0, field='telecq')
+	data_smells.check_precision_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
+											expected_decimals=0, field='interest')
+	data_smells.check_precision_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df,
+											expected_decimals=0, field='stuemail')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='TRAVEL_INIT_CNTCTS')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='REFERRAL_CNTCTS')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='telecq')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='interest')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='stuemail')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='CONTACT_CODE1')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS')
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq')
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest')
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail')
+	data_smells.check_integer_as_floating_point(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1')
+	
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS', expected_type=DataType.INTEGER)
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1', expected_type=DataType.STRING)
+	
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df.copy()
 	field_list_columnFilter_param_field=['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'interest', 'stuemail', 'CONTACT_CODE1']
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'TRAVEL_INIT_CNTCTS')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'REFERRAL_CNTCTS')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'telecq')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'interest')
-	data_smells.check_precision_consistency(columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed, 0, 'stuemail')
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed,
 																	columns=field_list_columnFilter_param_field, belong_op=Belong.BELONG)
 	
@@ -422,6 +576,20 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	mapping_TERRITORY__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/columnFilter_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='TERRITORY')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_types_as_string(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.STRING)
+	
 	if contract_pre_post.check_fix_value_range(value='A', is_substring=False, data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(TERRITORY) FixValue:A VALIDATED')
@@ -487,6 +655,20 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	mapping_Instate__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/ruleEngine_territory_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mapping_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='Instate')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_types_as_string(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
 	if contract_pre_post.check_fix_value_range(value='Y', is_substring=False, data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(Instate) FixValue:Y VALIDATED')
@@ -552,6 +734,27 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	stringToNumber_TERRITORY_Instate__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/ruleEngine_instate_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='TERRITORY')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='Instate')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY')
+	data_smells.check_integer_as_floating_point(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_types_as_string(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.STRING)
+	data_smells.check_types_as_string(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
 	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
 	                                	  field='TERRITORY', field_type=DataType(0), origin_function="String To Number"):
 		print('PRECONDITION String To Number(TERRITORY) Type:String VALIDATED')
@@ -636,6 +839,36 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/stringToNumber_output_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df,
+											expected_decimals=0, field='Instate')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='avg_income')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='distance')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='Instate')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance')
+	data_smells.check_integer_as_floating_point(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income', expected_type=DataType.DOUBLE)
+	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance', expected_type=DataType.DOUBLE)
+	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
 	if contract_pre_post.check_outliers(belong_op=Belong(0), data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income', 
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Numeric Outliers"):
 		print('PRECONDITION Numeric Outliers(avg_income) VALIDATED')
@@ -668,7 +901,6 @@ def generateWorkflow():
 																  axis_param=0, field_in = 'distance', field_out = 'distance')
 	
 	missing_values_list=[]
-	data_smells.check_precision_consistency(imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed, 0, 'Instate')
 	imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed=data_transformations.transform_special_value_num_op(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_transformed,
 																  special_type_input=SpecialType(2), num_op_output=Operation(3),
 																  missing_values=missing_values_list,		
@@ -738,6 +970,40 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericOutliers_output_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df,
+											expected_decimals=0, field='TOTAL_CONTACTS')
+	data_smells.check_precision_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df,
+											expected_decimals=0, field='SELF_INIT_CNTCTS')
+	data_smells.check_precision_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df,
+											expected_decimals=0, field='SOLICITED_CNTCTS')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='TOTAL_CONTACTS')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='SELF_INIT_CNTCTS')
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS')
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS')
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS', expected_type=DataType.INTEGER)
+	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS', expected_type=DataType.INTEGER)
+	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS', expected_type=DataType.INTEGER)
+	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=1000.0, data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df,
 	                                	closure_type=Closure(0), belong_op=Belong(0), field='TOTAL_CONTACTS', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(TOTAL_CONTACTS) Interval:(-1000.0, 1000.0) VALIDATED')
@@ -778,7 +1044,6 @@ def generateWorkflow():
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'TOTAL_CONTACTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=-1000.0, right_margin=1.0,
 																  closure_type=Closure(0),
@@ -787,7 +1052,6 @@ def generateWorkflow():
 																  field_in = 'TOTAL_CONTACTS',
 																  field_out = 'TOTAL_CONTACTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SELF_INIT_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=-1000.0, right_margin=1.0,
 																  closure_type=Closure(0),
@@ -796,7 +1060,6 @@ def generateWorkflow():
 																  field_in = 'SELF_INIT_CNTCTS',
 																  field_out = 'SELF_INIT_CNTCTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SOLICITED_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=-1000.0, right_margin=1.0,
 																  closure_type=Closure(0),
@@ -808,7 +1071,6 @@ def generateWorkflow():
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'TOTAL_CONTACTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=1.0, right_margin=4.0,
 																  closure_type=Closure(2),
@@ -817,7 +1079,6 @@ def generateWorkflow():
 																  field_in = 'TOTAL_CONTACTS',
 																  field_out = 'TOTAL_CONTACTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SELF_INIT_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=1.0, right_margin=4.0,
 																  closure_type=Closure(2),
@@ -826,7 +1087,6 @@ def generateWorkflow():
 																  field_in = 'SELF_INIT_CNTCTS',
 																  field_out = 'SELF_INIT_CNTCTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SOLICITED_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=1.0, right_margin=4.0,
 																  closure_type=Closure(2),
@@ -838,7 +1098,6 @@ def generateWorkflow():
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'TOTAL_CONTACTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=4.0, right_margin=1000.0,
 																  closure_type=Closure(2),
@@ -847,7 +1106,6 @@ def generateWorkflow():
 																  field_in = 'TOTAL_CONTACTS',
 																  field_out = 'TOTAL_CONTACTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SELF_INIT_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=4.0, right_margin=1000.0,
 																  closure_type=Closure(2),
@@ -856,7 +1114,6 @@ def generateWorkflow():
 																  field_in = 'SELF_INIT_CNTCTS',
 																  field_out = 'SELF_INIT_CNTCTS_binned')
 	
-	data_smells.check_precision_consistency(binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed, 0, 'SOLICITED_CNTCTS')
 	binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_transformed,
 																  left_margin=4.0, right_margin=1000.0,
 																  closure_type=Closure(2),
@@ -1007,6 +1264,22 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	binner_TERRITORY__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericOutliers_output_dataDictionary.parquet')
 
+	data_smells.check_precision_consistency(data_dictionary=binner_TERRITORY__input_dataDictionary_df,
+											expected_decimals=0, field='TERRITORY')
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_TERRITORY__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='TERRITORY')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_types_as_string(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.INTEGER)
+	
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_TERRITORY__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='TERRITORY', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(TERRITORY) Interval:[0.0, 1000.0] VALIDATED')
@@ -1021,7 +1294,6 @@ def generateWorkflow():
 	binner_TERRITORY__output_dataDictionary_df=binner_TERRITORY__input_dataDictionary_transformed
 	binner_TERRITORY__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TERRITORY__input_dataDictionary_transformed, 0, 'TERRITORY')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  left_margin=-1000.0, right_margin=1.0,
 																  closure_type=Closure(0),
@@ -1033,7 +1305,6 @@ def generateWorkflow():
 	binner_TERRITORY__output_dataDictionary_df=binner_TERRITORY__input_dataDictionary_transformed
 	binner_TERRITORY__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TERRITORY__input_dataDictionary_transformed, 0, 'TERRITORY')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  left_margin=1.0, right_margin=3.0,
 																  closure_type=Closure(2),
@@ -1045,7 +1316,6 @@ def generateWorkflow():
 	binner_TERRITORY__output_dataDictionary_df=binner_TERRITORY__input_dataDictionary_transformed
 	binner_TERRITORY__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TERRITORY__input_dataDictionary_transformed, 0, 'TERRITORY')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  left_margin=3.0, right_margin=5.0,
 																  closure_type=Closure(2),
@@ -1057,7 +1327,6 @@ def generateWorkflow():
 	binner_TERRITORY__output_dataDictionary_df=binner_TERRITORY__input_dataDictionary_transformed
 	binner_TERRITORY__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TERRITORY__input_dataDictionary_transformed, 0, 'TERRITORY')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  left_margin=5.0, right_margin=7.0,
 																  closure_type=Closure(2),
@@ -1069,7 +1338,6 @@ def generateWorkflow():
 	binner_TERRITORY__output_dataDictionary_df=binner_TERRITORY__input_dataDictionary_transformed
 	binner_TERRITORY__output_dataDictionary_df.to_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
 	binner_TERRITORY__output_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericBinner_output_dataDictionary.parquet')
-	data_smells.check_precision_consistency(binner_TERRITORY__input_dataDictionary_transformed, 0, 'TERRITORY')
 	binner_TERRITORY__input_dataDictionary_transformed=data_transformations.transform_interval_fix_value(data_dictionary=binner_TERRITORY__input_dataDictionary_transformed,
 																  left_margin=7.0, right_margin=1000.0,
 																  closure_type=Closure(3),
@@ -1154,6 +1422,20 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	binner_satscore__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericOutliers_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_satscore__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='satscore')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_types_as_string(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore', expected_type=DataType.INTEGER)
+	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=2000.0, data_dictionary=binner_satscore__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='satscore', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(satscore) Interval:[-1000.0, 2000.0] VALIDATED')
@@ -1273,6 +1555,20 @@ def generateWorkflow():
 	#-----------------New DataProcessing-----------------
 	binner_avg_income__input_dataDictionary_df=pd.read_parquet('/wf_validation_contracts/data/numericOutliers_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_avg_income__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='avg_income')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
+	
+	data_smells.check_types_as_string(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income', expected_type=DataType.FLOAT)
+	
 	if contract_pre_post.check_interval_range_float(left_margin=9.0, right_margin=100000.0, data_dictionary=binner_avg_income__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='avg_income', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(avg_income) Interval:[9.0, 100000.0] VALIDATED')
