@@ -42,6 +42,29 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL', expected_type=DataType.STRING)
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY', expected_type=DataType.STRING)
 	
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex')
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL')
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY')
+	
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex')
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL')
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex')
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL')
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY')
+	
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, decimal_sep='.',  field='sex')
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, decimal_sep='.',  field='IRSCHOOL')
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, decimal_sep='.',  field='ETHNICITY')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='IRSCHOOL')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='ETHNICITY')
+	
+	
 	missing_values_imputeByDerivedValue_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMostFrequent_sex_IRISCHOOL_ETHNICITY__input_dataDictionary_df, field='sex', 
 									missing_values=missing_values_imputeByDerivedValue_PRE_valueRange,
@@ -179,6 +202,24 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2', expected_type=DataType.STRING)
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1', expected_type=DataType.STRING)
 	
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2')
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1')
+	
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2')
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2')
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1')
+	
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, decimal_sep='.',  field='ACADEMIC_INTEREST_2')
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, decimal_sep='.',  field='ACADEMIC_INTEREST_1')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_1')
+	
+	
 	missing_values_imputeByFixValue_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByFixValue_ACADEMIC_INTEREST_2_ACADEMIC_INTEREST_1__input_dataDictionary_df, field='ACADEMIC_INTEREST_2', 
 									missing_values=missing_values_imputeByFixValue_PRE_valueRange,
@@ -288,6 +329,26 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income', expected_type=DataType.DOUBLE)
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance', expected_type=DataType.DOUBLE)
 	
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income')
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance')
+	
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income')
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance')
+	
+	data_smells.check_suspect_distribution(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, min_value=9.0, max_value=202.0, field='avg_income')
+	data_smells.check_suspect_distribution(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, min_value=0.791, max_value=3882.192, field='distance')
+	
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income')
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance')
+	
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, decimal_sep='.',  field='avg_income')
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, decimal_sep='.',  field='distance')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='distance')
+	
+	
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByMean_avg_income_distance__input_dataDictionary_df, field='avg_income', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
@@ -384,6 +445,20 @@ def generateWorkflow():
 	
 	data_smells.check_types_as_string(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore', expected_type=DataType.INTEGER)
 	
+	data_smells.check_special_character_spacing(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_suspect_precision(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_suspect_distribution(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, min_value=440.0, max_value=1600.0, field='satscore')
+	
+	data_smells.check_date_as_datetime(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_separating_consistency(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, decimal_sep='.',  field='satscore')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore')
+	
+	
 	missing_values_imputeByNumericOp_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=imputeMissingByLinearInterpolation_satscore__input_dataDictionary_df, field='satscore', 
 									missing_values=missing_values_imputeByNumericOp_PRE_valueRange,
@@ -441,6 +516,20 @@ def generateWorkflow():
 	data_smells.check_integer_as_floating_point(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
 	
 	data_smells.check_types_as_string(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span', expected_type=DataType.INTEGER)
+	
+	data_smells.check_special_character_spacing(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
+	
+	data_smells.check_suspect_precision(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
+	
+	data_smells.check_suspect_distribution(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, min_value=-1000.0, max_value=1000.0, field='init_span')
+	
+	data_smells.check_date_as_datetime(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
+	
+	data_smells.check_separating_consistency(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, decimal_sep='.',  field='init_span')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=rowFilterRange_init_span__input_dataDictionary_df, field='init_span')
+	
 	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=1000.0, data_dictionary=rowFilterRange_init_span__input_dataDictionary_df,
 	                                	closure_type=Closure(0), belong_op=Belong(0), field='init_span', origin_function="Row Filter"):
@@ -550,6 +639,49 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail', expected_type=DataType.STRING)
 	data_smells.check_types_as_string(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1', expected_type=DataType.STRING)
 	
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS')
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq')
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest')
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail')
+	data_smells.check_special_character_spacing(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1')
+	
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS')
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq')
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest')
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail')
+	data_smells.check_suspect_precision(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1')
+	
+	data_smells.check_suspect_distribution(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, min_value=0.0, max_value=5.0, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_suspect_distribution(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, min_value=0.0, max_value=5.0, field='REFERRAL_CNTCTS')
+	data_smells.check_suspect_distribution(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, min_value=1.0, max_value=4.0, field='telecq')
+	data_smells.check_suspect_distribution(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, min_value=0.0, max_value=3.0, field='interest')
+	data_smells.check_suspect_distribution(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, min_value=0.0, max_value=1.0, field='stuemail')
+	
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS')
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq')
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest')
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail')
+	data_smells.check_date_as_datetime(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1')
+	
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='REFERRAL_CNTCTS')
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='telecq')
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='interest')
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='stuemail')
+	data_smells.check_separating_consistency(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, decimal_sep='.',  field='CONTACT_CODE1')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='TRAVEL_INIT_CNTCTS')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='REFERRAL_CNTCTS')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='telecq')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='interest')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='stuemail')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df, field='CONTACT_CODE1')
+	
+	
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_df.copy()
 	field_list_columnFilter_param_field=['TRAVEL_INIT_CNTCTS', 'REFERRAL_CNTCTS', 'telecq', 'interest', 'stuemail', 'CONTACT_CODE1']
 	columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed=data_transformations.transform_filter_columns(data_dictionary=columnFilter_TRAVEL_INIT_CNTCTS_REFERRAL_CNCTS_telecq_interest_stuemail_CONTACT_CODE1__input_dataDictionary_transformed,
@@ -589,6 +721,19 @@ def generateWorkflow():
 	data_smells.check_integer_as_floating_point(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
 	
 	data_smells.check_types_as_string(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_suspect_precision(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_separating_consistency(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, decimal_sep='.',  field='TERRITORY')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mapping_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
 	
 	if contract_pre_post.check_fix_value_range(value='A', is_substring=False, data_dictionary=mapping_TERRITORY__input_dataDictionary_df, belong_op=Belong(0), field='TERRITORY',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
@@ -668,6 +813,19 @@ def generateWorkflow():
 	data_smells.check_integer_as_floating_point(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
 	
 	data_smells.check_types_as_string(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_suspect_precision(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_separating_consistency(data_dictionary=mapping_Instate__input_dataDictionary_df, decimal_sep='.',  field='Instate')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mapping_Instate__input_dataDictionary_df, field='Instate')
+	
 	
 	if contract_pre_post.check_fix_value_range(value='Y', is_substring=False, data_dictionary=mapping_Instate__input_dataDictionary_df, belong_op=Belong(0), field='Instate',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Rule Engine"):
@@ -754,6 +912,24 @@ def generateWorkflow():
 	
 	data_smells.check_types_as_string(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.STRING)
 	data_smells.check_types_as_string(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY')
+	data_smells.check_special_character_spacing(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_suspect_precision(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY')
+	data_smells.check_suspect_precision(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY')
+	data_smells.check_date_as_datetime(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_separating_consistency(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, decimal_sep='.',  field='TERRITORY')
+	data_smells.check_separating_consistency(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, decimal_sep='.',  field='Instate')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='TERRITORY')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df, field='Instate')
+	
 	
 	if contract_pre_post.check_field_type(data_dictionary=stringToNumber_TERRITORY_Instate__input_dataDictionary_df,
 	                                	  field='TERRITORY', field_type=DataType(0), origin_function="String To Number"):
@@ -868,6 +1044,32 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income', expected_type=DataType.DOUBLE)
 	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance', expected_type=DataType.DOUBLE)
 	data_smells.check_types_as_string(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income')
+	data_smells.check_special_character_spacing(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance')
+	data_smells.check_special_character_spacing(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_suspect_precision(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income')
+	data_smells.check_suspect_precision(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance')
+	data_smells.check_suspect_precision(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_suspect_distribution(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, min_value=9.0, max_value=202.0, field='avg_income')
+	data_smells.check_suspect_distribution(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, min_value=0.791, max_value=3882.192, field='distance')
+	data_smells.check_suspect_distribution(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, min_value=0.0, max_value=1.0, field='Instate')
+	
+	data_smells.check_date_as_datetime(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income')
+	data_smells.check_date_as_datetime(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance')
+	data_smells.check_date_as_datetime(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate')
+	
+	data_smells.check_separating_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, decimal_sep='.',  field='avg_income')
+	data_smells.check_separating_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, decimal_sep='.',  field='distance')
+	data_smells.check_separating_consistency(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, decimal_sep='.',  field='Instate')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='distance')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='Instate')
+	
 	
 	if contract_pre_post.check_outliers(belong_op=Belong(0), data_dictionary=imputeOutlierByClosest_avg_income_distance_Instate__input_dataDictionary_df, field='avg_income', 
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Numeric Outliers"):
@@ -1003,6 +1205,32 @@ def generateWorkflow():
 	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS', expected_type=DataType.INTEGER)
 	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS', expected_type=DataType.INTEGER)
 	data_smells.check_types_as_string(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS', expected_type=DataType.INTEGER)
+	
+	data_smells.check_special_character_spacing(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS')
+	data_smells.check_special_character_spacing(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS')
+	data_smells.check_special_character_spacing(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_suspect_precision(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS')
+	data_smells.check_suspect_precision(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS')
+	data_smells.check_suspect_precision(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_suspect_distribution(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, min_value=1.0, max_value=28.0, field='TOTAL_CONTACTS')
+	data_smells.check_suspect_distribution(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, min_value=0.0, max_value=21.0, field='SELF_INIT_CNTCTS')
+	data_smells.check_suspect_distribution(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, min_value=0.0, max_value=9.0, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_date_as_datetime(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS')
+	data_smells.check_date_as_datetime(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS')
+	data_smells.check_date_as_datetime(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS')
+	
+	data_smells.check_separating_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, decimal_sep='.',  field='TOTAL_CONTACTS')
+	data_smells.check_separating_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, decimal_sep='.',  field='SELF_INIT_CNTCTS')
+	data_smells.check_separating_consistency(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, decimal_sep='.',  field='SOLICITED_CNTCTS')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='TOTAL_CONTACTS')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SELF_INIT_CNTCTS')
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df, field='SOLICITED_CNTCTS')
+	
 	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=1000.0, data_dictionary=binner_TOTAL_CONTACTS_SELF_INIT_CNTCTS_SOLICITED_CNTCTS__input_dataDictionary_df,
 	                                	closure_type=Closure(0), belong_op=Belong(0), field='TOTAL_CONTACTS', origin_function="Numeric Binner"):
@@ -1280,6 +1508,20 @@ def generateWorkflow():
 	
 	data_smells.check_types_as_string(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY', expected_type=DataType.INTEGER)
 	
+	data_smells.check_special_character_spacing(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_suspect_precision(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_suspect_distribution(data_dictionary=binner_TERRITORY__input_dataDictionary_df, min_value=0.0, max_value=8.0, field='TERRITORY')
+	
+	data_smells.check_date_as_datetime(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	data_smells.check_separating_consistency(data_dictionary=binner_TERRITORY__input_dataDictionary_df, decimal_sep='.',  field='TERRITORY')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_TERRITORY__input_dataDictionary_df, field='TERRITORY')
+	
+	
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_TERRITORY__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='TERRITORY', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(TERRITORY) Interval:[0.0, 1000.0] VALIDATED')
@@ -1436,6 +1678,20 @@ def generateWorkflow():
 	
 	data_smells.check_types_as_string(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore', expected_type=DataType.INTEGER)
 	
+	data_smells.check_special_character_spacing(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_suspect_precision(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_suspect_distribution(data_dictionary=binner_satscore__input_dataDictionary_df, min_value=-1000.0, max_value=2000.0, field='satscore')
+	
+	data_smells.check_date_as_datetime(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore')
+	
+	data_smells.check_separating_consistency(data_dictionary=binner_satscore__input_dataDictionary_df, decimal_sep='.',  field='satscore')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_satscore__input_dataDictionary_df, field='satscore')
+	
+	
 	if contract_pre_post.check_interval_range_float(left_margin=-1000.0, right_margin=2000.0, data_dictionary=binner_satscore__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='satscore', origin_function="Numeric Binner"):
 		print('PRECONDITION Numeric Binner(satscore) Interval:[-1000.0, 2000.0] VALIDATED')
@@ -1568,6 +1824,20 @@ def generateWorkflow():
 	data_smells.check_integer_as_floating_point(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
 	
 	data_smells.check_types_as_string(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income', expected_type=DataType.FLOAT)
+	
+	data_smells.check_special_character_spacing(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
+	
+	data_smells.check_suspect_precision(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
+	
+	data_smells.check_suspect_distribution(data_dictionary=binner_avg_income__input_dataDictionary_df, min_value=9.0, max_value=100000.0, field='avg_income')
+	
+	data_smells.check_date_as_datetime(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
+	
+	data_smells.check_separating_consistency(data_dictionary=binner_avg_income__input_dataDictionary_df, decimal_sep='.',  field='avg_income')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_avg_income__input_dataDictionary_df, field='avg_income')
+	
 	
 	if contract_pre_post.check_interval_range_float(left_margin=9.0, right_margin=100000.0, data_dictionary=binner_avg_income__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='avg_income', origin_function="Numeric Binner"):
