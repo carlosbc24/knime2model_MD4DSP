@@ -101,7 +101,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterMissing(Life_expectancy)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -126,7 +125,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterMissing(Life_expectancy)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -266,7 +264,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterPrimitive(Year)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -292,7 +289,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterPrimitive(Year)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -432,7 +428,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterRange(Life_expectancy)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -459,7 +454,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterRange(Life_expectancy)_INV_condition">
         <in
             xsi:type="Contract:DataField"
