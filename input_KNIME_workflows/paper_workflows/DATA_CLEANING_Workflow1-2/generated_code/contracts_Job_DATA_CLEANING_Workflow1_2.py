@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import functions.contract_invariants as contract_invariants
 import functions.contract_pre_post as contract_pre_post
+import functions.data_smells as data_smells
 from helpers.enumerations import Belong, Operator, Operation, SpecialType, DataType, DerivedType, Closure, FilterType, MapOperation, MathOperator
 from helpers.logger import set_logger
 import pyarrow
@@ -15,6 +16,34 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/binner_output_dataDictionary.parquet'):
 		binner_hours_per_week__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/binner_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=binner_hours_per_week__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='hours-per-week')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week')
+	
+	data_smells.check_types_as_string(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week', expected_type=DataType.INTEGER)
+	
+	data_smells.check_special_character_spacing(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week')
+	
+	data_smells.check_suspect_precision(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week')
+	
+	data_smells.check_suspect_distribution(data_dictionary=binner_hours_per_week__input_dataDictionary_df, min_value=0.0, max_value=8.0, field='hours-per-week')
+	
+	data_smells.check_date_as_datetime(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week')
+	
+	data_smells.check_separating_consistency(data_dictionary=binner_hours_per_week__input_dataDictionary_df, decimal_sep='.',  field='hours-per-week')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=binner_hours_per_week__input_dataDictionary_df, field='hours-per-week')
+	
+	
 	if contract_pre_post.check_interval_range_float(left_margin=0.0, right_margin=1000.0, data_dictionary=binner_hours_per_week__input_dataDictionary_df,
 	                                	closure_type=Closure(3), belong_op=Belong(0), field='hours-per-week', origin_function="Rule Engine"):
 		print('PRECONDITION Rule Engine(hours-per-week) Interval:[0.0, 1000.0] VALIDATED')
@@ -60,6 +89,33 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet'):
 		mapping_native_country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mapping_native_country__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='native-country')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country')
+	
+	data_smells.check_types_as_string(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country')
+	
+	data_smells.check_suspect_precision(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country')
+	
+	data_smells.check_separating_consistency(data_dictionary=mapping_native_country__input_dataDictionary_df, decimal_sep='.',  field='native-country')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mapping_native_country__input_dataDictionary_df, field='native-country')
+	
+	
 	if contract_pre_post.check_fix_value_range(value='-', is_substring=True, data_dictionary=mapping_native_country__input_dataDictionary_df, belong_op=Belong(0), field='native-country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('PRECONDITION String Manipulation(native-country) FixValue:- VALIDATED')
@@ -103,6 +159,34 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet'):
 		mathOperation_year_of_birth__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/columnExpressions_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='age')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age')
+	
+	data_smells.check_types_as_string(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age', expected_type=DataType.DOUBLE)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age')
+	
+	data_smells.check_suspect_precision(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age')
+	
+	data_smells.check_suspect_distribution(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, min_value=440.0, max_value=1600.0, field='age')
+	
+	data_smells.check_date_as_datetime(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age')
+	
+	data_smells.check_separating_consistency(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, decimal_sep='.',  field='age')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age')
+	
+	
 	missing_values_mathOperation_PRE_valueRange=[]
 	if contract_pre_post.check_missing_range(belong_op=Belong(0), data_dictionary=mathOperation_year_of_birth__input_dataDictionary_df, field='age', 
 									missing_values=missing_values_mathOperation_PRE_valueRange,

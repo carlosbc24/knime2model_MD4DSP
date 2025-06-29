@@ -122,7 +122,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="binner(Life_expectancy)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -148,7 +147,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="binner(Life_expectancy)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -340,7 +338,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterPrimitive(Region)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -365,7 +362,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterPrimitive(Region)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -626,7 +622,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:FieldRange"
-          type="POSTCONDITION"
           name="columnFilter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing)_POST_fieldRange"
           belongOp="NOTBELONG">
         <in
@@ -681,7 +676,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="columnFilter(Year, Infant_deaths, Under_five_deaths, Adult_mortality, Alcohol_consumption, Hepatitis_B, Measles, BMI, Polio, Diphtheria, Incidents_HIV, GDP_per_capita, Population_mln, Thinness_ten_nineteen_years, Thinness_five_nine_years, Schooling, Economy_status_Developed, Economy_status_Developing)_INV_condition">
         <in
             xsi:type="Contract:DataDictionary"

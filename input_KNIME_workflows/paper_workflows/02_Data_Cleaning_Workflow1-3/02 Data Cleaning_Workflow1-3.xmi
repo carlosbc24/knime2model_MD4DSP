@@ -102,7 +102,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterRange(Altitude)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -129,7 +128,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.8/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterRange(Altitude)_INV_condition">
         <in
             xsi:type="Contract:DataField"

@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import functions.contract_invariants as contract_invariants
 import functions.contract_pre_post as contract_pre_post
+import functions.data_smells as data_smells
 from helpers.enumerations import Belong, Operator, Operation, SpecialType, DataType, DerivedType, Closure, FilterType, MapOperation, MathOperator
 from helpers.logger import set_logger
 import pyarrow
@@ -15,6 +16,33 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/mapping1_output_dataDictionary.parquet'):
 		mapping_Tz_database_time_zone__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping1_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='Tz database time zone')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone')
+	
+	data_smells.check_types_as_string(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone')
+	
+	data_smells.check_suspect_precision(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone')
+	
+	data_smells.check_separating_consistency(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, decimal_sep='.',  field='Tz database time zone')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, field='Tz database time zone')
+	
+	
 	if contract_pre_post.check_fix_value_range(value='/', is_substring=True, data_dictionary=mapping_Tz_database_time_zone__input_dataDictionary_df, belong_op=Belong(0), field='Tz database time zone',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('PRECONDITION String Manipulation(Tz database time zone) FixValue:/ VALIDATED')
@@ -58,6 +86,33 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/mapping2_output_dataDictionary.parquet'):
 		mapping_Source__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/mapping2_output_dataDictionary.parquet')
 
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=[]
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=mapping_Source__input_dataDictionary_df, 
+														missing_invalid_list=[], common_missing_invalid_list=common_missing_list, field='Source')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source')
+	
+	data_smells.check_types_as_string(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source')
+	
+	data_smells.check_suspect_precision(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source')
+	
+	
+	data_smells.check_date_as_datetime(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source')
+	
+	data_smells.check_separating_consistency(data_dictionary=mapping_Source__input_dataDictionary_df, decimal_sep='.',  field='Source')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=mapping_Source__input_dataDictionary_df, field='Source')
+	
+	
 	if contract_pre_post.check_fix_value_range(value='3', is_substring=True, data_dictionary=mapping_Source__input_dataDictionary_df, belong_op=Belong(0), field='Source',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="String Manipulation"):
 		print('PRECONDITION String Manipulation(Source) FixValue:3 VALIDATED')

@@ -110,7 +110,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="binner(Longitude)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -136,7 +135,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="binner(Longitude)_INV_condition">
         <in
             xsi:type="Contract:DataField"

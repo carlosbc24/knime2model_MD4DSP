@@ -89,7 +89,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mapping(Tz database time zone)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -116,7 +115,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mapping(Tz database time zone)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -242,7 +240,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mapping(Source)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -269,7 +266,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mapping(Source)_INV_condition">
         <in
             xsi:type="Contract:DataField"

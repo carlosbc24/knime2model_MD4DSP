@@ -86,7 +86,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mapping(Country)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -112,7 +111,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.4/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mapping(Country)_INV_condition">
         <in
             xsi:type="Contract:DataField"

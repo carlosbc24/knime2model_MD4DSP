@@ -101,7 +101,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterMissing(marital-status)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -126,7 +125,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.10/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterMissing(marital-status)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -263,7 +261,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterPrimitive(marital-status)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -288,7 +285,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterPrimitive(marital-status)_INV_condition">
         <in
             xsi:type="Contract:DataField"

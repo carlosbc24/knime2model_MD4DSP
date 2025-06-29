@@ -80,7 +80,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:FieldRange"
-          type="POSTCONDITION"
           name="columnFilter(Latitude, Longitude)_POST_fieldRange"
           belongOp="NOTBELONG">
         <in
@@ -103,7 +102,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="columnFilter(Latitude, Longitude)_INV_condition">
         <in
             xsi:type="Contract:DataDictionary"

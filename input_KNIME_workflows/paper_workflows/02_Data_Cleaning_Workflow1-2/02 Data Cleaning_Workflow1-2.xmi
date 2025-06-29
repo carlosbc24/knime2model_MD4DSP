@@ -101,7 +101,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="rowFilterPrimitive(Name)_POST_valueRange">
         <in
             xsi:type="Contract:DataField"
@@ -126,7 +125,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.2/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="rowFilterPrimitive(Name)_INV_condition">
         <in
             xsi:type="Contract:DataField"

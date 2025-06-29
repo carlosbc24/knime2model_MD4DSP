@@ -105,7 +105,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.11/@contractdefinition.0"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="INV_join_condition_Name with City">
         <in
             xsi:type="Contract:DataField"

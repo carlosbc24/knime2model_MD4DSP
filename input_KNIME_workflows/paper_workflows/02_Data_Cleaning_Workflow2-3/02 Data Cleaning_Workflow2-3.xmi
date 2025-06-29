@@ -189,7 +189,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:FieldRange"
-          type="POSTCONDITION"
           name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_POST_fieldRange">
         <in
             xsi:type="Contract:DataDictionary"
@@ -235,7 +234,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.3/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="columnFilter(Airport ID, Name, City, Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST, Tz database time zone, Type, Source)_INV_condition">
         <in
             xsi:type="Contract:DataDictionary"

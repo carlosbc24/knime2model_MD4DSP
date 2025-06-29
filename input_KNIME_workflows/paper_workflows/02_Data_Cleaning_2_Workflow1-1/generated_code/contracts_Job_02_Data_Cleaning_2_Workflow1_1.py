@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import functions.contract_invariants as contract_invariants
 import functions.contract_pre_post as contract_pre_post
+import functions.data_smells as data_smells
 from helpers.enumerations import Belong, Operator, Operation, SpecialType, DataType, DerivedType, Closure, FilterType, MapOperation, MathOperator
 from helpers.logger import set_logger
 import pyarrow
@@ -16,13 +17,41 @@ def generateWorkflow():
 	if os.path.exists('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet'):
 		rowFilterPrimitive_Country__output_dataDictionary_df=pd.read_parquet('/wf_validation_python/data/output/rowFilterPrimitive_output_dataDictionary.parquet')
 
-	if contract_pre_post.check_fix_value_range(value='China', data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, belong_op=Belong(0), field='Country',
+	
+	common_invalid_list=['inf', '-inf', 'nan']
+	common_missing_list=['', '?', '.','null','none','na']
+	
+	list_missing=[]
+	list_invalid=['China']
+	
+	data_smells.check_missing_invalid_value_consistency(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, 
+														missing_invalid_list=list_invalid, common_missing_invalid_list=common_invalid_list, field='Country')
+	
+	data_smells.check_integer_as_floating_point(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country')
+	
+	data_smells.check_types_as_string(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country', expected_type=DataType.STRING)
+	
+	data_smells.check_special_character_spacing(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country')
+	
+	data_smells.check_suspect_precision(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country')
+	
+	data_smells.check_suspect_distribution(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, min_value=9.0, max_value=202.0, field='Country')
+	
+	data_smells.check_date_as_datetime(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country')
+	
+	data_smells.check_separating_consistency(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, decimal_sep='.',  field='Country')
+	
+	
+	data_smells.check_ambiguous_datetime_format(data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, field='Country')
+	
+	
+	if contract_pre_post.check_fix_value_range(value='China', is_substring=False, data_dictionary=rowFilterPrimitive_Country__input_dataDictionary_df, belong_op=Belong(0), field='Country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('PRECONDITION Row Filter(Country) FixValue:China VALIDATED')
 	else:
 		print('PRECONDITION Row Filter(Country) FixValue:China NOT VALIDATED')
 	
-	if contract_pre_post.check_fix_value_range(value='China', data_dictionary=rowFilterPrimitive_Country__output_dataDictionary_df, belong_op=Belong(0), field='Country',
+	if contract_pre_post.check_fix_value_range(value='China', is_substring=False, data_dictionary=rowFilterPrimitive_Country__output_dataDictionary_df, belong_op=Belong(0), field='Country',
 									quant_abs=None, quant_rel=None, quant_op=None, origin_function="Row Filter"):
 		print('POSTCONDITION Row Filter(Country) FixValue:China VALIDATED')
 	else:

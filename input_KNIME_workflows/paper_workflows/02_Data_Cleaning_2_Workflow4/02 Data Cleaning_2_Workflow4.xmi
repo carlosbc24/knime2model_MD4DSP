@@ -138,7 +138,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mathOperation(Change)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -163,7 +162,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mathOperation(Change)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -361,7 +359,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="mathOperation(Percentage)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -386,7 +383,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.9/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="mathOperation(Percentage)_INV_condition">
         <in
             xsi:type="Contract:DataField"
@@ -580,7 +576,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.1"/>
       <contract
           xsi:type="Contract:ValueRange"
-          type="POSTCONDITION"
           name="binner(Change)_POST_valueRange"
           belongOp="NOTBELONG">
         <in
@@ -606,7 +601,6 @@
           href="library_validation.xmi#//@dataprocessingdefinition.7/@contractdefinition.2"/>
       <contract
           xsi:type="Contract:Condition"
-          type="INVARIANT"
           name="binner(Change)_INV_condition">
         <in
             xsi:type="Contract:DataField"
